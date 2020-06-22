@@ -13,9 +13,10 @@ export VISUAL=vi
 export EDITOR="$VISUAL"
 echo "enabled Bash built-ins"
 # git
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-alias home='/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME'
-alias homegraph='/usr/bin/git --git-dir=/home/ma/.home/ --work-tree=/home/ma log --all --decorate --oneline --graph'
+alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
+alias home="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME"
+alias homegraph="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME log --all --decorate --oneline --graph"
+alias homels="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME ls-tree -r --name-only master"
 #alias gitt='/usr/bin/git --git-dir=$HOME/.git/ --work-tree=$HOME'
 alias ginit='git init'
 alias gadd='git add'
