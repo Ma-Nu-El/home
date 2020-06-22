@@ -1,3 +1,6 @@
 [submodule "uni"]
 	path = uni
 	url = ./uni/
+[submodule "deploy"]
+	path = deploy
+	url = ./deploy/
