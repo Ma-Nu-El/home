@@ -4,3 +4,6 @@
 [submodule "deploy"]
 	path = deploy
 	url = ./deploy/
+[submodule "org"]
+	path = org
+	url = ./org/
