@@ -7,6 +7,3 @@
 [submodule "org"]
 	path = org
 	url = ./org/
-[submodule "tryingHome"]
-	path = tryingHome
-	url = ./tryingHome/
