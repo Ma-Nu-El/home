@@ -41,16 +41,16 @@ fi
 if [[ "$1" == "install" ]]
 then
 cd $HOME
-if [[ -z $2 ]]
-then
-echo "Please specify the protocol to use:"
-echo "--ssh or --https"
-echo ""
-echo "Example:"
-echo "'deploy install --ssh'"
-echo "or"
-echo "'deploy install --https'"
-fi
+#if [[ -z $2 ]]
+#then
+#echo "Please specify the protocol to use:"
+#echo "--ssh or --https"
+#echo ""
+#echo "Example:"
+#echo "'deploy install --ssh'"
+#echo "or"
+#echo "'deploy install --https'"
+#fi
 
 #backup
 
@@ -149,17 +149,17 @@ fi
 #IF BACKUP SUCCESS
 #git init --bare $HOME/.home # not necessary when not creating from scratch
 
-if [[ "$2" == "--ssh" ]]
-then
-echo "Installing via ssh..."
-git clone --bare git@github.com:Ma-Nu-El/home.git $HOME/.home
-fi
+#if [[ "$2" == "--ssh" ]]
+#then
+#echo "Installing via ssh..."
+#git clone --bare git@github.com:Ma-Nu-El/home.git $HOME/.home
+#fi
 
-if [[ "$2" == "--https" ]]
-then
-git clone --bare https://github.com/Ma-Nu-El/home.git $HOME/.home
-echo "Installing via https..."
-fi
+#if [[ "$2" == "--https" ]]
+#then
+#git clone --bare https://github.com/Ma-Nu-El/home.git $HOME/.home
+#echo "Installing via https..."
+#fi
 
 #alias home="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME" # not working?
 #home checkout # not working?
@@ -167,11 +167,11 @@ fi
 /usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME checkout
 
 
-if [[ "$3" == "--recursive" ]] || [[ "$3" == "-r" ]]
-then
-echo "  Downloading submodules..."
+#if [[ "$3" == "--recursive" ]] || [[ "$3" == "-r" ]]
+#then
+#echo "  Downloading submodules..."
 #home submodule update --init --recursive --remote
-fi
+#fi
 
 cd -
 fi
