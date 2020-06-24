@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-#
-# HELP
+
+### HELP
+
 #If no argument, display mini-help.
 if [[ -z $1 ]]
 then
@@ -37,8 +38,9 @@ echo "Remove all installed dotfiles and submodules. If a backup was created,"
 echo "move the backed up files and folders to their original state prior to"
 echo "'deploy install'."
 fi
-#
-# ACTIONS
+
+### ACTIONS
+
 if [[ "$1" == "install" ]]
 then
 cd $HOME
@@ -53,7 +55,7 @@ cd $HOME
 #echo "'deploy install --https'"
 #fi
 
-#BACKUP
+### BACKUP
 
 #.bash_aliases
 if [ -f $HOME/.bash_aliases ]
@@ -146,13 +148,14 @@ else
 echo ".home not found, installing from github..."
 fi
 
-#IF BACKUP SUCCESS THEN DEPLOY WORK TREE
+### IF BACKUP SUCCESS THEN DEPLOY WORK TREE
+
 mv $HOME/home/.git $HOME/.home
 rm -rf $HOME/home
 /usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME \
 config --bool core.bare true
 /usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME \
-checkout
+checkout $HOME
 
 fi
 
