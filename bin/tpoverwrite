@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+overwrite(){
+	echo "Overwriting your tmuxp session:"
+		cat $YOUR_FILE > $YOUR_FILE~ # for backup
+		rm $YOUR_FILE
+		tmuxp freeze
+		echo 'tmuxp session backed up and overwriten in:'
+		echo $YOUR_FILE
+}
+depython(){
+	echo 'Warning: if you actually are running anything that contains the word'
+		echo 'python3 and gets saved into the session, it could mess with your'
+		echo 'tmuxp freeze file.'
+		echo ''
+		echo 'A backup of your file will be stored in'
+		echo '~/.tmuxp/trimmed/'
+		echo 'in case anything goes wrong.'
+		AUX_FILE=$FILE_LOCATION/auxFile
+		cat $YOUR_FILE > ~/.tmuxp/depython/$SESSION_NAME.$EXTENSION
+		sed '/python3/d' $YOUR_FILE > $AUX_FILE
+		cat $AUX_FILE > $YOUR_FILE
+		echo 'done: file depythoned.'
+}
+debash(){
+	echo 'Warning: if you actually are running anything that contains the word'
+		echo ''\''bash'\'' and gets saved into the session, it could mess with your'
+		echo 'tmuxp freeze file.'
+		echo ''
+		echo 'A backup of your file will be stored in'
+		echo '~/.tmuxp/trimmed/'
+		echo 'in case anything goes wrong.'
+		AUX_FILE=$FILE_LOCATION/auxFile
+		cat $YOUR_FILE > ~/.tmuxp/depython/$SESSION_NAME.$EXTENSION
+		sed '/shell_command:\ bash/d' $YOUR_FILE > $AUX_FILE
+		cat $AUX_FILE > $YOUR_FILE
+		echo 'done: file debashed.'
+}
+if [[ -z $1  ]]
+then
+echo 'tpoverwrite is a bash macro to overwrite tmuxp sessions'
+echo 'type '\''tpoverwrite --help'\'' for more info'
+exit
+fi
+if [[ "$1" == --help ]] 
+then
+echo 'tpoverwrite - tmuxp overwrite'
+echo ''
+echo 'tpoverwrite is a bash macro that lets you quickly overwrite an'
+echo 'EXISTING tmuxp session (it won'\''t create a new one from scratch).'
+echo ''
+echo 'source code: '
+echo 'USAGE'
+echo ''\''tpoverwrite OPTION'\'''
+echo ''
+echo 'OPTIONS'
+echo '-o'
+echo '--overwrite'
+echo 'overwrite your EXISTING tmuxp frozen file'
+echo ''
+echo '-h'
+echo '--hard'
+echo 'You can append this option to the --overwrite option'
+echo 'to perform --depython and --debash in the same command'
+echo ''
+echo '--depython'
+echo 'remove that '\''python3'\'' line from the frozen file'
+echo '--debash'
+echo 'remove that '\''bash'\'' line from the frozen file'
+echo 'remove that '\''shell_command: bash'\'' line from the frozen file'
+echo 'for the moment it only works with .yaml files since I don'\''t know yet'
+echo 'how to implement TAB completion from within a bash script :D'
+echo 'Happy coding'
+exit
+fi
+if [[ "$1" != "--help" ]] || [[ -z $1 ]]
+then
+FILE_LOCATION=~/.tmuxp
+SESSION_NAME=$(tmux display-message -p '#S')
+EXTENSION=yaml
+YOUR_FILE=$FILE_LOCATION/$SESSION_NAME.$EXTENSION
+fi
+if [[ "$1" == "-o" ]] || [[ "$1" == "--overwrite" ]]
+then
+overwrite
+fi
+if [[ "$1" == "--depython" ]]
+then
+depython
+fi
+if [[ "$1" == "--debash" ]]
+then
+debash
+fi
+if [[ "$2" == "-h" ]] || [[ "$2" == "--hard" ]]
+then
+depython
+debash
+echo 'session overwritten, depythoned and debashed'
+fi
+if [[ "$1" == "-r" ]] || [[ "$1" == "--recover" ]]
+then
+if mv "$YOUR_FILE~" "$YOUR_FILE"
+then
+echo 'renamed:'
+echo \'$YOUR_FILE~\'
+echo 'to'
+echo \'$YOUR_FILE\'
+fi
+fi
+exit

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# this script does the following:
+# - commit before for just in case
+# - fetch-in the submodule recursively and make new files part of the actual
+# working directory.
+# - commit the last
+# - remove files that are left untracked after the fetch-in
+# - commit the last
+if [[ -z $1 ]]
+then
+git commit -am "Automatic commit pre submodule update"
+echo "Automatic commit pre update"
+git submodule update --init --remote --recursive
+git commit -am "Update submodules recursively"
+echo "Updated and commited submodules recursively"
+git submodule foreach --recursive "git clean -ffxd"
+echo "Removed files left untracked after submodule update."
+fi
+#git commit -am "Remove files left untracked after submodule update"
+# this way, you get a complete update of whatever the state of upstream
+# is.
+
+if [[ "$1" = "--home" ]]
+then
+/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME \
+commit -am "Automatic commit pre submodule update"
+echo "Automatic commit pre update of home submodules"
+/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME \
+submodule update --init --remote --recursive
+/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME \
+commit -am "Update submodules recursively"
+echo "Updated and commited submodules of home recursively"
+/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME \
+submodule foreach --recursive "git clean -ffxd"
+echo "Removed files left untracked after submodule update of home."
+fi
+
+#if [[ "$1" != "--help" ]] || [[ -z $1 ]]
+#then
+#FILE_LOCATION=~/.tmuxp
+#SESSION_NAME=$(tmux display-message -p '#S')
+#EXTENSION=yaml
+#YOUR_FILE=$FILE_LOCATION/$SESSION_NAME.$EXTENSION
+#fi

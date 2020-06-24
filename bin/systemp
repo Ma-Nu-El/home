@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+sensors | grep 'id 0' | tr -s ' ' | cut -d' ' -f4 | cut -b 2-

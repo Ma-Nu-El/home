@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+git submodule add "$1"
+git submodule update --init --remote --recursive
+echo "Added and recursively updated submodule"
+
+

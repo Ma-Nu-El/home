@@ -1,0 +1,189 @@
+#!/usr/bin/env bash
+#
+#If no argument, display mini-help.
+
+if [[ -z $1 ]]
+then
+echo "Script to automate actions related to your home directory."
+echo "To learn more type 'home --help'"
+echo "Warning: it'll crowd your terminal since I don't know how to"
+echo "install a man page."
+echo "- I'd recommend you to pipe it to 'less' like this:"
+echo "'deploy --help | less'"
+fi
+
+# help page
+if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]
+then
+echo "deploy"
+echo ""
+echo "Script to automate some stuff regarding your home folder, like downloading"
+echo "your dotfiles from github."
+echo ""
+echo "USAGE"
+echo "  deploy OPTIONS"
+echo "OPTIONS"
+echo "    -h,--help"
+echo "Display this page."
+echo "    install  --ssh|--https [-r|--recursive]"
+echo "Download dotfiles and install then, creating a backup if necessary."
+echo "Append the protocol you want to use: ssh or https"
+echo "Hint: if you don't know the difference between them, you'll be just"
+echo "just fine with https."
+echo "Append '--recursive' to download the submodules as well."
+echo "Remember to set your ssh keys if using ssh."
+echo "    uninstall"
+echo "Remove all installed dotfiles and submodules. If a backup was created,"
+echo "move the backed up files and folders to their original state prior to"
+echo "'deploy install'."
+fi
+# Actions
+if [[ "$1" == "install" ]]
+then
+cd $HOME
+if [[ -z $2 ]]
+then
+echo "Please specify the protocol to use:"
+echo "--ssh or --https"
+echo ""
+echo "Example:"
+echo "'deploy install --ssh'"
+echo "or"
+echo "'deploy install --https'"
+fi
+
+#backup
+
+#.bash_aliases
+if [ -f $HOME/.bash_aliases ]
+then
+echo "Found $HOME/.bash_aliases"
+echo "  Renaming to $HOME/.bash_aliases.pre-deploy"
+mv $HOME/.bash_aliases $HOME/.bash_aliases.pre-deploy
+else
+echo ".bash_aliases not found, installing from github..."
+fi
+
+#.vimrc
+if [ -f $HOME/.vimrc ]
+then
+echo "Found $HOME/.vimrc"
+echo "  Renaming to $HOME/.vimrc"
+mv $HOME/.vimrc $HOME/.vimrc.pre-deploy
+else
+echo ".vimrc not found, installing from github..."
+fi
+
+#.ideavimrc
+if [ -f $HOME/.ideavimrc ]
+then
+echo "Found $HOME/.ideavimrc"
+echo "  Renaming to $HOME/.ideavimrc.pre-deploy"
+mv $HOME/.ideavimrc $HOME/.ideavimrc.pre-deploy
+else
+echo ".ideavimrc not found, installing from github..."
+fi
+
+#.tmux.conf
+if [ -f $HOME/.tmux.conf ]
+then
+echo "Found $HOME/.tmux.conf"
+echo "  Renaming to $HOME/.tmux.conf.pre-deploy"
+mv $HOME/.tmux.conf $HOME/.tmux.conf.pre-deploy
+else
+echo ".tmux.conf not found, installing from github..."
+fi
+
+#.doom.d
+if [ -d $HOME/.doom.d ]
+then
+echo "Found $HOME/.doom.d"
+echo "  Renaming to $HOME/.doom.d.pre-deploy"
+mv $HOME/.doom.d $HOME/.doom.d.pre-deploy
+else
+echo ".doom.d not found, installing from github..."
+fi
+#
+
+#.emacs.d
+if [ -d $HOME/.emacs.d ]
+then
+echo "Found $HOME/.emacs.d"
+echo "  Renaming to $HOME/.emacs.d.pre-deploy"
+mv $HOME/.emacs.d $HOME/.emacs.d.pre-deploy
+else
+echo ".emacs.d not found, installing from github..."
+fi
+
+#.emacs.d.bak
+if [ -d $HOME/.emacs.d.bak ]
+then
+echo "Found $HOME/.emacs.d.bak"
+echo "  Renaming to $HOME/.emacs.d.bak.pre-deploy"
+mv $HOME/.emacs.d.bak $HOME/.emacs.d.bak.pre-deploy
+else
+echo ".emacs.d.bak not found, installing from github..."
+fi
+
+#.gitmodules
+if [ -f $HOME/.gitmodules ]
+then
+echo "Found $HOME/.gitmodules"
+echo "  Renaming to $HOME/.gitmodules.pre-deploy"
+mv $HOME/.gitmodules $HOME/.gitmodules.pre-deploy
+else
+echo ".gitmodules not found, installing from github..."
+fi
+
+#.home
+if [ -d $HOME/.home ]
+then
+echo "Found $HOME/.home"
+echo "  Renaming to $HOME/.home.pre-deploy"
+mv $HOME/.home $HOME/.home.pre-deploy
+else
+echo ".home not found, installing from github..."
+fi
+
+
+#IF BACKUP SUCCESS
+#git init --bare $HOME/.home # not necessary when not creating from scratch
+
+if [[ "$2" == "--ssh" ]]
+then
+echo "Installing via ssh..."
+git clone --bare git@github.com:Ma-Nu-El/home.git $HOME/.home
+fi
+
+if [[ "$2" == "--https" ]]
+then
+git clone --bare https://github.com/Ma-Nu-El/home.git $HOME/.home
+echo "Installing via https..."
+fi
+
+#alias home="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME" # not working?
+#home checkout # not working?
+
+/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME checkout
+
+
+if [[ "$3" == "--recursive" ]] || [[ "$3" == "-r" ]]
+then
+echo "  Downloading submodules..."
+#home submodule update --init --recursive --remote
+fi
+
+cd -
+fi
+
+if [[ "$1" == "uninstall" ]]
+then
+cd $HOME
+echo "Removing dotfiles and submodules..."
+echo "Putting backed up files in their original place prior to"
+echo "installation of this program."
+echo "Original files recovered and program sucessfuly uninstalled"
+echo "Removing program from disc"
+echo "Bye"
+cd -
+fi

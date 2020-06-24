@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Git SubModule Update --Init --Remote --Recursive = "gsmuirr"
+git submodule update --init --remote --recursive

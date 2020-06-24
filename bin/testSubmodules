@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+touch file
+git init
+git add .
+git commit -am "yes"

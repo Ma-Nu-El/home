@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+NAME_FILE=~/.sit/reponame
+DIR_FILE=~/.sit/repodir
+declare -A repositories
+if [ $1 == 'add' ]
+then
+ADD_NAME=$2
+ADD_DIR=$3
+echo $ADD_NAME >> $NAME_FILE
+echo $ADD_DIR >> $DIR_FILE
+fi
+if [ $1 == 'remove' ]
+then
+REMOVE_NAME=$2
+REMOVE_DIR=$3
+REMOVE_NAME_AUX=~/.sit/nameAux
+REMOVE_DIR_AUX=~/.sit/dirAux
+sed '/'"$REMOVE_NAME"'/d' $NAME_FILE > $REMOVE_NAME_AUX
+cat $REMOVE_NAME_AUX > $NAME_FILE
+sed '/'"$REMOVE_DIR"'/d' $DIR_FILE > $REMOVE_DIR_AUX
+cat $REMOVE_DIR_AUX > $DIR_FILE
+rm $REMOVE_NAME_AUX
+rm $REMOVE_DIR_AUX
+fi
+if [ $1 == 'ls' ]
+then
+echo "repo names:"
+cat $NAME_FILE
+echo ""
+echo "repo locations:"
+cat $DIR_FILE
+fi
