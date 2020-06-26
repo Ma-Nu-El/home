@@ -136,10 +136,19 @@ cd $HOME
 echo "Removing dotfiles and submodules..."
 /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
 rm -rf .
+echo "Creating \~/home directory"
+mkdir $HOME/home
+mv $HOME/.home $HOME/home/.git
+rm -rf $HOME/.home
+echo "Converting \~/home/.git into a non-bare git repo"
+cd $HOME/home/.git
+git config --bool core.bare false
+cd $HOME/home
+echo "Checking out master branch in $HOME/home"
+/usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
+checkout master .
+
 echo "Putting backed up files in their original place prior to"
 echo "installation of this program."
-echo "Original files recovered and program sucessfuly uninstalled"
-echo "Removing program from disc"
-rm -rf $HOME/.home
-echo "Bye"
+
 fi
