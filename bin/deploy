@@ -136,11 +136,11 @@ cd $HOME
 echo "Removing dotfiles and submodules..."
 /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
 rm -rf .
-echo "Creating \~/home directory"
+echo "Creating ~/home directory"
 mkdir $HOME/home
 mv $HOME/.home $HOME/home/.git
 rm -rf $HOME/.home
-echo "Converting \~/home/.git into a non-bare git repo"
+echo "Converting ~/home/.git into a non-bare git repo"
 cd $HOME/home/.git
 git config --bool core.bare false
 cd $HOME/home
