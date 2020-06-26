@@ -145,8 +145,7 @@ cd $HOME/home/.git
 git config --bool core.bare false
 cd $HOME/home
 echo "Checking out master branch in $HOME/home"
-/usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
-checkout master .
+git checkout master .
 
 echo "Putting backed up files in their original place prior to"
 echo "installation of this program."
