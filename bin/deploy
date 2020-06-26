@@ -134,7 +134,8 @@ if [[ "$1" == "uninstall" ]]
 then
 cd $HOME
 echo "Removing dotfiles and submodules..."
-home rm -rf .
+/usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
+rm -rf .
 echo "Putting backed up files in their original place prior to"
 echo "installation of this program."
 echo "Original files recovered and program sucessfuly uninstalled"
