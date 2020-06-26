@@ -122,3 +122,6 @@ manuclone(){
 }
 echo "loaded functions"
 echo "loaded .bash_aliases"
+
+## misc aliases
+alias chmodx="chmod +x"
