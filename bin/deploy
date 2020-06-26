@@ -5,12 +5,13 @@
 #If no argument, display mini-help.
 if [[ -z $1 ]]
 then
-. ./scripts/minHelp
+. ./deployScripts/miniHelp
 fi
 #
 # help page
 if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]
 then
+. ./scripts/help
 fi
 
 ### ACTIONS
@@ -114,15 +115,12 @@ fi
 
 ### IF BACKUP SUCCESS THEN DEPLOY WORK TREE
 
-mv $HOME/home/.git $HOME/.home
-rm -rf $HOME/home
-/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME \
-config --bool core.bare true
-/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME \
-checkout $HOME
+. ./deployScripts/makeBare
+. ./deployScripts/checkoutHome
 
 fi
 
+### REMOVE
 
 if [[ "$1" == "uninstall" ]]
 then

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+echo "Script to automate actions related to your home directory."
+echo "To learn more type 'home --help'"
+echo "Warning: it'll crowd your terminal since I don't know how to"
+echo "install a man page."
+echo "- I'd recommend you to pipe it to 'less' like this:"
+echo "'deploy --help | less'"
