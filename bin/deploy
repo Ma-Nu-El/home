@@ -149,7 +149,7 @@ git checkout master .
 
 echo "Putting backed up files in their original place prior to"
 echo "installation of this program."
-$BACKUP_EXTENSION=pre-deploy
+$BACKUP_EXTENSION="pre-deploy"
 cd $HOME
 rename -v "s/\.$BACKUP_EXTENSION$//" *.$BACKUP_EXTENSION
 fi
