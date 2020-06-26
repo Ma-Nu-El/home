@@ -44,16 +44,6 @@ fi
 if [[ "$1" == "install" ]]
 then
 cd $HOME
-#if [[ -z $2 ]]
-#then
-#echo "Please specify the protocol to use:"
-#echo "--ssh or --https"
-#echo ""
-#echo "Example:"
-#echo "'deploy install --ssh'"
-#echo "or"
-#echo "'deploy install --https'"
-#fi
 
 ### BACKUP
 
