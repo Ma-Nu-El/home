@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME'
-checkout master
