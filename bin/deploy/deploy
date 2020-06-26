@@ -5,38 +5,12 @@
 #If no argument, display mini-help.
 if [[ -z $1 ]]
 then
-echo "Script to automate actions related to your home directory."
-echo "To learn more type 'home --help'"
-echo "Warning: it'll crowd your terminal since I don't know how to"
-echo "install a man page."
-echo "- I'd recommend you to pipe it to 'less' like this:"
-echo "'deploy --help | less'"
+. ./scripts/minHelp
 fi
 #
 # help page
 if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]
 then
-echo "deploy"
-echo ""
-echo "Script to automate some stuff regarding your home folder, like downloading"
-echo "your dotfiles from github."
-echo ""
-echo "USAGE"
-echo "  deploy OPTIONS"
-echo "OPTIONS"
-echo "    -h,--help"
-echo "Display this page."
-echo "    install  --ssh|--https [-r|--recursive]"
-echo "Download dotfiles and install then, creating a backup if necessary."
-echo "Append the protocol you want to use: ssh or https"
-echo "Hint: if you don't know the difference between them, you'll be just"
-echo "just fine with https."
-echo "Append '--recursive' to download the submodules as well."
-echo "Remember to set your ssh keys if using ssh."
-echo "    uninstall"
-echo "Remove all installed dotfiles and submodules. If a backup was created,"
-echo "move the backed up files and folders to their original state prior to"
-echo "'deploy install'."
 fi
 
 ### ACTIONS
