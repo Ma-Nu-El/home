@@ -115,11 +115,14 @@ fi
 
 ### IF BACKUP SUCCESS THEN DEPLOY WORK TREE
 
+echo "Converting ~/home repo into"
+echo "~/.home bare repo"
 mv $HOME/home/.git $HOME/.home
 rm -fr $HOME/home
 cd $HOME/.home
 git config --bool core.bare true
-/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME
+echo "Checking out master branch in $HOME"
+/usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME
 checkout master .
 
 fi
