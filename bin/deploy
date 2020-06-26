@@ -123,7 +123,7 @@ cd $HOME/.home
 git config --bool core.bare true
 cd $HOME
 echo "Checking out master branch in $HOME"
-/usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME
+/usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
 checkout master .
 
 fi
