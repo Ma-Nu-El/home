@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+cd $HOME/home
+git ls-tree --name-only master >> trackedFiles.txt
+
+EXTENSION=pre-deploy
+for FILE in $(cat trackedFiles.txt); do
+	mv $FILE $FILE.$EXTENSION
+done
