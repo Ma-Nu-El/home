@@ -124,7 +124,7 @@ for FILE in $(cat $HOME/home/trackedFiles.txt); do
 	then
 	echo "Renaming $FILE into $FILE.$EXTENSION"
 	else
-	echo "This output should be re directed to null or something like that"
+	:	
 	fi
 done
 
