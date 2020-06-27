@@ -122,7 +122,7 @@ EXTENSION=pre-deploy
 for FILE in $(cat $HOME/home/trackedFiles.txt); do
 	if mv "$HOME/$FILE" "$HOME/$FILE.$EXTENSION"
 	then
-#	echo "Renaming $FILE into $FILE.$EXTENSION"
+	echo "dis text"
 	else
 	:	
 	fi
