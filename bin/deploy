@@ -120,8 +120,12 @@ cd $HOME
 EXTENSION=pre-deploy
 
 for FILE in $(cat $HOME/home/trackedFiles.txt); do
-	mv "$HOME/$FILE" "$HOME/$FILE.$EXTENSION"
+	if [ mv "$HOME/$FILE" "$HOME/$FILE.$EXTENSION" ]
+	then
 	echo "Renaming $FILE into $FILE.$EXTENSION"
+	else
+	echo "This output should be re directed to null or something like that"
+	fi
 done
 
 ### IF BACKUP SUCCESS THEN DEPLOY WORK TREE
