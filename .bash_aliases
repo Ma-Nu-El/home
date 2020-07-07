@@ -110,7 +110,7 @@ cdf(){
 		vim $HOME/.doom.d/config.el
 	fi
 }
-# git clone from @Ma-Nu-El (github)
+# git clone from @Ma-Nu-El in github.
 manuclone(){
 	if [[ -z "$1"  ]]
 	then
