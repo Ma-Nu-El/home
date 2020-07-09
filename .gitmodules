@@ -4,3 +4,6 @@
 [submodule "deploy"]
 	path = deploy
 	url = ./deploy/
+[submodule "org"]
+	path = org
+	url = git@github.com:Ma-Nu-El/org.git
