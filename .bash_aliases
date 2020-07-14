@@ -74,6 +74,7 @@ alias edn="emacs-daemon-new" # append your emacs daemon name
 alias els="ls -1 /tmp/emacs${UID}"
 alias ec='emacsclient -t' # attach to the default emacs server
 alias ecs='emacsclient -t -s' # append your server name to be attached to
+alias enw='emacs -nw'
 # tmux
 alias t="tmux"
 alias tn="tmux new-session" # create session with default name
