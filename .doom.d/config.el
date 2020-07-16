@@ -62,7 +62,6 @@
 (define-key evil-motion-state-map (kbd "C-z") nil)
 (global-set-key (kbd "\C-cr") 'ispell-region)
 ;; roam
-;(setq org-roam-directory "~/org-roam")
-(setq org-roam-directory "~/org/uni/org/2020-1/lab2/roam")
+(setq org-roam-directory "~/org/roam")
 (add-hook 'after-init-hook 'org-roam-mode)
 (require 'org-roam-protocol)
