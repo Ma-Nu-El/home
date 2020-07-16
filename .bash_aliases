@@ -7,6 +7,7 @@ export PS1='\
 \[\033[0m\]\
 '
 shopt -s autocd
+shopt -s cdspell
 # vi
 git config --global core.editor "vi"
 export VISUAL=vi
