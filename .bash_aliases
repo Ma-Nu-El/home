@@ -139,7 +139,8 @@ echo "loaded functions"
 ### MISC
 # add ~/.emacs.d/bin to $PATH
 #https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#the-bindoom-utility
-export PATH=~/.emacs.d/bin:$PATH # how to verify existence first?
+export PATH=~/.emacs.d/bin:$PATH 
+# how to verify existence first?
 
 #https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path
 #if [ -z "${PATH-}" ]; then export PATH=/usr/local/bin:/usr/bin:/bin; fi
