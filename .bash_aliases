@@ -1,21 +1,24 @@
 #!/usr/share/env bash
 echo "loading .bash_aliases"
+### promt ###
 export PS1='\
 \[\033[1;37m\]\
 \[\033[1;33m\]\
 \$ \
 \[\033[0m\]\
 '
+### shopt ###
 shopt -s autocd
 shopt -s cdspell
-# vi
+### vi ###
 git config --global core.editor "vi"
 export VISUAL=vi
 export EDITOR="$VISUAL"
 echo "enabled Bash built-ins"
-# git
+### ALIASES ###
+### git ###
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
-## home bare repo
+### home bare repo ###
 alias home="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME"
 alias homest="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME status"
 alias homegraph="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME log --all --decorate --oneline --graph"
@@ -86,8 +89,12 @@ alias ta="tmux attach-session" # attach to last session
 alias tas="tmux attach-session -t" # append your session name to be attached to
 #alias tpls="ls ~/.tmuxp/"
 alias fire="firefox --private-window >/dev/null 2>/dev/null &"
-alias temp='systemp'
+## misc aliases
+alias chmodx="chmod +x"
+alias now="date && cal"
 echo "loaded aliases"
+### FUNCTIONS ###
+echo "loading functions"
 # dotfiles edition
 cdf(){
 	if [[ -z "$1"  ]]
@@ -128,8 +135,14 @@ manuclone(){
 	fi	
 }
 echo "loaded functions"
+
+### MISC
+# add ~/.emacs.d/bin to $PATH
+#https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#the-bindoom-utility
+export PATH=~/.emacs.d/bin:$PATH 
+# how to verify existence first?
+
+#https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path
+#if [ -z "${PATH-}" ]; then export PATH=/usr/local/bin:/usr/bin:/bin; fi
 echo "loaded .bash_aliases"
 
-## misc aliases
-alias chmodx="chmod +x"
-alias now="date && cal"
