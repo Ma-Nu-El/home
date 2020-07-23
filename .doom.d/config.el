@@ -66,3 +66,7 @@
 (setq org-roam-directory "~/2020-1/lab2/roam")
 (add-hook 'after-init-hook 'org-roam-mode)
 (require 'org-roam-protocol)
+;disable backup
+(setq backup-inhibited t)
+;disable auto save
+(setq auto-save-default nil)
