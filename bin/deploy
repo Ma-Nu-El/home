@@ -22,6 +22,7 @@ cd $HOME
 
 ### BACKUP
 
+## DEMO OF WHAT IT WAS BEFORE
 #.bash_aliases
 #if [ -f $HOME/.bash_aliases ]
 #then
@@ -30,87 +31,6 @@ cd $HOME
 #mv $HOME/.bash_aliases $HOME/.bash_aliases.pre-deploy
 #else
 #echo ".bash_aliases not found, installing from github..."
-#fi
-
-#.vimrc
-#if [ -f $HOME/.vimrc ]
-#then
-#echo "Found $HOME/.vimrc"
-#echo "  Renaming to $HOME/.vimrc"
-#mv $HOME/.vimrc $HOME/.vimrc.pre-deploy
-#else
-#echo ".vimrc not found, installing from github..."
-#fi
-
-#.ideavimrc
-#if [ -f $HOME/.ideavimrc ]
-#then
-#echo "Found $HOME/.ideavimrc"
-#echo "  Renaming to $HOME/.ideavimrc.pre-deploy"
-#mv $HOME/.ideavimrc $HOME/.ideavimrc.pre-deploy
-#else
-#echo ".ideavimrc not found, installing from github..."
-#fi
-
-#.tmux.conf
-#if [ -f $HOME/.tmux.conf ]
-#then
-#echo "Found $HOME/.tmux.conf"
-#echo "  Renaming to $HOME/.tmux.conf.pre-deploy"
-#mv $HOME/.tmux.conf $HOME/.tmux.conf.pre-deploy
-#else
-#echo ".tmux.conf not found, installing from github..."
-#fi
-
-#.doom.d
-#if [ -d $HOME/.doom.d ]
-#then
-#echo "Found $HOME/.doom.d"
-#echo "  Renaming to $HOME/.doom.d.pre-deploy"
-#mv $HOME/.doom.d $HOME/.doom.d.pre-deploy
-#else
-#echo ".doom.d not found, installing from github..."
-#fi
-#
-
-#.emacs.d
-#if [ -d $HOME/.emacs.d ]
-#then
-#echo "Found $HOME/.emacs.d"
-#echo "  Renaming to $HOME/.emacs.d.pre-deploy"
-#mv $HOME/.emacs.d $HOME/.emacs.d.pre-deploy
-#else
-#echo ".emacs.d not found, installing from github..."
-#fi
-
-#.emacs.d.bak
-#if [ -d $HOME/.emacs.d.bak ]
-#then
-#echo "Found $HOME/.emacs.d.bak"
-#echo "  Renaming to $HOME/.emacs.d.bak.pre-deploy"
-#mv $HOME/.emacs.d.bak $HOME/.emacs.d.bak.pre-deploy
-#else
-#echo ".emacs.d.bak not found, installing from github..."
-#fi
-
-#.gitmodules
-#if [ -f $HOME/.gitmodules ]
-#then
-#echo "Found $HOME/.gitmodules"
-#echo "  Renaming to $HOME/.gitmodules.pre-deploy"
-#mv $HOME/.gitmodules $HOME/.gitmodules.pre-deploy
-#else
-#echo ".gitmodules not found, installing from github..."
-#fi
-
-#.home
-#if [ -d $HOME/.home ]
-#then
-#echo "Found $HOME/.home"
-#echo "  Renaming to $HOME/.home.pre-deploy"
-#mv $HOME/.home $HOME/.home.pre-deploy
-#else
-#echo ".home not found, installing from github..."
 #fi
 
 cd $HOME/home
@@ -140,10 +60,9 @@ cd $HOME
 echo "Checking out master branch in $HOME"
 /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
 checkout master .
-
 fi
 
-### REMOVE
+### UNINSTALL
 
 if [[ "$1" == "uninstall" ]]
 then
@@ -164,6 +83,7 @@ git checkout master .
 
 echo "Putting backed up files in their original place prior to"
 echo "installation of this program."
+
 BACKUP_EXTENSION=pre-deploy
 cd $HOME
 rename -v "s/\.$BACKUP_EXTENSION$//" *.$BACKUP_EXTENSION
