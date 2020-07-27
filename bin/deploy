@@ -3,15 +3,18 @@
 ### HELP
 
 #If no argument, display mini-help.
+#
+SCRIPT_HELP_DIRECTORY=deployScripts
+
 if [[ -z $1 ]]
 then
-. ./deployScripts/miniHelp
+. ./$SCRIPT_HELP_DIRECTORY/miniHelp
 fi
 #
 # help page
 if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]
 then
-. ./scripts/help
+. ./$SCRIPT_HELP_DIRECTORY/help
 fi
 
 ### ACTIONS
@@ -34,7 +37,7 @@ cd $HOME
 #fi
 
 cd $HOME/home
-git ls-tree --name-only master >> trackedFiles.txt
+git ls-tree --name-only master > trackedFiles.txt
 cd $HOME
 
 EXTENSION=pre-deploy
@@ -42,7 +45,7 @@ EXTENSION=pre-deploy
 for FILE in $(cat $HOME/home/trackedFiles.txt); do
 	if mv "$HOME/$FILE" "$HOME/$FILE.$EXTENSION"
 	then
-	echo "dis text"
+	echo "How to do nothing when a command is sucessful?"
 	else
 	:	
 	fi
