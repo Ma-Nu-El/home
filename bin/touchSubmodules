@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-mkdir local 1lib 2lib 3lib
-cd 1lib && testSubmodules && cd ../
-cd 2lib && testSubmodules && cd ../
-cd 3lib && testSubmodules && cd ../
-cd ./local && testSubmodules && cd ../
-
