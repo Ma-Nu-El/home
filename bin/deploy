@@ -23,8 +23,9 @@ if [[ "$1" == "install" ]]
 then
 
 #ls -al $HOME > $HOME/auxLs
+#grep "
 #for FILE in $(cat $HOME/auxLs); do
-	#if mv "$HOME/$FILE" "$HOME/$FILE.$EXTENSION"
+	#if mv "$HOME/$FILE" "$HOME/$FILE.$BACKUP_EXTENSION"
 	#if [[ -f  ]] || [[ -d  ]]
 	#'.pre-deploy' extention
 #	then
@@ -57,10 +58,10 @@ cd $HOME/home
 git ls-tree --name-only master > trackedFiles.txt
 cd $HOME
 
-EXTENSION=pre-deploy
+BACKUP_EXTENSION=pre-deploy
 
 for FILE in $(cat $HOME/home/trackedFiles.txt); do
-	if mv "$HOME/$FILE" "$HOME/$FILE.$EXTENSION"
+	if mv "$HOME/$FILE" "$HOME/$FILE.$BACKUP_EXTENSION"
 	then
 	echo "How to do nothing when a command is sucessful?"
 	else
