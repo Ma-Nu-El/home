@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# get the size of a file
+# standarize some bare help?
+ls -lah ./ | grep "$1"
