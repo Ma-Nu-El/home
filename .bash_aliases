@@ -67,7 +67,6 @@ alias 4="clear && pwd && echo '-----' && tree -L 4./ | less"
 alias 5="clear && pwd && echo '-----' && tree -L 5./ | less"
 alias 6="clear && pwd && echo '-----' && tree -L 6./ | less"
 alias 7="clear && pwd && echo '-----' && tree -L 7./ | less"
-alias p='watch -n1 -t "clear && tree -L 1./"'
 alias lagrep='ls -a | grep' # append your simple grep search
 alias ..="cd .."
 alias ..2="cd ../../"
