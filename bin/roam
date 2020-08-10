@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # The purpose of this script is to automate the enabling of graph generation for
 # Doom Emacs Org-roam.
+# Standard bare help system?
 
 
