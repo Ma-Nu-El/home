@@ -11,6 +11,7 @@ then
 echo "This bash script helps you put the content of the current directory"
 echo "into ~/org/auxRoam/ and also the content of that directory into the"
 echo "current directory. For more info type 'roam --help'"
+echo "You can also check commit 2047847 from https://github.com/Ma-Nu-El/home
 fi
 
 if [[ "$1" = "--help" ]]
