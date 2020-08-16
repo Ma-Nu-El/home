@@ -3,4 +3,41 @@
 # Doom Emacs Org-roam.
 # Standard bare help system?
 
+ACTION1=mount
+ACTION2=fetch
 
+if [[ -z $1 ]]
+then
+echo "This bash script helps you put the content of the current directory"
+echo "into ~/org/auxRoam/ and also the content of that directory into the"
+echo "current directory. For more info type 'roam --help'"
+echo "You can also check commit 2047847 from https://github.com/Ma-Nu-El/home
+fi
+
+if [[ "$1" = "--help" ]]
+then
+echo "roam"
+echo "Enable and disable org-roam graph capabilities."
+echo ""
+echo "USAGE"
+echo "    roam OPTIONS"
+echo "OPTIONS"
+echo "    --help"
+echo "Display this page."
+echo ""
+echo "    $ACTION1"
+echo "Add the content of current directory into ~/org/auxRoam/"
+echo ""
+echo "    $ACTION2"
+echo "Add the content of ~/org/auxRoam/ into current directory"
+fi
+
+if [[ "$1" = $ACTION1 ]]
+then
+cp ./* ~/org/auxRoam/
+fi
+
+if [[ "$1" = $ACTION2 ]]
+then
+cp ~/org/auxRoam/* ./
+fi
