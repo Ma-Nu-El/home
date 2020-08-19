@@ -5,39 +5,48 @@
 
 ACTION1=mount
 ACTION2=fetch
+ACTION21=clean
 
 if [[ -z $1 ]]
 then
-echo "This bash script helps you put the content of the current directory"
-echo "into ~/org/auxRoam/ and also the content of that directory into the"
-echo "current directory. For more info type 'roam --help'"
-echo "You can also check commit 2047847 from https://github.com/Ma-Nu-El/home
+   echo "This bash script helps you put the content of the current directory"
+   echo "into ~/org/auxRoam/ and also the content of that directory into the"
+   echo "current directory. For more info type 'roam --help'"
+   echo "You can also check commit 2047847 from https://github.com/Ma-Nu-El/home"
 fi
 
 if [[ "$1" = "--help" ]]
 then
-echo "roam"
-echo "Enable and disable org-roam graph capabilities."
-echo ""
-echo "USAGE"
-echo "    roam OPTIONS"
-echo "OPTIONS"
-echo "    --help"
-echo "Display this page."
-echo ""
-echo "    $ACTION1"
-echo "Add the content of current directory into ~/org/auxRoam/"
-echo ""
-echo "    $ACTION2"
-echo "Add the content of ~/org/auxRoam/ into current directory"
+   echo "roam"
+   echo "Enable and disable org-roam graph capabilities."
+   echo ""
+   echo "USAGE"
+   echo "    roam OPTIONS"
+   echo "OPTIONS"
+   echo "    --help"
+   echo "Display this page."
+   echo ""
+   echo "    $ACTION1"
+   echo "Add the content of current directory into ~/org/auxRoam/"
+   echo ""
+   echo "    $ACTION2"
+   echo "Add the content of ~/org/auxRoam/ into current directory"
+   echo ""
+   echo "If you append '--$ACTION21' to $ACTION2 the script will effectively"
+   echo "remove the content of ~/org/auxRoam after being backed up to its"
+   echo "correspondent directory"
 fi
 
-if [[ "$1" = $ACTION1 ]]
+if [[ "$1" = "$ACTION1" ]]
 then
-cp ./* ~/org/auxRoam/
+   cp ./* ~/org/auxRoam/
 fi
 
-if [[ "$1" = $ACTION2 ]]
+if [[ "$1" = "$ACTION2" ]]
 then
-cp ~/org/auxRoam/* ./
-fi
+   cp ~/org/auxRoam/* ./
+   if [[ "$2" = "--$ACTION21" ]]
+   then
+      rm -rf ~/org/auxRoam/*
+   fi
+   fi
