@@ -77,12 +77,12 @@ alias d="cd ~/Desktop"
 alias E="exit"
 # quick editor
 alias v="vim"
+alias e='emacs -nw' # opens new instance of emacs in the terminal: no GUI
 alias ed="emacs --daemon" # creates default emacs server named 'server'
-alias edn="emacs-daemon-new" # append your emacs daemon name
-alias els="ls -1 /tmp/emacs${UID}"
 alias ec='emacsclient -t' # attach to the default emacs server
+alias edn="emacs-daemon-new" # append your emacs daemon name
+alias els="ls -1 /tmp/emacs${UID}" # get list of running emacs servers
 alias ecs='emacsclient -t -s' # append your server name to be attached to
-alias enw='emacs -nw'
 # tmux
 alias t="tmux"
 alias tn="tmux new-session" # create session with default name
