@@ -30,6 +30,9 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
+;; Added by me
+;; https://stackoverflow.com/questions/11384516/how-to-make-all-org-files-under-a-folder-added-in-agenda-list-automatically
+(setq org-agenda-files (directory-files-recursively "~/org/" "\\.org$")) 
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -58,9 +61,10 @@
         )
   (add-to-list 'org-export-backends 'org)
   )
+;; personal key bindings
 (define-key evil-motion-state-map (kbd "C-z") nil)
 (global-set-key (kbd "\C-cr") 'ispell-region)
-;; roam
+;; roam capabilities
 (setq org-roam-directory "~/org/auxRoam")
 (add-hook 'after-init-hook 'org-roam-mode)
 (require 'org-roam-protocol)
