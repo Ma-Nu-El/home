@@ -75,6 +75,7 @@ alias ..4="cd ../../../../"
 alias h="cd ~"
 alias o="cd ~/org"
 alias n="cd ~/norg"
+alias i="/usr/bin/vi ~/org/inbox.org"
 alias d="cd ~/Desktop"
 alias E="exit"
 # quick editor
