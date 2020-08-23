@@ -73,6 +73,8 @@ alias ..2="cd ../../"
 alias ..3="cd ../../../"
 alias ..4="cd ../../../../"
 alias h="cd ~"
+alias o="cd ~/org"
+alias n="cd ~/norg"
 alias d="cd ~/Desktop"
 alias E="exit"
 # quick editor
