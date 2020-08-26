@@ -7,9 +7,3 @@
 [submodule "org"]
 	path = org
 	url = git@github.com:Ma-Nu-El/org.git
-[submodule "norg"]
-	path = norg
-	url = git@github.com:Ma-Nu-El/norg.git
-[submodule "origin"]
-	path = origin
-	url = git@github.com:Ma-Nu-El/norg.git
