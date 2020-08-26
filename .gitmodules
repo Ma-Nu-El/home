@@ -10,3 +10,6 @@
 [submodule "norg"]
 	path = norg
 	url = git@github.com:Ma-Nu-El/norg.git
+[submodule "origin"]
+	path = origin
+	url = git@github.com:Ma-Nu-El/norg.git
