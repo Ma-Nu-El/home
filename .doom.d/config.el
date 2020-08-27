@@ -72,3 +72,5 @@
 (setq backup-inhibited t)
 ;disable auto save
 (setq auto-save-default nil)
+; https://emacs.stackexchange.com/questions/9709/keep-the-headlines-expanded-in-org-mode
+(setq org-startup-folded t)
