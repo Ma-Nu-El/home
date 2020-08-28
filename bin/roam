@@ -3,16 +3,20 @@
 # Doom Emacs Org-roam.
 # Standard bare help system?
 
+ROAMDIR=~/org/auxRoam
+
 ACTION1=mount
-ACTION2=fetch
-ACTION21=clean
+ACTION2=unmount
+ACTION3=fetch
+ACTION31=clean
 
 if [[ -z $1 ]]
 then
    echo "This bash script helps you put the content of the current directory"
-   echo "into ~/org/auxRoam/ and also the content of that directory into the"
+   echo "into $ROAMDIR and also the content of that directory into the"
    echo "current directory. For more info type 'roam --help'"
    echo "You can also check commit 2047847 from https://github.com/Ma-Nu-El/home"
+   echo "https://github.com/Ma-Nu-El/home/commit/2047847"
 fi
 
 if [[ "$1" = "--help" ]]
@@ -27,26 +31,64 @@ then
    echo "Display this page."
    echo ""
    echo "    $ACTION1"
-   echo "Add the content of current directory into ~/org/auxRoam/"
+   echo "Add the content of current directory into $ROAMDIR"
    echo ""
    echo "    $ACTION2"
-   echo "Add the content of ~/org/auxRoam/ into current directory"
+   echo "Replace files in current directory by their correspondent"
+   echo "parts in $ROAMDIR. Use it once you edited your files and"
+   echo "now you want them back updated."
    echo ""
-   echo "If you append '--$ACTION21' to $ACTION2 the script will effectively"
-   echo "remove the content of ~/org/auxRoam after being backed up to its"
-   echo "correspondent directory"
+   echo "    $ACTION3"
+   echo "Copy the content of $ROAMDIR into current directory."
+   echo "If you append "--$ACTION31" to $ACTION3, do it and also"
+   echo "remove the content of $ROAMDIR after $ACTION3"
 fi
 
+# mount
 if [[ "$1" = "$ACTION1" ]]
 then
-   cp ./* ~/org/auxRoam/
+   cp ./* $ROAMDIR/
 fi
 
 if [[ "$1" = "$ACTION2" ]]
 then
-   cp ~/org/auxRoam/* ./
-   if [[ "$2" = "--$ACTION21" ]]
+
+# get a file with current directory filenames
+for i in *
+do
+	echo "$i" | rev | cut -d/ -f 1 | rev >> LOCALFILES
+done
+
+# get a file with ~/org/auxRoam directory filenames
+for j in $ROAMDIR/*
+do
+	echo "$j" | rev | cut -d/ -f 1 | rev >> ROAMFILES
+done
+
+# find a match and proceed to move files back
+for localfile in $(cat LOCALFILES)
+do
+	for roamfile in $(cat ROAMFILES)
+	do
+		if [ "$localfile" == "$roamfile" ]
+		then
+		rm -rf $localfile
+		cp $ROAMDIR/$roamfile ./
+		rm -rf $ROAMDIR/$roamfile
+		fi
+	done
+done
+
+rm -rf LOCALFILES ROAMFILES
+
+fi
+
+# fetch
+if [[ "$1" = "$ACTION3" ]]
+then
+   cp $ROAMDIR/* ./
+   if [[ "$1" = "--$ACTION31" ]]
    then
-      rm -rf ~/org/auxRoam/*
+       rm $ROAMDIR/*
    fi
-   fi
+fi
