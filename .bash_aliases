@@ -10,6 +10,8 @@ export PS1='\
 ### shopt ###
 shopt -s autocd
 shopt -s cdspell
+### environment variables ###
+#export ORGDIR=~ USE EVAL maybe?
 ### vi ###
 git config --global core.editor "vi"
 export VISUAL=vi
