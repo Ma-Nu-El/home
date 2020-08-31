@@ -86,11 +86,9 @@ fi
 # fetch
 if [[ "$1" = "$ACTION3" ]]
 then
-   echo "fetching..."
    cp $ROAMDIR/* ./
    if [[ "$2" = "--$ACTION31" ]]
    then
-      echo "removing content of $ROAMDIR..."
        rm $ROAMDIR/*
    fi
 fi
