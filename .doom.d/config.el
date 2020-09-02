@@ -66,12 +66,12 @@
 (setq org-log-states-order-reversed t) ; doesn't really work...why?
 (add-to-list 'org-export-backends 'org)
 
-; ### TRACK TODO STATE CHANGE
+; ### TRACK TODO STATE CHANGES
 ; https://orgmode.org/manual/Tracking-TODO-state-changes.html
 ; OrgMode E03S01: Automatic logging of status changes:
 ; https://www.youtube.com/watch?v=R4QSTDco_w8
 (setq org-todo-keywords
-      '((sequence "TODO(t@/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)" "|" "DONE(d@/!)" "CANCELED(c@/!)")))
+      '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)" "|" "DONE(d@/!)" "CANCELED(c@/!)")))
 (setq org-log-done t)
 )
 
