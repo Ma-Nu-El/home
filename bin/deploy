@@ -114,18 +114,22 @@ fi
 
 if [[ "$1" == "encrypt" ]]
 then
-    /usr/bin/tar cf aux$2 $2 # create archive named aux$2 which contains the content of $2
+    tar cf aux$2 $2 # create archive named aux$2 which contains the content of $2
     rm -rf $2 # remove original directory/file
     mv aux$2 $2 # now the archive aux$2 becomes just $2
-    /usr/bin/gpg --symmetric $2 # regular symmetric encryption
+    gpg --symmetric $2 # regular symmetric encryption
     rm -rf $2 # remove unencrypted original archive
     mv $2.gpg $2 # remove '.gpg' extension of encrypted file
 fi
 
 if [[ "$1" == "decrypt" ]]
 then
-/usr/bin/gpg --decrypt $2 > aux$2 # decrypt file to auxiliary file
-rm -rf $2 # remove encrypted file
-mv aux$2 $2 # now the decrypted file is renamed to its correspondent name
-/usr/bin/tar xf $2 # regular archive extraction
+    gpg --decrypt $2 > aux$2 # decrypt file to auxiliary file
+    rm -rf $2 # remove encrypted file
+    mv aux$2 $2 # now the decrypted file is renamed to its correspondent name
+    mkdir $2Aux
+    tar xf $2 -C $2Aux # regular archive extraction
+    rm -rf $2
+    mv $2Aux/* ./
+    rm -rf $2Aux
 fi
