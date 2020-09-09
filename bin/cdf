@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# dotfiles edition
+
+if [[ -z "$1"  ]]
+then
+echo "vim to dotfile of...?"
+echo "cdf = cdf itself"
+echo "b = bash"
+echo "v = vim"
+echo "t = tmux"
+echo "e = ~/.doom.d/config.el"
+echo "e i= ~/.doom.d/init.el"
+echo "example: 'cdf v' is the same as"
+echo "'vim $HOME/.vimrc'"
+fi
+
+if [[ "$1" == "cdf" ]]
+then
+vim $HOME/bin/cdf
+fi
+
+if [[ "$1" == "b" ]]
+then
+vim $HOME/.bash_aliases
+fi
+
+if [[ "$1" == "t" ]]
+then
+vim $HOME/.tmux.conf
+fi
+
+if [[ "$1" == "v" ]]
+then
+vim $HOME/.vimrc
+fi
+
+if [[ "$1" == "e" ]]
+then
+    if [[ "$2" == "i" ]]
+    then
+        vim $HOME/.doom.d/init.el
+    else
+    vim $HOME/.doom.d/config.el
+    fi
+fi
