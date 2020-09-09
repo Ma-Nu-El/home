@@ -105,38 +105,11 @@ alias fire="firefox --private-window >/dev/null 2>/dev/null &"
 ## misc aliases
 alias chmodx="chmod +x"
 alias now="date && cal"
+alias de="deploy encrypt"
+alias dd="deploy decrypt"
 echo "loaded aliases"
 ### FUNCTIONS ###
 echo "loading functions"
-# dotfiles edition
-cdf(){
-	if [[ -z "$1"  ]]
-	then
-		echo "vim to dotfile of...?"
-		echo "b = bash"
-		echo "v = vim"
-		echo "t = tmux"
-		echo "e = doom emacs"
-		echo "example: 'cdf v' is the same as"
-		echo "'vim $HOME/.vimrc'"
-	fi	
-	if [[ "$1" == "b" ]] 
-	then
-		vim $HOME/.bash_aliases
-	fi
-	if [[ "$1" == "t" ]]
-	then
-		vim $HOME/.tmux.conf
-	fi
-	if [[ "$1" == "v" ]]
-	then
-		vim $HOME/.vimrc
-	fi
-	if [[ "$1" == "e" ]]
-	then
-		vim $HOME/.doom.d/config.el
-	fi
-}
 # git clone from @Ma-Nu-El in github.
 manuclone(){
 	if [[ -z "$1"  ]]
