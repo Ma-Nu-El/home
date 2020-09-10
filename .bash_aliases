@@ -26,7 +26,6 @@ alias home="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME"
 alias homest="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME status"
 alias homegraph="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME log --all --decorate --oneline --graph"
 alias homels="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME ls-tree --name-only master"
-#alias gitt='/usr/bin/git --git-dir=$HOME/.git/ --work-tree=$HOME'
 alias ginit='git init'
 alias gadd='git add'
 alias gst="git status"
@@ -52,12 +51,7 @@ alias lah="ls -lah"
 alias pa="clear && pwd && echo '-----' && ls"
 alias paa="clear && pwd && echo '-----' && ls -a"
 alias lagrep='ls -a | grep' # append your simple grep search
-# make a function for this
-alias ..="cd .."
-alias ..2="cd ../../"
-alias ..3="cd ../../../"
-alias ..4="cd ../../../../"
-# proper aliases
+# quick navigation
 alias hh="cd ~"
 alias o="cd ~/org"
 alias u="cd ~/org/uni"
@@ -84,12 +78,12 @@ alias tls="tmux ls" # list sessions # <prefix> s
 alias ta="tmux attach-session" # attach to last session
 alias tas="tmux attach-session -t" # append your session name to be attached to
 #alias tpls="ls ~/.tmuxp/"
-alias fire="firefox --private-window >/dev/null 2>/dev/null &"
 ## misc aliases
 alias chmodx="chmod +x"
 alias now="date && cal"
 alias de="deploy encrypt"
 alias dd="deploy decrypt"
+alias fire="firefox --private-window >/dev/null 2>/dev/null &"
 echo "loaded aliases"
 ### FUNCTIONS ###
 echo "loading functions"
