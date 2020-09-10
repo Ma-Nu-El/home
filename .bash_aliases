@@ -1,4 +1,5 @@
 #!/usr/share/env bash
+# TODO directory history?
 echo "loading .bash_aliases"
 ### promt ###
 export PS1='\
@@ -29,23 +30,17 @@ alias homels="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME ls-tree --na
 alias ginit='git init'
 alias gadd='git add'
 alias gst="git status"
-alias gca="git commit -a"
+alias gcm="git commit -m"
 alias gcam="git commit -am"
 alias gpsh="git push"
 alias gpll="git pull"
-alias gsm="git submodule"
-alias gsmfr="git submodule foreach --recursive"
 alias grv="git remote -v"
 alias graph="git log --all --decorate --oneline --graph"
 alias giff="git diff"
-alias gt="git ls-tree -r --name-only"
-alias gth="git ls-tree -r --name-only HEAD"
-alias gtm="git ls-tree -r --name-only master"
-alias ct="config ls-tree -r --name-only"
-alias cth="config ls-tree -r --name-only HEAD"
-alias ctm="config ls-tree -r --name-only master"
 alias gch="git checkout"
 alias gchm="git checkout master"
+alias gth="git ls-tree -r --name-only HEAD"
+alias gtm="git ls-tree -r --name-only master"
 # shell interaction
 alias c='clear'
 alias cnd='clear &&' 
@@ -56,32 +51,20 @@ alias aa="ls -a"
 alias lah="ls -lah"
 alias pa="clear && pwd && echo '-----' && ls"
 alias paa="clear && pwd && echo '-----' && ls -a"
-alias pt="clear && pwd && echo '-----' && tree ./"
-alias pt1="clear && pwd && echo '-----' && tree -L 1./"
-alias pt2="clear && pwd && echo '-----' && tree -L 2./"
-alias pt3="clear && pwd && echo '-----' && tree -L 3./"
-alias pt4="clear && pwd && echo '-----' && tree -L 4./"
-alias 0="clear && pwd && echo '-----' && tree ./ | less"
-alias 1="clear && pwd && echo '-----' && tree -L 1./ | less"
-alias 2="clear && pwd && echo '-----' && tree -L 2./ | less"
-alias 3="clear && pwd && echo '-----' && tree -L 3./ | less"
-alias 4="clear && pwd && echo '-----' && tree -L 4./ | less"
-alias 5="clear && pwd && echo '-----' && tree -L 5./ | less"
-alias 6="clear && pwd && echo '-----' && tree -L 6./ | less"
-alias 7="clear && pwd && echo '-----' && tree -L 7./ | less"
 alias lagrep='ls -a | grep' # append your simple grep search
+# make a function for this
 alias ..="cd .."
 alias ..2="cd ../../"
 alias ..3="cd ../../../"
 alias ..4="cd ../../../../"
-alias h="cd ~"
-alias d="cd ~/Desktop"
+# proper aliases
+alias hh="cd ~"
 alias o="cd ~/org"
 alias u="cd ~/org/uni"
 alias n="cd ~/norg"
 alias b="cd ~/bin"
 alias i="/usr/bin/vi ~/org/inbox.org"
-alias d="cd ~/Desktop"
+alias desk="cd ~/Desktop"
 alias r="cd ~/org/auxRoam"
 alias E="exit"
 # quick editor
