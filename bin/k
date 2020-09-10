@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# go up N levels in directory hierarchy.
+
+if [[ -z $1 ]]
+then
+    echo "Go up N levels"
+    echo "example: 'k 9' = go up 9 levels in file hierarchy."
+fi
+
+while [ $1 != 0 ]
+do
+    # success up to here
+done

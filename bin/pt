@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# display tree of directories in 'less'
+if [[ -z "$1" ]]
+then
+echo "Display tree of directories with 'n' levels of depth."
+echo "example: 'pt 3' = display tree with 3 levels of depth."
+fi
+
+for i in $1
+do
+    tree -L $1 | less
+done
