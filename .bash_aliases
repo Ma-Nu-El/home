@@ -52,14 +52,12 @@ alias pa="clear && pwd && echo '-----' && ls"
 alias paa="clear && pwd && echo '-----' && ls -a"
 alias lagrep='ls -a | grep' # append your simple grep search
 # quick navigation
-alias hh="cd ~"
-alias o="cd ~/org"
 alias u="cd ~/org/uni"
 alias n="cd ~/norg"
 alias b="cd ~/bin"
 alias i="/usr/bin/vi ~/org/inbox.org"
-alias desk="cd ~/Desktop"
-alias r="cd ~/org/auxRoam"
+alias D="cd ~/Desktop"
+alias DD="cd ~/Downloads"
 alias E="exit"
 # quick editor
 alias v="vim"
@@ -79,6 +77,7 @@ alias ta="tmux attach-session" # attach to last session
 alias tas="tmux attach-session -t" # append your session name to be attached to
 #alias tpls="ls ~/.tmuxp/"
 ## misc aliases
+alias open="xdg-open &>/dev/null"
 alias chmodx="chmod +x"
 alias now="date && cal"
 alias de="deploy encrypt"
@@ -98,6 +97,67 @@ manuclone(){
 	fi	
 }
 echo "loaded functions"
+
+# quick roam 
+r(){
+pushd .
+cd ~/org/auxRoam
+}
+
+#quick home and other useful defaults
+h(){
+if [ -z $1 ]
+then
+	if [[ "$1" = "-h" ]] || [[ "$1" = "--help" ]] # doesn't work?
+	then
+		echo "h 1 =~/Desktop"
+		echo "h 2 =~/Downloads"
+		echo "h 3 =~/Documents"
+		echo "h 4 =~/Pictures"
+		echo "h 5 =~/Videos"
+	fi	
+    cd ~
+fi
+
+#improve with case?
+
+if [ "$1" = "1" ]
+then
+    cd ~/Desktop
+fi
+
+if [ "$1" = "2" ]
+then
+    cd ~/Downloads
+fi
+
+if [ "$1" = "3" ]
+then
+    cd ~/Documents
+fi
+
+if [ "$1" = "4" ]
+then
+    cd ~/Pictures
+fi
+
+if [ "$1" = "5" ]
+then
+    cd ~/Videos
+fi
+
+}
+
+# smarter org
+# https://unix.stackexchange.com/questions/6435/how-to-check-if-pwd-is-a-subdirectory-of-a-given-path
+o(){
+if [[ "$PWD" = "$HOME/org" ]]
+then
+cd org
+else
+cd ~/org
+fi
+}
 
 ### MISC
 # add ~/.emacs.d/bin to $PATH
