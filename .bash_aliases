@@ -53,7 +53,6 @@ alias paa="clear && pwd && echo '-----' && ls -a"
 alias lagrep='ls -a | grep' # append your simple grep search
 # quick navigation
 alias u="cd ~/org/uni"
-alias n="cd ~/norg"
 alias b="cd ~/bin"
 alias i="/usr/bin/vi ~/org/inbox.org"
 alias D="cd ~/Desktop"
@@ -157,6 +156,18 @@ cd org
 else
 cd ~/org
 fi
+}
+
+# smarter norg
+n(){
+
+if [[ "$PWD" = "$HOME/norg" ]]
+then
+cd norg
+else
+cd ~/norg
+fi
+
 }
 
 ### MISC
