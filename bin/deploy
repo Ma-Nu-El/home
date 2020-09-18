@@ -8,13 +8,13 @@ SCRIPT_HELP_DIRECTORY=deployScripts
 
 if [[ -z $1 ]]
 then
-. ./$SCRIPT_HELP_DIRECTORY/miniHelp
+    . ./$SCRIPT_HELP_DIRECTORY/miniHelp
 fi
 #
 # help page
 if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]
 then
-. ./$SCRIPT_HELP_DIRECTORY/help
+    . ./$SCRIPT_HELP_DIRECTORY/help
 fi
 
 ### ACTIONS
@@ -39,7 +39,7 @@ then
 #	fi
 #done
 
-cd $HOME
+    cd $HOME
 
 ### BACKUP
 
@@ -54,81 +54,94 @@ cd $HOME
 #echo ".bash_aliases not found, installing from github..."
 #fi
 
-cd $HOME/home
-git ls-tree --name-only master > trackedFiles.txt
-cd $HOME
+    cd $HOME/home
+    git ls-tree --name-only master > trackedFiles.txt
+    cd $HOME
 
-BACKUP_EXTENSION=pre-deploy
+    BACKUP_EXTENSION=pre-deploy
 
-for FILE in $(cat $HOME/home/trackedFiles.txt); do
-	if mv "$HOME/$FILE" "$HOME/$FILE.$BACKUP_EXTENSION"
-	then
-	echo "How to do nothing when a command is sucessful?"
-	else
-	:	
-	fi
-done
+    for FILE in $(cat $HOME/home/trackedFiles.txt); do
+    	if mv "$HOME/$FILE" "$HOME/$FILE.$BACKUP_EXTENSION"
+    	then
+    	    echo "How to do nothing when a command is sucessful?"
+    	else
+    	    :	
+    	fi
+    done
 
 ### IF BACKUP SUCCESS THEN DEPLOY WORK TREE
 
-echo "Converting ~/home repo into"
-echo "~/.home bare repo"
-mv $HOME/home/.git $HOME/.home
-rm -fr $HOME/home
-cd $HOME/.home
-git config --bool core.bare true
-cd $HOME
-echo "Checking out master branch in $HOME"
-/usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
-checkout master .
+    echo "Converting ~/home repo into"
+    echo "~/.home bare repo"
+    mv $HOME/home/.git $HOME/.home
+    rm -fr $HOME/home
+    cd $HOME/.home
+    git config --bool core.bare true
+    cd $HOME
+    echo "Checking out master branch in $HOME"
+    /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
+    checkout master .
 fi
-
+    
 ### UNINSTALL
 
 if [[ "$1" == "uninstall" ]]
 then
-cd $HOME
-echo "Removing dotfiles and submodules..."
-/usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
-rm -rf .
-echo "Creating ~/home directory"
-mkdir $HOME/home
-mv $HOME/.home $HOME/home/.git
-rm -rf $HOME/.home
-echo "Converting ~/home/.git into a non-bare git repo"
-cd $HOME/home/.git
-git config --bool core.bare false
-cd $HOME/home
-echo "Checking out master branch in $HOME/home"
-git checkout master .
+    cd $HOME
+    echo "Removing dotfiles and submodules..."
+    /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
+    rm -rf .
+    echo "Creating ~/home directory"
+    mkdir $HOME/home
+    mv $HOME/.home $HOME/home/.git
+    rm -rf $HOME/.home
+    echo "Converting ~/home/.git into a non-bare git repo"
+    cd $HOME/home/.git
+    git config --bool core.bare false
+    cd $HOME/home
+    echo "Checking out master branch in $HOME/home"
+    git checkout master .
+    echo "Putting backed up files in their original place prior to"
+    echo "installation of this program."
 
-echo "Putting backed up files in their original place prior to"
-echo "installation of this program."
-
-BACKUP_EXTENSION=pre-deploy
-cd $HOME
-rename -v "s/\.$BACKUP_EXTENSION$//" *.$BACKUP_EXTENSION
+    BACKUP_EXTENSION=pre-deploy
+    cd $HOME
+    rename -v "s/\.$BACKUP_EXTENSION$//" *.$BACKUP_EXTENSION
 fi
 
 ### ENCRYPT AND DECRYPT
 
 if [[ "$1" == "encrypt" ]]
 then
-    tar cf $2.tar $2
-    gpg --symmetric $2.tar
-    # $2.tar.gpg is created
-    rm -rf $2.tar # remove tar that is not yet encrypted
-    # So you end up with encrypted and original versions
-    # discarting the unencrypted tar 
-    mv $2.tar.gpg $2.yup 
+    if tar cf aux$2 $2
+    then
+        if gpg --symmetric aux$2 # if archive and gpg success
+        then
+            rm -rf $2 # remove original
+            # $2.tar.gpg is created
+            rm -rf aux$2 # remove tar that is not yet encrypted
+            # So you end up with encrypted and original versions
+            # discarting the unencrypted tar 
+            mv aux$2.gpg $2
+        else
+            exit
+        fi
+    else
+        exit
+    fi
 fi
 
 if [[ "$1" == "decrypt" ]]
 then
-    gpg --decrypt $2 > decrypted$2 # decrypt file to auxiliary file
-    mkdir aux$2 # just so tar xf can extract to an archive
-    tar xf decrypted$2 -C aux$2 # extract content of decrypted into aux
-    rm -rf decrypted$2 # remove decrypted tar archive
-    mv aux$2/* ./ # mv content of extrated archive one level up
-    rm -rf aux$2 # rm the extra extracted archive
+    if gpg --decrypt $2 > decrypted$2 # decrypt file to auxiliary file
+    then
+        rm -rf $2
+        mkdir aux$2 # just so tar xf can extract to an archive
+        tar xf decrypted$2 -C aux$2 # extract content of decrypted into aux
+        rm -rf decrypted$2 # remove decrypted tar archive
+        mv aux$2/* ./ # mv content of extrated archive one level up
+        rm -rf aux$2 # rm the extra extracted archive
+    else
+        exit
+    fi
 fi
