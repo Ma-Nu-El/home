@@ -137,11 +137,16 @@ then
     then
         rm -rf $2
         mkdir aux$2 # just so tar xf can extract to an archive
-        tar xf decrypted$2 -C aux$2 # extract content of decrypted into aux
-        rm -rf decrypted$2 # remove decrypted tar archive
-        mv aux$2/* ./ # mv content of extrated archive one level up
-        rm -rf aux$2 # rm the extra extracted archive
+        if tar xf decrypted$2 -C aux$2 # extract content of decrypted into aux
+        then
+            rm -rf decrypted$2 # remove decrypted tar archive
+            mv aux$2/* ./ # mv content of extrated archive one level up
+            rm -rf aux$2 # rm the extra extracted archive
+        else
+            exit
+        fi
     else
+            rm -rf aux$2 # remove the extra directory if tar xf fails (10 lines above)
         exit
     fi
 fi
