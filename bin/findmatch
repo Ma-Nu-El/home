@@ -6,25 +6,51 @@
 # findmatch DIR1 DIR2
 #
 # get a file with first directory filenames
-for i in $1/*
-do
-    echo "$i" | rev | cut -d/ -f 1 | rev >> ./localfiles
-done
+#
 
-# get a file with second directory filenames
-for j in $2/*
-do
-    echo "$j" | rev | cut -d/ -f 1 | rev >> ./remotefiles
-done
+### HELP ###
 
-# find a match and write to STDOUT
-for localfile in $(cat ./localfiles)
-do
-    for roamfile in $(cat ./remotefiles)
-    do
-    if [ "$localfile" == "$roamfile" ]
-    then
-        echo "$localfile"
-        fi
-        done
-done
+if [[ -z $1 ]]
+then
+echo "findmatch DIR1 DIR2"
+echo ""
+echo "If there are files that have the same filename between"
+echo "DIR1 and DIR2, display the coincidences."
+echo "Note: this script doesn't consider the content of the "
+echo "the files, just the file's name."
+fi
+
+### ACTUAL HELP ###
+
+if [[ -d $1 ]] && [[ -d $2 ]]
+then
+   # get a file with first directory filenames
+   for i in $1/*
+   do
+       echo "$i" | rev | cut -d/ -f 1 | rev >> ./localfiles
+   done
+
+   # get a file with second directory filenames
+   for j in $2/*
+   do
+       echo "$j" | rev | cut -d/ -f 1 | rev >> ./remotefiles
+   done
+
+   # find a match and write to STDOUT
+   for localfile in $(cat ./localfiles)
+   do
+       for roamfile in $(cat ./remotefiles)
+       do
+           if [ "$localfile" == "$roamfile" ]
+           then
+               echo "$localfile"
+           fi
+       done
+   done
+
+   rm -rf ./localfiles
+   rm -rf ./remotefiles
+
+else
+    exit
+fi
