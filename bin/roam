@@ -53,33 +53,33 @@ fi
 if [[ "$1" = "$ACTION2" ]]
 then
 
-# get a file with current directory filenames
-for i in *
-do
-	echo "$i" | rev | cut -d/ -f 1 | rev >> LOCALFILES
-done
+   # get a file with current directory filenames
+   for i in *
+   do
+       echo "$i" | rev | cut -d/ -f 1 | rev >> LOCALFILES
+   done
 
-# get a file with ~/org/auxRoam directory filenames
-for j in $ROAMDIR/*
-do
-	echo "$j" | rev | cut -d/ -f 1 | rev >> ROAMFILES
-done
+   # get a file with ~/org/auxRoam directory filenames
+   for j in $ROAMDIR/*
+   do
+       echo "$j" | rev | cut -d/ -f 1 | rev >> ROAMFILES
+   done
 
-# find a match and proceed to move files back
-for localfile in $(cat LOCALFILES)
-do
-	for roamfile in $(cat ROAMFILES)
-	do
-		if [ "$localfile" == "$roamfile" ]
-		then
-		rm -rf $localfile
-		cp $ROAMDIR/$roamfile ./
-		rm -rf $ROAMDIR/$roamfile
-		fi
-	done
-done
-
-rm -rf LOCALFILES ROAMFILES
+   # find a match and proceed to move files back
+   for localfile in $(cat LOCALFILES)
+   do
+       for roamfile in $(cat ROAMFILES)
+       do
+           if [ "$localfile" == "$roamfile" ]
+           then
+              rm -rf $localfile
+              cp $ROAMDIR/$roamfile ./
+              rm -rf $ROAMDIR/$roamfile
+           fi
+       done
+   done
+   
+   rm -rf LOCALFILES ROAMFILES
 
 fi
 
