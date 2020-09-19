@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# This script will find matches between two directories and
+# write the matches to standard output
+#
+# Syntax
+# findmatch DIR1 DIR2
+#
+# get a file with first directory filenames
+for i in $1/*
+do
+    echo "$i" | rev | cut -d/ -f 1 | rev >> ./localfiles
+done
+
+# get a file with second directory filenames
+for j in $2/*
+do
+    echo "$j" | rev | cut -d/ -f 1 | rev >> ./remotefiles
+done
+
+# find a match and write to STDOUT
+for localfile in $(cat ./localfiles)
+do
+    for roamfile in $(cat ./remotefiles)
+    do
+    if [ "$localfile" == "$roamfile" ]
+    then
+        echo "$localfile"
+        fi
+        done
+done
