@@ -58,6 +58,12 @@ alias i="/usr/bin/vi ~/org/inbox.org"
 alias D="cd ~/Desktop"
 alias DD="cd ~/Downloads"
 alias E="exit"
+alias h="cd ~"
+alias h1="cd ~/Desktop"
+alias h2="cd ~/Downloads"
+alias h3="cd ~/Documents"
+alias h4="cd ~/Pictures"
+alias h5="cd ~/Videos"
 # quick editor
 alias v="vim"
 alias e='emacs -nw' # opens new instance of emacs in the terminal: no GUI
@@ -107,49 +113,7 @@ pushd .
 cd ~/org/auxRoam
 }
 
-#quick home and other useful defaults
-h(){
-if [ -z $1 ]
-then
-	if [[ "$1" = "-h" ]] || [[ "$1" = "--help" ]] # doesn't work?
-	then
-		echo "h 1 =~/Desktop"
-		echo "h 2 =~/Downloads"
-		echo "h 3 =~/Documents"
-		echo "h 4 =~/Pictures"
-		echo "h 5 =~/Videos"
-	fi	
-    cd ~
-fi
-
-#improve with case?
-
-if [ "$1" = "1" ]
-then
-    cd ~/Desktop
-fi
-
-if [ "$1" = "2" ]
-then
-    cd ~/Downloads
-fi
-
-if [ "$1" = "3" ]
-then
-    cd ~/Documents
-fi
-
-if [ "$1" = "4" ]
-then
-    cd ~/Pictures
-fi
-
-if [ "$1" = "5" ]
-then
-    cd ~/Videos
-fi
-
-}
+#quick useful defaults
 
 # smarter org
 # https://unix.stackexchange.com/questions/6435/how-to-check-if-pwd-is-a-subdirectory-of-a-given-path
