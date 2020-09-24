@@ -85,6 +85,7 @@ alias tas="tmux attach-session -t" # append your session name to be attached to
 alias match="findmatch"
 alias X="command -v"
 alias R="ranger"
+alias V="sxiv -to"
 alias ptt="tree | less"
 alias open="xdg-open &>/dev/null"
 alias openwith="mimeopen -a"
