@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # save history interactively
 # rely on popd, pushd and dirs!
-# functions:
+# 
+# FUNCTIONS:
+# 
 # save dir by input
 # delete dir by input
 # go to dir using numbers
