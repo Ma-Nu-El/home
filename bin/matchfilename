@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script will find matches between two directories and
+# This script will find filename matches between two directories and
 # write the matches to standard output
 #
 # Syntax
@@ -12,7 +12,7 @@
 
 if [[ -z $1 ]]
 then
-echo "findmatch DIR1 DIR2"
+echo "matchfilename DIR1 DIR2"
 echo ""
 echo "If there are files that have the same filename between"
 echo "DIR1 and DIR2, display the coincidences."

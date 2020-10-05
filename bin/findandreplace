@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+#Find and replace within directory recursively
+# https://stackoverflow.com/questions/1583219/how-to-do-a-recursive-find-replace-of-a-string-with-awk-or-sed
+#Exclude dirs
+# https://stackoverflow.com/questions/4210042/how-to-exclude-a-directory-in-find-command
+#extra
+# https://superuser.com/questions/428493/how-can-i-do-a-recursive-find-and-replace-from-the-command-line
+#
+#Function
+#
+#find . -type d \( -name dir2 -o -name dir3 \) -prune -o -type f -print0 | xargs -0 sed -i 's/foo/bar/Ig'
