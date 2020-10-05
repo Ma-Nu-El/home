@@ -82,12 +82,12 @@ alias ta="tmux attach-session" # attach to last session
 alias tas="tmux attach-session -t" # append your session name to be attached to
 #alias tpls="ls ~/.tmuxp/"
 ## misc aliases
-alias match="findmatch"
+alias match="matchfilename"
 alias X="command -v"
 alias R="ranger"
 alias V="sxiv -to"
 alias ptt="tree | less"
-alias open="xdg-open &>/dev/null"
+alias O="xdg-open &>/dev/null"
 alias openwith="mimeopen -a"
 alias chmodx="chmod +x"
 alias now="date && cal"
