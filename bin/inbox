@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# fetch the content of ~/org/inbox.org
+
+echo "Fetch the content of ~/org/inbox.org"
+echo "Type 'inbox --help' for more info"
+
+if [[ "$1" = "fetch" ]]
+	then
+	cat ~/org/inbox.org
+	if [[ "$2" = "--clean" ]]
+		then
+		echo "" > ~/org/inbox.org
+	fi
+fi
