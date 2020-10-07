@@ -94,6 +94,7 @@ alias now="date && cal"
 alias de="deploy encrypt"
 alias dd="deploy decrypt"
 alias fire="firefox --private-window >/dev/null 2>/dev/null &"
+alias ii="inbox fetch --clean >> *inbox.org"
 echo "loaded aliases"
 ### FUNCTIONS ###
 echo "loading functions"
