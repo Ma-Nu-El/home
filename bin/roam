@@ -5,6 +5,7 @@
 
 ROAMDIR=~/org/auxRoam
 
+ACTION0=dummy
 ACTION1=mount
 ACTION2=unmount
 ACTION3=fetch
@@ -90,5 +91,23 @@ then
    if [[ "$2" = "--$ACTION31" ]]
    then
        rm $ROAMDIR/*
+   fi
+fi
+
+# dummy
+# just because 
+
+if [[ "$1" = "$ACTION0" ]]
+then
+   if [ ! -d ~/org/auxRoam/ ]
+   then
+      mkdir ~/org/auxRoam
+   else
+       if [ ! -f ~/org/auxRoam/.dummy ]
+       then
+          touch ~/org/auxRoam/.dummy
+       else
+           :
+       fi
    fi
 fi
