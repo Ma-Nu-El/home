@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+#
+#
+# %s/old/new/gc recursively?
+# - https://stackoverflow.com/questions/366980/what-are-the-differences-between-perl-python-awk-and-sed
+# - https://stackoverflow.com/questions/14229377/when-should-i-use-sed-and-when-should-i-use-awk
+# - - http://sed.sourceforge.net/sed1line.txt
 
 #Find and replace within directory recursively
 # https://stackoverflow.com/questions/1583219/how-to-do-a-recursive-find-replace-of-a-string-with-awk-or-sed
