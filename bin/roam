@@ -41,7 +41,7 @@ then
    echo "    $ACTION3"
    echo "Copy the content of $ROAMDIR into current directory."
    echo "If you append "--$ACTION31" to $ACTION3, do it and also"
-   echo "remove the content of $ROAMDIR after $ACTION3"
+   echo "remove the content of $ROAMDIR after $ACTION3."
 fi
 
 # mount
