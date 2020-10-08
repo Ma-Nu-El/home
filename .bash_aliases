@@ -83,6 +83,7 @@ alias ta="tmux attach-session" # attach to last session
 alias tas="tmux attach-session -t" # append your session name to be attached to
 #alias tpls="ls ~/.tmuxp/"
 ## misc aliases
+alias hh="echo 'https://github.com/Ma-Nu-El'"
 alias match="matchfilename"
 alias x="command -v"
 alias X="command -V"
