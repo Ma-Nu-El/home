@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 # fetch the content of ~/org/inbox.org
 
-echo "Fetch the content of ~/org/inbox.org"
+
+if [ -z "$1" ]
+	then
+	echo "Fetch the content of ~/org/inbox.org"
+fi
 
 if [[ "$1" = "fetch" ]]
 	then
