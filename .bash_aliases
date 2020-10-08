@@ -23,7 +23,7 @@ echo "enabled Bash built-ins"
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 ### home bare repo ###
 alias home="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME"
-alias homest="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME status"
+alias he="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME status" # same idea as 'te'
 alias homegraph="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME log --all --decorate --oneline --graph"
 alias homels="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME ls-tree --name-only master"
 alias ginit='git init'
@@ -85,13 +85,13 @@ alias tas="tmux attach-session -t" # append your session name to be attached to
 ## misc aliases
 alias hh="echo 'https://github.com/Ma-Nu-El'"
 alias match="matchfilename"
-alias x="command -v"
-alias X="command -V"
+alias x="command -v " # last space to enable post alias expansion
+alias X="command -V " # last space to enable post alias expansion
 alias R="ranger"
 alias V="sxiv -to"
 alias ptt="tree | less"
 alias O="xdg-open &>/dev/null"
-alias openwith="mimeopen -a"
+alias openwith="mimeopen -a " # last space to enable post alias expansion
 alias chmodx="chmod +x"
 alias now="date && cal"
 alias de="deploy encrypt"
@@ -123,7 +123,7 @@ cd ~/org/auxRoam
 
 # smarter org
 # https://unix.stackexchange.com/questions/6435/how-to-check-if-pwd-is-a-subdirectory-of-a-given-path
-o(){
+org(){
 if [[ "$PWD" = "$HOME/org" ]]
 then
 cd org
@@ -133,7 +133,7 @@ fi
 }
 
 # smarter norg
-n(){
+norg(){
 
 if [[ "$PWD" = "$HOME/norg" ]]
 then
