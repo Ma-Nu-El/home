@@ -28,7 +28,8 @@ alias homegraph="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME log --all
 alias homels="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME ls-tree --name-only master"
 alias ginit='git init'
 alias gadd='git add'
-alias gst="git status"
+#alias gst="git status" # too much load on right pinky
+alias te="git status"
 alias gcm="git commit -m"
 alias gcam="git commit -am"
 alias gpsh="git push"
