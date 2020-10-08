@@ -2,7 +2,6 @@
 # fetch the content of ~/org/inbox.org
 
 echo "Fetch the content of ~/org/inbox.org"
-echo "Type 'inbox --help' for more info"
 
 if [[ "$1" = "fetch" ]]
 	then
