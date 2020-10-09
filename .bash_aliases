@@ -85,13 +85,13 @@ alias tas="tmux attach-session -t" # append your session name to be attached to
 ## misc aliases
 alias hh="echo 'https://github.com/Ma-Nu-El'"
 alias match="matchfilename"
-alias x="command -v " # last space to enable post alias expansion
-alias X="command -V " # last space to enable post alias expansion
+alias x="command -v" 
+alias X="command -V"
 alias R="ranger"
 alias V="sxiv -to"
 alias ptt="tree | less"
 alias O="xdg-open &>/dev/null"
-alias openwith="mimeopen -a " # last space to enable post alias expansion
+alias openwith="mimeopen -a"
 alias chmodx="chmod +x"
 alias now="date && cal"
 alias de="deploy encrypt"
@@ -116,7 +116,7 @@ echo "loaded functions"
 # quick roam 
 r(){
 pushd .
-cd ~/org/auxRoam
+~/org/auxRoam
 }
 
 #quick useful defaults
