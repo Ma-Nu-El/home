@@ -132,6 +132,12 @@ then
 fi
 
 if [[ "$1" == "decrypt" ]]
+   #DEBUG: this script is creating an empty file name 'decrypted'
+   #when
+   #'dd ^C'
+   #OBJ: disable this effect so when
+   #'dd ^C'
+   # the script will simply exit without leaving empty useless files behind
 then
     if gpg --decrypt $2 > decrypted$2 # decrypt file to auxiliary file
     then
@@ -147,6 +153,5 @@ then
         fi
     else
         rm -rf decrypted$2
-        exit
     fi
 fi
