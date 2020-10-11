@@ -53,6 +53,7 @@ alias pa="clear && pwd && echo '-----' && ls"
 alias paa="clear && pwd && echo '-----' && ls -a"
 alias lagrep='ls -a | grep' # append your simple grep search
 # quick navigation
+alias gg="cd && org && org"
 alias u="~/org/uni"
 alias b="~/bin"
 alias i="/usr/bin/vi ~/org/inbox.org"
