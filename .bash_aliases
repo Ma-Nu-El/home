@@ -82,6 +82,7 @@ alias tks="tmux kill-session -t" # append your session name to be killed
 alias tls="tmux ls" # list sessions # <prefix> s
 alias ta="tmux attach-session" # attach to last session
 alias tas="tmux attach-session -t" # append your session name to be attached to
+alias tmupdate="git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm" # install packages on fresh OS
 #alias tpls="ls ~/.tmuxp/"
 ## misc aliases
 alias hh="echo 'https://github.com/Ma-Nu-El'"
