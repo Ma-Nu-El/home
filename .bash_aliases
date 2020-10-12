@@ -155,4 +155,3 @@ export PATH=~/.emacs.d/bin:$PATH
 #https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path
 #if [ -z "${PATH-}" ]; then export PATH=/usr/local/bin:/usr/bin:/bin; fi
 echo "loaded .bash_aliases"
-
