@@ -99,6 +99,7 @@ alias now="date && cal"
 alias de="deploy encrypt"
 alias dd="deploy decrypt"
 alias fire="firefox --private-window >/dev/null 2>/dev/null &"
+alias rr="rm -rf ~/org/auxRoam && roam dummy"
 echo "loaded aliases"
 ### FUNCTIONS ###
 echo "loading functions"

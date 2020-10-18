@@ -99,15 +99,6 @@ fi
 
 if [[ "$1" = "$ACTION0" ]]
 then
-   if [ ! -d ~/org/auxRoam/ ]
-   then
-      mkdir ~/org/auxRoam
-   else
-       if [ ! -f ~/org/auxRoam/.dummy ]
-       then
-          touch ~/org/auxRoam/.dummy
-       else
-           :
-       fi
-   fi
+   mkdir ~/org/auxRoam
+   touch ~/org/auxRoam/.dummy
 fi
