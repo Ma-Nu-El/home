@@ -108,7 +108,7 @@ manuclone(){
 	if [[ -z "$1"  ]]
 	then
 		echo "example: 'manuclone foo bar' is the same as"
-		echo "'git clone git@github..Nu-El/foo bar'"
+		echo "'git clone git@github.com:Ma-Nu-El/foo bar'"
 	else
 	git clone git@github.com:Ma-Nu-El/$1 
 	fi	
