@@ -55,10 +55,12 @@ alias lagrep='ls -a | grep' # append your simple grep search
 # inbox
 alias i="/usr/bin/vi ~/org/inbox.org"
 alias ii="inbox fetch --clean >> *inbox.org"
+alias cati="cat ~/org/inbox.org" 
 # quick navigation
 alias gg="cd && org && org"
 alias uni="~/org/uni"
 alias bin="~/bin"
+alias drive="~/myDrive"
 alias E="exit"
 alias h="~"
 alias h1="~/Desktop"
