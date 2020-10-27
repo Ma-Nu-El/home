@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# copy the content of a file to clipboard
+# https://askubuntu.com/questions/210413/what-is-the-command-line-equivalent-of-copying-a-file-to-clipboard
+cat $1|xclip -i -selection clipboard

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# shell script
+# export org files to different formats using the
+# export capabilities of emacs
+# emacs should be invoked non-interactively
+# aka 'emacs batch mode'
+
+# for the moment, I'm interested in 
+# org2html
+# org2org 

@@ -39,9 +39,9 @@ then
    # find a match and write to STDOUT
    for localfile in $(cat ./localfiles)
    do
-       for roamfile in $(cat ./remotefiles)
+       for remotefile in $(cat ./remotefiles)
        do
-           if [ "$localfile" == "$roamfile" ]
+           if [ "$localfile" == "$remotefile" ]
            then
                echo "$localfile"
            fi

@@ -1,0 +1,11 @@
+This sed script has to replace a specific line IF IT IS PRESENT in a certain file.
+
+The script has to be contained inside the 'install' option of '~/bin/deploy'.
+
+The line should say something like this:
+
+[status]
+showUntrackedFiles = no
+
+And the file should be ~/.gitconfig
+

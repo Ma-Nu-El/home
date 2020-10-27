@@ -1,0 +1,4 @@
+first line
+the next line should be replaced ONLY ONCE using sed
+hello
+more text
