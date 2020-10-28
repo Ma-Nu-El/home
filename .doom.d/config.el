@@ -87,3 +87,9 @@
 (setq backup-inhibited t)
 ;disable auto save
 (setq auto-save-default nil)
+
+;; OS X specific !
+;;(setq
+ ;;ispell-program-name "/usr/local/bin/aspell"
+;; ispell-dictionary "en_US"
+;; )
