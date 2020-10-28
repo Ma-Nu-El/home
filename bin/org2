@@ -7,4 +7,20 @@
 
 # for the moment, I'm interested in 
 # org2html
-# org2org 
+# org2org
+
+
+# https://stackoverflow.com/questions/22072773/batch-export-of-org-mode-files-from-the-command-line 
+# html export
+if [ "$1" == "html" ]
+then
+    emacs --batch --visit $2 -f org-html-export-to-html --kill
+fi
+
+# org export
+# this one will create a file with a double '.org' extension. This is
+# not necessarily a problem though.
+if [ "$1" == "org" ]
+then
+    emacs --batch --visit $2 -f org-org-export-to-org --kill
+fi
