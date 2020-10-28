@@ -57,39 +57,40 @@
 (after! org
   (setq org-hide-leading-stars t
         org-startup-indented nil
-	flyspell-mode t
+        flyspell-mode t
         )
-; https://emacs.stackexchange.com/questions/9709/keep-the-headlines-expanded-in-org-mode
-(setq org-startup-folded t)
-; https://stackoverflow.com/questions/24686129/how-can-i-make-org-mode-store-state-changes-for-a-repeating-task-in-a-drawer
-(setq org-log-into-drawer t) ; couldn't make it work with a STRING but still gets the job done anyway so I'm happy.
-(setq org-log-states-order-reversed t) ; doesn't really work...why?
-(add-to-list 'org-export-backends 'org)
+                                        ; https://emacs.stackexchange.com/questions/9709/keep-the-headlines-expanded-in-org-mode
+  (setq org-startup-folded t)
+                                        ; https://stackoverflow.com/questions/24686129/how-can-i-make-org-mode-store-state-changes-for-a-repeating-task-in-a-drawer
+  (setq org-log-into-drawer t) ; couldn't make it work with a STRING but still gets the job done anyway so I'm happy.
+  (setq org-log-states-order-reversed t) ; doesn't really work...why?
+  (add-to-list 'org-export-backends 'org)
 
-; ### TRACK TODO STATE CHANGES
-; https://orgmode.org/manual/Tracking-TODO-state-changes.html
-; OrgMode E03S01: Automatic logging of status changes:
-; https://www.youtube.com/watch?v=R4QSTDco_w8
-(setq org-todo-keywords
-      '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)" "|" "DONE(d@/!)" "CANCELED(c@/!)")))
-(setq org-log-done t)
-)
+                                        ; ### TRACK TODO STATE CHANGES
+                                        ; https://orgmode.org/manual/Tracking-TODO-state-changes.html
+                                        ; OrgMode E03S01: Automatic logging of status changes:
+                                        ; https://www.youtube.com/watch?v=R4QSTDco_w8
+  (setq org-todo-keywords
+        '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)" "|" "DONE(d@/!)" "CANCELED(c@/!)")))
+  (setq org-log-done t)
+  (define-key org-mode-map "SPC o i s t" 'org-insert-structure-template)
+  )
 
 ;; personal key bindings
-(define-key evil-motion-state-map (kbd "C-z") nil)
+(define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
 (global-set-key (kbd "\C-cr") 'ispell-region)
 
 ;; roam capabilities
 (setq org-roam-directory "~/org/auxRoam")
 (add-hook 'after-init-hook 'org-roam-mode)
 (require 'org-roam-protocol)
-;disable backup
+                                        ;disable backup
 (setq backup-inhibited t)
-;disable auto save
+                                        ;disable auto save
 (setq auto-save-default nil)
 
 ;; OS X specific !
 ;;(setq
- ;;ispell-program-name "/usr/local/bin/aspell"
+;;ispell-program-name "/usr/local/bin/aspell"
 ;; ispell-dictionary "en_US"
 ;; )
