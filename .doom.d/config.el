@@ -74,7 +74,7 @@
         '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)" "|" "DONE(d@/!)" "CANCELED(c@/!)")))
   (setq org-log-done t)
   (define-key org-mode-map "SPC o i s t" 'org-insert-structure-template)
-  )
+  ) ;; end after org
 
 ;; personal key bindings
 (define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
@@ -94,3 +94,16 @@
 ;;ispell-program-name "/usr/local/bin/aspell"
 ;; ispell-dictionary "en_US"
 ;; )
+;; https://orgmode.org/manual/Breaking-Down-Tasks.html#Breaking-Down-Tasks
+(defun org-summary-todo (n-done n-not-done)
+  "Switch entry to DONE when all subentries are done, to TODO otherwise."
+  (let (org-log-done org-log-states)   ; turn off logging
+    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+
+(add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+;; also, you have to set the cookie property to 'todo recursive'; you can use
+;; Doom's 'SPC m o'. Still, it's too much work. Have to do something about it.
+(add-to-list 'load-path "~/path/to/your/downloaded/htmlize.el")
+(require 'htmlize)
+
+(setq org-id-link-to-org-use-id t)
