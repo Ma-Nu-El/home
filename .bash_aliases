@@ -27,6 +27,9 @@ alias he="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME status" # same i
 alias hf="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME diff"
 alias homegraph="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME log --all --decorate --oneline --graph"
 alias homels="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME ls-tree --name-only master"
+alias homeunstage="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME restore --staged"
+alias homeuntrack="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME rm -r --cached"
+alias homeamend="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME commit --amend"
 # pure git #
 alias ginit='git init'
 alias gadd='git add'
