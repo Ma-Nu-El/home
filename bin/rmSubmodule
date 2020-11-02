@@ -8,7 +8,7 @@
 #https://gist.github.com/myusuf3/7f645819ded92bda6677
 if [[ -z $2 ]]
 then
-git commit -am "Automatic commit pre submodule deletion"
+#git commit -am "Automatic commit pre submodule deletion"
 git rm -rf $1
 rm -rf ./.git/modules/$1
 echo "Deleted $1 submodule"
@@ -16,8 +16,8 @@ fi
 
 if [[ "$2" = "--home" ]]
 then
-/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME \
-commit -am "Automatic commit pre submodule deletion"
+#/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME \
+#commit -am "Automatic commit pre submodule deletion"
 /usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME \
 rm -rf $HOME/$1
 rm -rf $HOME/.home/modules/$1 
