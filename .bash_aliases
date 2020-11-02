@@ -24,11 +24,12 @@ alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 ### home bare repo ###
 alias home="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME"
 alias he="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME status" # same idea as 'te'
+alias hf="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME diff"
 alias homegraph="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME log --all --decorate --oneline --graph"
 alias homels="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME ls-tree --name-only master"
+# pure git #
 alias ginit='git init'
 alias gadd='git add'
-#alias gst="git status" # too much load on right pinky
 alias te="git status"
 alias gcm="git commit -m"
 alias gcam="git commit -am"
@@ -36,19 +37,21 @@ alias gpsh="git push"
 alias gpll="git pull"
 alias grv="git remote -v"
 alias graph="git log --all --decorate --oneline --graph"
-alias giff="git diff"
 alias gch="git checkout"
 alias gchm="git checkout master"
 alias gth="git ls-tree -r --name-only HEAD"
 alias gtm="git ls-tree -r --name-only master"
+alias gf="git diff"
+alias unstage="git restore --staged" # remove file from staging area, '-r' flag for directories
+alias untrack="git rm -r --cached" # untrack files currently tracked by git, '-r' flag for directories
+alias amend="git commit --amend"
 # shell interaction
 alias c='clear'
 alias cnd='clear &&' 
 alias p="pwd"
 alias pp="clear && pwd"
-alias a="ls"
-alias aa="ls -a"
 alias lah="ls -lah"
+alias las="du -sh * | sort -h" # sort by size
 alias pa="clear && pwd && echo '-----' && ls"
 alias paa="clear && pwd && echo '-----' && ls -a"
 alias lagrep='ls -a | grep' # append your simple grep search
