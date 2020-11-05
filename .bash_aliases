@@ -30,6 +30,7 @@ alias homels="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME ls-tree --na
 alias homeunstage="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME restore --staged"
 alias homeuntrack="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME rm -r --cached"
 alias homeamend="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME commit --amend"
+alias hadd="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME add"
 # pure git #
 alias ginit='git init'
 alias gadd='git add'
@@ -53,6 +54,7 @@ alias c='clear'
 alias cnd='clear &&' 
 alias p="pwd"
 alias pp="clear && pwd"
+alias ls="ls -G" #darwin os only
 alias lah="ls -lah"
 alias las="du -sh * | sort -h" # sort by size
 alias pa="clear && pwd && echo '-----' && ls"
@@ -108,6 +110,9 @@ alias de="deploy encrypt"
 alias dd="deploy decrypt"
 alias fire="firefox --private-window >/dev/null 2>/dev/null &"
 alias rr="rm -rf ~/org/auxRoam && roam dummy"
+alias pah="h && clear && pwd && he"
+alias ahp="h && clear && pwd && he"
+alias hpa="h && clear && pwd && he"
 echo "loaded aliases"
 ### FUNCTIONS ###
 echo "loading functions"
