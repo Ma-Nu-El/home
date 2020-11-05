@@ -112,8 +112,6 @@ alias dd="deploy decrypt"
 alias fire="firefox --private-window >/dev/null 2>/dev/null &"
 alias rr="rm -rf ~/org/auxRoam && roam dummy"
 alias pah="h && clear && pwd && he"
-alias ahp="h && clear && pwd && he"
-alias hpa="h && clear && pwd && he"
 echo "loaded aliases"
 ### FUNCTIONS ###
 echo "loading functions"
