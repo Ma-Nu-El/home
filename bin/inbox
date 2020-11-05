@@ -12,6 +12,7 @@ if [[ "$1" = "fetch" ]]
 	cat ~/org/inbox.org
 	if [[ "$2" = "--clean" ]]
 		then
-		echo "" > ~/org/inbox.org
+		rm ~/org/inbox.org
+		touch ~/org/inbox.org
 	fi
 fi

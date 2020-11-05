@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# detect OS from Bash
+
+# Solution 1
+#https://stackoverflow.com/questions/394230/how-to-detect-the-os-from-a-bash-script
+#if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+#echo "os: linux"
+#elif [[ "$OSTYPE" == "darwin"* ]]; then
+#echo "os: darwin"
+#fi
+
+# Solution 2
+# https://gist.github.com/prabirshrestha/3080525
+
+UNAME=$( command -v uname)
+
+case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
+  linux*)
+    printf 'linux\n'
+    ;;
+  darwin*)
+    printf 'darwin\n'
+    ;;
+  msys*|cygwin*|mingw*)
+    # or possible 'bash on windows'
+    printf 'windows\n'
+    ;;
+  nt|win*)
+    printf 'windows\n'
+    ;;
+  *)
+    printf 'unknown\n'
+    ;;
+esac
