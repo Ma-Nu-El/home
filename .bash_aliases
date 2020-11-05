@@ -49,6 +49,7 @@ alias gf="git diff"
 alias unstage="git restore --staged" # remove file from staging area, '-r' flag for directories
 alias untrack="git rm -r --cached" # untrack files currently tracked by git, '-r' flag for directories
 alias amend="git commit --amend"
+alias restore="git restore"
 # shell interaction
 alias c='clear'
 alias cnd='clear &&' 
