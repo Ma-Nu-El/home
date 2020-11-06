@@ -59,7 +59,6 @@ alias c='clear'
 alias cnd='clear &&' 
 alias p="pwd"
 alias pp="clear && pwd"
-alias ls="ls -G" #darwin os only
 alias lah="ls -lah"
 alias las="du -sh * | sort -h" # sort by size
 alias pa="clear && pwd && echo '-----' && ls"
