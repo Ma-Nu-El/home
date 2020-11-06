@@ -15,6 +15,7 @@ alias hommit="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME commit"
 alias hpush="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME push"
 alias hpull="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME pull"
 alias hfetch="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME fetch"
+alias hmerge="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME merge"
 alias hbranch="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME branch"
 alias hcheck="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME checkout"
 # pure git #
