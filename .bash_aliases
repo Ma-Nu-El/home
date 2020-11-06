@@ -31,6 +31,7 @@ alias homeunstage="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME restore
 alias homeuntrack="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME rm -r --cached"
 alias homeamend="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME commit --amend"
 alias hadd="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME add"
+alias hommit="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME commit"
 # pure git #
 alias ginit='git init'
 alias gadd='git add'
