@@ -35,6 +35,8 @@ alias hommit="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME commit"
 alias hpush="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME push"
 alias hpull="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME pull"
 alias hfetch="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME fetch"
+alias hbranch="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME branch"
+alias hcheck="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME checkout"
 # pure git #
 alias ginit='git init'
 alias gadd='git add'
