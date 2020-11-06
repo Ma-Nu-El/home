@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+manuclone(){
+	if [[ -z "$1"  ]]
+	then
+		echo "example: 'manuclone foo bar' is the same as"
+		echo "'git clone git@github.com:Ma-Nu-El/foo bar'"
+	else
+	git clone git@github.com:Ma-Nu-El/$1
+	fi
+}
+
+# quick roam
+r(){
+pushd .
+~/org/auxRoam
+}
+
+#quick useful defaults
+
+# smarter org
+# https://unix.stackexchange.com/questions/6435/how-to-check-if-pwd-is-a-subdirectory-of-a-given-path
+org(){
+if [[ "$PWD" = "$HOME/org" ]]
+then
+cd org
+else
+cd ~/org
+fi
+}
+
+# smarter norg
+norg(){
+if [[ "$PWD" = "$HOME/norg" ]]
+then
+	cd norg
+else
+cd ~/norg
+fi
+}
+
+# cd and git status into directory
+cd-and-git-status(){
+if [ -d "$1" ] # if argument is a directory
+then
+	cd $1
+	clear && pwd && git status
+else
+	if [ -z $1 ]
+	then
+		clear && pwd && git status
+	fi
+fi
+}
