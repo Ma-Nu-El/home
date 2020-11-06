@@ -111,7 +111,7 @@ alias de="deploy encrypt"
 alias dd="deploy decrypt"
 alias fire="firefox --private-window >/dev/null 2>/dev/null &"
 alias rr="rm -rf ~/org/auxRoam && roam dummy"
-alias hhe="cd ~ && clear && pwd && he"
+alias thea="cd ~ && clear && pwd && he"
 alias the="cd-and-git-status"
 echo "loaded aliases"
 ### FUNCTIONS ###
