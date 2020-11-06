@@ -13,7 +13,6 @@
 git config --global core.editor "vi"
 export VISUAL=vi
 export EDITOR="$VISUAL"
-echo "enabled Bash built-ins"
 ### doom emacs ###
 # add ~/.emacs.d/bin to $PATH
 #https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#the-bindoom-utility
