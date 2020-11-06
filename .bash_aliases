@@ -32,6 +32,9 @@ alias homeuntrack="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME rm -r -
 alias homeamend="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME commit --amend"
 alias hadd="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME add"
 alias hommit="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME commit"
+alias hpush="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME push"
+alias hpull="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME pull"
+alias hfetch="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME fetch"
 # pure git #
 alias ginit='git init'
 alias gadd='git add'
