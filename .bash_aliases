@@ -1,6 +1,6 @@
-#!/usr/share/env bash
-# TODO directory history?
+#!/usr/bin/env bash
 echo "loading .bash_aliases"
+# TODO directory history?
 ### promt ###
 export PS1='\
 \[\033[1;37m\]\
@@ -55,7 +55,7 @@ alias c='clear'
 alias cnd='clear &&' 
 alias p="pwd"
 alias pp="clear && pwd"
-alias ls="ls -G" #darwin os only
+#alias ls="ls -G" #darwin os only
 alias lah="ls -lah"
 alias las="du -sh * | sort -h" # sort by size
 alias pa="clear && pwd && echo '-----' && ls"
@@ -111,7 +111,8 @@ alias de="deploy encrypt"
 alias dd="deploy decrypt"
 alias fire="firefox --private-window >/dev/null 2>/dev/null &"
 alias rr="rm -rf ~/org/auxRoam && roam dummy"
-alias pah="h && clear && pwd && he"
+alias hhe="cd ~ && clear && pwd && he"
+alias the="cd-and-git-status"
 echo "loaded aliases"
 ### FUNCTIONS ###
 echo "loading functions"
@@ -148,14 +149,30 @@ fi
 
 # smarter norg
 norg(){
-
 if [[ "$PWD" = "$HOME/norg" ]]
 then
-cd norg
+	cd norg
 else
 cd ~/norg
 fi
+}
 
+# cd and git status into directory
+cd-and-git-status(){
+if [ -d "$1" ] # if argument is a directory
+then
+	cd $1
+	if [ -d .git ] # if there is a .git directory
+	then
+		git status
+		else
+			echo ".git directory not found"
+			if [ -f .git ] # submodules have a .git file instead
+			then
+				echo "probably a submodule of another parent directory."
+			fi
+	fi
+fi
 }
 
 ### MISC
