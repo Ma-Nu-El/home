@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # TODO directory history?
+# environment variables
+. ~/.bash/env
 # prompt
 . ~/.bash/prompt
 ### shopt ###
