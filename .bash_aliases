@@ -3,60 +3,65 @@ echo "loading .bash_aliases"
 # TODO directory history?
 ### promt ###
 export PS1='\
-	   \[\033[1;37m\]\
-	   \[\033[1;33m\]\
-	   \$ \
-	   \[\033[0m\]\
-	   '
+\[\033[1;37m\]\
+\[\033[1;33m\]\
+\$ \
+\[\033[0m\]\
+'
 ### shopt ###
-	   shopt -s autocd
-	   shopt -s cdspell
+shopt -s autocd
+shopt -s cdspell
 ### environment variables ###
 #export ORGDIR=~ USE EVAL maybe?
 ### vi ###
-	   git config --global core.editor "vi"
-	   export VISUAL=vi
-	   export EDITOR="$VISUAL"
-	   echo "enabled Bash built-ins"
+git config --global core.editor "vi"
+export VISUAL=vi
+export EDITOR="$VISUAL"
+echo "enabled Bash built-ins"
 ### ALIASES ###
 ### git ###
-	   alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
+alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 ### home bare repo ###
-	   alias home="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME"
-	   alias he="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME status" # same idea as 'te'
-	   alias hf="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME diff"
-	   alias homegraph="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME log --all --decorate --oneline --graph"
-	   alias homels="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME ls-tree --name-only master"
-	   alias homeunstage="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME restore --staged"
-	   alias homeuntrack="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME rm -r --cached"
-	   alias homeamend="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME commit --amend"
-	   alias hadd="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME add"
-	   alias hommit="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME commit"
+alias home="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME"
+alias he="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME status" # same idea as 'te'
+alias hf="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME diff"
+alias homegraph="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME log --all --decorate --oneline --graph"
+alias homels="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME ls-tree --name-only master"
+alias homeunstage="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME restore --staged"
+alias homeuntrack="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME rm -r --cached"
+alias homeamend="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME commit --amend"
+alias hadd="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME add"
+alias hommit="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME commit"
+alias hpush="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME push"
+alias hpull="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME pull"
+alias hfetch="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME fetch"
+alias hbranch="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME branch"
+alias hcheck="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME checkout"
 # pure git #
-	   alias ginit='git init'
-	   alias gadd='git add'
-	   alias te="git status"
-	   alias gcm="git commit -m"
-	   alias gcam="git commit -am"
-	   alias gpush="git push"
-	   alias gpull="git pull"
-	   alias grv="git remote -v"
-	   alias graph="git log --all --decorate --oneline --graph"
-	   alias gch="git checkout"
-	   alias gchm="git checkout master"
-	   alias gtreeh="git ls-tree -r --name-only HEAD"
-	   alias gtreem="git ls-tree -r --name-only master"
-	   alias gf="git diff"
-	   alias unstage="git restore --staged" # remove file from staging area, '-r' flag for directories
-	   alias untrack="git rm -r --cached" # untrack files currently tracked by git, '-r' flag for directories
-	   alias amend="git commit --amend"
-	   alias restore="git restore"
+alias ginit='git init'
+alias gadd='git add'
+alias te="git status"
+alias gcm="git commit -m"
+alias gcam="git commit -am"
+alias gpush="git push"
+alias gpull="git pull"
+alias grv="git remote -v"
+alias graph="git log --all --decorate --oneline --graph"
+alias gch="git checkout"
+alias gchm="git checkout master"
+alias gtreeh="git ls-tree -r --name-only HEAD"
+alias gtreem="git ls-tree -r --name-only master"
+alias gf="git diff"
+alias unstage="git restore --staged" # remove file from staging area, '-r' flag for directories
+alias untrack="git rm -r --cached" # untrack files currently tracked by git, '-r' flag for directories
+alias amend="git commit --amend"
+alias restore="git restore"
 # shell interaction
-	   alias c='clear'
-	   alias cnd='clear &&' 
-	   alias p="pwd"
-	   alias pp="clear && pwd"
 alias ls="ls -G" #darwin os only
+alias c='clear'
+alias cnd='clear &&' 
+alias p="pwd"
+alias pp="clear && pwd"
 alias lah="ls -lah"
 alias las="du -sh * | sort -h" # sort by size
 alias pa="clear && pwd && echo '-----' && ls"
