@@ -162,15 +162,11 @@ cd-and-git-status(){
 if [ -d "$1" ] # if argument is a directory
 then
 	cd $1
-	if [ -d .git ] # if there is a .git directory
+	clear && pwd && git status
+else
+	if [ -z $1 ]
 	then
-		git status
-		else
-			echo ".git directory not found"
-			if [ -f .git ] # submodules have a .git file instead
-			then
-				echo "probably a submodule of another parent directory."
-			fi
+		clear && pwd && git status
 	fi
 fi
 }
