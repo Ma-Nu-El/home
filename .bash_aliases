@@ -60,6 +60,8 @@ alias lah="ls -lah"
 alias las="du -sh * | sort -h" # sort by size
 alias pa="clear && pwd && echo '-----' && ls"
 alias paa="clear && pwd && echo '-----' && ls -a"
+alias hpa="cd ~ && clear && pwd && echo '-----' && ls"
+alias hpaa="cd ~ && clear && pwd && echo '-----' && ls -a"
 alias lagrep='ls -a | grep' # append your simple grep search
 # inbox
 alias i="/usr/bin/vi ~/org/inbox.org"
