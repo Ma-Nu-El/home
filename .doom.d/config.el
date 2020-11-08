@@ -119,3 +119,15 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
 )
+;; orgmode: open links with default application?
+;;https://stackoverflow.com/questions/3973896/emacs-org-mode-file-viewer-associations
+;;https://emacs.stackexchange.com/questions/2856/how-to-configure-org-mode-to-respect-system-specific-default-applications-for-ex
+(setq org-file-apps
+'((auto-mode . emacs)
+ ("\\.mm\\'" . default)
+ ("\\.x?html?\\'" . default)
+ ("\\.pdf\\'" . default)
+ ("\\.jpg\\'" . default)
+ ("\\.png\\'" . default)
+)
+)
