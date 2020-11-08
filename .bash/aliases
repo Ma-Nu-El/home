@@ -5,7 +5,7 @@ alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 alias home="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME"
 alias he="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME status" # same idea as 'te'
 alias hf="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME diff"
-alias homegraph="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME log --all --decorate --oneline --graph"
+alias hgraph="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME log --all --decorate --oneline --graph"
 alias homels="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME ls-tree --name-only master"
 alias homeunstage="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME restore --staged"
 alias homeuntrack="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME rm -r --cached"
