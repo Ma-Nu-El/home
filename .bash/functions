@@ -43,7 +43,7 @@ cd-and-git-status(){
 if [ -d "$1" ] # if argument is a directory
 then
 	cd $1
-	clear && pwd && git status
+	clear && pwd && echo "-----" && git status
 else
 	if [ -z $1 ]
 	then
