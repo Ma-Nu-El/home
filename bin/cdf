@@ -4,12 +4,15 @@
 if [[ -z "$1"  ]]
 then
 echo "vim to dotfile of...?"
-echo "cdf = cdf itself"
-echo "b = bash"
-echo "v = vim"
-echo "t = tmux"
-echo "e = ~/.doom.d/config.el"
-echo "e i= ~/.doom.d/init.el"
+echo " cdf = cdf itself"
+echo " b= cd ~/.bash/"
+echo " b a= ~/.bash/aliases"
+echo " b f= ~/.bash/functions"
+echo " v = ~/.vimrc"
+echo " t = ~/.tmux.conf"
+echo " e i= ~/.doom.d/init.el"
+echo " e c= ~/.doom.d/config.el"
+echo ""
 echo "example: 'cdf v' is the same as"
 echo "'vim $HOME/.vimrc'"
 fi
@@ -21,7 +24,15 @@ fi
 
 if [[ "$1" == "b" ]]
 then
-vim $HOME/.bash_aliases
+  if [[ "$2" == "a" ]]
+  then
+    vim $HOME/.bash/aliases
+  fi
+  if [[ "$2" == "f" ]]
+  then
+    vim $HOME/.bash/functions
+  fi
+  cd ~/.bash/
 fi
 
 if [[ "$1" == "t" ]]
@@ -36,10 +47,12 @@ fi
 
 if [[ "$1" == "e" ]]
 then
-    if [[ "$2" == "i" ]]
-    then
-        vim $HOME/.doom.d/init.el
-    else
+  if [[ "$2" == "i" ]]
+  then
+    vim $HOME/.doom.d/init.el
+  fi
+  if [[ "$2" == "c" ]]
+  then
     vim $HOME/.doom.d/config.el
-    fi
+  fi
 fi
