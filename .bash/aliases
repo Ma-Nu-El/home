@@ -23,6 +23,7 @@ alias ginit='git init'
 alias gadd='git add'
 alias te="git status"
 alias gommit="git commit"
+alias gcam="git commit -am" 
 alias gpush="git push"
 alias gpull="git pull"
 alias graph="git log --all --decorate --oneline --graph"
