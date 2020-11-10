@@ -44,8 +44,9 @@ alias p="pwd"
 alias pp="clear && pwd"
 alias lah="ls -lah"
 alias las="du -sh * | sort -h" # sort by size
-alias pa="clear && pwd && echo '-----' && ls"
-alias paa="clear && pwd && echo '-----' && ls -a"
+alias eo="clear && pwd && echo '-----' && ls" # was 'pa', but was the most used one so now is more ergo
+# https://superuser.com/questions/250227/how-do-i-see-what-my-most-used-linux-command-are
+alias eoe="clear && pwd && echo '-----' && ls -a" # same deal
 alias hpa="cd ~ && clear && pwd && echo '-----' && ls"
 alias hpaa="cd ~ && clear && pwd && echo '-----' && ls -a"
 alias lagrep='ls -a | grep' # append your simple grep search
