@@ -22,8 +22,7 @@ alias hcheck="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME checkout"
 alias ginit='git init'
 alias gadd='git add'
 alias te="git status"
-alias gommit="git commit -m"
-alias gcam="git commit -am"
+alias gommit="git commit"
 alias gpush="git push"
 alias gpull="git pull"
 alias graph="git log --all --decorate --oneline --graph"
