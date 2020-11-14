@@ -106,3 +106,6 @@ alias rr="rm -rf ~/org/auxRoam && roam dummy"
 alias theo="cd ~ && clear && pwd && echo "-----" && he"
 alias the="cd-and-git-status"
 alias detectdir="detectdirectories"
+alias speed="speedtest --simple --bytes"
+alias dvorak="sudo loadkeys dvorak"
+
