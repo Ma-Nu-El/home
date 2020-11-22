@@ -109,6 +109,6 @@ alias detectdir="detectdirectories"
 alias speed="speedtest --simple --bytes"
 alias dvorak="sudo loadkeys dvorak"
 ## MACOS ONLY ##
+# colorful ls
+# https://superuser.com/questions/183876/how-do-i-get-ls-color-auto-to-work-on-mac-os-x
 alias ls='ls -G'
-
-
