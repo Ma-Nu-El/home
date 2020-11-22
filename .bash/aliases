@@ -108,4 +108,7 @@ alias the="cd-and-git-status"
 alias detectdir="detectdirectories"
 alias speed="speedtest --simple --bytes"
 alias dvorak="sudo loadkeys dvorak"
+## MACOS ONLY ##
+alias ls='ls -G'
+
 
