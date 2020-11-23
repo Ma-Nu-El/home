@@ -108,4 +108,5 @@ alias the="cd-and-git-status"
 alias detectdir="detectdirectories"
 alias speed="speedtest --simple --bytes"
 alias dvorak="sudo loadkeys dvorak"
+alias eva="cat ~/org/uni/org/2020-2/evaluaciones.txt"
 
