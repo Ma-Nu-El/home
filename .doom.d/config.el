@@ -90,10 +90,10 @@
 (setq auto-save-default nil)
 
 ;; OS X specific !
-;;(setq
-;;ispell-program-name "/usr/local/bin/aspell"
-;; ispell-dictionary "en_US"
-;; )
+(setq
+ ispell-program-name "/usr/local/bin/aspell"
+ ispell-dictionary "en_US"
+ )
 ;; https://orgmode.org/manual/Breaking-Down-Tasks.html#Breaking-Down-Tasks
 (defun org-summary-todo (n-done n-not-done)
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
