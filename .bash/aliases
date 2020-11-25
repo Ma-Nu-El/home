@@ -41,8 +41,8 @@ alias amend="git commit --amend"
 alias restore="git restore"
 alias gsm="git submodule"
 # shell interaction
-alias c='clear'
-alias cnd='clear &&'
+alias c="clear"
+alias cnd="clear &&"
 alias p="pwd"
 alias pp="clear && pwd"
 alias lah="ls -lah"
@@ -108,7 +108,8 @@ alias the="cd-and-git-status"
 alias detectdir="detectdirectories"
 alias speed="speedtest --simple --bytes"
 alias dvorak="sudo loadkeys dvorak"
+alias eva="cat ~/org/uni/org/2020-2/evaluaciones.txt"
 ## MACOS ONLY ##
 # colorful ls
 # https://superuser.com/questions/183876/how-do-i-get-ls-color-auto-to-work-on-mac-os-x
-alias ls='ls -G'
+alias ls="ls -G"

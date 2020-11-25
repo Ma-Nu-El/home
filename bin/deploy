@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+## hopefully to be a wrapper for git AND rsync
 
 ### HELP
 
