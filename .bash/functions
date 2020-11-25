@@ -51,3 +51,8 @@ else
 	fi
 fi
 }
+
+# cd and ls
+ue(){
+cd $1 && clear && pwd && echo '-----' && ls
+}
