@@ -95,7 +95,7 @@ alias X="command -V"
 alias R="ranger"
 alias V="sxiv -to"
 alias ptt="tree | less"
-alias O="xdg-open &>/dev/null"
+alias O="open" # macos version of xdg-open
 alias openwith="mimeopen -a"
 alias chmodx="chmod +x"
 alias now="date && cal"
@@ -109,7 +109,7 @@ alias detectdir="detectdirectories"
 alias speed="speedtest --simple --bytes"
 alias dvorak="sudo loadkeys dvorak"
 alias eva="cat ~/org/uni/org/2020-2/evaluaciones.txt"
-## MACOS ONLY ##
+# macos only
 # colorful ls
 # https://superuser.com/questions/183876/how-do-i-get-ls-color-auto-to-work-on-mac-os-x
-alias ls="ls -G"
+alias ls="ls -G" # macos only
