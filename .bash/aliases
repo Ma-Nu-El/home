@@ -112,7 +112,3 @@ alias dvorak="sudo loadkeys dvorak"
 alias eva="cat ~/org/uni/org/2020-2/evaluaciones.txt"
 alias bat="~/bin/manu-battery"
 alias batn="~/bin/manu-battery -n"
-# macos only
-# colorful ls
-# https://superuser.com/questions/183876/how-do-i-get-ls-color-auto-to-work-on-mac-os-x
-alias ls="ls -G" # macos only
