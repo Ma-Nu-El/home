@@ -19,6 +19,7 @@ alias hmerge="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME merge"
 alias hbranch="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME branch"
 alias hch="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME checkout"
 alias hchm="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME checkout master"
+alias hrestore="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME restore"
 # pure git #
 alias ginit='git init'
 alias gadd='git add'
