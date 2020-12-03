@@ -89,11 +89,6 @@
                                         ;disable auto save
 (setq auto-save-default nil)
 
-;; OS X specific !
-(setq
- ispell-program-name "/usr/local/bin/aspell"
- ispell-dictionary "en_US"
- )
 ;; https://orgmode.org/manual/Breaking-Down-Tasks.html#Breaking-Down-Tasks
 (defun org-summary-todo (n-done n-not-done)
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
@@ -103,8 +98,6 @@
 (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
 ;; also, you have to set the cookie property to 'todo recursive'; you can use
 ;; Doom's 'SPC m o'. Still, it's too much work. Have to do something about it.
-(add-to-list 'load-path "~/path/to/your/downloaded/htmlize.el")
-(require 'htmlize)
 
 (setq org-id-link-to-org-use-id t)
 (custom-set-variables
