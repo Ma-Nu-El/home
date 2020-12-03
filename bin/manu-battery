@@ -1,0 +1,152 @@
+#!/bin/bash
+#Original:
+#https://github.com/Goles/Battery
+#TODO
+# The script shows 87 at a given time while
+# 'pmset -g batt'
+# shows 92; the same shown by the DM top bar
+# Thus, use the output of 'pmset -g batt'
+
+usage() {
+cat <<EOF
+battery usage:
+  general:
+    -h, --help    print this message
+    -n            nice output; % sign and a ascii bar
+    -b            battery path            default: /sys/class/power_supply/BAT0
+    -p            use pmset (more accurate)
+EOF
+}
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
+    usage
+    exit 0
+fi
+
+# For default behavior
+setDefaults() {
+    pmset_on=0
+    ascii=1
+    n=0
+    ascii_bar='===== ===== ===== ====='
+    connected=0
+    battery_path=/sys/class/power_supply/BAT0
+}
+
+setDefaults
+
+# Determine battery charge state
+battery_charge() {
+    case $(uname -s) in
+        "Darwin")
+            if ((pmset_on)) && command -v pmset &>/dev/null; then
+                if [ "$(pmset -g batt | grep -o 'AC Power')" ]; then
+                    BATT_CONNECTED=1
+                else
+                    BATT_CONNECTED=0
+                fi
+                BATTERY_PERCENTAGE=$(pmset -g batt | grep -o '[0-9]*%' | tr -d %)
+            else
+                while read key value; do
+                    case $key in
+                        "MaxCapacity")
+                            maxcap=$value
+                            ;;
+                        "CurrentCapacity")
+                            curcap=$value
+                            ;;
+                        "ExternalConnected")
+                            if [ $value == "No" ]; then
+                                BATT_CONNECTED=0
+                            else
+                                BATT_CONNECTED=1
+                            fi
+                            ;;
+                    esac
+                    if [[ -n "$maxcap" && -n $curcap ]]; then
+                        BATTERY_PERCENTAGE=$(( 100 * curcap / maxcap))
+                    fi
+                done < <(ioreg -n AppleSmartBattery -r | grep -o '"[^"]*" = [^ ]*' | sed -e 's/= //g' -e 's/"//g' | sort)
+            fi
+            ;;
+        "Linux")
+            case $(cat /etc/*-release) in
+                *"Arch Linux"*|*"Ubuntu"*|*"openSUSE"*)
+                    battery_state=$(cat $battery_path/energy_now)
+                    battery_full=$battery_path/energy_full
+                    battery_current=$battery_path/energy_now
+                    ;;
+                *)
+                    battery_state=$(cat $battery_path/status)
+                    battery_full=$battery_path/charge_full
+                    battery_current=$battery_path/charge_now
+                    ;;
+            esac
+            if [ $battery_state == 'Discharging' ]; then
+                BATT_CONNECTED=0
+            else
+                BATT_CONNECTED=1
+            fi
+                now=$(cat $battery_current)
+                full=$(cat $battery_full)
+                BATTERY_PERCENTAGE=$((100 * $now / $full))
+            ;;
+    esac
+}
+
+# Print the battery status
+print_status() {
+    barlength=${#ascii_bar}
+
+    # Battery percentage rounded to the lenght of ascii_bar
+    rounded_n=$(( $barlength * $BATTERY_PERCENTAGE / 100 + 1))
+
+    # Creates the bar
+    BATTERY_BAR=$(printf "[%-${barlength}s]" "${ascii_bar:0:rounded_n}")
+
+    # Print percentage
+    printf "$BATTERY_PERCENTAGE\n"
+
+    # Print percentage with battery charge bar
+    if ((n)); then
+        printf "$BATTERY_BAR\n"
+    fi
+
+}
+
+# Read args
+while getopts ":ap:b:n" opt; do
+    case $opt in
+        a)
+            ascii=1
+            ;;
+        p)
+            pmset_on=1
+            ;;
+        b)
+            if [ -d $OPTARG ]; then
+                battery_path=$OPTARG
+            else
+                >&2 echo "Battery not found, trying to use default path..."
+                if [ ! -d $battery_path ]; then
+                    >&2 echo "Default battery path is also unreachable"
+                    exit 1
+                fi
+            fi
+            ;;
+        n)
+            n=1
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG"
+            exit 1
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument"
+            exit 1
+            ;;
+    esac
+done
+
+battery_charge
+print_status
