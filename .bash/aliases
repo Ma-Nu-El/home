@@ -53,7 +53,7 @@ alias eo="clear && pwd && echo '-----' && ls" # was 'pa', but was the most used 
 alias eoe="clear && pwd && echo '-----' && ls -a" # same deal
 alias hpa="cd ~ && clear && pwd && echo '-----' && ls"
 alias hpaa="cd ~ && clear && pwd && echo '-----' && ls -a"
-alias lagrep='ls -a | grep' # append your simple grep search
+alias lagrep='ls -a | grep -i' # append your simple grep search
 # inbox
 alias i="/usr/bin/vi ~/org/inbox.org"
 alias ii="inbox fetch --clean >> *inbox.org"
