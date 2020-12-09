@@ -34,7 +34,7 @@ setDefaults() {
     n=0
     ascii_bar='===== ===== ===== ====='
     connected=0
-    battery_path=/sys/class/power_supply/BAT0
+    battery_path=/sys/class/power_supply/BAT1
 }
 
 setDefaults
