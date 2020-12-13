@@ -1,0 +1,218 @@
+#!/usr/bin/env bash
+
+# tar has issues when pointing paths _with_ slashes,
+# says something like removing hard links or some sort.
+# So to avoid that, it is _essential_ to be located in the $HOME
+# directory so one can point tar the paths without slashes.
+
+# BACKEND
+
+cd $HOME || exit
+
+areKeysLocked(){
+    if [ -d .password-store ]
+    then
+        if [ -z "$(ls -A .password-store)" ]
+           # if there is nothing in there
+        then
+            KEYS_ARE_LOCKED=1
+        else
+            if [ "$(ls -A .password-store)" ]
+               # if there is actually something in there
+            then
+                KEYS_ARE_LOCKED=0
+            fi
+        fi
+    else
+        if [ ! -d .password-store ] && [ -f .keys ]
+        then
+            KEYS_ARE_LOCKED=1
+        fi
+    fi
+}
+areKeysLocked
+
+areKeysBackedUp(){
+    if [ -f .keys ]
+    then
+        KEYS_ARE_BACKED_UP=1
+    fi
+}
+areKeysBackedUp
+
+removeGnuDirectory(){
+    # For unkwown reasons, I can't directly remove the ~/.gnupg directory.
+    # But what I can do instead is rename that directory and remove the
+    # renamed directory. I don't like that workaround, but it works.
+    mv ~/.gnupg ~/.gnupg-aux
+    rm -rf ~/.gnupg-aux
+}
+
+closeKeys(){
+    if [ -f ~/.keys ]
+    then
+        rm -rf ~/.keys
+    fi
+
+    tar cf .keys.tar \
+        .gnupg \
+        .password-store
+
+    gpg --output ~/.keys --symmetric ~/.keys.tar
+
+    # a dangerous part of the script
+    if [[ -f ~/.keys ]]
+    then
+        rm -rf ~/.keys.tar
+        removeGnuDirectory
+        rm -rf ~/.password-store
+    else
+        echo "$HOME/.keys file not found. Exiting."
+        exit
+    fi
+
+    KEYS_ARE_LOCKED=1
+}
+
+backUpKeys(){
+    # Almost the same as closeKeys, but this one instead, creates a
+    # gpg symmetrically encrypted copy of the current keys _while_
+    # also leaving the keys open.
+    # Use this one when you update a passphrase and want to back it up
+    # while still keeping the keys open.
+    if [ -f ~/.keys ]
+    then
+        rm -rf ~/.keys
+        KEYS_ARE_BACKED_UP=0
+    fi
+
+    tar cf .keys.tar \
+        .gnupg \
+        .password-store
+
+    gpg --output ~/.keys --symmetric ~/.keys.tar
+    rm -rf ~/.keys.tar
+    KEYS_ARE_BACKED_UP=1
+}
+
+openKeys(){
+    gpg --output ~/.keys.tar --decrypt .keys
+    removeGnuDirectory
+    tar xf .keys.tar
+    # the other dangerous part of the script
+    rm .keys.tar
+
+    KEYS_ARE_LOCKED=0
+}
+
+
+safeClose(){
+    if (( KEYS_ARE_LOCKED ))
+    then
+        echo "Keys seem to be locked."
+        echo "Exiting."
+    else
+        if (( ! KEYS_ARE_LOCKED ))
+        then
+            closeKeys
+        fi
+    fi
+}
+
+safeOpen(){
+    if (( KEYS_ARE_LOCKED ))
+    then
+        if [[ -d .gnupg ]]
+        then
+            removeGnuDirectory
+        fi
+        openKeys
+    else
+        if (( ! KEYS_ARE_LOCKED ))
+        then
+            echo "Keys seem to be unlocked."
+            echo "Exiting."
+            exit
+        fi
+    fi
+}
+
+addCommitAndPushKeys(){
+    # home 'unstage': reset the staging area so we commit only the keys
+    /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
+        checkout master
+    /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
+        restore --staged $HOME
+    /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
+        add ~/.keys
+    #home commit -m "$TODAY Update ~/.keys"
+    #home push
+}
+
+# INTERACTION
+
+if [[ -z "$1" ]]
+then
+    if (( KEYS_ARE_LOCKED )) && (( ! KEYS_ARE_BACKED_UP ))
+    then
+        echo "Keys: locked."
+        echo "Type 'keys open' to unlock them."
+    else
+        if (( KEYS_ARE_LOCKED )) && (( KEYS_ARE_BACKED_UP ))
+        then
+            echo "Keys: locked and backed up."
+            echo "Last modified:"
+            stat .keys | grep "odify"
+            echo "Type 'keys open' to unlock them."
+        fi
+        if (( ! KEYS_ARE_LOCKED ))
+        then
+            echo "Keys: unlocked."
+            echo "Type 'keys close' to lock them."
+        fi
+    fi
+fi
+
+if [[ "$1" = "close" ]]
+then
+    safeClose
+fi
+
+if [[ "$1" = "open" ]]
+then
+    safeOpen
+fi
+
+if [[ "$1" = "rmgnu" ]]
+then
+    removeGnuDirectory
+fi
+
+if [ "$1" = "push" ] #DWIFM
+then
+    if (( KEYS_ARE_LOCKED ))
+    then
+        addCommitAndPushKeys
+    else
+        if (( ! KEYS_ARE_LOCKED ))
+        then
+            safeClose
+            addCommitAndPushKeys
+        fi
+    fi
+fi
+
+if [ "$1" = "backup" ]
+then
+    if (( KEYS_ARE_LOCKED ))
+    then
+        addCommitAndPushKeys
+    else
+        if (( ! KEYS_ARE_LOCKED ))
+        then
+            backUpKeys
+            echo "Current keys backed up."
+            addCommitAndPushKeys
+        fi
+    fi
+fi
