@@ -144,6 +144,7 @@ addCommitAndPushKeys(){
     # home 'unstage': reset the staging area so we commit only the keys
     /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
         restore --staged $HOME
+    # add ~/.keys
     /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
         add ~/.keys
     #home commit -m "$TODAY Update ~/.keys"
