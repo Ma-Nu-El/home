@@ -159,6 +159,10 @@ addCommitAndPushKeys(){
     KEYS_ARE_PUSHED=1
 }
 
+lastModified(){
+    echo "Last modified:"
+    stat .keys | grep "odify"
+}
 # Wraps
 
 # wrap for the 'close' function
@@ -214,8 +218,7 @@ status(){
         if (( KEYS_ARE_BACKED_UP ))
         then
             echo "Keys: locked and backed up."
-            echo "Last modified:"
-            stat .keys | grep "odify"
+            lastModified
             echo "Type 'keys open' to unlock them."
         fi
         if (( ! KEYS_ARE_BACKED_UP ))
@@ -230,8 +233,7 @@ status(){
         if (( KEYS_ARE_BACKED_UP ))
         then
             echo "Keys: unlocked and backed up."
-            echo "Last modified:"
-            stat .keys | grep "odify"
+            lastModified
             echo "Type 'keys close' to lock them."
         fi
         if (( ! KEYS_ARE_BACKED_UP ))
