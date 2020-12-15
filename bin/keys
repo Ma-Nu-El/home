@@ -1,11 +1,33 @@
 #!/usr/bin/env bash
 
+# pass-extension-tomb didn't play well with git.
+# The ~/.password.tomb file was 10MB at start so
+# pushing and pulling it around wasn't quite comfortable.
+# Specially considering my biggest hand written file being
+# 72 KB at time of writing.
+# So I wrote this script to emulate the basic functions
+# of 'pass tomb' so I can carry the encrypted
+# ~/.password-store
+# directory around without those 10MB that haunted me.
+# Also, I am not acquainted with that LUKS encryption
+# protocol (seems interesting though) while the 'gnupg'
+# program has had a lot of publicity so this is a nice
+# instance to get to know it better.
+
+# PRIMITIVE LEVEL 1 functions affect the whole script.
+# PRIMITIVE LEVEL 2 functions depend on PL1.
+# Wraps are simply to make the front end nicer to script.
+# Do not make calls within functions of the same level
+# since it can lead to inconsistencies.
+
+# BACK END
+
+# PRIMITIVE LEVEL 1
+
 # tar has issues when pointing paths _with_ slashes,
 # says something like removing hard links or some sort.
 # So to avoid that, it is _essential_ to be located in the $HOME
 # directory so one can point tar the paths without slashes.
-
-# BACKEND
 
 cd $HOME || exit
 
@@ -23,11 +45,6 @@ areKeysLocked(){
                 KEYS_ARE_LOCKED=0
             fi
         fi
-    else
-        if [ ! -d .password-store ] && [ -f .keys ]
-        then
-            KEYS_ARE_LOCKED=1
-        fi
     fi
 }
 areKeysLocked
@@ -36,6 +53,11 @@ areKeysBackedUp(){
     if [ -f .keys ]
     then
         KEYS_ARE_BACKED_UP=1
+    else
+        if [ ! -f .keys ]
+        then
+            KEYS_ARE_BACKED_UP=0
+        fi
     fi
 }
 areKeysBackedUp
@@ -48,38 +70,12 @@ removeGnuDirectory(){
     rm -rf ~/.gnupg-aux
 }
 
-closeKeys(){
-    if [ -f ~/.keys ]
-    then
-        rm -rf ~/.keys
-    fi
-
-    tar cf .keys.tar \
-        .gnupg \
-        .password-store
-
-    gpg --output ~/.keys --symmetric ~/.keys.tar
-
-    # a dangerous part of the script
-    if [[ -f ~/.keys ]]
-    then
-        rm -rf ~/.keys.tar
-        removeGnuDirectory
-        rm -rf ~/.password-store
-    else
-        echo "$HOME/.keys file not found. Exiting."
-        exit
-    fi
-
-    KEYS_ARE_LOCKED=1
-}
-
 backUpKeys(){
-    # Almost the same as closeKeys, but this one instead, creates a
-    # gpg symmetrically encrypted copy of the current keys _while_
-    # also leaving the keys open.
-    # Use this one when you update a passphrase and want to back it up
-    # while still keeping the keys open.
+    # Almost the same as closeKeys (comes next), but this
+    # one instead, creates a gpg symmetrically encrypted
+    # copy of the current keys _while_ also leaving the keys
+    # open.  Use this one when you update a passphrase and want
+    # to back it up  while still keeping the keys open.
     if [ -f ~/.keys ]
     then
         rm -rf ~/.keys
@@ -90,49 +86,55 @@ backUpKeys(){
         .gnupg \
         .password-store
 
-    gpg --output ~/.keys --symmetric ~/.keys.tar
-    rm -rf ~/.keys.tar
-    KEYS_ARE_BACKED_UP=1
-}
-
-openKeys(){
-    gpg --output ~/.keys.tar --decrypt .keys
-    removeGnuDirectory
-    tar xf .keys.tar
-    # the other dangerous part of the script
-    rm .keys.tar
-
-    KEYS_ARE_LOCKED=0
-}
-
-
-safeClose(){
-    if (( KEYS_ARE_LOCKED ))
+    if gpg --output ~/.keys --symmetric ~/.keys.tar
     then
-        echo "Keys seem to be locked."
-        echo "Exiting."
+        rm -rf ~/.keys.tar
+        KEYS_ARE_BACKED_UP=1
     else
-        if (( ! KEYS_ARE_LOCKED ))
-        then
-            closeKeys
-        fi
+        rm -rf ~/.keys.tar
+        echo "Error: ~/.keys.tar file not encrypted successfully."
+        echo "Removing ~/.keys.tar"
+        echo "Keys are _not_ backed up."
+        echo "Exiting."
+        exit
     fi
 }
 
-safeOpen(){
-    if (( KEYS_ARE_LOCKED ))
+# PRIMITIVE LEVEL 2
+
+closeKeys(){
+
+    backUpKeys
+
+    # a dangerous part of the script
+    if [[ -f ~/.keys ]]
     then
-        if [[ -d .gnupg ]]
-        then
-            removeGnuDirectory
-        fi
-        openKeys
+        rm -rf ~/.keys.tar
+        removeGnuDirectory
+        rm -rf ~/.password-store
+        KEYS_ARE_LOCKED=1
     else
-        if (( ! KEYS_ARE_LOCKED ))
+        if [[ ! -f ~/.keys ]]
         then
-            echo "Keys seem to be unlocked."
+            echo "$HOME/.keys file not found; the backup was not successful."
             echo "Exiting."
             exit
+        fi
+    fi
+
+}
+
+
+openKeys(){
+
+    removeGnuDirectory
+
+    if gpg --output ~/.keys.tar --decrypt .keys
+    then
+        removeGnuDirectory
+        if tar xf .keys.tar
+        then
+            KEYS_ARE_LOCKED=0
         fi
     fi
 }
@@ -153,30 +155,116 @@ addCommitAndPushKeys(){
     #home push
     /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
         push
+
+    KEYS_ARE_PUSHED=1
 }
 
-# INTERACTION
+# Wraps
 
-if [[ -z "$1" ]]
-then
-    if (( KEYS_ARE_LOCKED )) && (( ! KEYS_ARE_BACKED_UP ))
+# wrap for the 'close' function
+safeClose(){
+    if (( KEYS_ARE_LOCKED ))
     then
-        echo "Keys: locked."
-        echo "Type 'keys open' to unlock them."
+        echo "Keys seem to be locked."
+        echo "Exiting."
     else
-        if (( KEYS_ARE_LOCKED )) && (( KEYS_ARE_BACKED_UP ))
+        if (( ! KEYS_ARE_LOCKED ))
+        then
+            closeKeys
+        fi
+    fi
+}
+
+# wrap for the 'open' function
+safeOpen(){
+    if (( KEYS_ARE_LOCKED ))
+    then
+        if [[ -d .gnupg ]]
+        then
+            removeGnuDirectory
+        fi
+        openKeys
+    else
+        if (( ! KEYS_ARE_LOCKED ))
+        then
+            echo "Keys seem to be unlocked."
+            echo "Exiting."
+            exit
+        fi
+    fi
+}
+
+# wrap for the 'push' option
+safePush(){
+    if (( KEYS_ARE_LOCKED ))
+    then
+        addCommitAndPushKeys
+    else
+        if (( ! KEYS_ARE_LOCKED ))
+        then
+            closeKeys
+            addCommitAndPushKeys
+        fi
+    fi
+}
+
+status(){
+    if (( KEYS_ARE_LOCKED ))
+    then
+        if (( KEYS_ARE_BACKED_UP ))
         then
             echo "Keys: locked and backed up."
             echo "Last modified:"
             stat .keys | grep "odify"
             echo "Type 'keys open' to unlock them."
         fi
-        if (( ! KEYS_ARE_LOCKED ))
+        if (( ! KEYS_ARE_BACKED_UP ))
         then
-            echo "Keys: unlocked."
+            echo "Keys: locked, no backup found."
+            echo "Type 'keys open' to unlock them."
+        fi
+    fi
+
+    if (( ! KEYS_ARE_LOCKED ))
+    then
+        if (( KEYS_ARE_BACKED_UP ))
+        then
+            echo "Keys: unlocked and backed up."
+            echo "Last modified:"
+            stat .keys | grep "odify"
+            echo "Type 'keys close' to lock them."
+        fi
+        if (( ! KEYS_ARE_BACKED_UP ))
+        then
+            echo "Keys: unlocked, no backup found."
             echo "Type 'keys close' to lock them."
         fi
     fi
+}
+
+wrapBackUp(){
+    if (( KEYS_ARE_LOCKED ))
+    then
+        addCommitAndPushKeys
+    else
+        if (( ! KEYS_ARE_LOCKED ))
+        then
+            backUpKeys
+            addCommitAndPushKeys
+        fi
+    fi
+    if (( KEYS_ARE_PUSHED )) && (( KEYS_ARE_BACKED_UP))
+    then
+        echo "Keys have been encrypted, backed up and pushed."
+    fi
+}
+
+# FRONT END
+
+# check lock and backup status of keys
+if [[ -z "$1" ]]
+then
+    status
 fi
 
 if [[ "$1" = "close" ]]
@@ -194,31 +282,12 @@ then
     removeGnuDirectory
 fi
 
-if [ "$1" = "push" ] #DWIFM
+if [ "$1" = "push" ]
 then
-    if (( KEYS_ARE_LOCKED ))
-    then
-        addCommitAndPushKeys
-    else
-        if (( ! KEYS_ARE_LOCKED ))
-        then
-            safeClose
-            addCommitAndPushKeys
-        fi
-    fi
+    safePush #DWIFM
 fi
 
 if [ "$1" = "backup" ]
 then
-    if (( KEYS_ARE_LOCKED ))
-    then
-        addCommitAndPushKeys
-    else
-        if (( ! KEYS_ARE_LOCKED ))
-        then
-            backUpKeys
-            echo "Current keys backed up."
-            addCommitAndPushKeys
-        fi
-    fi
+    wrapBackUp
 fi
