@@ -159,9 +159,9 @@ addCommitAndPushKeys(){
     KEYS_ARE_PUSHED=1
 }
 
-lastModified(){
-    echo "Last modified:"
-    stat .keys | grep "odify"
+lastBackUp(){
+    echo "Last backup:"
+    stat .keys | grep "odify" | cut --delimiter=" " --fields=2- | sed 's/\..*\ / /'
 }
 # Wraps
 
@@ -218,7 +218,7 @@ status(){
         if (( KEYS_ARE_BACKED_UP ))
         then
             echo "Keys: locked and backed up."
-            lastModified
+            lastBackUp
             echo "Type 'keys open' to unlock them."
         fi
         if (( ! KEYS_ARE_BACKED_UP ))
@@ -233,7 +233,7 @@ status(){
         if (( KEYS_ARE_BACKED_UP ))
         then
             echo "Keys: unlocked and backed up."
-            lastModified
+            lastBackUp
             echo "Type 'keys close' to lock them."
         fi
         if (( ! KEYS_ARE_BACKED_UP ))
@@ -264,7 +264,7 @@ wrapBackUp(){
 # FRONT END
 
 # check lock and backup status of keys
-if [[ -z "$1" ]]
+if [ -z "$1" ] || [[ "$1" = "-s" ]] || [[ "$1" = "status" ]]
 then
     status
 fi
