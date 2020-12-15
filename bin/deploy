@@ -23,16 +23,16 @@ fi
 if [[ "$1" == "install" ]]
 then
 
-#ls -al $HOME > $HOME/auxLs
+#ls -al "$HOME" > "$HOME"/auxLs
 #grep "
-#for FILE in $(cat $HOME/auxLs); do
+#for FILE in $(cat "$HOME"/auxLs); do
 	#if mv "$HOME/$FILE" "$HOME/$FILE.$BACKUP_EXTENSION"
 	#if [[ -f  ]] || [[ -d  ]]
 	#'.pre-deploy' extention
 #	then
 #	echo "There are already files/directories that contain the extension"
 #	echo "'.pre-deploy'. That is a sign that there's someone else's 'home'"
-#	echo "already installed in this \$HOME directory."
+#	echo "already installed in this \"$HOME" directory."
 #	echo "Please remove or backup the files that contain the '.pre-deploy'"
 #	echo "extension so there won't be any conflicts." 
 #	else
@@ -40,28 +40,28 @@ then
 #	fi
 #done
 
-    cd $HOME
+    cd "$HOME"
 
 ### BACKUP
 
 ## DEMO OF WHAT IT WAS BEFORE
 #.bash_aliases
-#if [ -f $HOME/.bash_aliases ]
+#if [ -f "$HOME"/.bash_aliases ]
 #then
-#echo "Found $HOME/.bash_aliases"
-#echo "  Renaming to $HOME/.bash_aliases.pre-deploy"
-#mv $HOME/.bash_aliases $HOME/.bash_aliases.pre-deploy
+#echo "Found "$HOME"/.bash_aliases"
+#echo "  Renaming to "$HOME"/.bash_aliases.pre-deploy"
+#mv "$HOME"/.bash_aliases "$HOME"/.bash_aliases.pre-deploy
 #else
 #echo ".bash_aliases not found, installing from github..."
 #fi
 
-    cd $HOME/home
+    cd "$HOME"/home
     git ls-tree --name-only master > trackedFiles.txt
-    cd $HOME
+    cd "$HOME"
 
     BACKUP_EXTENSION=pre-deploy
 
-    for FILE in $(cat $HOME/home/trackedFiles.txt); do
+    for FILE in $(cat "$HOME"/home/trackedFiles.txt); do
     	if mv "$HOME/$FILE" "$HOME/$FILE.$BACKUP_EXTENSION"
     	then
     	    echo "How to do nothing when a command is sucessful?"
@@ -74,13 +74,13 @@ then
 
     echo "Converting ~/home repo into"
     echo "~/.home bare repo"
-    mv $HOME/home/.git $HOME/.home
-    rm -fr $HOME/home
-    cd $HOME/.home
+    mv "$HOME"/home/.git "$HOME"/.home
+    rm -fr "$HOME"/home
+    cd "$HOME"/.home
     git config --bool core.bare true
-    cd $HOME
+    cd "$HOME"
     echo "Checking out master branch in $HOME"
-    /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
+    /usr/bin/git --git-dir="$HOME"/.home --work-tree="$HOME" \
     checkout master .
 fi
     
@@ -88,25 +88,25 @@ fi
 
 if [[ "$1" == "uninstall" ]]
 then
-    cd $HOME
+    cd "$HOME"
     echo "Removing dotfiles and submodules..."
-    /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
+    /usr/bin/git --git-dir="$HOME"/.home --work-tree="$HOME" \
     rm -rf .
     echo "Creating ~/home directory"
-    mkdir $HOME/home
-    mv $HOME/.home $HOME/home/.git
-    rm -rf $HOME/.home
+    mkdir "$HOME"/home
+    mv "$HOME"/.home "$HOME"/home/.git
+    rm -rf "$HOME"/.home
     echo "Converting ~/home/.git into a non-bare git repo"
-    cd $HOME/home/.git
+    cd "$HOME"/home/.git
     git config --bool core.bare false
-    cd $HOME/home
+    cd "$HOME"/home
     echo "Checking out master branch in $HOME/home"
     git checkout master .
     echo "Putting backed up files in their original place prior to"
     echo "installation of this program."
 
     BACKUP_EXTENSION=pre-deploy
-    cd $HOME
+    cd "$HOME"
     rename -v "s/\.$BACKUP_EXTENSION$//" *.$BACKUP_EXTENSION
 fi
 

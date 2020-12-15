@@ -29,7 +29,7 @@
 # So to avoid that, it is _essential_ to be located in the $HOME
 # directory so one can point tar the paths without slashes.
 
-cd $HOME || exit
+cd "$HOME" || exit
 
 areKeysLocked(){
     if [ -d .password-store ]
@@ -141,19 +141,19 @@ openKeys(){
 
 addCommitAndPushKeys(){
     # check that you are in the master branch
-    /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
+    /usr/bin/git --git-dir="$HOME"/.home --work-tree="$HOME" \
         checkout master
     # home 'unstage': reset the staging area so we commit only the keys
-    /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
-        restore --staged $HOME
+    /usr/bin/git --git-dir="$HOME"/.home --work-tree="$HOME" \
+        restore --staged "$HOME"
     # add ~/.keys
-    /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
+    /usr/bin/git --git-dir="$HOME"/.home --work-tree="$HOME" \
         add ~/.keys
     #home commit -m "$TODAY Update ~/.keys"
-    /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
+    /usr/bin/git --git-dir="$HOME"/.home --work-tree="$HOME" \
         commit -m "Automatic keys update"
     #home push
-    /usr/bin/git --git-dir=$HOME/.home --work-tree=$HOME \
+    /usr/bin/git --git-dir="$HOME"/.home --work-tree="$HOME" \
         push
 
     KEYS_ARE_PUSHED=1
