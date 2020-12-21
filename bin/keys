@@ -41,6 +41,7 @@
 # WRAPS are simply to make the front end nicer to script.
 # Do not make calls within functions of the same level
 # since it can lead to inconsistencies.
+# (maybe it's time to migrate to another more robust language?)
 
 # BACK END
 
@@ -128,15 +129,19 @@ closeKeys(){
 
     backUpKeys
 
-    # a dangerous part of the script
+    # DANGER: an important file is replaced during this part
+    # so the script makes sure it only occurs when necessary
+    # to avoid removing important files that have no back up.
     if [[ -f ~/.keys ]]
+       # only if the important file has a backup
     then
-        rm -rf ~/.keys.tar
-        removeGnuDirectory
-        rm -rf ~/.password-store
+        rm -rf ~/.keys.tar # auxiliary file
+        removeGnuDirectory # important file 1
+        rm -rf ~/.password-store # important file 2
         KEYS_ARE_LOCKED=1
     else
         if [[ ! -f ~/.keys ]]
+           # if there is not back up found
         then
             echo "$HOME/.keys file not found; the backup was not successful."
             echo "Exiting."
@@ -183,7 +188,9 @@ addCommitAndPushKeys(){
 
 lastBackUp(){
     echo "Last backup:"
-    stat .keys | grep "odify" | cut --delimiter=" " --fields=2- | sed 's/\..*\ / /'
+    stat .keys | grep "odify" |
+        cut --delimiter=" " --fields=2- |
+        sed 's/\..*\ / /'
 }
 
 # Wraps
@@ -229,7 +236,7 @@ safePush(){
     else
         if (( ! KEYS_ARE_LOCKED ))
         then
-            closeKeys
+            backUpKeys
             addCommitAndPushKeys
         fi
     fi
@@ -299,6 +306,10 @@ fi
 
 if [[ "$1" = "open" ]]
 then
+    if [[ "$2" = "-f" ]] || [[ "$2" = "--force" ]]
+    then
+        openKeys
+    fi
     safeOpen
 fi
 
