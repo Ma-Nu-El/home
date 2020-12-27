@@ -99,11 +99,6 @@ backUpKeys(){
     # copy of the current keys _while_ also leaving the keys
     # open.  Use this one when you update a passphrase and want
     # to back it up  while still keeping the keys open.
-    if [ -f ~/.keys ]
-    then
-        rm -rf ~/.keys
-        KEYS_ARE_BACKED_UP=0
-    fi
 
     tar cf .keys.tar \
         .gnupg \
@@ -111,16 +106,16 @@ backUpKeys(){
 
     if gpg --output ~/.keys --symmetric ~/.keys.tar
     then
-        rm -rf ~/.keys.tar
         KEYS_ARE_BACKED_UP=1
     else
-        rm -rf ~/.keys.tar
         echo "Error: ~/.keys.tar file not encrypted successfully."
         echo "Removing ~/.keys.tar"
-        echo "Keys are _not_ backed up."
+        echo "Keys have _not_ been backed up."
         echo "Exiting."
+        rm -rf ~/.keys.tar
         exit
     fi
+    rm -rf ~/.keys.tar
 }
 
 # PRIMITIVE LEVEL 2
