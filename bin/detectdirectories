@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+### HELP ###
+ONE_LINE_DESCRIPTION="This script detects if there are any directories in the current directory."
+if [[ "$1" = "--help" ]]
+then
+    ~/bin/displayhelp "$ONE_LINE_DESCRIPTION"
+fi
+
+### BODY ###
+### https://stackoverflow.com/questions/6781225/how-do-i-check-if-a-directory-has-child-directories
+SUB_DIRECTORIES_LIST=directoriesCounter
+for i in * # travel all files/directories
+do
+    if [[ -d $i ]] # if it's a directory then
+    then
+        echo "$i" >> $SUB_DIRECTORIES_LIST
+        SUB_DIRECTORIES_COUNTER=$(cat $SUB_DIRECTORIES_LIST | wc -l)
+    fi
+done
+
+# STDOUT
+if [[ -z $1 ]]
+then
+    if [[ "$SUB_DIRECTORIES_COUNTER" -eq 0 ]]
+    then
+        echo "0 directories found."
+    else
+        echo "$SUB_DIRECTORIES_COUNTER directories found."
+    fi
+fi
+
+### OPTIONS ###
+# list
+if [[ "$1" = "--list" ]]
+then
+    cat "$SUB_DIRECTORIES_LIST"
+fi
+
+# actual number
+if [[ "$1" = "--number" ]]
+then
+    echo "$SUB_DIRECTORIES_COUNTER"
+fi
+
+# verbose
+if [[ "$1" = "-v" ]]
+then
+    if [[ "$SUB_DIRECTORIES_COUNTER" -eq 0 ]]
+    then
+        echo "There are not directories in here."
+    else
+        echo "There are $SUB_DIRECTORIES_COUNTER directories in here."
+        echo "Directories: $SUB_DIRECTORIES_COUNTER"
+        cat "$SUB_DIRECTORIES_LIST"
+    fi
+fi
+
+### EXIT ###
+# remove auxiliary files
+if [[ -f $SUB_DIRECTORIES_LIST ]]
+then
+    rm $SUB_DIRECTORIES_LIST
+fi
