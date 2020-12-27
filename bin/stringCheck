@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+#Check if two strings are identical
+
+# help
+help() {
+cat <<EOF
+Check if two strings are identical.
+
+Examples
+stringCheck "string1" "string2"
+stringCheck file1 file2
+
+EOF
+}
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
+    help
+    exit 0
+fi
+
+STRINGS_ARE_IDENTICAL=0
+
+# body
+if [ -f $1 ] # if input is a file then read the content of those files
+then
+    STRING1=$(cat $1)
+    STRING2=$(cat $2)
+else #anything else, just read the arguments as they are given
+    STRING1=$1
+    STRING2=$2
+fi
+
+# the money
+if [[ $STRING1 = $STRING2 ]]
+then
+    STRINGS_ARE_IDENTICAL=1
+fi
+
+# output
+if (( $STRINGS_ARE_IDENTICAL ))
+then
+    printf "Strings are identical. \n"
+else
+    printf "Not identical strings."
+fi
+
+exit
