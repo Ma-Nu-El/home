@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# a bash script to automate backup of data using rsync.
+
+# rsync -avP /source/path/ /dest/path/
