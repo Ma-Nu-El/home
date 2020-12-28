@@ -2,3 +2,7 @@
 # a bash script to automate backup of data using rsync.
 
 # rsync -avP /source/path/ /dest/path/
+
+# uses:
+# backup fromThisPlace toThatPlace
+# plus a cronjob
