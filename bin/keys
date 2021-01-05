@@ -68,6 +68,12 @@ areKeysLocked(){
                 KEYS_ARE_LOCKED=0
             fi
         fi
+    else
+        if [ ! -d .password-store ]
+           # if the dir doesn't exists in the first place
+        then
+            KEYS_ARE_LOCKED=1
+        fi
     fi
 }
 areKeysLocked
