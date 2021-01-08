@@ -59,17 +59,23 @@
         org-startup-indented nil
         flyspell-mode t
         )
-                                        ; https://emacs.stackexchange.com/questions/9709/keep-the-headlines-expanded-in-org-mode
+  ; https://emacs.stackexchange.com/questions/9709/keep-the-headlines-expanded-in-org-mode
   (setq org-startup-folded t)
-                                        ; https://stackoverflow.com/questions/24686129/how-can-i-make-org-mode-store-state-changes-for-a-repeating-task-in-a-drawer
+  ; https://stackoverflow.com/questions/24686129/how-can-i-make-org-mode-store-state-changes-for-a-repeating-task-in-a-drawer
   (setq org-log-into-drawer t) ; couldn't make it work with a STRING but still gets the job done anyway so I'm happy.
   (setq org-log-states-order-reversed t) ; doesn't really work...why?
+  ;; https://stackoverflow.com/questions/32423127/how-to-view-the-next-days-in-org-modes-agend
+  (setq	org-agenda-start-on-weekday nil) ; doesn't really work, still shows from last Monday,
+; but it's less of a problem if you set a long enough agenda. That way, when you advance to the last 
+; Sunday, you'll still going to have 2 weeks spare to look up; then, following Monday, you get 3 weeks
+; ahead anyway.
+  (setq org-agenda-span 21)
+; That's way I set it to 21 days.
   (add-to-list 'org-export-backends 'org)
-
-                                        ; ### TRACK TODO STATE CHANGES
-                                        ; https://orgmode.org/manual/Tracking-TODO-state-changes.html
-                                        ; OrgMode E03S01: Automatic logging of status changes:
-                                        ; https://www.youtube.com/watch?v=R4QSTDco_w8
+  ; ### TRACK TODO STATE CHANGES
+  ; https://orgmode.org/manual/Tracking-TODO-state-changes.html
+  ; OrgMode E03S01: Automatic logging of status changes:
+  ; https://www.youtube.com/watch?v=R4QSTDco_w8
   (setq org-todo-keywords
         '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)" "|" "DONE(d@/!)" "CANCELED(c@/!)")))
   (setq org-log-done t)
