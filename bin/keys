@@ -163,6 +163,7 @@ openKeys(){
         if tar xf .keys.tar
         then
             KEYS_ARE_LOCKED=0
+            rm -rf ~/.keys.tar # auxiliary file
         fi
     fi
 }
