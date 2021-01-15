@@ -65,7 +65,7 @@
   (setq org-log-into-drawer t) ; couldn't make it work with a STRING but still gets the job done anyway so I'm happy.
   (setq org-log-states-order-reversed t) ; doesn't really work...why?
   ;; https://stackoverflow.com/questions/32423127/how-to-view-the-next-days-in-org-modes-agend
-  (setq	org-agenda-start-on-weekday 1) ; doesn't really work, still shows from last Monday,
+  ;(setq	org-agenda-start-on-weekday 1) ; doesn't really work, still shows from last Monday,
 ; but it's less of a problem if you set a long enough agenda. That way, when you advance to the last 
 ; Sunday, you'll still going to have 2 weeks spare to look up; then, following Monday, you get 3 weeks
 ; ahead anyway.
@@ -79,7 +79,6 @@
   (setq org-todo-keywords
         '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)" "|" "DONE(d@/!)" "CANCELED(c@/!)")))
   (setq org-log-done t)
-  (define-key org-mode-map "SPC o i s t" 'org-insert-structure-template)
   ) ;; end after org
 
 ;; personal key bindings
