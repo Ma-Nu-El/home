@@ -17,3 +17,5 @@
 " disable back ups
 :set nobackup
 
+"https://vi.stackexchange.com/questions/574/keeping-lines-to-less-than-80-characters
+:set colorcolumn=80
