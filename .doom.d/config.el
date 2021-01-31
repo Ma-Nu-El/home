@@ -64,13 +64,8 @@
   ; https://stackoverflow.com/questions/24686129/how-can-i-make-org-mode-store-state-changes-for-a-repeating-task-in-a-drawer
   (setq org-log-into-drawer t) ; couldn't make it work with a STRING but still gets the job done anyway so I'm happy.
   (setq org-log-states-order-reversed t) ; doesn't really work...why?
-  ;; https://stackoverflow.com/questions/32423127/how-to-view-the-next-days-in-org-modes-agend
-  ;(setq	org-agenda-start-on-weekday 1) ; doesn't really work, still shows from last Monday,
-; but it's less of a problem if you set a long enough agenda. That way, when you advance to the last 
-; Sunday, you'll still going to have 2 weeks spare to look up; then, following Monday, you get 3 weeks
-; ahead anyway.
-  (setq org-agenda-span 21)
-; That's way I set it to 21 days.
+  (setq org-agenda-span 7)
+  ; Now it's just 7 days; discovered org-agenda-later and org-agenda-earlier!
   (add-to-list 'org-export-backends 'org)
   ; ### TRACK TODO STATE CHANGES
   ; https://orgmode.org/manual/Tracking-TODO-state-changes.html
@@ -79,7 +74,9 @@
   (setq org-todo-keywords
         '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)" "|" "DONE(d@/!)" "CANCELED(c@/!)")))
   (setq org-log-done t)
-  ) ;; end after org
+;;https://github.com/hlissner/doom-emacs/issues/3102
+(add-to-list 'org-modules 'org-habit)
+) ;; end after org
 
 ;; personal key bindings
 (define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
@@ -89,43 +86,43 @@
 (setq org-roam-directory "~/org/auxRoam")
 (add-hook 'after-init-hook 'org-roam-mode)
 (require 'org-roam-protocol)
-                                        ;disable backup
+	;disable backup
 (setq backup-inhibited t)
-                                        ;disable auto save
+	;disable auto save
 (setq auto-save-default nil)
 
-;; https://orgmode.org/manual/Breaking-Down-Tasks.html#Breaking-Down-Tasks
+	;; https://orgmode.org/manual/Breaking-Down-Tasks.html#Breaking-Down-Tasks
 (defun org-summary-todo (n-done n-not-done)
-  "Switch entry to DONE when all subentries are done, to TODO otherwise."
-  (let (org-log-done org-log-states)   ; turn off logging
-    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+ "Switch entry to DONE when all subentries are done, to TODO otherwise."
+ (let (org-log-done org-log-states)   ; turn off logging
+  (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 
-(add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
-;; also, you have to set the cookie property to 'todo recursive'; you can use
-;; Doom's 'SPC m o'. Still, it's too much work. Have to do something about it.
+	(add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+	;; also, you have to set the cookie property to 'todo recursive'; you can use
+	;; Doom's 'SPC m o'. Still, it's too much work. Have to do something about it.
 
 (setq org-id-link-to-org-use-id t)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(safe-local-variable-values (quote ((ispell-dictionary . "español")))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
-)
-;; orgmode: open links with default application?
-;;https://stackoverflow.com/questions/3973896/emacs-org-mode-file-viewer-associations
-;;https://emacs.stackexchange.com/questions/2856/how-to-configure-org-mode-to-respect-system-specific-default-applications-for-ex
-(setq org-file-apps
-'((auto-mode . emacs)
- ("\\.mm\\'" . default)
- ("\\.x?html?\\'" . default)
- ("\\.pdf\\'" . default)
- ("\\.jpg\\'" . default)
- ("\\.png\\'" . default)
-)
-)
+	(custom-set-variables
+	 ;; custom-set-variables was added by Custom.
+	 ;; If you edit it by hand, you could mess it up, so be careful.
+	 ;; Your init file should contain only one such instance.
+	 ;; If there is more than one, they won't work right.
+	 '(safe-local-variable-values (quote ((ispell-dictionary . "español")))))
+	(custom-set-faces
+	 ;; custom-set-faces was added by Custom.
+	 ;; If you edit it by hand, you could mess it up, so be careful.
+	 ;; Your init file should contain only one such instance.
+	 ;; If there is more than one, they won't work right.
+	)
+	;; orgmode: open links with default application?
+	;;https://stackoverflow.com/questions/3973896/emacs-org-mode-file-viewer-associations
+	;;https://emacs.stackexchange.com/questions/2856/how-to-configure-org-mode-to-respect-system-specific-default-applications-for-ex
+	(setq org-file-apps
+	 '((auto-mode . emacs)
+		 ("\\.mm\\'" . default)
+		 ("\\.x?html?\\'" . default)
+		 ("\\.pdf\\'" . default)
+		 ("\\.jpg\\'" . default)
+		 ("\\.png\\'" . default)
+	  )
+	)
