@@ -48,7 +48,7 @@ fi
 # mount
 if [[ "$1" = "$ACTION1" ]]
 then
-   cp ./* $ROAMDIR/
+   cp -r ./* $ROAMDIR/
 fi
 
 if [[ "$1" = "$ACTION2" ]]
@@ -87,7 +87,7 @@ fi
 # fetch
 if [[ "$1" = "$ACTION3" ]]
 then
-   cp $ROAMDIR/* ./
+   cp -r $ROAMDIR/* ./
    if [[ "$2" = "--$ACTION31" ]]
    then
        rm $ROAMDIR/*
