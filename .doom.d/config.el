@@ -58,7 +58,9 @@
 
 ;; BEGIN AFTER ORG
 (after! org
-  (setq org-hide-leading-stars t
+  (setq org-fontify-quote-and-verse-blocks nil
+        org-fontify-whole-heading-line nil
+        org-hide-leading-stars nil
         org-startup-indented nil
         flyspell-mode t
         )
@@ -82,8 +84,8 @@
 
 
   (setq org-log-states-order-reversed t) ; doesn't really work...why?
-  (setq org-agenda-span 7)
-                                        ; Now it's just 7 days; discovered org-agenda-later and org-agenda-earlier!
+  (setq org-agenda-span 21) ; does work
+  (setq org-agenda-start-on-weekday 1) ; doesn't work
   (add-to-list 'org-export-backends 'org)
                                         ; ### TRACK TODO STATE CHANGES
                                         ; https://orgmode.org/manual/Tracking-TODO-state-changes.html
