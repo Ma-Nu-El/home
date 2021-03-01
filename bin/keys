@@ -331,3 +331,4 @@ then
 fi
 
 # TODO: use hash to check if keys have been changed since last backup?
+# using shasum
