@@ -116,6 +116,12 @@
        ( "c" "Custom agenda, only 'contacts' tag"
          ((agenda ""))
          ((org-agenda-tag-filter-preset '("+contacts"))))
+       ( "k" "Custom agenda, ignore 'music' tag"
+         ((agenda ""))
+         ((org-agenda-tag-filter-preset '("-music"))))
+       ( "K" "Custom agenda, only 'music' tag"
+         ((agenda ""))
+         ((org-agenda-tag-filter-preset '("+music"))))
        )
      )
    )
