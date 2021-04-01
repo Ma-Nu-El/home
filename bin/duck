@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+surfraw duckduckgo "$1" >/dev/null 2>/dev/null &
+

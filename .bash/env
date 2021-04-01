@@ -4,5 +4,8 @@
 export MY_ALIASES="~/.bash/aliases"
 export MY_PROMPT="~/.bash/prompt"
 export MY_FUNCTIONS="~/.bash/functions"
+set PASSWORD_STORE_ENABLE_EXTENSIONS=true
+# https://www.passwordstore.org/
+# https://git.zx2c4.com/password-store/about/
 # https://apple.stackexchange.com/questions/33677/how-can-i-configure-mac-terminal-to-have-color-ls-output
 export CLICOLOR=1

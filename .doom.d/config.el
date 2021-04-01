@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+(setq user-full-name "Manuel Fuica Morales"
+      user-mail-address "m.fuica01@ufromail.cl")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -36,7 +36,8 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type nil)
+;; https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#why-is-emacsdoom-slow
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -54,73 +55,129 @@
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
+
+;; BEGIN AFTER ORG
 (after! org
-  (setq org-hide-leading-stars t
+  (setq org-fontify-quote-and-verse-blocks nil
+        org-fontify-whole-heading-line nil
+        org-hide-leading-stars nil
         org-startup-indented nil
         flyspell-mode t
         )
                                         ; https://emacs.stackexchange.com/questions/9709/keep-the-headlines-expanded-in-org-mode
   (setq org-startup-folded t)
                                         ; https://stackoverflow.com/questions/24686129/how-can-i-make-org-mode-store-state-changes-for-a-repeating-task-in-a-drawer
-  (setq org-log-into-drawer t) ; couldn't make it work with a STRING but still gets the job done anyway so I'm happy.
-  (setq org-log-states-order-reversed t) ; doesn't really work...why?
-  (add-to-list 'org-export-backends 'org)
+  (setq org-log-into-drawer "LOGBOOK") 
+  (setq org-clock-into-drawer "CLOCKBOOK")
 
+  ;; https://github.com/pokeefe/Settings/blob/master/emacs-settings/.emacs.d/modules/init-org.el
+  ;; Effort and global properties
+  (setq org-global-properties '(
+                                ("Effort_ALL". "0 0:01 0:03 0:05 0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00
+                               4:00 6:00 8:00")
+                                )
+        )
+
+  ;; Set global Column View format
+  (setq org-columns-default-format '"%34ITEM(Item) %10TAGS(Tags) %5TODO(State)
+ %5Effort(Estim){:} %10CLOCKSUM(Actual)")
+
+
+  (setq org-log-states-order-reversed t) ; doesn't really work...why?
+  (setq org-agenda-span 21) ; does work
+  (setq org-agenda-start-on-weekday 1) ; doesn't work
+  (add-to-list 'org-export-backends 'org)
                                         ; ### TRACK TODO STATE CHANGES
                                         ; https://orgmode.org/manual/Tracking-TODO-state-changes.html
                                         ; OrgMode E03S01: Automatic logging of status changes:
                                         ; https://www.youtube.com/watch?v=R4QSTDco_w8
-  (setq org-todo-keywords
-        '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)" "|" "DONE(d@/!)" "CANCELED(c@/!)")))
-  (setq org-log-done t)
-  (define-key org-mode-map "SPC o i s t" 'org-insert-structure-template)
-  ) ;; end after org
 
-;; personal key bindings
+  (setq org-todo-keywords
+        '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)"
+                    "SOMEDAY(s)" "|" "DONE(d@/!)" "CANCELED(c@/!)")
+          )
+        )
+  (setq org-log-done t)
+  ;;https://github.com/hlissner/doom-emacs/issues/3102
+  (add-to-list 'org-modules 'org-habit)
+  ;; https://emacs.stackexchange.com/questions/38183/how-to-exclude-a-file-from-agenda
+  (custom-set-variables
+   '(org-agenda-custom-commands
+     '(( "h" "Custom agenda, ignore 'habit' tag"
+         ((agenda ""))
+         ((org-agenda-tag-filter-preset '("-habit")))
+         )
+       ( "H" "Custom agenda, only 'habit' tag"
+         ((agenda ""))
+         ((org-agenda-tag-filter-preset '("+habit"))))
+       ( "u" "Custom agenda, only 'university' tag"
+         ((agenda ""))
+         ((org-agenda-tag-filter-preset '("+university"))))
+       ( "c" "Custom agenda, only 'contacts' tag"
+         ((agenda ""))
+         ((org-agenda-tag-filter-preset '("+contacts"))))
+       ( "k" "Custom agenda, ignore 'music' tag"
+         ((agenda ""))
+         ((org-agenda-tag-filter-preset '("-music"))))
+       ( "K" "Custom agenda, only 'music' tag"
+         ((agenda ""))
+         ((org-agenda-tag-filter-preset '("+music"))))
+       )
+     )
+   )
+  ) ;; END AFTER ORG
+
+;; PERSONAL KEY BINDINGS
 (define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
 (global-set-key (kbd "\C-cr") 'ispell-region)
 
-;; roam capabilities
+;; ORG-ROAM
 (setq org-roam-directory "~/org/auxRoam")
 (add-hook 'after-init-hook 'org-roam-mode)
 (require 'org-roam-protocol)
-                                        ;disable backup
+
+;; https://www.orgroam.com/manual.html#Daily_002dnotes
+(setq org-roam-dailies-directory "~/org/dailies/2021")
+(setq org-roam-dailies-capture-templates
+      '(("d" "default" entry
+         #'org-roam-capture--get-point
+         "* %?"
+         :file-name "daily/%<%Y-%m-%d>"
+         :head "#+title: %<%Y-%m-%d>\n\n"))
+      )
+
+;; disable backup
 (setq backup-inhibited t)
-                                        ;disable auto save
+;; disable auto save
 (setq auto-save-default nil)
 
+;; MORE ABOUT ORG MODE
 ;; https://orgmode.org/manual/Breaking-Down-Tasks.html#Breaking-Down-Tasks
 (defun org-summary-todo (n-done n-not-done)
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
   (let (org-log-done org-log-states)   ; turn off logging
-    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
-
+    (org-todo (if (= n-not-done 0) "DONE" "TODO")))
+  )
 (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
-;; also, you have to set the cookie property to 'todo recursive'; you can use
-;; Doom's 'SPC m o'. Still, it's too much work. Have to do something about it.
+;; also, you have to set the cookie property to 'todo recursive'; you
+;; can use Doom's 'SPC m o'. Still, it's too much work. Have to do
+;; something about it.
 
 (setq org-id-link-to-org-use-id t)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(safe-local-variable-values (quote ((ispell-dictionary . "español")))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
-)
+
 ;; orgmode: open links with default application?
 ;;https://stackoverflow.com/questions/3973896/emacs-org-mode-file-viewer-associations
 ;;https://emacs.stackexchange.com/questions/2856/how-to-configure-org-mode-to-respect-system-specific-default-applications-for-ex
 (setq org-file-apps
-'((auto-mode . emacs)
- ("\\.mm\\'" . default)
- ("\\.x?html?\\'" . default)
- ("\\.pdf\\'" . default)
- ("\\.jpg\\'" . default)
- ("\\.png\\'" . default)
-)
-)
+      '((auto-mode . emacs)
+        ("\\.mm\\'" . default)
+        ("\\.x?html?\\'" . default)
+        ("\\.pdf\\'" . default)
+        ("\\.jpg\\'" . default)
+        ("\\.png\\'" . default)
+        )
+      )
+
+(custom-set-variables
+ '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
+ )

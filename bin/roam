@@ -40,7 +40,7 @@ then
    echo "now you want them back updated."
    echo ""
    echo "    $ACTION3"
-   echo "Copy the content of $ROAMDIR into current directory."
+   echo "Copy the entire content of $ROAMDIR into current directory."
    echo "If you append "--$ACTION31" to $ACTION3, do it and also"
    echo "remove the content of $ROAMDIR after $ACTION3."
 fi
@@ -48,7 +48,7 @@ fi
 # mount
 if [[ "$1" = "$ACTION1" ]]
 then
-   cp ./* $ROAMDIR/
+   cp -r ./* $ROAMDIR/
 fi
 
 if [[ "$1" = "$ACTION2" ]]
@@ -87,7 +87,7 @@ fi
 # fetch
 if [[ "$1" = "$ACTION3" ]]
 then
-   cp $ROAMDIR/* ./
+   cp -r $ROAMDIR/* ./
    if [[ "$2" = "--$ACTION31" ]]
    then
        rm $ROAMDIR/*

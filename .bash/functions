@@ -28,16 +28,6 @@ cd ~/org
 fi
 }
 
-# smarter norg
-norg(){
-if [[ "$PWD" = "$HOME/norg" ]]
-then
-	cd norg
-else
-cd ~/norg
-fi
-}
-
 # cd and git status into directory
 cd-and-git-status(){
 if [ -d "$1" ] # if argument is a directory
