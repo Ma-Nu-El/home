@@ -28,11 +28,16 @@ then
   then
     vim $HOME/.bash/aliases
   fi
+
   if [[ "$2" == "f" ]]
   then
     vim $HOME/.bash/functions
   fi
-  cd ~/.bash/
+
+  if [[ "$2" == "e" ]]
+  then
+    vim $HOME/.bash/env
+  fi
 fi
 
 if [[ "$1" == "t" ]]
