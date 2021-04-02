@@ -50,10 +50,10 @@ alias lah="ls -lah"
 alias dusort="du -sh * | sort -h" # sort by size
 alias eo="clear && pwd && echo '-----' && ls" # was 'pa', but was the most used one so now is more ergo
 # https://superuser.com/questions/250227/how-do-i-see-what-my-most-used-linux-command-are
-alias eoe="clear && pwd && echo '-----' && ls -a" # same deal
+alias eoa="clear && pwd && echo '-----' && ls -a" # same deal but with hidden files
 alias hpa="cd ~ && clear && pwd && echo '-----' && ls"
 alias hpaa="cd ~ && clear && pwd && echo '-----' && ls -a"
-alias lagrep='ls -a | grep -i' # append your simple grep search
+alias lagrep='ls -a | grep -i' # append your simple grep search, case insensitive
 # inbox
 alias i="/usr/bin/vi ~/org/inbox.org"
 alias ii="inbox fetch --clean >> *inbox.org"
