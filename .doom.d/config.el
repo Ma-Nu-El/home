@@ -181,3 +181,8 @@
 (custom-set-variables
  '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
  )
+
+
+;; Orgmode latex export: new page after TOC
+;; https://emacs.stackexchange.com/questions/42558/org-mode-export-force-page-break-after-toc
+(setq org-latex-toc-command "\\tableofcontents \\clearpage")
