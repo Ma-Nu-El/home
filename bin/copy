@@ -4,7 +4,7 @@
 
 if [[ -f $1 ]]
 then
-cat $1|xclip -i -selection clipboard
+cat "$1"|xclip -i -selection clipboard
 else
 echo "$1"|xclip -i -selection clipboard
 fi
