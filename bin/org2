@@ -14,7 +14,7 @@
 # html export
 if [ "$1" == "html" ]
 then
-    emacs --batch --visit $2 -f org-html-export-to-html --kill
+    emacs --batch --visit "$2" -f org-html-export-to-html --kill
 fi
 
 
@@ -23,5 +23,5 @@ fi
 # not necessarily a problem though.
 if [ "$1" == "org" ]
 then
-    emacs --batch --visit $2 -f org-org-export-to-org --kill
+    emacs --batch --visit "$2" -f org-org-export-to-org --kill
 fi

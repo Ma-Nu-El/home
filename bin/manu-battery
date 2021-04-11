@@ -8,7 +8,8 @@
 # 'pmset -g batt'
 # shows 92; the same shown by the DM top bar
 # Thus, use the output of 'pmset -g batt'
-#
+
+set -o pipefail
 
 usage() {
 cat <<EOF

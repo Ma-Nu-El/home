@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # dotfiles edition
 
+set -o pipefail
+
 if [[ -z "$1"  ]]
 then
 echo "vim to dotfile of...?"
@@ -19,45 +21,40 @@ fi
 
 if [[ "$1" == "cdf" ]]
 then
-vim $HOME/bin/cdf
+vim "$HOME"/bin/cdf
 fi
 
 if [[ "$1" == "b" ]]
 then
   if [[ "$2" == "a" ]]
   then
-    vim $HOME/.bash/aliases
+    vim "$HOME"/.bash/aliases
   fi
-
   if [[ "$2" == "f" ]]
   then
-    vim $HOME/.bash/functions
+    vim "$HOME"/.bash/functions
   fi
-
-  if [[ "$2" == "e" ]]
-  then
-    vim $HOME/.bash/env
-  fi
+  cd ~/.bash/ || exit
 fi
 
 if [[ "$1" == "t" ]]
 then
-vim $HOME/.tmux.conf
+vim "$HOME"/.tmux.conf
 fi
 
 if [[ "$1" == "v" ]]
 then
-vim $HOME/.vimrc
+vim "$HOME"/.vimrc
 fi
 
 if [[ "$1" == "e" ]]
 then
   if [[ "$2" == "i" ]]
   then
-    vim $HOME/.doom.d/init.el
+    vim "$HOME"/.doom.d/init.el
   fi
   if [[ "$2" == "c" ]]
   then
-    vim $HOME/.doom.d/config.el
+    vim "$HOME"/.doom.d/config.el
   fi
 fi
