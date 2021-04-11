@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 ## hopefully to be a wrapper for git AND rsync
 
+set -o pipefail
+
 ### HELP
 
 #If no argument, display mini-help.
@@ -40,7 +42,7 @@ then
 #	fi
 #done
 
-    cd "$HOME"
+    cd "$HOME" || exit
 
 ### BACKUP
 
@@ -55,9 +57,9 @@ then
 #echo ".bash_aliases not found, installing from github..."
 #fi
 
-    cd "$HOME"/home
+    cd "$HOME"/home || exit
     git ls-tree --name-only master > trackedFiles.txt
-    cd "$HOME"
+    cd "$HOME" || exit
 
     BACKUP_EXTENSION=pre-deploy
 
@@ -76,9 +78,9 @@ then
     echo "~/.home bare repo"
     mv "$HOME"/home/.git "$HOME"/.home
     rm -fr "$HOME"/home
-    cd "$HOME"/.home
+    cd "$HOME"/.home || exit
     git config --bool core.bare true
-    cd "$HOME"
+    cd "$HOME" || exit
     echo "Checking out master branch in $HOME"
     /usr/bin/git --git-dir="$HOME"/.home --work-tree="$HOME" \
     checkout master .
@@ -88,7 +90,7 @@ fi
 
 if [[ "$1" == "uninstall" ]]
 then
-    cd "$HOME"
+    cd "$HOME" || exit
     echo "Removing dotfiles and submodules..."
     /usr/bin/git --git-dir="$HOME"/.home --work-tree="$HOME" \
     rm -rf .
@@ -97,16 +99,16 @@ then
     mv "$HOME"/.home "$HOME"/home/.git
     rm -rf "$HOME"/.home
     echo "Converting ~/home/.git into a non-bare git repo"
-    cd "$HOME"/home/.git
+    cd "$HOME"/home/.git || exit
     git config --bool core.bare false
-    cd "$HOME"/home
+    cd "$HOME"/home || exit
     echo "Checking out master branch in $HOME/home"
     git checkout master .
     echo "Putting backed up files in their original place prior to"
     echo "installation of this program."
 
     BACKUP_EXTENSION=pre-deploy
-    cd "$HOME"
+    cd "$HOME" || exit
     rename -v "s/\.$BACKUP_EXTENSION$//" *.$BACKUP_EXTENSION
 fi
 
