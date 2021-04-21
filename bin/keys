@@ -52,7 +52,8 @@
 # So to avoid that, it is _essential_ to be located in the $HOME
 # directory so one can point tar the paths without slashes.
 
-set - o pipefail
+# set - o pipefail
+# causes trouble?
 
 cd "$HOME" || exit
 
