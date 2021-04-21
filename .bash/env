@@ -4,6 +4,9 @@
 export MY_ALIASES="~/.bash/aliases"
 export MY_PROMPT="~/.bash/prompt"
 export MY_FUNCTIONS="~/.bash/functions"
+export LV2_PATH="/usr/local/lib/lv2:/usr/lib/lv2:$HOME/.lv2"
+# https://discourse.ardour.org/t/lsp-plugins-package-version-1-0-20-is-out/90340/5
+# https://stackoverflow.com/questions/21131590/how-to-add-multiple-path-in-path-variable-linux
 set PASSWORD_STORE_ENABLE_EXTENSIONS=true
 # https://www.passwordstore.org/
 # https://git.zx2c4.com/password-store/about/
