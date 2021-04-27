@@ -51,6 +51,8 @@ alias dusort="du -sh * | sort -h" # sort by size
 alias eo="clear && pwd && echo '-----' && ls" # was 'pa', but was the most used one so now is more ergo
 # https://superuser.com/questions/250227/how-do-i-see-what-my-most-used-linux-command-are
 alias eoa="clear && pwd && echo '-----' && ls -a" # same deal but with hidden files
+alias eol="clear && pwd && echo '-----' && ls -1" # was 'pa', but was the most used one so now is more ergo
+alias eola="clear && pwd && echo '-----' && ls -1a" # was 'pa', but was the most used one so now is more ergo
 alias hpa="cd ~ && clear && pwd && echo '-----' && ls"
 alias hpaa="cd ~ && clear && pwd && echo '-----' && ls -a"
 alias lagrep='ls -a | grep -i' # append your simple grep search, case insensitive
@@ -59,6 +61,8 @@ alias i="/usr/bin/vi ~/org/inbox.org"
 alias ii="inbox fetch --clean >> *inbox.org"
 alias cati="cat ~/org/inbox.org"
 # quick navigation
+alias ...="cd ../../"
+alias ....="cd ../../../"
 alias uni="~/org/uni"
 alias bin="~/bin"
 alias drive="~/myDrive"
@@ -68,6 +72,7 @@ alias 2="~/Downloads"
 alias 3="~/Documents"
 alias 4="~/Pictures"
 alias 5="~/Videos"
+alias 6="~/Music"
 # quick editor
 alias v="vim"
 alias e="emacs -nw" # opens new instance of emacs in the terminal: no GUI
