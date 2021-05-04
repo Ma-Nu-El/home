@@ -7,7 +7,49 @@
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Manuel Fuica Morales"
-      user-mail-address "m.fuica01@ufromail.cl")
+      ;; user-mail-address "m.fuica01@ufromail.cl"
+      )
+;; (setq smtpmail-smtp-server "smtp.gmail.com")
+;; (setq smtpmail-smtp-service 587) ;; this might need to change
+
+
+;; https://stackoverflow.com/questions/17281669/using-smtp-gmail-and-starttls
+;; https://emacs.stackexchange.com/questions/46257/sending-email-fails-with-process-smtpmail-not-running
+(setq mu4e-maildir "~/Maildir")
+(setq mu4e-attachment-dir (expand-file-name "~/myDrive/mailAttachments"))
+;; Details for mu4e-attachement-dir configuration:
+;; https://github.com/hlissner/doom-emacs/issues/3294
+
+;; https://gist.github.com/areina/3879626
+(setq message-send-mail-function 'smtpmail-send-it
+      starttls-use-gnutls t
+      smtpmail-starttls-credentials
+      '(("smtp.gmail.com" 587 nil nil))
+      smtpmail-auth-credentials
+      (expand-file-name "~/.authinfo.gpg")
+      smtpmail-default-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587
+      smtpmail-debug-info t
+      ;; auth-sources '(password-store)
+      auth-source-debug t
+      )
+
+-----BEGIN PGP MESSAGE-----
+
+jA0ECQMC8cgBmdsmtoX70sE7AW7N01llSKvughVmDJrBCk3HYvEQdsEz8Z8SgLdc
+AUM7zfHtpRhMm/iYGAlX4cM/a7WcwQrr2jYaBQvNKq12n0rVrQY7CZ4GlYaL/39O
+i0hpgDcLSyAPFS+nzjtrAKvc57eLxIwbCUfajAihNWO5z7mP6XaFjWEsG3/FltkH
+/818BEqPbO7Q34r6zlU3uQee3pbVY/M+FdeHmxBPSIzugMXW1D7nDXn1PI7jxgeN
+QLe2yjum1Q5ikxL/H946YQcLBjW715KAgdHmJjn57fo7V67QxPNcGcei5hVSKE1N
+uL+h3+I2QXFsZqzCmaSqlnFW8Rmcu8gJaLYHzFzNJG7jmzPCn1WgnB84LKJB640k
+yht3UFgj32wB3eQldFekmWQkA8MDwmtwhwKubYPMvoM2H3Rg9O9NJPUIHgllb9kQ
+jAqHQAgD3orQyw18ejhjBwPv0N934+sc5fJs9d1ygYaVukVhqLR18QU66rreMbss
+sRx30tEPtZB6b++uU6EOAGPf/z4uM0fSL6x8ZpSxVwV++moZD+q3ByoJl1iDO7Zw
+IcCk9JIPD5Iei+ssC6nMaMpNhvZsRc4p1+FENUkfqSrEvBYBb9B6J4iGud3kEiPW
+UXIQ1KPZ34NDgFispTn2f8Px0NR/uRMSsUOKl63r3UksOMboQ7HO7xfx0vJ0
+=NoKE
+-----END PGP MESSAGE-----
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -106,16 +148,23 @@
      '(( "h" "Custom agenda, ignore 'habit' tag"
          ((agenda ""))
          ((org-agenda-tag-filter-preset '("-habit")))
+         ("~/org/agenda.html") ;; enables html export of this agenda view
          )
        ( "H" "Custom agenda, only 'habit' tag"
          ((agenda ""))
          ((org-agenda-tag-filter-preset '("+habit"))))
-       ( "u" "Custom agenda, only 'university' tag"
+       ( "u" "Custom agenda, ignore 'university' tag"
+         ((agenda ""))
+         ((org-agenda-tag-filter-preset '("-university"))))
+       ( "U" "Custom agenda, only 'university' tag"
          ((agenda ""))
          ((org-agenda-tag-filter-preset '("+university"))))
        ( "c" "Custom agenda, only 'contacts' tag"
          ((agenda ""))
          ((org-agenda-tag-filter-preset '("+contacts"))))
+       ( "b" "Custom agenda, only 'contacts' tag"
+         ((agenda ""))
+         ((org-agenda-tag-filter-preset '("+birthday"))))
        ( "k" "Custom agenda, ignore 'music' tag"
          ((agenda ""))
          ((org-agenda-tag-filter-preset '("-music"))))
@@ -125,6 +174,52 @@
        )
      )
    )
+  ;; Hide filename in agenda view
+  (setq org-agenda-prefix-format "%t %s")
+  ;; https://lists.gnu.org/archive/html/emacs-orgmode/2010-01/msg00744.html
+
+  ;; Disable "now" line in org agenda view
+  ;; That line is counterintuitive sometimes when checking agenda
+  ;; remotely.
+  (setq org-agenda-show-current-time-in-grid nil)
+  (setq org-agenda-hide-tags-regexp ".")
+  (setq org-agenda-use-time-grid nil)
+  ;; https://orgmode.org/manual/Agenda-Commands.html
+  ;; Orgmode latex export: new page after TOC
+  ;; https://emacs.stackexchange.com/questions/42558/org-mode-export-force-page-break-after-toc
+  (setq org-latex-toc-command "\\tableofcontents \\clearpage")
+
+  ;; [2021-05-03 Mon]
+  ;; By default, doom emacs wont store email links in mu4e headers view
+  ;; have to enable org-mu4e
+  (require 'org-mu4e)
+
+  ;; MORE ABOUT ORG MODE
+  ;; https://orgmode.org/manual/Breaking-Down-Tasks.html#Breaking-Down-Tasks
+  (defun org-summary-todo (n-done n-not-done)
+    "Switch entry to DONE when all subentries are done, to TODO otherwise."
+    (let (org-log-done org-log-states)   ; turn off logging
+      (org-todo (if (= n-not-done 0) "DONE" "TODO")))
+    )
+  (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+  ;; also, you have to set the cookie property to 'todo recursive'; you
+  ;; can use Doom's 'SPC m o'. Still, it's too much work. Have to do
+  ;; something about it.
+
+  (setq org-id-link-to-org-use-id t)
+
+  ;; orgmode: open links with default application?
+  ;;https://stackoverflow.com/questions/3973896/emacs-org-mode-file-viewer-associations
+  ;;https://emacs.stackexchange.com/questions/2856/how-to-configure-org-mode-to-respect-system-specific-default-applications-for-ex
+  (setq org-file-apps
+        '((auto-mode . emacs)
+          ("\\.mm\\'" . default)
+          ("\\.x?html?\\'" . default)
+          ("\\.pdf\\'" . default)
+          ("\\.jpg\\'" . default)
+          ("\\.png\\'" . default)
+          )
+        )
   ) ;; END AFTER ORG
 
 ;; PERSONAL KEY BINDINGS
@@ -137,7 +232,7 @@
 (require 'org-roam-protocol)
 
 ;; https://www.orgroam.com/manual.html#Daily_002dnotes
-(setq org-roam-dailies-directory "~/org/dailies/2021")
+(setq org-roam-dailies-directory "~/org/dailies/")
 (setq org-roam-dailies-capture-templates
       '(("d" "default" entry
          #'org-roam-capture--get-point
@@ -151,38 +246,6 @@
 ;; disable auto save
 (setq auto-save-default nil)
 
-;; MORE ABOUT ORG MODE
-;; https://orgmode.org/manual/Breaking-Down-Tasks.html#Breaking-Down-Tasks
-(defun org-summary-todo (n-done n-not-done)
-  "Switch entry to DONE when all subentries are done, to TODO otherwise."
-  (let (org-log-done org-log-states)   ; turn off logging
-    (org-todo (if (= n-not-done 0) "DONE" "TODO")))
-  )
-(add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
-;; also, you have to set the cookie property to 'todo recursive'; you
-;; can use Doom's 'SPC m o'. Still, it's too much work. Have to do
-;; something about it.
-
-(setq org-id-link-to-org-use-id t)
-
-;; orgmode: open links with default application?
-;;https://stackoverflow.com/questions/3973896/emacs-org-mode-file-viewer-associations
-;;https://emacs.stackexchange.com/questions/2856/how-to-configure-org-mode-to-respect-system-specific-default-applications-for-ex
-(setq org-file-apps
-      '((auto-mode . emacs)
-        ("\\.mm\\'" . default)
-        ("\\.x?html?\\'" . default)
-        ("\\.pdf\\'" . default)
-        ("\\.jpg\\'" . default)
-        ("\\.png\\'" . default)
-        )
-      )
-
 (custom-set-variables
  '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
  )
-
-
-;; Orgmode latex export: new page after TOC
-;; https://emacs.stackexchange.com/questions/42558/org-mode-export-force-page-break-after-toc
-(setq org-latex-toc-command "\\tableofcontents \\clearpage")
