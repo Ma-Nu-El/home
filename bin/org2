@@ -9,6 +9,7 @@
 # org2html
 # org2org
 
+set -o pipefail
 
 # https://stackoverflow.com/questions/22072773/batch-export-of-org-mode-files-from-the-command-line 
 # html export
@@ -25,3 +26,13 @@ if [ "$1" == "org" ]
 then
     emacs --batch --visit "$2" -f org-org-export-to-org --kill
 fi
+
+
+#Doesn't work, but will
+#https://orgmode.org/manual/Exporting-Agenda-Views.html
+# generate agenda view ignoring "habit" tag
+#if [ "$1" == "agenda" ]
+#then
+#emacs -eval  (org-store-agenda-views) -kill
+#fi
+
