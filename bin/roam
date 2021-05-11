@@ -3,6 +3,9 @@
 # Doom Emacs Org-roam.
 # Standard bare help system?
 
+set -o pipefail
+
+#DEFINE VARIABLES
 ROAMDIR=~/org/auxRoam
 
 ACTION0=dummy
@@ -11,46 +14,62 @@ ACTION2=unmount
 ACTION3=fetch
 ACTION31=clean
 
+#HELP
+## SHORT
+shortHelp() {
+echo 'This bash script helps you put the content of the current directory'
+echo "into $ROAMDIR and also the content of that directory into the"
+echo 'current directory. For more info type "roam --help"'
+echo 'You can also check commit 2047847 from https://github.com/Ma-Nu-El/home'
+echo 'https://github.com/Ma-Nu-El/home/commit/2047847'
+}
+
 if [[ -z $1 ]]
 then
-   echo "This bash script helps you put the content of the current directory"
-   echo "into $ROAMDIR and also the content of that directory into the"
-   echo "current directory. For more info type 'roam --help'"
-   echo "You can also check commit 2047847 from https://github.com/Ma-Nu-El/home"
-   echo "https://github.com/Ma-Nu-El/home/commit/2047847"
+   shortHelp
+   exit 0
 fi
 
-if [[ "$1" = "--help" ]]
+
+## LONG
+longHelp() {
+echo "roam"
+echo "Enable and disable org-roam graph capabilities."
+echo "USAGE"
+echo "    roam OPTIONS"
+echo "OPTIONS"
+echo "  --help, -h, -?, help"
+echo "      Display this page."
+echo "  $ACTION1"
+echo "      Add the content of current directory into $ROAMDIR"
+echo "  $ACTION2"
+echo "      Replace files in current directory by their correspondent"
+echo "      parts in $ROAMDIR. Use it once you edited your files and"
+echo "      now you want them back updated."
+echo "  $ACTION3"
+echo "      Copy the entire content of $ROAMDIR into current directory."
+echo "      If you append '"--$ACTION31"' to '$ACTION3', do it and also"
+echo "      remove the content of $ROAMDIR after $ACTION3."
+echo ""
+echo "   Note that '$ACTION2' fetches only previously created files."
+echo "   If you created new files in $ROAMDIR, use '$ACTION3' instead."
+echo "   If not, your new files won't be fetched back."
+}
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
 then
-   echo "roam"
-   echo "Enable and disable org-roam graph capabilities."
-   echo ""
-   echo "USAGE"
-   echo "    roam OPTIONS"
-   echo "OPTIONS"
-   echo "    --help"
-   echo "Display this page."
-   echo ""
-   echo "    $ACTION1"
-   echo "Add the content of current directory into $ROAMDIR"
-   echo ""
-   echo "    $ACTION2"
-   echo "Replace files in current directory by their correspondent"
-   echo "parts in $ROAMDIR. Use it once you edited your files and"
-   echo "now you want them back updated."
-   echo ""
-   echo "    $ACTION3"
-   echo "Copy the entire content of $ROAMDIR into current directory."
-   echo "If you append "--$ACTION31" to $ACTION3, do it and also"
-   echo "remove the content of $ROAMDIR after $ACTION3."
+   longHelp
+   exit 0
 fi
 
-# mount
+
+# MOUNT
 if [[ "$1" = "$ACTION1" ]]
 then
    cp -r ./* $ROAMDIR/
 fi
 
+# UNMOUNT
 if [[ "$1" = "$ACTION2" ]]
 then
 
@@ -67,30 +86,47 @@ then
    done
 
    # find a match and proceed to move files back
-   for localfile in $(cat LOCALFILES)
+   # for localfile in $(cat LOCALFILES)
+   # do
+   #     for roamfile in $(cat ROAMFILES)
+   #     do
+   #         if [ "$localfile" == "$roamfile" ]
+   #         then
+   #            rm -rf "$localfile"
+   #            cp "$ROAMDIR"/"$roamfile" ./
+   #            rm -rf "${ROAMDIR"/"$roamfile:?}"*
+   #         fi
+   #     done
+   # done
+
+   # find a match and proceed to move files back (2nd try)
+   # use this form instead
+   # https://github.com/koalaman/shellcheck/wiki/SC2013
+   while IFS= read -r localLine
    do
-       for roamfile in $(cat ROAMFILES)
+       while IFS= read -r roamLine
        do
-           if [ "$localfile" == "$roamfile" ]
+           if [ "$localLine" == "$roamLine" ] # if coincidence
            then
-              rm -rf "$localfile"
-              cp "$ROAMDIR"/"$roamfile" ./
-              rm -rf "$ROAMDIR"/"$roamfile"
+              rm -rf "$localLine" # remove old local version of file
+              cp -r "$ROAMDIR"/"$roamLine" ./ # move updated file back
+              rm -rf "${ROAMDIR"/"$roamLine:?}"* # remove new file in $ROAMDIR
            fi
-       done
-   done
-   
+       done < ROAMFILES
+   done < LOCALFILES
+
+   # don't leave traces
    rm -rf LOCALFILES ROAMFILES
 
 fi
 
-# fetch
+# FETCH
 if [[ "$1" = "$ACTION3" ]]
 then
    cp -r "$ROAMDIR"/* ./
-   if [[ "$2" = "--$ACTION31" ]]
+   if [[ "$2" = "--$ACTION31" ]] # if you append '--clean' to 'fetch'
    then
-       rm "$ROAMDIR"/*
+      rm "$ROAMDIR"/*
    fi
 fi
 
