@@ -192,7 +192,7 @@ UXIQ1KPZ34NDgFispTn2f8Px0NR/uRMSsUOKl63r3UksOMboQ7HO7xfx0vJ0
   ;; [2021-05-03 Mon]
   ;; By default, doom emacs wont store email links in mu4e headers view
   ;; have to enable org-mu4e
-  (require 'org-mu4e)
+  ;;(require 'org-mu4e) ; interferes 
 
   ;; MORE ABOUT ORG MODE
   ;; https://orgmode.org/manual/Breaking-Down-Tasks.html#Breaking-Down-Tasks
