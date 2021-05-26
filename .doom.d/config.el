@@ -37,18 +37,18 @@
 
 -----BEGIN PGP MESSAGE-----
 
-jA0ECQMC8cgBmdsmtoX70sE7AW7N01llSKvughVmDJrBCk3HYvEQdsEz8Z8SgLdc
-AUM7zfHtpRhMm/iYGAlX4cM/a7WcwQrr2jYaBQvNKq12n0rVrQY7CZ4GlYaL/39O
-i0hpgDcLSyAPFS+nzjtrAKvc57eLxIwbCUfajAihNWO5z7mP6XaFjWEsG3/FltkH
-/818BEqPbO7Q34r6zlU3uQee3pbVY/M+FdeHmxBPSIzugMXW1D7nDXn1PI7jxgeN
-QLe2yjum1Q5ikxL/H946YQcLBjW715KAgdHmJjn57fo7V67QxPNcGcei5hVSKE1N
-uL+h3+I2QXFsZqzCmaSqlnFW8Rmcu8gJaLYHzFzNJG7jmzPCn1WgnB84LKJB640k
-yht3UFgj32wB3eQldFekmWQkA8MDwmtwhwKubYPMvoM2H3Rg9O9NJPUIHgllb9kQ
-jAqHQAgD3orQyw18ejhjBwPv0N934+sc5fJs9d1ygYaVukVhqLR18QU66rreMbss
-sRx30tEPtZB6b++uU6EOAGPf/z4uM0fSL6x8ZpSxVwV++moZD+q3ByoJl1iDO7Zw
-IcCk9JIPD5Iei+ssC6nMaMpNhvZsRc4p1+FENUkfqSrEvBYBb9B6J4iGud3kEiPW
-UXIQ1KPZ34NDgFispTn2f8Px0NR/uRMSsUOKl63r3UksOMboQ7HO7xfx0vJ0
-=NoKE
+jA0ECQMCrNKZlxS5d8//0sE7ATOfEle03cbdtksSgFLH96Hu2noFjtRvmhZEwzlN
+BO7X+UOpoDdWotD8Ubrllm0wWkvn+kLqz+8LjoFCHCfFc84vwFZ4gtyVGLD02lsy
+3ETb3614nOX/nvyIauo/If0+yfsrvEa77DndAeaPtYNuDVkLLrHfjXxUDnUkcgAo
+dte5yyOojC40saA4rEXs55+OuQ8jZkSd8ANZEx9UEy9bD4wJ9BuPZBMjYygFxwCN
+bTjM088GOid9Lnt1wIHqw4OmfXQjadjvac6QgpWEusQEtoIn3d6D5RdpTFWBJiXz
+l6gyyZQSpLG70K0f1hWZ6IZQ90lAXA8fiME36rXzRi7VEQ48psRv4+drnmYRG7Tu
+kDs+++y3SZluQqWJCNBz2Bb5YIy+F9/U1HA46sK+Y1UOSRn2Y/vj4zFulD3l41to
+rlEe23re4r0rTVowUL3PkxwMhbOwSyx20lLOmf8LL8CRaFlTvdDy+tKiy3z7gn2r
+D6YIx51wRaxK724y3YLVwpc7V4HuO7VOpKHTj8JEJkcLA/f+y1evCACdPibiwvdM
+2QdhQSrBqXScF3qRodKpNFQKL6x6gQFngw4X1nk7kp0/chPX9jjkZ/cJiHs2/tGd
+8UcDGRYHIw9EyvRKGg/UVXJY+G2CqovtLl3S2kdkr1Yip5BpHaSPWZHSgdjv
+=BfQG
 -----END PGP MESSAGE-----
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
@@ -100,6 +100,8 @@ UXIQ1KPZ34NDgFispTn2f8Px0NR/uRMSsUOKl63r3UksOMboQ7HO7xfx0vJ0
 
 ;; BEGIN AFTER ORG
 (after! org
+  (setq org-adapt-indentation nil)
+  ;; More consistent; if I change heading level I don't have to fix indentation.
   (setq org-fontify-quote-and-verse-blocks nil
         org-fontify-whole-heading-line nil
         org-hide-leading-stars nil
@@ -126,8 +128,9 @@ UXIQ1KPZ34NDgFispTn2f8Px0NR/uRMSsUOKl63r3UksOMboQ7HO7xfx0vJ0
 
 
   (setq org-log-states-order-reversed t) ; doesn't really work...why?
-  (setq org-agenda-span 21) ; does work
-  (setq org-agenda-start-on-weekday 1) ; doesn't work
+  (setq org-agenda-span 1) ; show today only by default; it's quicker
+  (setq org-agenda-start-day "-0d") ; start on current day,
+                                    ; useful when exporting html 28-day version.
   (add-to-list 'org-export-backends 'org)
                                         ; ### TRACK TODO STATE CHANGES
                                         ; https://orgmode.org/manual/Tracking-TODO-state-changes.html
@@ -148,6 +151,14 @@ UXIQ1KPZ34NDgFispTn2f8Px0NR/uRMSsUOKl63r3UksOMboQ7HO7xfx0vJ0
      '(( "h" "Custom agenda, ignore 'habit' tag"
          ((agenda ""))
          ((org-agenda-tag-filter-preset '("-habit")))
+         )
+       ( "x" "28-day version of h"
+         ;; Made to be exported to html
+         ((agenda ""
+                  ((org-agenda-span 28))
+                  ))
+         ;; The bigger the agenda span, the longer the process
+         ((org-agenda-tag-filter-preset '("-habit")))
          ("~/org/agenda.html") ;; enables html export of this agenda view
          )
        ( "H" "Custom agenda, only 'habit' tag"
@@ -162,7 +173,7 @@ UXIQ1KPZ34NDgFispTn2f8Px0NR/uRMSsUOKl63r3UksOMboQ7HO7xfx0vJ0
        ( "c" "Custom agenda, only 'contacts' tag"
          ((agenda ""))
          ((org-agenda-tag-filter-preset '("+contacts"))))
-       ( "b" "Custom agenda, only 'contacts' tag"
+       ( "b" "Custom agenda, only 'birthday' tag"
          ((agenda ""))
          ((org-agenda-tag-filter-preset '("+birthday"))))
        ( "k" "Custom agenda, ignore 'music' tag"
@@ -192,7 +203,7 @@ UXIQ1KPZ34NDgFispTn2f8Px0NR/uRMSsUOKl63r3UksOMboQ7HO7xfx0vJ0
   ;; [2021-05-03 Mon]
   ;; By default, doom emacs wont store email links in mu4e headers view
   ;; have to enable org-mu4e
-  ;;(require 'org-mu4e) ; interferes 
+  ;; (require 'org-mu4e) ; interferes with the rest of org-links
 
   ;; MORE ABOUT ORG MODE
   ;; https://orgmode.org/manual/Breaking-Down-Tasks.html#Breaking-Down-Tasks
@@ -226,6 +237,8 @@ UXIQ1KPZ34NDgFispTn2f8Px0NR/uRMSsUOKl63r3UksOMboQ7HO7xfx0vJ0
 (define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
 (global-set-key (kbd "\C-cr") 'ispell-region)
 
+(setq ispell-dictionary "en")
+
 ;; ORG-ROAM
 (setq org-roam-directory "~/org/auxRoam")
 (add-hook 'after-init-hook 'org-roam-mode)
@@ -246,6 +259,6 @@ UXIQ1KPZ34NDgFispTn2f8Px0NR/uRMSsUOKl63r3UksOMboQ7HO7xfx0vJ0
 ;; disable auto save
 (setq auto-save-default nil)
 
-(custom-set-variables
- '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
- )
+;; (custom-set-variables
+;;  '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
+;;  )
