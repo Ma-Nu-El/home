@@ -73,6 +73,7 @@ alias 3="~/Documents"
 alias 4="~/Pictures"
 alias 5="~/Videos"
 alias 6="~/Music"
+alias aux="~/org/auxRoam"
 # quick editor
 alias v="vim"
 alias e="emacs -nw" # opens new instance of emacs in the terminal: no GUI
