@@ -1,0 +1,321 @@
+#+TITLE: Init file
+#+EXCLUDE_TAGS: noexport
+
+* Table of Contents :TOC_2:noexport:
+- [[#shebang][Shebang]]
+- [[#default-stuff][Default stuff]]
+- [[#begin-doom][Begin Doom!]]
+  - [[#completion][Completion]]
+  - [[#ui][ui]]
+  - [[#editor][editor]]
+  - [[#emacs][emacs]]
+  - [[#term][term]]
+  - [[#checkers][checkers]]
+  - [[#tools][tools]]
+  - [[#lang][lang]]
+  - [[#email][email]]
+  - [[#app][app]]
+  - [[#config][config]]
+  - [[#end-doom][end doom!]]
+
+* Shebang
+:PROPERTIES:
+:header-args: :results silent :tangle ~/.doom.d/init.el
+:ID:       ad24dd4d-c3a0-4b7d-913d-d0c84cfd50f4
+:END:
+#+begin_src elisp
+;;; init.el -*- lexical-binding: t; -*-
+#+end_src
+
+* Default stuff
+:PROPERTIES:
+:header-args: :results silent :tangle ~/.doom.d/init.el
+:END:
+
+#+begin_example elisp
+;; This file controls what Doom modules are enabled and what order they load
+;; in. Remember to run 'doom sync' after modifying it!
+
+;; NOTE Press 'SPC h d h' (or 'C-h d h' for non-vim users) to access Doom's
+;;      documentation. There you'll find information about all of Doom's
+;;      modules and what flags they support.
+
+;; NOTE Move your cursor over a module's name (or its flags) and press 'K' (or
+;;      'C-c g k' for non-vim users) to view its documentation. This works on
+;;      flags as well (those symbols that start with a plus).
+;;
+;;      Alternatively, press 'gd' (or 'C-c g d') on a module to browse its
+;;      directory (for easy access to its source code).
+#+end_example
+
+* Begin Doom!
+:PROPERTIES:
+:header-args: :results silent :tangle ~/.doom.d/init.el
+:ID:       286f06de-85af-4993-907d-76904e7c2a9f
+:END:
+
+
+#+begin_src elisp
+(doom!
+#+end_src
+
+:input
+;;chinese
+;;japanese
+
+** Completion
+:PROPERTIES:
+:ID:       02f5843b-9341-41a3-88c4-7e3d93779bec
+:END:
+#+begin_src elisp
+:completion
+company           ; the ultimate code completion backend
+ivy               ; a search engine for love and life
+#+end_src
+
+;;helm              ; the *other* search engine for love and life
+;;ido               ; the other *other* search engine...
+
+** ui
+:PROPERTIES:
+:ID:       795e5e79-8b55-4d9d-906c-b39d7044529a
+:END:
+
+#+begin_src elisp
+:ui
+doom              ; what makes DOOM look the way it does
+doom-dashboard    ; a nifty splash screen for Emacs
+doom-quit         ; DOOM quit-message prompts when you quit Emacs
+fill-column       ; a `fill-column' indicator
+hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
+(modeline +light)          ; snazzy, Atom-inspired modeline, plus API
+#+end_src
+;; https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#why-is-emacsdoom-slow
+
+#+begin_src elisp
+nav-flash         ; blink cursor line after big motions
+ophints           ; highlight the region an operation acts on
+(popup +defaults)   ; tame sudden yet inevitable temporary windows
+vi-tilde-fringe   ; fringe tildes to mark beyond EOB
+#+end_src
+
+;;deft              ; notational velocity for Emacs
+;;hydra
+;;indent-guides     ; highlighted indent columns
+;;minimap           ; show a map of the code on the side
+;;neotree           ; a project drawer, like NERDTree for vim
+;;pretty-code       ; ligatures or substitute text with pretty symbols
+;;tabs              ; an tab bar for Emacs
+;;treemacs          ; a project drawer, like neotree but cooler
+;;unicode           ; extended unicode support for various languages
+;;vc-gutter         ; vcs diff in the fringe
+;;window-select     ; visually switch windows
+;;workspaces        ; tab emulation, persistence & separate workspaces
+;;zen               ; distraction-free coding or writing
+
+** editor
+:PROPERTIES:
+:ID:       ae18815c-6111-42ef-8d99-6ab59d8ee433
+:END:
+#+begin_src elisp
+:editor
+(evil +everywhere); come to the dark side, we have cookies
+file-templates    ; auto-snippets for empty files
+fold              ; (nigh) universal code folding
+snippets          ; my elves. They type so I don't have to
+#+end_src
+
+;;(format +onsave)  ; automated prettiness
+;;god               ; run Emacs commands without modifier keys
+;;lispy             ; vim for lisp, for people who don't like vim
+;;multiple-cursors  ; editing in many places at once
+;;objed             ; text object editing for the innocent
+;;parinfer          ; turn lisp into python, sort of
+;;rotate-text       ; cycle region at point between text candidates
+;;word-wrap         ; soft wrapping with language-aware indent
+
+** emacs
+:PROPERTIES:
+:ID:       b09991ec-8a15-4022-86d3-43b16b5e7c79
+:END:
+#+begin_src elisp
+:emacs
+dired             ; making dired pretty [functional]
+electric          ; smarter, keyword-based electric-indent
+undo              ; persistent, smarter undo for your inevitable mistakes
+vc                ; version-control and Emacs, sitting in a tree
+#+end_src
+
+;;ibuffer         ; interactive buffer management
+
+** term
+:term
+;;eshell            ; the elisp shell that works everywhere
+;;shell             ; simple shell REPL for Emacs
+;;term              ; basic terminal emulator for Emacs
+;;vterm             ; the best terminal emulation in Emacs
+
+** checkers
+:PROPERTIES:
+:ID:       bfa4acdb-21df-4115-a1ab-5ece1f6ca62a
+:END:
+#+begin_src elisp
+:checkers
+syntax              ; tasing you for every semicolon you forget
+spell             ; tasing you for misspelling mispelling
+grammar           ; tasing grammar mistake every you make
+#+end_src
+
+** tools
+:PROPERTIES:
+:ID:       10ce98ae-a55c-4f3d-a034-a0100be71d13
+:END:
+#+begin_src elisp
+:tools
+(debugger +lsp)          ; FIXME stepping through code, to help you add bugs
+(eval +overlay)     ; run code, run (also, repls)
+lookup              ; navigate your code and its documentation
+lsp
+pdf               ; pdf enhancements
+#+end_src
+
+
+;;ansible
+;;direnv
+;;docker
+;;editorconfig      ; let someone else argue about tabs vs spaces
+;;ein               ; tame Jupyter notebooks with emacs
+;;gist              ; interacting with github gists
+;;macos             ; MacOS-specific commands
+;;magit             ; a git porcelain for Emacs
+;;make              ; run make tasks from Emacs
+;;pass              ; password manager for nerds
+;;prodigy           ; FIXME managing external services & code builders
+;;rgb               ; creating color strings
+;;taskrunner        ; taskrunner for all your projects
+;;terraform         ; infrastructure as code
+;;tmux              ; an API for interacting with tmux
+;;upload            ; map local to remote projects via ssh/ftp
+
+** lang
+:PROPERTIES:
+:ID:       1810d609-a71e-4399-b44b-8b0c6cc601ba
+:END:
+
+#+begin_src elisp
+:lang
+#+end_src
+;;agda              ; types of types of types of types...
+;;cc                ; C/C++/Obj-C madness
+;;clojure           ; java with a lisp
+;;common-lisp       ; if you've seen one lisp, you've seen them all
+;;coq               ; proofs-as-programs
+;;crystal           ; ruby at the speed of c
+;;csharp            ; unity, .NET, and mono shenanigans
+;;data              ; config/data formats
+;;(dart +flutter)   ; paint ui and not much else
+;;elixir            ; erlang done right
+;;elm               ; care for a cup of TEA?
+#+begin_src elisp
+emacs-lisp        ; drown in parentheses
+#+end_src
+;;erlang            ; an elegant language for a more civilized age
+;;ess               ; emacs speaks statistics
+;;faust             ; dsp, but you get to keep your soul
+;;fsharp           ; ML stands for Microsoft's Language
+;;fstar             ; (dependent) types and (monadic) effects and Z3
+;;gdscript          ; the language you waited for
+;;(go +lsp)         ; the hipster dialect
+;;(haskell +dante)  ; a language that's lazier than I am
+;;hy                ; readability of scheme w/ speed of python
+;;idris             ;
+;;json              ; At least it ain't XML
+#+begin_src elisp
+(java +lsp)         ; Added by Ma Nu from
+#+end_src
+https://emacs-lsp.github.io/lsp-mode/page/installation/
+;;(java +meghanada) ; the poster child for carpal tunnel syndrome
+;;javascript        ; all(hope(abandon(ye(who(enter(here))))))
+;;julia             ; a better, faster MATLAB
+;;kotlin            ; a better, slicker Java(Script)
+#+begin_src elisp
+latex             ; writing papers in Emacs has never been so fun
+#+end_src
+;;lean
+;;factor
+;;ledger            ; an accounting system in Emacs
+;;lua               ; one-based indices? one-based indices
+#+begin_src elisp
+markdown          ; writing docs for people to ignore
+#+end_src
+;;nim               ; python + lisp at the speed of c
+;;nix               ; I hereby declare "nix geht mehr!"
+;;ocaml             ; an objective camel
+#+begin_src elisp
+(org +roam)               ; organize your plain life in plain text
+#+end_src
+;;perl              ; write code no one else can comprehend
+;;php               ; perl's insecure younger brother
+;;plantuml          ; diagrams for confusing people more
+;;purescript        ; javascript, but functional
+;;python            ; beautiful is better than ugly
+;;qt                ; the 'cutest' gui framework ever
+;;racket            ; a DSL for DSLs
+;;rest              ; Emacs as a REST client
+;;rst               ; ReST in peace
+;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+;;scala             ; java, but good
+;;scheme            ; a fully conniving family of lisps
+#+begin_src elisp
+sh                ; she sells {ba,z,fi}sh shells on the C xor
+#+end_src
+;;sml
+;;solidity          ; do you need a blockchain? No.
+;;swift             ; who asked for emoji variables?
+;;terra             ; Earth and Moon in alignment for performance.
+;;web               ; the tubes
+;;yaml              ; JSON, but readable
+
+** email
+:PROPERTIES:
+:ID:       264560f9-a446-4fa3-94b7-198cc07d1d61
+:END:
+#+begin_src elisp
+:email
+(mu4e +gmail)
+#+end_src
+;;notmuch
+;;(wanderlust +gmail)
+
+** app
+:PROPERTIES:
+:ID:       14a735da-0fc3-4db3-9d6c-53a4d5bbe24d
+:END:
+#+begin_src elisp
+:app
+calendar
+#+end_src
+
+;;irc               ; how neckbeards socialize
+;;(rss +org)        ; emacs as an RSS reader
+;;twitter           ; twitter client https://twitter.com/vnought
+
+** config
+:PROPERTIES:
+:ID:       2a596dcb-e96d-42f5-91ae-9b87ed8d3254
+:END:
+
+#+begin_src elisp
+:config
+literate
+(default +bindings +smartparens)
+#+end_src
+
+** end doom!
+:PROPERTIES:
+:ID:       2c8bd181-980e-45b7-87c1-5c1facfb75aa
+:END:
+#+begin_src elisp
+)
+#+end_src

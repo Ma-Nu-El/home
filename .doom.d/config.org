@@ -1,0 +1,625 @@
+#+TITLE: Config File
+
+* Table of Contents :TOC_4:noexport:
+- [[#shebang][shebang]]
+- [[#the-rest][the rest]]
+  - [[#user-full-name][user-full-name]]
+  - [[#mu4e][mu4e]]
+    - [[#standard-config][standard config]]
+    - [[#after-standard-config][after standard config]]
+  - [[#theme][theme]]
+  - [[#org-directory][org directory]]
+  - [[#recursive-agenda-files][recursive agenda files]]
+  - [[#no-line-numbers][no line numbers]]
+  - [[#begin-org-section][begin org section]]
+    - [[#buffer-opening-settings-for-speed][buffer opening settings for speed]]
+      - [[#fixed-flush-left-indentation][fixed flush left indentation]]
+      - [[#other-settings][other settings]]
+      - [[#start-folded-nil][start folded nil]]
+    - [[#logbook-and-clockbook][logbook and clockbook]]
+    - [[#global-properties][global properties]]
+    - [[#column-view-settings][column view settings]]
+    - [[#reversed-org-log-states][reversed org log states]]
+    - [[#agenda-settings][agenda settings]]
+    - [[#export-backend-enabling][export backend enabling]]
+    - [[#keywords][keywords]]
+    - [[#habit-graph-enabling][habit graph enabling]]
+    - [[#agenda-custom-commands][agenda custom commands]]
+    - [[#agenda-view-prefix][agenda view prefix]]
+    - [[#agenda-view-settings][agenda view settings]]
+    - [[#latex-export-table-of-contents-settings][latex export table of contents settings]]
+    - [[#mu4e-store-links][mu4e store links]]
+    - [[#log][log]]
+    - [[#how-many-todos-left-info-in-heading][how many todos left info in heading]]
+    - [[#use-org-id-to-store-links-when-appropriate][use org-id to store links when appropriate]]
+    - [[#open-links-with-default-application][open links with default application]]
+    - [[#org-clock][org clock]]
+    - [[#global-exclude-tags][global exclude tags]]
+    - [[#disable-crypt-tag-inheritance][disable crypt tag inheritance]]
+  - [[#end-org-section][end org section]]
+  - [[#personal-keybindingsn][personal keybindingsn]]
+  - [[#ispell-config][ispell config]]
+  - [[#roam][roam]]
+  - [[#dailies][dailies]]
+  - [[#disable-backup][disable backup]]
+  - [[#custom-set-variables][custom set variables]]
+- [[#footnotes][Footnotes]]
+
+* shebang
+:PROPERTIES:
+:header-args: :results silent :tangle ~/.doom.d/config.el
+:ID:       741425b4-8f1d-44c0-9245-7fe9a5c62e12
+:END:
+
+#+begin_src elisp
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+#+end_src
+
+;; Place your private configuration here! Remember, you do not need to run 'doom
+;; sync' after modifying this file!
+
+
+;; Some functionality uses this to identify you, e.g. GPG configuration, email
+;; clients, file templates and snippets.
+
+* the rest
+:PROPERTIES:
+:header-args: :results silent :tangle ~/.doom.d/config.el
+:END:
+** user-full-name
+:PROPERTIES:
+:ID:       c1cc08a8-95ed-4bb6-a523-41fb398a2dd9
+:END:
+#+begin_src elisp
+(setq user-full-name "Manuel Fuica Morales"
+      ;; user-mail-address "m.fuica01@ufromail.cl"
+      )
+#+end_src
+
+;; (setq smtpmail-smtp-server "smtp.gmail.com")
+;; (setq smtpmail-smtp-service 587) ;; this might need to change
+
+
+;; https://stackoverflow.com/questions/17281669/using-smtp-gmail-and-starttls
+;; https://emacs.stackexchange.com/questions/46257/sending-email-fails-with-process-smtpmail-not-running
+
+** mu4e
+*** standard config
+:PROPERTIES:
+:ID:       53c3636b-214b-43e4-967b-e8af4a806c45
+:END:
+
+#+begin_src elisp
+(setq mu4e-maildir "~/Maildir")
+(setq mu4e-attachment-dir (expand-file-name "~/myDrive/mailAttachments"))
+#+end_src
+
+;; Details for mu4e-attachement-dir configuration:
+;; https://github.com/hlissner/doom-emacs/issues/3294
+
+;; https://gist.github.com/areina/3879626
+
+#+begin_src elisp
+(setq message-send-mail-function 'smtpmail-send-it
+starttls-use-gnutls t
+smtpmail-starttls-credentials
+'(("smtp.gmail.com" 587 nil nil))
+smtpmail-auth-credentials
+(expand-file-name "~/.authinfo.gpg")
+smtpmail-default-smtp-server "smtp.gmail.com"
+smtpmail-smtp-server "smtp.gmail.com"
+smtpmail-smtp-service 587
+smtpmail-debug-info t
+;; auth-sources '(password-store)
+auth-source-debug t
+)
+#+end_src
+
+
+*** after standard config
+:PROPERTIES:
+:ID:       1ee20f94-c54e-4597-9a06-d3b32ecd1b32
+:END:
+
+-----BEGIN PGP MESSAGE-----
+
+jA0ECQMCkwoknappwLf/0ukBtKYJvvOzvECA0Qu3z2l4/u3F2qNPbiI2vUBCpaiK
+7U4VXxmEFam/rLhKCEqv3BX87tmJdTs63V7sx9DIP3liqg0gu/0ruWq/pHShPZTz
+HCOxDrkolivI0aKBqqP7eR/fKAeSUOyGhdb8qaSNxh6slQTclCyj1MlQE6gCnU/R
+OxhbRj/11YVUlbQiRdVxVpqBZ5V0vfHRH0IveNfG1JnWhaYxNFQlfhp1aLqyDaKL
+4nt+vry1wKz9LKCxhku01QxXCzFJpL0mdQFw7miK8Rl8elY7JEY8OylYbTdGYXrK
+G0raVf/8/dVHFWWuJFNnQ9X249jdzN2Ue0ssk/AWKsbcdvnRv1M+yvPccM3P5gc6
+altDGRPv+DASiSMKcp1D58NI+k0lw+hAjrfWVxkrytqxIDDfx07dzUf63aFWs4Xz
+yPFLHFkpra4vQ/0D6dvQ3ZMyiSOYL4y6j4I+WQrJdxJn70J9nOf0/GM3Ed5GeUuk
+VLO09Slwj0x2LaT8rmEAGt1QRoON7PznkdRFlkiQzDn2GlElKDUg9CDlw7gCHpW2
+oguGKqFZ+EG6sJ98U243XS6I910EYb8fdLgl0a6YV5pu1fvwxGzKIEvaPJmMyqpr
+Dtt96KfZ0C/8HkBHl8IPGorKaDoPVdbZv7ZLGk1qILT6qz3q8TYcJqsl2Irij9Qh
+DRFkAq+aq8rcZs888Zi4gmK07A==
+=WLFB
+-----END PGP MESSAGE-----
+
+
+Doom exposes five (optional) variables for controlling fonts in Doom. Here
+are the three important ones:
+
++ `doom-font'
++ `doom-variable-pitch-font'
++ `doom-big-font' -- used for `doom-big-font-mode'; use this for
+  presentations or streaming.
+
+They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
+font string. You generally only need these two:
+(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "sans" :size 13))
+
+There are two ways to load a theme. Both assume the theme is installed and
+available. You can either set `doom-theme' or manually load a theme with the
+`load-theme' function. This is the default:
+** theme
+:PROPERTIES:
+:ID:       3d09ad0f-b02f-419e-a6a4-5a137258ef5f
+:END:
+#+begin_src elisp
+(setq doom-theme 'doom-one)
+#+end_src
+
+** org directory
+:PROPERTIES:
+:ID:       86d962a4-8100-483a-a739-59cfcdfb0655
+:END:
+
+If you use `org' and don't want your org files in the default location below,
+change `org-directory'. It must be set before org loads!
+
+#+begin_src elisp
+(setq org-directory "~/org/")
+#+end_src
+
+;; Added by me
+;; https://stackoverflow.com/questions/11384516/how-to-make-all-org-files-under-a-folder-added-in-agenda-list-automatically
+
+** recursive agenda files
+:PROPERTIES:
+:ID:       7e605bae-b5f5-41ad-b95e-c02f621b7926
+:END:
+#+begin_src elisp
+(setq org-agenda-files (directory-files-recursively "~/org/" "\\.org$"))
+#+end_src
+
+** no line numbers
+:PROPERTIES:
+:ID:       23918f8e-2350-40a7-b4d8-57520c5a36cf
+:END:
+This determines the style of line numbers in effect. If set to `nil', line
+numbers are disabled. For relative line numbers, set this to `relative'.
+
+#+begin_src elisp
+(setq display-line-numbers-type nil)
+#+end_src
+
+https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#why-is-emacsdoom-slow
+
+Here are some additional functions/macros that could help you configure Doom:
+
+- `load!' for loading external *.el files relative to this one
+- `use-package' for configuring packages
+- `after!' for running code after a package has loaded
+- `add-load-path!' for adding directories to the `load-path', relative to
+  this file. Emacs searches the `load-path' when you load packages with
+  `require' or `use-package'.
+- `map!' for binding new keys
+
+To get information about any of these functions/macros, move the cursor over
+the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
+This will open documentation for it, including demos of how they are used.
+
+You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
+they are implemented.
+
+** begin org section
+:PROPERTIES:
+:ID:       72258b79-1e04-4a73-95b8-515f48143e5d
+:END:
+#+begin_src elisp
+;; BEGIN AFTER ORG
+(after! org
+#+end_src
+*** buffer opening settings for speed
+:PROPERTIES:
+:ID:       f04c5ecf-aba4-4d99-adc0-0527201f84b8
+:END:
+**** fixed flush left indentation
+:PROPERTIES:
+:ID:       27de66e8-d440-4a80-bab7-843bebf87b8b
+:END:
+#+begin_src elisp
+(setq org-adapt-indentation nil)
+#+end_src
+
+More consistent; if I change heading level I don't have to fix indentation.
+
+**** other settings
+:PROPERTIES:
+:ID:       a4d196f2-9fc3-44ab-97a5-fb2130c5d167
+:END:
+#+begin_src elisp
+(setq org-fontify-quote-and-verse-blocks nil
+      org-fontify-whole-heading-line nil
+      org-hide-leading-stars nil
+      org-startup-indented nil
+      flyspell-mode t
+      )
+#+end_src
+
+- https://emacs.stackexchange.com/questions/9709/keep-the-headlines-expanded-in-org-mode
+
+**** start folded nil
+:PROPERTIES:
+:ID:       964fd048-37ad-4bff-a09e-dbf48ab72124
+:END:
+It's gotta be faster. Useful too when you have a TOC heading first.
+
+#+begin_src elisp
+(setq org-startup-folded nil)
+#+end_src
+
+*** logbook and clockbook
+:PROPERTIES:
+:ID:       a065fc59-7ecf-4c1a-aa3c-d01f7f36eb28
+:END:
+- https://stackoverflow.com/questions/24686129/how-can-i-make-org-mode-store-state-changes-for-a-repeating-task-in-a-drawer
+#+begin_src elisp
+(setq org-log-into-drawer "LOGBOOK")
+(setq org-clock-into-drawer "CLOCKBOOK")
+#+end_src
+*** global properties
+:PROPERTIES:
+:ID:       64ea25a8-c5a6-4d48-a199-3d5162305169
+:END:
+#+begin_src elisp
+;; https://github.com/pokeefe/Settings/blob/master/emacs-settings/.emacs.d/modules/init-org.el
+;; Effort and global properties
+(setq org-global-properties '(
+                              ("Effort_ALL". "0 0:01 0:03 0:05 0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00
+                               4:00 6:00 8:00")
+                              )
+      )
+
+#+end_src
+*** column view settings
+:PROPERTIES:
+:ID:       82451b12-f96d-40b5-9b2a-2908eee6eff4
+:END:
+Set global Column View format.
+#+begin_src elisp
+(setq org-columns-default-format '"%34ITEM(Item) %10TAGS(Tags) %5TODO(State)
+ %5Effort(Estim){:} %10CLOCKSUM(Actual)")
+#+end_src
+
+*** reversed org log states
+(setq org-log-states-order-reversed t) ; doesn't really work...why?
+
+*** agenda settings
+:PROPERTIES:
+:ID:       4790fa62-de1b-4118-a722-f41212854368
+:END:
+#+begin_src elisp
+(setq org-agenda-span 1) ; show today only by default; it's quicker
+(setq org-agenda-start-day "-0d") ; start on current day,
+                                        ; useful when exporting html 28-day version.
+
+#+end_src
+
+*** export backend enabling
+:PROPERTIES:
+:ID:       a794b757-4dcb-4a6b-a515-89e4419b5f19
+:END:
+#+begin_src elisp
+(add-to-list 'org-export-backends 'org)
+#+end_src
+- TRACK TODO STATE CHANGES
+- https://orgmode.org/manual/Tracking-TODO-state-changes.html
+- OrgMode E03S01: Automatic logging of status changes:
+  + https://www.youtube.com/watch?v=R4QSTDco_w8
+
+*** todo keywords
+:PROPERTIES:
+:ID:       55c05291-82b3-443f-93ee-68a68b38d3de
+:END:
+#+begin_src elisp
+(setq org-todo-keywords
+      '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)"
+                  "SOMEDAY(s)" "|" "DONE(d@/!)" "CANCELED(c@/!)")
+        )
+      )
+(setq org-log-done t)
+
+
+#+end_src
+*** habit graph enabling
+:PROPERTIES:
+:ID:       c6e2c52f-51bd-4fd9-8fd5-080fb2a617be
+:END:
+#+begin_src elisp
+(add-to-list 'org-modules 'org-habit)
+#+end_src
+- https://github.com/hlissner/doom-emacs/issues/3102
+
+*** agenda custom commands
+:PROPERTIES:
+:ID:       e4bd5984-7063-44f3-973d-51c298645761
+:END:
+
+#+begin_src elisp
+(custom-set-variables
+ '(org-agenda-custom-commands
+   '(( "h" "Custom agenda, ignore 'habit' tag"
+       ((agenda ""))
+       ((org-agenda-tag-filter-preset '("-habit")))
+       )
+     ( "x" "28-day version of h"
+       ;; Made to be exported to html
+       ((agenda ""
+                ((org-agenda-span 28))
+                ))
+       ;; The bigger the agenda span, the longer the process
+       ((org-agenda-tag-filter-preset '("-habit")))
+       ("~/org/agenda.html") ;; enables html export of this agenda view
+       )
+     ( "H" "Custom agenda, only 'habit' tag"
+       ((agenda ""))
+       ((org-agenda-tag-filter-preset '("+habit"))))
+     ( "u" "Custom agenda, ignore 'university' tag"
+       ((agenda ""))
+       ((org-agenda-tag-filter-preset '("-university"))))
+     ( "U" "Custom agenda, only 'university' tag"
+       ((agenda ""))
+       ((org-agenda-tag-filter-preset '("+university"))))
+     ( "c" "Custom agenda, only 'contacts' tag"
+       ((agenda ""))
+       ((org-agenda-tag-filter-preset '("+contacts"))))
+     ( "b" "Custom agenda, only 'birthday' tag"
+       ((agenda ""))
+       ((org-agenda-tag-filter-preset '("+birthday"))))
+     ( "k" "Custom agenda, ignore 'music' tag"
+       ((agenda ""))
+       ((org-agenda-tag-filter-preset '("-music"))))
+     ( "K" "Custom agenda, only 'music' tag"
+       ((agenda ""))
+       ((org-agenda-tag-filter-preset '("+music"))))
+     )
+   )
+ )
+#+end_src
+
+- https://emacs.stackexchange.com/questions/38183/how-to-exclude-a-file-from-agenda
+
+*** agenda view prefix
+:PROPERTIES:
+:ID:       1b805336-7fdb-4b66-b08c-4e346cc9c61e
+:END:
+Hide filename in agenda view
+#+begin_src elisp
+(setq org-agenda-prefix-format "%t %s")
+#+end_src
+- https://lists.gnu.org/archive/html/emacs-orgmode/2010-01/msg00744.html
+
+*** agenda view settings
+:PROPERTIES:
+:ID:       197f9212-94e5-4475-8d03-f9118493320a
+:END:
+Disable "now" line in org agenda view
+That line is counterintuitive sometimes when checking agenda remotely.
+
+#+begin_src elisp
+(setq org-agenda-show-current-time-in-grid nil)
+(setq org-agenda-hide-tags-regexp ".")
+(setq org-agenda-use-time-grid nil)
+#+end_src
+- https://orgmode.org/manual/Agenda-Commands.html
+
+*** latex export table of contents settings
+:PROPERTIES:
+:ID:       994f0f4d-3184-445a-b079-2a1c894dbcaf
+:END:
+Orgmode latex export: new page after TOC
+- https://emacs.stackexchange.com/questions/42558/org-mode-export-force-page-break-after-toc
+
+#+begin_src elisp
+(setq org-latex-toc-command "\\tableofcontents \\clearpage")
+
+
+#+end_src
+*** mu4e store links
+But when enabling this, it overrides the other org-store-link* protocols.
+Have to enable, compile and restart emacs when wanting to use, and disable
+compile and restart emacs when wanting to store links from anywhere else.
+
+At least the links are still useful when the mechanism is disabled, but have
+to do something about it.
+##+begin_src elisp
+
+;; [2021-05-03 Mon]
+;; By default, doom emacs wont store email links in mu4e headers view
+;; have to enable org-mu4e
+;; (require 'org-mu4e) ; interferes with the rest of org-links
+
+;; MORE ABOUT ORG MODE
+;; https://orgmode.org/manual/Breaking-Down-Tasks.html#Breaking-Down-Tasks
+##+end_src
+
+*** log
+Throws error. Disabling since not essential.
+##+begin_src elisp
+(defun org-summary-todo (n-done n-not-done)
+"Switch entry to DONE when all subentries are done, to TODO otherwise."
+(let (org-log-done org-log-states)   ; turn off logging
+(org-todo (if (= n-not-done 0) "DONE" "TODO")))
+)
+##+end_src
+
+*** how many todos left info in heading
+:PROPERTIES:
+:ID:       485fa339-fde6-47bb-9873-59bf7e3d5ded
+:END:
+#+begin_src elisp
+(add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+#+end_src
+
+also, you have to set the cookie property to 'todo recursive'; you
+can use Doom's 'SPC m o'. Still, it's too much work. Have to do
+something about it.
+
+*** use org-id to store links when appropriate
+:PROPERTIES:
+:ID:       7a291636-2179-4180-8d53-1614e7074454
+:END:
+#+begin_src elisp
+(setq org-id-link-to-org-use-id t)
+#+end_src
+
+*** open links with default application
+:PROPERTIES:
+:ID:       c9e0a789-0d20-4dfa-b457-ff5a9ed27698
+:END:
+#+begin_src elisp
+(setq org-file-apps
+      '((auto-mode . emacs)
+        ("\\.mm\\'" . default)
+        ("\\.x?html?\\'" . default)
+        ("\\.pdf\\'" . default)
+        ("\\.jpg\\'" . default)
+        ("\\.png\\'" . default)
+        )
+      )
+#+end_src
+- https://stackoverflow.com/questions/3973896/emacs-org-mode-file-viewer-associations
+- https://emacs.stackexchange.com/questions/2856/how-to-configure-org-mode-to-respect-system-specific-default-applications-for-ex
+
+*** org clock
+:PROPERTIES:
+:ID:       21d12421-59e2-484c-ace5-95dfc13b67dd
+:END:
+Persistent org clock.
+#+begin_src elisp
+(setq org-clock-persist 'history)
+(setq org-clock-persist-file "~/.doom.d/.org-clock-save.el")
+(setq org-clock-persistence-insinuate t)
+#+end_src
+Also check this at:
+- https://github.com/pokeefe/Settings/blob/master/emacs-settings/.emacs.d/modules/init-org.el
+  - (setq org-clock-persist-file (concat user-emacs-directory "persistence/org-clock-save.el"))
+
+https://orgmode.org/manual/Clocking-Work-Time.html
+
+*** global exclude tags
+:PROPERTIES:
+:ID:       54b7e29a-55da-4baf-b0a5-10848d35130e
+:END:
+[2021-05-30 Sun 11:20]
+
+#+begin_src elisp
+(setq org-export-exclude-tags '("noexport"))
+#+end_src
+
+That way you don't have to put
+#+begin_example elisp
+#+EXCLUDE_TAGS: noexport
+#+end_example
+in every file's initial properties.
+
+Very useful combined with a first heading containing a table of contents.
+
+#+begin_example elisp
+# * Table of Contents :TOC_4:noexport:
+#+end_example
+
+That table of contents combined with start [[id:964fd048-37ad-4bff-a09e-dbf48ab72124][unfolded]], the first thing
+you see when opening a buffer will be a local and always updated table
+of contents that also [[https://orgmode.org/manual/Export-Settings.html][won't be exported]] [fn:1] so it doesn't conflict with other
+exports like html, latex or markup.
+
+Neat thing indeed.
+
+*** disable crypt tag inheritance
+:PROPERTIES:
+:ID:       68153510-2ca9-4d16-ae50-6e916da8142d
+:END:
+- https://orgmode.org/manual/Org-Crypt.html
+
+#+begin_src elisp
+(setq org-tags-exclude-from-inheritance '("crypt"))
+#+end_src
+** end org section
+:PROPERTIES:
+:ID:       889fe81d-8200-4e4f-b833-a2c20cc295eb
+:END:
+#+begin_src elisp
+)
+;; END AFTER ORG
+#+end_src
+
+** personal keybindingsn
+:PROPERTIES:
+:ID:       0cc3c478-ed08-4e4a-b993-a2ff205b829d
+:END:
+#+begin_src elisp
+(define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
+(global-set-key (kbd "\C-cr") 'ispell-region)
+#+end_src
+
+** ispell config
+:PROPERTIES:
+:ID:       71aa1a7e-7cf6-4eb3-8fe5-e3d824003528
+:END:
+#+begin_src elisp
+(setq ispell-dictionary "en")
+#+end_src
+
+** roam
+:PROPERTIES:
+:ID:       41e53852-03b8-4098-a190-287a30504cfc
+:END:
+#+begin_src elisp
+;; ORG-ROAM
+(setq org-roam-directory "~/org/auxRoam")
+(add-hook 'after-init-hook 'org-roam-mode)
+(require 'org-roam-protocol)
+#+end_src
+
+** dailies
+:PROPERTIES:
+:ID:       2078934a-a605-4347-a616-9359566f16f7
+:END:
+;; https://www.orgroam.com/manual.html#Daily_002dnotes
+##+begin_src elisp
+(setq org-roam-dailies-directory "~/org/dailies/")
+(setq org-roam-dailies-capture-templates
+'(("d" "default" entry
+#'org-roam-capture--get-point
+"* %?"
+:file-name "daily/%<%Y-%m-%d>"
+:head "#+title: %<%Y-%m-%d>\n\n"))
+)
+##+end_src
+
+** disable backup
+:PROPERTIES:
+:ID:       9a8a2efc-9871-4f88-9231-8017e44186e5
+:END:
+#+begin_src elisp
+;; disable backup
+(setq backup-inhibited t)
+;; disable auto save
+(setq auto-save-default nil)
+#+end_src
+
+** custom set variables
+
+;; (custom-set-variables
+;;  '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
+;;  )
+
+* Footnotes
+
+[fn:1] Check the =EXCLUDE_TAGS= section.
