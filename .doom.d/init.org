@@ -54,7 +54,6 @@
 :ID:       286f06de-85af-4993-907d-76904e7c2a9f
 :END:
 
-
 #+begin_src elisp
 (doom!
 #+end_src
@@ -70,8 +69,9 @@
 #+begin_src elisp
 :completion
 company           ; the ultimate code completion backend
-ivy               ; a search engine for love and life
+ivy (+fuzzy)              ; a search engine for love and life
 #+end_src
+- https://www.reddit.com/r/emacs/comments/ga8qtd/noob_here_doom_emacs_projectile_find_file/
 
 ;;helm              ; the *other* search engine for love and life
 ;;ido               ; the other *other* search engine...
