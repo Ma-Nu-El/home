@@ -61,14 +61,26 @@ then
 
     BACKUP_EXTENSION=pre-deploy
 
-    for FILE in $(cat "$HOME"/home/trackedFiles.txt); do
+    # What was done before
+    # for FILE in $(cat "$HOME"/home/trackedFiles.txt); do
+    #     if mv "$HOME/$FILE" "$HOME/$FILE.$BACKUP_EXTENSION"
+    #     then
+    #         echo "How to do nothing when a command is sucessful?"
+    #     else
+    #         :
+    #     fi
+    # done
+
+    # SC2013 - Shellcheck error 2013 fix from previous
+    while IFS= read -r FILE
+    do
         if mv "$HOME/$FILE" "$HOME/$FILE.$BACKUP_EXTENSION"
         then
             echo "How to do nothing when a command is sucessful?"
         else
             :
         fi
-    done
+    done < "$HOME"/home/trackedFiles.txt
 
     ### IF BACKUP SUCCESS THEN DEPLOY WORK TREE
 
