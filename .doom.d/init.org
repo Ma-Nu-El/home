@@ -1,5 +1,6 @@
 #+TITLE: Init file
-#+EXCLUDE_TAGS: noexport
+#+FILETAGS: :literate:config:
+#+PROPERTY: header-args :tangle ~/.doom.d/init.el :results silent
 
 * Table of Contents :TOC_2:noexport:
 - [[#shebang][Shebang]]
@@ -15,12 +16,11 @@
   - [[#lang][lang]]
   - [[#email][email]]
   - [[#app][app]]
-  - [[#config][config]]
-  - [[#end-doom][end doom!]]
+  - [[#literate-config][literate config]]
+- [[#end-doom][end doom!]]
 
 * Shebang
 :PROPERTIES:
-:header-args: :results silent :tangle ~/.doom.d/init.el
 :ID:       ad24dd4d-c3a0-4b7d-913d-d0c84cfd50f4
 :END:
 #+begin_src elisp
@@ -28,9 +28,6 @@
 #+end_src
 
 * Default stuff
-:PROPERTIES:
-:header-args: :results silent :tangle ~/.doom.d/init.el
-:END:
 
 #+begin_example elisp
 ;; This file controls what Doom modules are enabled and what order they load
@@ -50,7 +47,6 @@
 
 * Begin Doom!
 :PROPERTIES:
-:header-args: :results silent :tangle ~/.doom.d/init.el
 :ID:       286f06de-85af-4993-907d-76904e7c2a9f
 :END:
 
@@ -301,7 +297,7 @@ calendar
 ;;(rss +org)        ; emacs as an RSS reader
 ;;twitter           ; twitter client https://twitter.com/vnought
 
-** config
+** literate config
 :PROPERTIES:
 :ID:       2a596dcb-e96d-42f5-91ae-9b87ed8d3254
 :END:
@@ -312,7 +308,7 @@ literate
 (default +bindings +smartparens)
 #+end_src
 
-** end doom!
+* end doom!
 :PROPERTIES:
 :ID:       2c8bd181-980e-45b7-87c1-5c1facfb75aa
 :END:

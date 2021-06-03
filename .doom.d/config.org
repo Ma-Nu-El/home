@@ -1,48 +1,48 @@
 #+TITLE: Config File
+#+FILETAGS: :literate:config:
+#+PROPERTY: header-args :tangle ~/.doom.d/config.el :results silent
 
-* Table of Contents :TOC_4:noexport:
+* Table of Contents :TOC_2:noexport:
 - [[#shebang][shebang]]
-- [[#the-rest][the rest]]
-  - [[#user-full-name][user-full-name]]
-  - [[#mu4e][mu4e]]
-    - [[#standard-config][standard config]]
-    - [[#after-standard-config][after standard config]]
-  - [[#theme][theme]]
-  - [[#org-directory][org directory]]
-  - [[#recursive-agenda-files][recursive agenda files]]
-  - [[#no-line-numbers][no line numbers]]
-  - [[#begin-org-section][begin org section]]
-    - [[#buffer-opening-settings-for-speed][buffer opening settings for speed]]
-      - [[#fixed-flush-left-indentation][fixed flush left indentation]]
-      - [[#other-settings][other settings]]
-      - [[#start-folded-nil][start folded nil]]
-    - [[#logbook-and-clockbook][logbook and clockbook]]
-    - [[#global-properties][global properties]]
-    - [[#column-view-settings][column view settings]]
-    - [[#reversed-org-log-states][reversed org log states]]
-    - [[#agenda-settings][agenda settings]]
-    - [[#export-backend-enabling][export backend enabling]]
-    - [[#keywords][keywords]]
-    - [[#habit-graph-enabling][habit graph enabling]]
-    - [[#agenda-custom-commands][agenda custom commands]]
-    - [[#agenda-view-prefix][agenda view prefix]]
-    - [[#agenda-view-settings][agenda view settings]]
-    - [[#latex-export-table-of-contents-settings][latex export table of contents settings]]
-    - [[#mu4e-store-links][mu4e store links]]
-    - [[#log][log]]
-    - [[#how-many-todos-left-info-in-heading][how many todos left info in heading]]
-    - [[#use-org-id-to-store-links-when-appropriate][use org-id to store links when appropriate]]
-    - [[#open-links-with-default-application][open links with default application]]
-    - [[#org-clock][org clock]]
-    - [[#global-exclude-tags][global exclude tags]]
-    - [[#disable-crypt-tag-inheritance][disable crypt tag inheritance]]
-  - [[#end-org-section][end org section]]
-  - [[#personal-keybindingsn][personal keybindingsn]]
-  - [[#ispell-config][ispell config]]
-  - [[#roam][roam]]
-  - [[#dailies][dailies]]
-  - [[#disable-backup][disable backup]]
-  - [[#custom-set-variables][custom set variables]]
+- [[#user-full-name][user-full-name]]
+- [[#mu4e][mu4e]]
+  - [[#standard-config][standard config]]
+  - [[#after-standard-config][after standard config]]
+- [[#theme][theme]]
+- [[#org-directory][org directory]]
+- [[#recursive-agenda-files][recursive agenda files]]
+- [[#no-line-numbers][no line numbers]]
+- [[#begin-org-section][begin org section]]
+  - [[#buffer-opening-settings-for-speed][buffer opening settings for speed]]
+  - [[#fixed-flush-left-indentation][fixed flush left indentation]]
+  - [[#logbook-and-clockbook][logbook and clockbook]]
+  - [[#global-properties][global properties]]
+  - [[#column-view-settings][column view settings]]
+  - [[#reversed-org-log-states][reversed org log states]]
+  - [[#agenda-settings][agenda settings]]
+  - [[#export-backend-enabling][export backend enabling]]
+  - [[#keywords][keywords]]
+  - [[#habit-graph-enabling][habit graph enabling]]
+  - [[#agenda-custom-commands][agenda custom commands]]
+  - [[#agenda-view-prefix][agenda view prefix]]
+  - [[#agenda-view-settings][agenda view settings]]
+  - [[#latex-export-table-of-contents-settings][latex export table of contents settings]]
+  - [[#mu4e-store-links][mu4e store links]]
+  - [[#log][log]]
+  - [[#how-many-todos-left-info-in-heading][how many todos left info in heading]]
+  - [[#use-org-id-to-store-links-when-appropriate][use org-id to store links when appropriate]]
+  - [[#open-links-with-default-application][open links with default application]]
+  - [[#org-clock][org clock]]
+  - [[#global-exclude-tags][global exclude tags]]
+  - [[#disable-crypt-tag-inheritance][disable crypt tag inheritance]]
+  - [[#org-transclusion][org-transclusion]]
+- [[#end-org-section][end org section]]
+- [[#personal-keybindings][personal keybindings]]
+- [[#ispell-config][ispell config]]
+- [[#roam][roam]]
+- [[#dailies][dailies]]
+- [[#disable-backup][disable backup]]
+- [[#custom-set-variables][custom set variables]]
 - [[#footnotes][Footnotes]]
 
 * shebang
@@ -62,11 +62,7 @@
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 
-* the rest
-:PROPERTIES:
-:header-args: :results silent :tangle ~/.doom.d/config.el
-:END:
-** user-full-name
+* user-full-name
 :PROPERTIES:
 :ID:       c1cc08a8-95ed-4bb6-a523-41fb398a2dd9
 :END:
@@ -76,6 +72,9 @@
       )
 #+end_src
 
+#+RESULTS:
+: Manuel Fuica Morales
+
 ;; (setq smtpmail-smtp-server "smtp.gmail.com")
 ;; (setq smtpmail-smtp-service 587) ;; this might need to change
 
@@ -83,8 +82,8 @@
 ;; https://stackoverflow.com/questions/17281669/using-smtp-gmail-and-starttls
 ;; https://emacs.stackexchange.com/questions/46257/sending-email-fails-with-process-smtpmail-not-running
 
-** mu4e
-*** standard config
+* mu4e
+** standard config
 :PROPERTIES:
 :ID:       53c3636b-214b-43e4-967b-e8af4a806c45
 :END:
@@ -101,43 +100,47 @@
 
 #+begin_src elisp
 (setq message-send-mail-function 'smtpmail-send-it
-starttls-use-gnutls t
-smtpmail-starttls-credentials
-'(("smtp.gmail.com" 587 nil nil))
-smtpmail-auth-credentials
-(expand-file-name "~/.authinfo.gpg")
-smtpmail-default-smtp-server "smtp.gmail.com"
-smtpmail-smtp-server "smtp.gmail.com"
-smtpmail-smtp-service 587
-smtpmail-debug-info t
-;; auth-sources '(password-store)
-auth-source-debug t
-)
+      starttls-u        se-gnutls t
+      smtpmail-starttls-credentials
+      '(("smtp.gmail.com" 587 nil nil))
+      smtpmail-auth-credentials
+      (expand-file-name "~/.authinfo.gpg")
+      smtpmail-default-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587
+      smtpmail-debug-info t
+      ;; auth-sources '(password-store)
+      auth-source-debug t
+      )
 #+end_src
 
 
-*** after standard config
+** after standard config :crypt:
 :PROPERTIES:
 :ID:       1ee20f94-c54e-4597-9a06-d3b32ecd1b32
 :END:
 
 -----BEGIN PGP MESSAGE-----
 
-jA0ECQMC1YXSLE8Z54r/0ukBodTD7EvUg3U7ccEg7lv+gCqnjZNvC5ickxR0l/SU
-BHtd8fA6nNRv6An/Nw3MWIdmAKw7F5gwxLDXo4imP85K08DB7SvFoKF4EG1szMfF
-ZkYX+/+uWV+7isdgn+o8+LDI5j55sr5rNJ4GhciEXmoyjrXjq6TObca5Vh8jQIXk
-OvcB01XcVz9K1kkdQeOGO2QdWn54bNtBriLaW3CGFAYw9j9SK3avoUkMDowVptNl
-1pkOeciPhrHUFdTtI493UUU/VKefQooXWgEG6i0yDqL/D1SYH0//vXDgsSmP2QgN
-3Qtp7dyduHWwkF8Itlh8gHnQgJXw9aNQ52RwrOg7HpaYaK6PPrUzhVTbw7X1SDkS
-zK0k+DoeYz9Qd8DyXqpLHncsNUgQpJah6rbk3HCdpyPHuJSfcMdvbI9plpl9gFG8
-DhrK2kwaasSkHMPCQ4Jjl+gZwqBYHa43r3MVzGRP5aE+mp+FE8gR5EWeaRo4cK1f
-/kSSXovAqfejLieMMWL3kWpczdi7KgvAfbCxPW8DPbZlG7LO9Jn+dH2a2nDalv/Y
-xIBkUyboTspoYdUdUsagVRPAbejrMFXVHkixibUQqk7nMjGKB52GvBzKC/Bq9YIj
-cCTJDJXmZkLBhQMIgH7vu4gG2QBHalxnba3JAlnyvGMLS4XiujTH8VBGSdXLCICR
-uRDD8kzDC+v3m4mptfOQQDxS
-=BC+l
+jA0ECQMCjT5FEOtY+D//0ukBXDyOKOK6tEjkIj9qtxoz4a99Bq9uW1s/MV4XRh5n
+DGhiCkF24Bc2EkQB0Um1Wee1NhKcILlJjjf0ICkcQdbO2Iiff8/rdoMYzTQlr8F5
+M6fmfBqp/c0Qgxm7cfP+kcRxgP5iUbXzJlt/Rl30XXWQn2Ef2luxl2rWIp4LAV8q
+uHFFeDVyDPAWAFooyKAPUwpHhRT4PwtyHRf1vEAv2zyKVws7E100NMjuSOWOu0sd
+MbERG69V6XS/Rhp75VZTZ2fw1BDmN3SMJreWyWzW5V/Bqsb0yWssWgTq7hacTbja
+PWXD2c1Up+nLmg3TK5IkfnVLB85tlDmTQwAHB6UVHZZq2Aa3O6PVeMs6heGolg+N
+UrdyfmYKluCP+08oAZQNHScoyxRkJjDDYCpLJzvy6b42AMrkyYBqknUM15pdaLm0
+IAPS/USx4gXdWxqdcTE0z8pP7Ky9lbHrw+38CKJmlOvWoLUybTATcqF5xriwc+yp
+oNoOTJZb5hZDzf6iP5YT2FNmDu1wNq+COyQMZI5cFtEXZupHzYIFx2Ae+6dCr95w
+EyvZLorn7y7R74OTdmFYhfFlB35YmLC7SYU8CbMio77lvbEzXEg21fZSE+zLPjzN
+/0hREjhaphLPy8FCa7841RUwKvDxxpj3aRV6nlO+XzqFd+dRvPcjwMEy6A2Kq51O
+VhBcur3oMXwe+WbCA5whZE63
+=W4kI
 -----END PGP MESSAGE-----
 
+* theme
+:PROPERTIES:
+:ID:       3d09ad0f-b02f-419e-a6a4-5a137258ef5f
+:END:
 
 Doom exposes five (optional) variables for controlling fonts in Doom. Here
 are the three important ones:
@@ -150,20 +153,17 @@ are the three important ones:
 They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 font string. You generally only need these two:
 (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "sans" :size 13))
+doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 There are two ways to load a theme. Both assume the theme is installed and
 available. You can either set `doom-theme' or manually load a theme with the
 `load-theme' function. This is the default:
-** theme
-:PROPERTIES:
-:ID:       3d09ad0f-b02f-419e-a6a4-5a137258ef5f
-:END:
+
 #+begin_src elisp
 (setq doom-theme 'doom-one)
 #+end_src
 
-** org directory
+* org directory
 :PROPERTIES:
 :ID:       86d962a4-8100-483a-a739-59cfcdfb0655
 :END:
@@ -178,7 +178,7 @@ change `org-directory'. It must be set before org loads!
 ;; Added by me
 ;; https://stackoverflow.com/questions/11384516/how-to-make-all-org-files-under-a-folder-added-in-agenda-list-automatically
 
-** recursive agenda files
+* recursive agenda files
 :PROPERTIES:
 :ID:       7e605bae-b5f5-41ad-b95e-c02f621b7926
 :END:
@@ -186,7 +186,7 @@ change `org-directory'. It must be set before org loads!
 (setq org-agenda-files (directory-files-recursively "~/org/" "\\.org$"))
 #+end_src
 
-** no line numbers
+* no line numbers
 :PROPERTIES:
 :ID:       23918f8e-2350-40a7-b4d8-57520c5a36cf
 :END:
@@ -216,7 +216,7 @@ This will open documentation for it, including demos of how they are used.
 You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 they are implemented.
 
-** begin org section
+* begin org section
 :PROPERTIES:
 :ID:       72258b79-1e04-4a73-95b8-515f48143e5d
 :END:
@@ -224,11 +224,11 @@ they are implemented.
 ;; BEGIN AFTER ORG
 (after! org
 #+end_src
-*** buffer opening settings for speed
+** buffer opening settings for speed
 :PROPERTIES:
 :ID:       f04c5ecf-aba4-4d99-adc0-0527201f84b8
 :END:
-**** fixed flush left indentation
+** fixed flush left indentation
 :PROPERTIES:
 :ID:       27de66e8-d440-4a80-bab7-843bebf87b8b
 :END:
@@ -236,9 +236,10 @@ they are implemented.
 (setq org-adapt-indentation nil)
 #+end_src
 
-More consistent; if I change heading level I don't have to fix indentation.
+More consistent; if I change heading level I don't have to fix line breaks due
+to later changes in heading level. CLI 80 chars FTW.
 
-**** other settings
+*** other settings
 :PROPERTIES:
 :ID:       a4d196f2-9fc3-44ab-97a5-fb2130c5d167
 :END:
@@ -253,7 +254,7 @@ More consistent; if I change heading level I don't have to fix indentation.
 
 - https://emacs.stackexchange.com/questions/9709/keep-the-headlines-expanded-in-org-mode
 
-**** start folded nil
+*** start folded nil
 :PROPERTIES:
 :ID:       964fd048-37ad-4bff-a09e-dbf48ab72124
 :END:
@@ -263,7 +264,7 @@ It's gotta be faster. Useful too when you have a TOC heading first.
 (setq org-startup-folded nil)
 #+end_src
 
-*** logbook and clockbook
+** logbook and clockbook
 :PROPERTIES:
 :ID:       a065fc59-7ecf-4c1a-aa3c-d01f7f36eb28
 :END:
@@ -272,7 +273,7 @@ It's gotta be faster. Useful too when you have a TOC heading first.
 (setq org-log-into-drawer "LOGBOOK")
 (setq org-clock-into-drawer "CLOCKBOOK")
 #+end_src
-*** global properties
+** global properties
 :PROPERTIES:
 :ID:       64ea25a8-c5a6-4d48-a199-3d5162305169
 :END:
@@ -286,7 +287,7 @@ It's gotta be faster. Useful too when you have a TOC heading first.
       )
 
 #+end_src
-*** column view settings
+** column view settings
 :PROPERTIES:
 :ID:       82451b12-f96d-40b5-9b2a-2908eee6eff4
 :END:
@@ -296,10 +297,10 @@ Set global Column View format.
  %5Effort(Estim){:} %10CLOCKSUM(Actual)")
 #+end_src
 
-*** reversed org log states
+** reversed org log states
 (setq org-log-states-order-reversed t) ; doesn't really work...why?
 
-*** agenda settings
+** agenda settings
 :PROPERTIES:
 :ID:       4790fa62-de1b-4118-a722-f41212854368
 :END:
@@ -310,7 +311,7 @@ Set global Column View format.
 
 #+end_src
 
-*** export backend enabling
+** export backend enabling
 :PROPERTIES:
 :ID:       a794b757-4dcb-4a6b-a515-89e4419b5f19
 :END:
@@ -322,7 +323,7 @@ Set global Column View format.
 - OrgMode E03S01: Automatic logging of status changes:
   + https://www.youtube.com/watch?v=R4QSTDco_w8
 
-*** todo keywords
+** todo keywords
 :PROPERTIES:
 :ID:       55c05291-82b3-443f-93ee-68a68b38d3de
 :END:
@@ -336,7 +337,7 @@ Set global Column View format.
 
 
 #+end_src
-*** habit graph enabling
+** habit graph enabling
 :PROPERTIES:
 :ID:       c6e2c52f-51bd-4fd9-8fd5-080fb2a617be
 :END:
@@ -345,7 +346,7 @@ Set global Column View format.
 #+end_src
 - https://github.com/hlissner/doom-emacs/issues/3102
 
-*** agenda custom commands
+** agenda custom commands
 :PROPERTIES:
 :ID:       e4bd5984-7063-44f3-973d-51c298645761
 :END:
@@ -394,7 +395,7 @@ Set global Column View format.
 
 - https://emacs.stackexchange.com/questions/38183/how-to-exclude-a-file-from-agenda
 
-*** agenda view prefix
+** agenda view prefix
 :PROPERTIES:
 :ID:       1b805336-7fdb-4b66-b08c-4e346cc9c61e
 :END:
@@ -404,7 +405,7 @@ Hide filename in agenda view
 #+end_src
 - https://lists.gnu.org/archive/html/emacs-orgmode/2010-01/msg00744.html
 
-*** agenda view settings
+** agenda view settings
 :PROPERTIES:
 :ID:       197f9212-94e5-4475-8d03-f9118493320a
 :END:
@@ -418,7 +419,7 @@ That line is counterintuitive sometimes when checking agenda remotely.
 #+end_src
 - https://orgmode.org/manual/Agenda-Commands.html
 
-*** latex export table of contents settings
+** latex export table of contents settings
 :PROPERTIES:
 :ID:       994f0f4d-3184-445a-b079-2a1c894dbcaf
 :END:
@@ -430,7 +431,7 @@ Orgmode latex export: new page after TOC
 
 
 #+end_src
-*** mu4e store links
+** mu4e store links
 But when enabling this, it overrides the other org-store-link* protocols.
 Have to enable, compile and restart emacs when wanting to use, and disable
 compile and restart emacs when wanting to store links from anywhere else.
@@ -448,7 +449,7 @@ to do something about it.
 ;; https://orgmode.org/manual/Breaking-Down-Tasks.html#Breaking-Down-Tasks
 ##+end_src
 
-*** log
+** log
 Throws error. Disabling since not essential.
 ##+begin_src elisp
 (defun org-summary-todo (n-done n-not-done)
@@ -458,7 +459,7 @@ Throws error. Disabling since not essential.
 )
 ##+end_src
 
-*** how many todos left info in heading
+** how many todos left info in heading
 :PROPERTIES:
 :ID:       485fa339-fde6-47bb-9873-59bf7e3d5ded
 :END:
@@ -470,7 +471,7 @@ also, you have to set the cookie property to 'todo recursive'; you
 can use Doom's 'SPC m o'. Still, it's too much work. Have to do
 something about it.
 
-*** use org-id to store links when appropriate
+** use org-id to store links when appropriate
 :PROPERTIES:
 :ID:       7a291636-2179-4180-8d53-1614e7074454
 :END:
@@ -478,7 +479,7 @@ something about it.
 (setq org-id-link-to-org-use-id t)
 #+end_src
 
-*** open links with default application
+** open links with default application
 :PROPERTIES:
 :ID:       c9e0a789-0d20-4dfa-b457-ff5a9ed27698
 :END:
@@ -496,7 +497,7 @@ something about it.
 - https://stackoverflow.com/questions/3973896/emacs-org-mode-file-viewer-associations
 - https://emacs.stackexchange.com/questions/2856/how-to-configure-org-mode-to-respect-system-specific-default-applications-for-ex
 
-*** org clock
+** org clock
 :PROPERTIES:
 :ID:       21d12421-59e2-484c-ace5-95dfc13b67dd
 :END:
@@ -512,7 +513,7 @@ Also check this at:
 
 https://orgmode.org/manual/Clocking-Work-Time.html
 
-*** global exclude tags
+** global exclude tags
 :PROPERTIES:
 :ID:       54b7e29a-55da-4baf-b0a5-10848d35130e
 :END:
@@ -541,7 +542,7 @@ exports like html, latex or markup.
 
 Neat thing indeed.
 
-*** disable crypt tag inheritance
+** disable crypt tag inheritance
 :PROPERTIES:
 :ID:       68153510-2ca9-4d16-ae50-6e916da8142d
 :END:
@@ -550,7 +551,54 @@ Neat thing indeed.
 #+begin_src elisp
 (setq org-tags-exclude-from-inheritance '("crypt"))
 #+end_src
-** end org section
+** org-transclusion
+:PROPERTIES:
+:ID:       0d747be6-fc5d-4270-bf63-123fd81cd6c2
+:END:
+- [2021-06-02 Wed]
+- Useful for Doom Emacs users.
+
+In your ~~/.doom.d/package.el~ add the following
+#+begin_example elisp
+(package! org-transclusion
+  :recipe (:host github
+           :repo "nobiot/org-transclusion"
+           :branch "main"
+           :files ("*.el")))
+#+end_example
+
+And in your ~~/.doom.d/config.el~ file add
+#+begin_src elisp
+(use-package! org-transclusion)
+#+end_src
+
+Notice
+- In your ~package.el~ file the statement starts with ~package!~ while
+  in the ~config.el~ it starts with ~use-package!~.
+- In your ~config.el~ file
+  #+begin_example elisp
+  (use-package! org-transclusion)
+  #+end_example
+  has to be placed inside the ~(after! org)~ section like this:
+  #+begin_example elisp
+  (after! org
+  your org config...
+  (use-package! org-transclusion)
+  )
+  #+end_example
+  - Don't have source but I remember reading it in the Doom Emacs's manual.
+
+
+Details here:
+- https://github.com/nobiot/org-transclusion/issues/28
+- https://github.com/nobiot/org-transclusion/issues/79
+- https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org
+  - See the section about configuring packages.
+
+- Examples:
+  + See my ~~/.doom.d/config.org~ and ~~/.doom.d/packages.org~ files and
+    search for =transclusion=. You can find them in my dotfile  s.
+* end org section
 :PROPERTIES:
 :ID:       889fe81d-8200-4e4f-b833-a2c20cc295eb
 :END:
@@ -559,7 +607,7 @@ Neat thing indeed.
 ;; END AFTER ORG
 #+end_src
 
-** personal keybindingsn
+* personal keybindings
 :PROPERTIES:
 :ID:       0cc3c478-ed08-4e4a-b993-a2ff205b829d
 :END:
@@ -568,7 +616,7 @@ Neat thing indeed.
 (global-set-key (kbd "\C-cr") 'ispell-region)
 #+end_src
 
-** ispell config
+* ispell config
 :PROPERTIES:
 :ID:       71aa1a7e-7cf6-4eb3-8fe5-e3d824003528
 :END:
@@ -576,7 +624,7 @@ Neat thing indeed.
 (setq ispell-dictionary "en")
 #+end_src
 
-** roam
+* roam
 :PROPERTIES:
 :ID:       41e53852-03b8-4098-a190-287a30504cfc
 :END:
@@ -587,7 +635,7 @@ Neat thing indeed.
 (require 'org-roam-protocol)
 #+end_src
 
-** dailies
+* dailies
 :PROPERTIES:
 :ID:       2078934a-a605-4347-a616-9359566f16f7
 :END:
@@ -603,7 +651,7 @@ Neat thing indeed.
 )
 ##+end_src
 
-** disable backup
+* disable backup
 :PROPERTIES:
 :ID:       9a8a2efc-9871-4f88-9231-8017e44186e5
 :END:
@@ -614,7 +662,7 @@ Neat thing indeed.
 (setq auto-save-default nil)
 #+end_src
 
-** custom set variables
+* custom set variables
 
 ;; (custom-set-variables
 ;;  '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
