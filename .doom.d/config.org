@@ -597,7 +597,8 @@ Details here:
 
 - Examples:
   + See my ~~/.doom.d/config.org~ and ~~/.doom.d/packages.org~ files and
-    search for =transclusion=. You can find them in my dotfile  s.
+    search for =transclusion=. You can find them in my dotfiles.
+    - https://github.com/Ma-Nu-El/home/tree/master/.doom.d
 * end org section
 :PROPERTIES:
 :ID:       889fe81d-8200-4e4f-b833-a2c20cc295eb
