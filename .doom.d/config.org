@@ -100,7 +100,7 @@
 
 #+begin_src elisp
 (setq message-send-mail-function 'smtpmail-send-it
-      starttls-u        se-gnutls t
+      starttls-use-gnutls t
       smtpmail-starttls-credentials
       '(("smtp.gmail.com" 587 nil nil))
       smtpmail-auth-credentials
@@ -122,19 +122,19 @@
 
 -----BEGIN PGP MESSAGE-----
 
-jA0ECQMCjT5FEOtY+D//0ukBXDyOKOK6tEjkIj9qtxoz4a99Bq9uW1s/MV4XRh5n
-DGhiCkF24Bc2EkQB0Um1Wee1NhKcILlJjjf0ICkcQdbO2Iiff8/rdoMYzTQlr8F5
-M6fmfBqp/c0Qgxm7cfP+kcRxgP5iUbXzJlt/Rl30XXWQn2Ef2luxl2rWIp4LAV8q
-uHFFeDVyDPAWAFooyKAPUwpHhRT4PwtyHRf1vEAv2zyKVws7E100NMjuSOWOu0sd
-MbERG69V6XS/Rhp75VZTZ2fw1BDmN3SMJreWyWzW5V/Bqsb0yWssWgTq7hacTbja
-PWXD2c1Up+nLmg3TK5IkfnVLB85tlDmTQwAHB6UVHZZq2Aa3O6PVeMs6heGolg+N
-UrdyfmYKluCP+08oAZQNHScoyxRkJjDDYCpLJzvy6b42AMrkyYBqknUM15pdaLm0
-IAPS/USx4gXdWxqdcTE0z8pP7Ky9lbHrw+38CKJmlOvWoLUybTATcqF5xriwc+yp
-oNoOTJZb5hZDzf6iP5YT2FNmDu1wNq+COyQMZI5cFtEXZupHzYIFx2Ae+6dCr95w
-EyvZLorn7y7R74OTdmFYhfFlB35YmLC7SYU8CbMio77lvbEzXEg21fZSE+zLPjzN
-/0hREjhaphLPy8FCa7841RUwKvDxxpj3aRV6nlO+XzqFd+dRvPcjwMEy6A2Kq51O
-VhBcur3oMXwe+WbCA5whZE63
-=W4kI
+jA0ECQMCPa7ohIH/Kxn/0ukBHz+ysQj+uwAraW5PYm1geaCtUpnCICLJKKly0GPs
+mLy9ELLplYhBx4RTdiEgQGFJdnQWbwiSpPPePWPAlxjUsv/k5cHtXui+wcUf0b2V
+Ze4FB+sPuhjIMJshugYcZaX1EsgtIGZjny3z1IF5nBkymlUNiBtFlYHVyadFpE1o
+Eo0Km29dT522WS9L2hM8jo3e+q3G7fvN/Y4Rao+Gr3NbBrJrucWtaoQAsRF4nv74
+rtvYCnd4xRC+q3uddJ0ZvU//bDSdVfQK268BzrNpFSe9SnBFp7Th0dxwtng03EqI
+Ee6WHbqSpU4fvX6gRxDociQwWDtNcspIIMsM6fbuj9JisNoQNSd7Neb84FQL4fd3
+KihKpm85gW7MBrmj3EPCjLM3frU35kZep2UQ/MBTKScYTS6v6KOAkAo1U0VGo9ek
+8I7ECRRPSh1awDe8Ga2mrPC98C6AlUgdTuvTODc8B4y8JLMCkW67JLzeyn1xcnNx
+3wZ9TTmz6fsAGzuw/Gbr9/pcfs3gRiaNP+TKnLhnrsKYieaGvEPk+TlnFoQCkfuR
+SW9bsU+I4S1grTNXE6CKsGdlFpgfeIsOw3/g5gBQzImHqQ4HO1GDrHOJgMxni0ti
+jC2/+rkiwsaKkxKYW/GuOXZBehVOomgwXLZ1W3a9T0y1RkeTgzvQHrKx1/z3MxT+
+rxBHf+9MsHJAft0kl8d162sz
+=iNHP
 -----END PGP MESSAGE-----
 
 * theme
@@ -459,13 +459,17 @@ Throws error. Disabling since not essential.
 )
 ##+end_src
 
-** how many todos left info in heading
+** how many todos left info in heading 
 :PROPERTIES:
 :ID:       485fa339-fde6-47bb-9873-59bf7e3d5ded
 :END:
-#+begin_src elisp
+
+Disabled because causes issues. Not investigated.
+
+#+begin_example elisp
 (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
-#+end_src
+#+end_example
+
 
 also, you have to set the cookie property to 'todo recursive'; you
 can use Doom's 'SPC m o'. Still, it's too much work. Have to do
@@ -579,7 +583,7 @@ Notice
   #+begin_example elisp
   (use-package! org-transclusion)
   #+end_example
-  has to be placed inside the ~(after! org)~ section like this:
+  has to be placed _inside_ the ~(after! org)~ section like this:
   #+begin_example elisp
   (after! org
   your org config...
@@ -599,6 +603,14 @@ Details here:
   + See my ~~/.doom.d/config.org~ and ~~/.doom.d/packages.org~ files and
     search for =transclusion=. You can find them in my dotfiles.
     - https://github.com/Ma-Nu-El/home/tree/master/.doom.d
+
+
+The core point of transclusion is probably not the syncronization of
+info across files, but the live sync and the saved space in storage. For
+static sync you could use the #+INCLUDE keyword. In fact I use it for
+university stuff. Check ~/org/uni/docs/index.html
+
+
 * end org section
 :PROPERTIES:
 :ID:       889fe81d-8200-4e4f-b833-a2c20cc295eb
