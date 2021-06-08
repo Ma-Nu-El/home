@@ -8,7 +8,7 @@
 (setq mu4e-attachment-dir (expand-file-name "~/myDrive/mailAttachments"))
 
 (setq message-send-mail-function 'smtpmail-send-it
-      starttls-u        se-gnutls t
+      starttls-use-gnutls t
       smtpmail-starttls-credentials
       '(("smtp.gmail.com" 587 nil nil))
       smtpmail-auth-credentials
@@ -119,8 +119,6 @@
 (setq org-agenda-use-time-grid nil)
 
 (setq org-latex-toc-command "\\tableofcontents \\clearpage")
-
-(add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
 
 (setq org-id-link-to-org-use-id t)
 
