@@ -126,7 +126,7 @@ then
    cp -r "$ROAMDIR"/* ./
    if [[ "$2" = "--$ACTION31" ]] # if you append '--clean' to 'fetch'
    then
-      rm "$ROAMDIR"/*
+      rm -rf "${ROAMDIR:?}"/*
    fi
 fi
 
