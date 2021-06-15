@@ -37,9 +37,10 @@
   - [[#disable-crypt-tag-inheritance][disable crypt tag inheritance]]
   - [[#org-transclusion][org-transclusion]]
 - [[#end-org-section][end org section]]
-- [[#personal-keybindings][personal keybindings]]
 - [[#ispell-config][ispell config]]
+- [[#personal-keybindings][personal keybindings]]
 - [[#roam][roam]]
+- [[#start-week-on-monday][start week on monday]]
 - [[#dailies][dailies]]
 - [[#disable-backup][disable backup]]
 - [[#custom-set-variables][custom set variables]]
@@ -114,7 +115,6 @@
       )
 #+end_src
 
-
 ** after standard config :crypt:
 :PROPERTIES:
 :ID:       1ee20f94-c54e-4597-9a06-d3b32ecd1b32
@@ -160,7 +160,7 @@ available. You can either set `doom-theme' or manually load a theme with the
 `load-theme' function. This is the default:
 
 #+begin_src elisp
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-dark+)
 #+end_src
 
 * org directory
@@ -428,9 +428,8 @@ Orgmode latex export: new page after TOC
 
 #+begin_src elisp
 (setq org-latex-toc-command "\\tableofcontents \\clearpage")
-
-
 #+end_src
+
 ** mu4e store links
 But when enabling this, it overrides the other org-store-link* protocols.
 Have to enable, compile and restart emacs when wanting to use, and disable
@@ -479,6 +478,7 @@ something about it.
 :PROPERTIES:
 :ID:       7a291636-2179-4180-8d53-1614e7074454
 :END:
+
 #+begin_src elisp
 (setq org-id-link-to-org-use-id t)
 #+end_src
@@ -555,6 +555,7 @@ Neat thing indeed.
 #+begin_src elisp
 (setq org-tags-exclude-from-inheritance '("crypt"))
 #+end_src
+
 ** org-transclusion
 :PROPERTIES:
 :ID:       0d747be6-fc5d-4270-bf63-123fd81cd6c2
@@ -610,7 +611,6 @@ info across files, but the live sync and the saved space in storage. For
 static sync you could use the #+INCLUDE keyword. In fact I use it for
 university stuff. Check ~/org/uni/docs/index.html
 
-
 * end org section
 :PROPERTIES:
 :ID:       889fe81d-8200-4e4f-b833-a2c20cc295eb
@@ -620,33 +620,46 @@ university stuff. Check ~/org/uni/docs/index.html
 ;; END AFTER ORG
 #+end_src
 
+* ispell config
+  :PROPERTIES:
+  :ID:       71aa1a7e-7cf6-4eb3-8fe5-e3d824003528
+  :END:
+
+#+begin_src elisp
+(setq ispell-dictionary "en")
+#+end_src
+
+- Seems unnecessary.
+
 * personal keybindings
-:PROPERTIES:
-:ID:       0cc3c478-ed08-4e4a-b993-a2ff205b829d
-:END:
+  :PROPERTIES:
+  :ID:       0cc3c478-ed08-4e4a-b993-a2ff205b829d
+  :END:
 #+begin_src elisp
 (define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
 (global-set-key (kbd "\C-cr") 'ispell-region)
 #+end_src
 
-* ispell config
-:PROPERTIES:
-:ID:       71aa1a7e-7cf6-4eb3-8fe5-e3d824003528
-:END:
-#+begin_src elisp
-(setq ispell-dictionary "en")
-#+end_src
-
 * roam
-:PROPERTIES:
-:ID:       41e53852-03b8-4098-a190-287a30504cfc
-:END:
+  :PROPERTIES:
+  :ID:       41e53852-03b8-4098-a190-287a30504cfc
+  :END:
 #+begin_src elisp
 ;; ORG-ROAM
 (setq org-roam-directory "~/org/auxRoam")
 (add-hook 'after-init-hook 'org-roam-mode)
 (require 'org-roam-protocol)
 #+end_src
+
+* start week on monday
+  :PROPERTIES:
+  :ID:       c1d944f2-b415-42b6-8e75-73a33185d38c
+  :END:
+- [2021-06-08 Tue 19:46]
+#+begin_src elisp
+(setq calendar-week-start-day 1)
+#+end_src
+- https://emacs.stackexchange.com/questions/42571/org-agenda-date-prompt-mini-calendar-start-week-on-monday
 
 * dailies
 :PROPERTIES:
@@ -676,10 +689,15 @@ university stuff. Check ~/org/uni/docs/index.html
 #+end_src
 
 * custom set variables
+:PROPERTIES:
+:ID:       b9de5245-3299-4e27-8956-9c4668ee337b
+:END:
 
-;; (custom-set-variables
-;;  '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
-;;  )
+#+begin_src elisp
+(custom-set-variables
+ '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
+ )
+ #+end_src
 
 * Footnotes
 

@@ -21,7 +21,7 @@
       auth-source-debug t
       )
 
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-dark+)
 
 (setq org-directory "~/org/")
 
@@ -145,17 +145,23 @@
 )
 ;; END AFTER ORG
 
+(setq ispell-dictionary "en")
+
 (define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
 (global-set-key (kbd "\C-cr") 'ispell-region)
-
-(setq ispell-dictionary "en")
 
 ;; ORG-ROAM
 (setq org-roam-directory "~/org/auxRoam")
 (add-hook 'after-init-hook 'org-roam-mode)
 (require 'org-roam-protocol)
 
+(setq calendar-week-start-day 1)
+
 ;; disable backup
 (setq backup-inhibited t)
 ;; disable auto save
 (setq auto-save-default nil)
+
+(custom-set-variables
+ '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
+ )
