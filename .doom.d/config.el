@@ -21,7 +21,7 @@
       auth-source-debug t
       )
 
-(setq doom-theme 'doom-dark+)
+(setq doom-theme 'doom-gruvbox)
 
 (setq org-directory "~/org/")
 
@@ -157,10 +157,17 @@
 
 (setq calendar-week-start-day 1)
 
+(setq +treemacs-git-mode 'simple)
+
 ;; disable backup
 (setq backup-inhibited t)
 ;; disable auto save
 (setq auto-save-default nil)
+
+(custom-set-faces!
+  '(aw-leading-char-face
+    :foreground "white" :background "red"
+    :weight bold :height 2.5 :box (:line-width 10 :color "red")))
 
 (custom-set-variables
  '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))

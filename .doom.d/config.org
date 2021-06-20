@@ -8,6 +8,7 @@
 - [[#mu4e][mu4e]]
   - [[#standard-config][standard config]]
   - [[#after-standard-config][after standard config]]
+- [[#font][font]]
 - [[#theme][theme]]
 - [[#org-directory][org directory]]
 - [[#recursive-agenda-files][recursive agenda files]]
@@ -42,7 +43,9 @@
 - [[#roam][roam]]
 - [[#start-week-on-monday][start week on monday]]
 - [[#dailies][dailies]]
+- [[#treemacs][treemacs]]
 - [[#disable-backup][disable backup]]
+- [[#custom-set-faces][custom set faces]]
 - [[#custom-set-variables][custom set variables]]
 - [[#footnotes][Footnotes]]
 
@@ -122,22 +125,22 @@
 
 -----BEGIN PGP MESSAGE-----
 
-jA0ECQMCPa7ohIH/Kxn/0ukBHz+ysQj+uwAraW5PYm1geaCtUpnCICLJKKly0GPs
-mLy9ELLplYhBx4RTdiEgQGFJdnQWbwiSpPPePWPAlxjUsv/k5cHtXui+wcUf0b2V
-Ze4FB+sPuhjIMJshugYcZaX1EsgtIGZjny3z1IF5nBkymlUNiBtFlYHVyadFpE1o
-Eo0Km29dT522WS9L2hM8jo3e+q3G7fvN/Y4Rao+Gr3NbBrJrucWtaoQAsRF4nv74
-rtvYCnd4xRC+q3uddJ0ZvU//bDSdVfQK268BzrNpFSe9SnBFp7Th0dxwtng03EqI
-Ee6WHbqSpU4fvX6gRxDociQwWDtNcspIIMsM6fbuj9JisNoQNSd7Neb84FQL4fd3
-KihKpm85gW7MBrmj3EPCjLM3frU35kZep2UQ/MBTKScYTS6v6KOAkAo1U0VGo9ek
-8I7ECRRPSh1awDe8Ga2mrPC98C6AlUgdTuvTODc8B4y8JLMCkW67JLzeyn1xcnNx
-3wZ9TTmz6fsAGzuw/Gbr9/pcfs3gRiaNP+TKnLhnrsKYieaGvEPk+TlnFoQCkfuR
-SW9bsU+I4S1grTNXE6CKsGdlFpgfeIsOw3/g5gBQzImHqQ4HO1GDrHOJgMxni0ti
-jC2/+rkiwsaKkxKYW/GuOXZBehVOomgwXLZ1W3a9T0y1RkeTgzvQHrKx1/z3MxT+
-rxBHf+9MsHJAft0kl8d162sz
-=iNHP
+jA0ECQMC3MG0U+DW6sD/0ukBLNhXmPMl96VRjoOoDHZVLB1Tg7ox5eUbt2GLVVsx
+cBhR56uJe0NsNVvGS8gZh/kG9N21jNVJHf8fNIsQM4Vf48RqK6o8XbWwLPh47+k7
+tLu7iRPjZnp985qpxF0KVMIVrOUIVPtWT8wxHSLLPh5/0tE5o1E7qeteKF2VMDgW
+OvWJLLY/ANeAx/Q6ECJJ+HmwZQrJiIzxqrsYf6hJ8W+Sqzo2xgafsF7qXVG7QoEV
+QZ0s2+D9lRd8/7tmaBUpusfHcp5KbAAaRnFwAqpv04/RRDjcAAHXmL5ZS/VUk4Hw
+i24m28RLVpiMq73ibBs0A9vXlmr1emOppbLTG+MMRpIgwK6akn9hWhX42s+swMfu
+dpXEwEDXsaua41XZe7+SOa0SxaEL7eQfdawq/iX4Ej5i6vO7CD/lWFZ/R6EjiYCQ
+XShHdMxgiwp1meGu/JlTbPNfjY9H/pxbLbnFWjmoTrzGrcJ6HP2bAl9dwbejRPow
+vBfoPGFUW+Ma5MTvUE7ZBd79fxFqFw2s2hK+gV/3/pijuXqdlvfAfr8cD/AwwWkU
+9//kQjv8v++AyC9lO6w9iaMmp38vWu5NDrcnXfhAX9dRDdxhXHBWgdf7bwqtn8D8
+t9yibjiPj6BVogXmXPESp5ux2Zt1+p2v7KL1ymeCDWLl82QVDpn3pWEndKUoutQn
+rhL7T1r4kXZ6NC4iFR56ROMPLzA=
+=2AAL
 -----END PGP MESSAGE-----
 
-* theme
+* font
 :PROPERTIES:
 :ID:       3d09ad0f-b02f-419e-a6a4-5a137258ef5f
 :END:
@@ -155,13 +158,21 @@ font string. You generally only need these two:
 (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
+* theme
+:PROPERTIES:
+:ID:       1f7b461e-9dcb-4f4b-b9b4-d3fbf8857903
+:END:
 There are two ways to load a theme. Both assume the theme is installed and
 available. You can either set `doom-theme' or manually load a theme with the
 `load-theme' function. This is the default:
 
 #+begin_src elisp
-(setq doom-theme 'doom-dark+)
+(setq doom-theme 'doom-gruvbox)
 #+end_src
+- Check the different themes
+  + https://github.com/hlissner/emacs-doom-themes/tree/screenshots
+
+
 
 * org directory
 :PROPERTIES:
@@ -677,6 +688,16 @@ university stuff. Check ~/org/uni/docs/index.html
 )
 ##+end_src
 
+* treemacs
+:PROPERTIES:
+:ID:       c7dc78b9-6e98-4b63-8343-8ee68efce605
+:END:
+
+#+begin_src elisp
+(setq +treemacs-git-mode 'simple)
+#+end_src
+
+
 * disable backup
 :PROPERTIES:
 :ID:       9a8a2efc-9871-4f88-9231-8017e44186e5
@@ -688,6 +709,18 @@ university stuff. Check ~/org/uni/docs/index.html
 (setq auto-save-default nil)
 #+end_src
 
+* custom set faces
+:PROPERTIES:
+:ID:       5b57bd2a-7746-41c9-ab96-dd1a9d0147ef
+:END:
+
+#+begin_src elisp
+(custom-set-faces!
+  '(aw-leading-char-face
+    :foreground "white" :background "red"
+    :weight bold :height 2.5 :box (:line-width 10 :color "red")))
+#+end_src
+
 * custom set variables
 :PROPERTIES:
 :ID:       b9de5245-3299-4e27-8956-9c4668ee337b
@@ -697,7 +730,7 @@ university stuff. Check ~/org/uni/docs/index.html
 (custom-set-variables
  '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
  )
- #+end_src
+#+end_src
 
 * Footnotes
 
