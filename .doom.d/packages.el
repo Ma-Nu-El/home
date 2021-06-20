@@ -7,10 +7,3 @@
            :files ("*.el")
            )
   )
-
-(package! org-sidebar
-  :recipe (:host github
-           :repo "alphapapa/org-sidebar"
-           :branch "master"
-           )
-  )

@@ -92,11 +92,20 @@
 - https://github.com/alphapapa/org-sidebar
 
 
-#+begin_src elisp
+~#+begin_src elisp
 (package! org-sidebar
   :recipe (:host github
            :repo "alphapapa/org-sidebar"
            :branch "master"
            )
   )
-#+end_src
+~#+end_src
+
+I tried it, but it was not intuitive enough. The only useful feature is
+~org-sidebar~, but that can be achieved using a buffer restriction of
+~org-agenda~ anyway.
+
+And as for the ~org-sidebar-tree~ feature, Doom already has ~treemacs~ and
+it does a better job --- more intuitive, DWIM vibe.
+
+Still, good promise. But not for me right now.
