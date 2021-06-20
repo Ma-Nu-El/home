@@ -18,6 +18,9 @@ nav-flash         ; blink cursor line after big motions
 ophints           ; highlight the region an operation acts on
 (popup +defaults)   ; tame sudden yet inevitable temporary windows
 vi-tilde-fringe   ; fringe tildes to mark beyond EOB
+(window-select +numbers)     ; visually switch windows
+(treemacs +lsp)          ; a project drawer, like neotree but cooler
+workspaces        ; tab emulation, persistence & separate workspaces
 
 :editor
 (evil +everywhere); come to the dark side, we have cookies
@@ -33,7 +36,7 @@ vc                ; version-control and Emacs, sitting in a tree
 
 :checkers
 syntax              ; tasing you for every semicolon you forget
-spell (+aspell)             ; tasing you for misspelling mispelling
+(spell +aspell)             ; tasing you for misspelling mispelling
 grammar           ; tasing grammar mistake every you make
 
 :tools
@@ -42,6 +45,7 @@ grammar           ; tasing grammar mistake every you make
 lookup              ; navigate your code and its documentation
 lsp
 pdf               ; pdf enhancements
+magit             ; a git porcelain for Emacs
 
 :lang
 

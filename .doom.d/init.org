@@ -93,7 +93,14 @@ nav-flash         ; blink cursor line after big motions
 ophints           ; highlight the region an operation acts on
 (popup +defaults)   ; tame sudden yet inevitable temporary windows
 vi-tilde-fringe   ; fringe tildes to mark beyond EOB
+(window-select +numbers)     ; visually switch windows
+(treemacs +lsp)          ; a project drawer, like neotree but cooler
+workspaces        ; tab emulation, persistence & separate workspaces
 #+end_src
+
+The ~+lsp~ flag in treemacs enables keyboard shortcuts.
+
+
 
 ;;deft              ; notational velocity for Emacs
 ;;hydra
@@ -102,11 +109,8 @@ vi-tilde-fringe   ; fringe tildes to mark beyond EOB
 ;;neotree           ; a project drawer, like NERDTree for vim
 ;;pretty-code       ; ligatures or substitute text with pretty symbols
 ;;tabs              ; an tab bar for Emacs
-;;treemacs          ; a project drawer, like neotree but cooler
 ;;unicode           ; extended unicode support for various languages
 ;;vc-gutter         ; vcs diff in the fringe
-;;window-select     ; visually switch windows
-;;workspaces        ; tab emulation, persistence & separate workspaces
 ;;zen               ; distraction-free coding or writing
 
 ** editor
@@ -158,7 +162,7 @@ vc                ; version-control and Emacs, sitting in a tree
 #+begin_src elisp
 :checkers
 syntax              ; tasing you for every semicolon you forget
-spell (+aspell)             ; tasing you for misspelling mispelling
+(spell +aspell)             ; tasing you for misspelling mispelling
 grammar           ; tasing grammar mistake every you make
 #+end_src
 
@@ -173,6 +177,7 @@ grammar           ; tasing grammar mistake every you make
 lookup              ; navigate your code and its documentation
 lsp
 pdf               ; pdf enhancements
+magit             ; a git porcelain for Emacs
 #+end_src
 
 
@@ -183,7 +188,6 @@ pdf               ; pdf enhancements
 ;;ein               ; tame Jupyter notebooks with emacs
 ;;gist              ; interacting with github gists
 ;;macos             ; MacOS-specific commands
-;;magit             ; a git porcelain for Emacs
 ;;make              ; run make tasks from Emacs
 ;;pass              ; password manager for nerds
 ;;prodigy           ; FIXME managing external services & code builders
