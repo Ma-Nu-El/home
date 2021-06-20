@@ -7,6 +7,7 @@
 - [[#shebang][shebang]]
 - [[#readme][readme]]
 - [[#org-transclusion][org-transclusion]]
+- [[#org-sidebar][org-sidebar]]
 
 * shebang
 :PROPERTIES:
@@ -81,6 +82,21 @@
            :repo "nobiot/org-transclusion"
            :branch "main"
            :files ("*.el")
+           )
+  )
+#+end_src
+* org-sidebar
+:PROPERTIES:
+:ID:       c8eb829b-a1c2-4ef3-a1b2-a2f1e7cc5899
+:END:
+- https://github.com/alphapapa/org-sidebar
+
+
+#+begin_src elisp
+(package! org-sidebar
+  :recipe (:host github
+           :repo "alphapapa/org-sidebar"
+           :branch "master"
            )
   )
 #+end_src
