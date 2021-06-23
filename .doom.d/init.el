@@ -33,16 +33,17 @@ dired             ; making dired pretty [functional]
 electric          ; smarter, keyword-based electric-indent
 undo              ; persistent, smarter undo for your inevitable mistakes
 vc                ; version-control and Emacs, sitting in a tree
+ibuffer         ; interactive buffer management
 
 :checkers
-syntax              ; tasing you for every semicolon you forget
-(spell +aspell)             ; tasing you for misspelling mispelling
+syntax            ; tasing you for every semicolon you forget
+spell             ; tasing you for misspelling mispelling
 grammar           ; tasing grammar mistake every you make
 
 :tools
 (debugger +lsp)          ; FIXME stepping through code, to help you add bugs
-(eval +overlay)     ; run code, run (also, repls)
-lookup              ; navigate your code and its documentation
+(eval +overlay)   ; run code, run (also, repls)
+lookup            ; navigate your code and its documentation
 lsp
 pdf               ; pdf enhancements
 magit             ; a git porcelain for Emacs

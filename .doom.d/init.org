@@ -144,9 +144,9 @@ dired             ; making dired pretty [functional]
 electric          ; smarter, keyword-based electric-indent
 undo              ; persistent, smarter undo for your inevitable mistakes
 vc                ; version-control and Emacs, sitting in a tree
+ibuffer         ; interactive buffer management
 #+end_src
 
-;;ibuffer         ; interactive buffer management
 
 ** term
 :term
@@ -161,8 +161,8 @@ vc                ; version-control and Emacs, sitting in a tree
 :END:
 #+begin_src elisp
 :checkers
-syntax              ; tasing you for every semicolon you forget
-(spell +aspell)             ; tasing you for misspelling mispelling
+syntax            ; tasing you for every semicolon you forget
+spell             ; tasing you for misspelling mispelling
 grammar           ; tasing grammar mistake every you make
 #+end_src
 
@@ -173,8 +173,8 @@ grammar           ; tasing grammar mistake every you make
 #+begin_src elisp
 :tools
 (debugger +lsp)          ; FIXME stepping through code, to help you add bugs
-(eval +overlay)     ; run code, run (also, repls)
-lookup              ; navigate your code and its documentation
+(eval +overlay)   ; run code, run (also, repls)
+lookup            ; navigate your code and its documentation
 lsp
 pdf               ; pdf enhancements
 magit             ; a git porcelain for Emacs
