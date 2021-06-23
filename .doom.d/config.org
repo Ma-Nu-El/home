@@ -37,6 +37,7 @@
   - [[#global-exclude-tags][global exclude tags]]
   - [[#disable-crypt-tag-inheritance][disable crypt tag inheritance]]
   - [[#org-transclusion][org-transclusion]]
+  - [[#org-fontify-quote-and-verse-blocks-disabled][org fontify quote and verse blocks [DISABLED]]]
 - [[#end-org-section][end org section]]
 - [[#ispell-config][ispell config]]
 - [[#personal-keybindings][personal keybindings]]
@@ -259,7 +260,7 @@ to later changes in heading level. CLI 80 chars FTW.
       org-fontify-whole-heading-line nil
       org-hide-leading-stars nil
       org-startup-indented nil
-      flyspell-mode t
+      ;; flyspell-mode t
       )
 #+end_src
 
@@ -622,6 +623,31 @@ info across files, but the live sync and the saved space in storage. For
 static sync you could use the #+INCLUDE keyword. In fact I use it for
 university stuff. Check ~/org/uni/docs/index.html
 
+** org fontify quote and verse blocks [DISABLED]
+:PROPERTIES:
+:ID:       5a04cbc3-238b-4f1c-8ec9-40b93404f25d
+:END:
+- https://emacs.stackexchange.com/questions/63344/italics-not-shown-in-block-quotes-in-orgmode
+
+Original idea:
+#+begin_quote
+So that way when exporting =quote= blocks, they are fontified by default.
+Since the variable ~org-fontify-quote-and-verse-block~ is set to ~nil~ by
+default at time of writing ([2021-06-22 Tue]).
+#+end_quote
+
+#+begin_example
+#+begin_src elisp
+(setq org-fontify-quote-and-verse-blocks t)
+#+end_src
+#+end_example
+
+*Commented out*: fontification only takes place inside the =orgmode= buffer,
+but the exported part --- at least to =html= --- is still not executed; you
+still have to put a =/= around the words you want to be /italiced/ when
+exporting.
+
+
 * end org section
 :PROPERTIES:
 :ID:       889fe81d-8200-4e4f-b833-a2c20cc295eb
@@ -637,7 +663,7 @@ university stuff. Check ~/org/uni/docs/index.html
   :END:
 
 #+begin_src elisp
-(setq ispell-dictionary "en")
+;;(setq ispell-dictionary "en")
 #+end_src
 
 - Seems unnecessary.
@@ -727,9 +753,9 @@ university stuff. Check ~/org/uni/docs/index.html
 :END:
 
 #+begin_src elisp
-(custom-set-variables
- '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
- )
+;; (custom-set-variables
+;;  '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
+;;  )
 #+end_src
 
 * Footnotes
