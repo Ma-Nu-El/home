@@ -38,7 +38,7 @@
       org-fontify-whole-heading-line nil
       org-hide-leading-stars nil
       org-startup-indented nil
-      flyspell-mode t
+      ;; flyspell-mode t
       )
 
 (setq org-startup-folded nil)
@@ -145,7 +145,7 @@
 )
 ;; END AFTER ORG
 
-(setq ispell-dictionary "en")
+;;(setq ispell-dictionary "en")
 
 (define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
 (global-set-key (kbd "\C-cr") 'ispell-region)
@@ -169,6 +169,6 @@
     :foreground "white" :background "red"
     :weight bold :height 2.5 :box (:line-width 10 :color "red")))
 
-(custom-set-variables
- '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
- )
+;; (custom-set-variables
+;;  '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
+;;  )
