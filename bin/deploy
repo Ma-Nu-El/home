@@ -29,15 +29,15 @@ then
     #if mv "$HOME/$FILE" "$HOME/$FILE.$BACKUP_EXTENSION"
     #if [[ -f  ]] || [[ -d  ]]
     #'.pre-deploy' extention
-    #	then
-    #	echo "There are already files/directories that contain the extension"
-    #	echo "'.pre-deploy'. That is a sign that there's someone else's 'home'"
-    #	echo "already installed in this \"$HOME" directory."
-    #	echo "Please remove or backup the files that contain the '.pre-deploy'"
-    #	echo "extension so there won't be any conflicts."
-    #	else
-    #	:
-    #	fi
+    #   then
+    #   echo "There are already files/directories that contain the extension"
+    #   echo "'.pre-deploy'. That is a sign that there's someone else's 'home'"
+    #   echo "already installed in this \"$HOME" directory."
+    #   echo "Please remove or backup the files that contain the '.pre-deploy'"
+    #   echo "extension so there won't be any conflicts."
+    #   else
+    #   :
+    #   fi
     #done
 
     cd "$HOME" || exit
