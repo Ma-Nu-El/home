@@ -52,6 +52,8 @@ magit             ; a git porcelain for Emacs
 
 emacs-lisp        ; drown in parentheses
 
+(ess +lsp)               ; emacs speaks statistics
+
 (java +lsp)         ; Added by Ma Nu from
 
 latex             ; writing papers in Emacs has never been so fun

@@ -220,7 +220,13 @@ magit             ; a git porcelain for Emacs
 emacs-lisp        ; drown in parentheses
 #+end_src
 ;;erlang            ; an elegant language for a more civilized age
-;;ess               ; emacs speaks statistics
+
+
+To enable R in Doom Emacs use:
+#+begin_src elisp
+(ess +lsp)               ; emacs speaks statistics
+#+end_src
+
 ;;faust             ; dsp, but you get to keep your soul
 ;;fsharp           ; ML stands for Microsoft's Language
 ;;fstar             ; (dependent) types and (monadic) effects and Z3

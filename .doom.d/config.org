@@ -38,6 +38,7 @@
   - [[#disable-crypt-tag-inheritance][disable crypt tag inheritance]]
   - [[#org-transclusion][org-transclusion]]
   - [[#org-fontify-quote-and-verse-blocks-disabled][org fontify quote and verse blocks [DISABLED]]]
+  - [[#prevent-invisible-edits-commented-out][prevent invisible edits [Commented out]]]
 - [[#end-org-section][end org section]]
 - [[#ispell-config][ispell config]]
 - [[#personal-keybindings][personal keybindings]]
@@ -330,10 +331,6 @@ Set global Column View format.
 #+begin_src elisp
 (add-to-list 'org-export-backends 'org)
 #+end_src
-- TRACK TODO STATE CHANGES
-- https://orgmode.org/manual/Tracking-TODO-state-changes.html
-- OrgMode E03S01: Automatic logging of status changes:
-  + https://www.youtube.com/watch?v=R4QSTDco_w8
 
 ** todo keywords
 :PROPERTIES:
@@ -346,9 +343,12 @@ Set global Column View format.
         )
       )
 (setq org-log-done t)
-
-
 #+end_src
+
+- TRACK TODO STATE CHANGES
+- https://orgmode.org/manual/Tracking-TODO-state-changes.html
+- OrgMode E03S01: Automatic logging of status changes:
+  + https://www.youtube.com/watch?v=R4QSTDco_w8
 ** habit graph enabling
 :PROPERTIES:
 :ID:       c6e2c52f-51bd-4fd9-8fd5-080fb2a617be
@@ -647,6 +647,43 @@ but the exported part --- at least to =html= --- is still not executed; you
 still have to put a =/= around the words you want to be /italiced/ when
 exporting.
 
+** prevent invisible edits [Commented out]
+:PROPERTIES:
+:ID:       b2c447ca-344c-451a-b3a4-cbb168ecb91e
+:END:
+- https://emacs.stackexchange.com/questions/2086/org-mode-prevent-editing-of-text-within-collapsed-subtree
+
+
+
+#+begin_quote
+Documentation
+Check if in invisible region before inserting or deleting a character.
+
+Valid values are:
+
+nil              Do not check, so just do invisible edits.
+error            Throw an error and do nothing.
+show             Make point visible, and do the requested edit.
+show-and-error   Make point visible, then throw an error and abort the edit.
+smart            Make point visible, and do insertion/deletion if it is
+adjacent to visible text and the change feels predictable.
+Never delete a previously invisible character or add in the
+middle or right after an invisible region.  Basically, this
+allows insertion and backward-delete right before ellipses.
+FIXME: maybe in this case we should not even show?
+
+This variable was added, or its default value changed, in Emacs 24.1.
+#+end_quote
+
+~#+begin_src elisp
+(setq-default org-catch-invisible-edits 'error)
+~#+end_src
+
+I did not understand the =smart= option. Simply fail and let me know so I'm
+more careful. It's not something that I do a lot so low signal-to-noise ratio.
+
+Commented out since it does not fail and does not let me know that I did a
+mistake. I'll simply have to be more careful.
 
 * end org section
 :PROPERTIES:
