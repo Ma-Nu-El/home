@@ -14,16 +14,6 @@ manuclone(){
 
 #quick useful defaults
 
-# smarter org
-# https://unix.stackexchange.com/questions/6435/how-to-check-if-pwd-is-a-subdirectory-of-a-given-path
-org(){
-if [[ "$PWD" = "$HOME/org" ]]
-then
-cd org || exit
-else
-cd "$HOME"/org || exit
-fi
-}
 
 # cd and git status into directory
 cd-and-git-status(){
@@ -49,13 +39,13 @@ drive(){
 
 if [[ "$1" ]]
 then
-    cd "$HOME"/myDrive/"$1" || exit
+    cd "$HOME"/myDrive/"$1" || return
     pwd
 fi
 
 if [[ -z "$1" ]]
 then
-    cd "$HOME"/myDrive/ || exit
+    cd "$HOME"/myDrive/ || return
     pwd
 fi
 
@@ -63,8 +53,8 @@ fi
 
 if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
 then
-	echo "'~/bin/drive'"
-	echo "Bash script for quick navigation to directories located in ~/myDrive"
+	echo "'~'/.bash/functions drive"
+	echo "Bash function for quick navigation to directories located in ~/myDrive"
 	echo "USAGE"
 	echo "    drive OPTIONS"
 	echo "OPTIONS"
@@ -76,3 +66,68 @@ then
 	echo "      'cd ~/myDrive/bar"
 fi
 }
+
+# https://unix.stackexchange.com/questions/6435/how-to-check-if-pwd-is-a-subdirectory-of-a-given-path
+org(){
+
+if [[ "$1" ]]
+then
+    cd "$HOME"/org/"$1" || return
+    pwd
+fi
+
+if [[ -z "$1" ]]
+then
+    cd "$HOME"/org/ || return
+    pwd
+fi
+
+# HELP SYSTEM
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
+then
+	echo "'~'/.bash/functions org"
+	echo "Bash function for quick navigation to directories located in ~/org"
+	echo "USAGE"
+	echo "    drive OPTIONS"
+	echo "OPTIONS"
+	echo "  --help, -h, -?, help"
+	echo "      Display this page."
+	echo "  foo"
+	echo "      'cd ~/org/foo"
+	echo "  bar"
+	echo "      'cd ~/org/bar"
+fi
+}
+
+# sort by size
+dusort() {
+
+if [[ -z "$1" ]]
+then
+	du -sh ./* | sort -h
+fi
+
+if [[ "$1" == "-1" ]]
+then
+	du -h ./* -d 1 | sort -h
+fi
+
+# HELP SYSTEM
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
+then
+	echo "'~'/.bash/functions dusort"
+	echo "Bash function for sorting files/directories by size"
+	echo "USAGE"
+	echo "    dusort OPTIONS"
+	echo "OPTIONS"
+	echo "  --help, -h, -?, help"
+	echo "      Display this page."
+	echo "  -1"
+	echo "      With 1 more depth level."
+fi
+
+}
+
+

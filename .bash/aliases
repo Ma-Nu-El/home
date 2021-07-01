@@ -3,7 +3,7 @@
 alias config='/usr/bin/git --git-dir="$HOME"/.cfg/ --work-tree="$HOME"'
 ### home bare repo ###
 alias home='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME"'
-alias he='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" status" # same idea as "te" '
+alias he="/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" status" # same idea as "te" 
 alias hf='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" diff'
 alias hgraph='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" log --all --decorate --oneline --graph'
 alias htree='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" ls-tree --name-only master'
@@ -47,7 +47,7 @@ alias cnd='clear &&'
 alias p='pwd'
 alias pp='clear && pwd'
 alias lah='ls -lah'
-alias dusort='du -sh * | sort -h' # sort by siz
+# alias dusort='du -sh * | sort -h' # sort by siz # made function: ./functions
 alias eo='clear && pwd && echo '-----' && ls' # was 'pa', but was the most used one so now is more ergo
 # https://superuser.com/questions/250227/how-do-i-see-what-my-most-used-linux-command-are
 alias eoa='clear && pwd && echo '-----' && ls -a' # same deal but with hidden files
@@ -109,7 +109,7 @@ alias de='deploy encrypt'
 alias dd='deploy decrypt'
 alias fire='firefox --private-window >/dev/null 2>/dev/null &'
 alias rr='rm -rf ~/org/auxRoam && roam dummy'
-alias theo='cd ~ && clear && pwd && echo "-----" && he'
+alias theo="cd ~ && clear && pwd && echo '-----' && he"
 alias the='cd-and-git-status'
 alias detectdir='detectdirectories'
 alias speed='speedtest --simple --bytes'
