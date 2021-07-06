@@ -72,11 +72,14 @@
 
 (add-to-list 'org-modules 'org-habit)
 
+(setq org-habit-preceding-days 21)
+(setq org-habit-following-days 7)
+
 (custom-set-variables
  '(org-agenda-custom-commands
    '(( "h" "Custom agenda, ignore 'habit' tag"
        ((agenda ""))
-       ((org-agenda-tag-filter-preset '("-habit")))
+       ;; ((org-agenda-tag-filter-preset '("-habit")))
        )
      ( "x" "28-day version of h"
        ;; Made to be exported to html
@@ -84,7 +87,7 @@
                 ((org-agenda-span 28))
                 ))
        ;; The bigger the agenda span, the longer the process
-       ((org-agenda-tag-filter-preset '("-habit")))
+       ;; ((org-agenda-tag-filter-preset '("-habit")))
        ("~/org/agenda.html") ;; enables html export of this agenda view
        )
      ( "H" "Custom agenda, only 'habit' tag"

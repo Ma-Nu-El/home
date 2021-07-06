@@ -24,6 +24,7 @@
   - [[#export-backend-enabling][export backend enabling]]
   - [[#keywords][keywords]]
   - [[#habit-graph-enabling][habit graph enabling]]
+  - [[#habit-graph-settings][habit graph settings]]
   - [[#agenda-custom-commands][agenda custom commands]]
   - [[#agenda-view-prefix][agenda view prefix]]
   - [[#agenda-view-settings][agenda view settings]]
@@ -358,6 +359,17 @@ Set global Column View format.
 #+end_src
 - https://github.com/hlissner/doom-emacs/issues/3102
 
+** habit graph settings
+:PROPERTIES:
+:ID:       0f4e33a5-1913-457f-ab12-ac5dba3619ef
+:END:
+
+#+begin_src elisp
+(setq org-habit-preceding-days 21)
+(setq org-habit-following-days 7)
+#+end_src
+
+- https://orgmode.org/manual/Tracking-your-habits.html
 ** agenda custom commands
 :PROPERTIES:
 :ID:       e4bd5984-7063-44f3-973d-51c298645761
@@ -368,7 +380,7 @@ Set global Column View format.
  '(org-agenda-custom-commands
    '(( "h" "Custom agenda, ignore 'habit' tag"
        ((agenda ""))
-       ((org-agenda-tag-filter-preset '("-habit")))
+       ;; ((org-agenda-tag-filter-preset '("-habit")))
        )
      ( "x" "28-day version of h"
        ;; Made to be exported to html
@@ -376,7 +388,7 @@ Set global Column View format.
                 ((org-agenda-span 28))
                 ))
        ;; The bigger the agenda span, the longer the process
-       ((org-agenda-tag-filter-preset '("-habit")))
+       ;; ((org-agenda-tag-filter-preset '("-habit")))
        ("~/org/agenda.html") ;; enables html export of this agenda view
        )
      ( "H" "Custom agenda, only 'habit' tag"
