@@ -29,6 +29,9 @@
 
 (setq display-line-numbers-type nil)
 
+(global-display-fill-column-indicator-mode)
+(setq display-fill-column-indicator t)
+
 ;; BEGIN AFTER ORG
 (after! org
 
@@ -38,7 +41,6 @@
       org-fontify-whole-heading-line nil
       org-hide-leading-stars nil
       org-startup-indented nil
-      ;; flyspell-mode t
       )
 
 (setq org-startup-folded nil)
@@ -77,7 +79,8 @@
 
 (custom-set-variables
  '(org-agenda-custom-commands
-   '(( "h" "Custom agenda, ignore 'habit' tag"
+   '(
+     ( "h" "Custom agenda, ignore 'habit' tag"
        ((agenda ""))
        ;; ((org-agenda-tag-filter-preset '("-habit")))
        )
@@ -88,8 +91,11 @@
                 ))
        ;; The bigger the agenda span, the longer the process
        ;; ((org-agenda-tag-filter-preset '("-habit")))
-       ("~/org/agenda.html") ;; enables html export of this agenda view
+       ;; ("~/org/agenda.html") ;; enables html export of this agenda view
        )
+     ( "n" "Custom agenda, only 'today' tag"
+       ((agenda ""))
+       ((org-agenda-tag-filter-preset '("+today"))))
      ( "H" "Custom agenda, only 'habit' tag"
        ((agenda ""))
        ((org-agenda-tag-filter-preset '("+habit"))))
@@ -121,8 +127,6 @@
 (setq org-agenda-hide-tags-regexp ".")
 (setq org-agenda-use-time-grid nil)
 
-(setq org-latex-toc-command "\\tableofcontents \\clearpage")
-
 (setq org-id-link-to-org-use-id t)
 
 (setq org-file-apps
@@ -148,7 +152,8 @@
 )
 ;; END AFTER ORG
 
-;;(setq ispell-dictionary "en")
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
 (define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
 (global-set-key (kbd "\C-cr") 'ispell-region)

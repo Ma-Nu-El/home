@@ -37,7 +37,7 @@ ibuffer         ; interactive buffer management
 
 :checkers
 syntax            ; tasing you for every semicolon you forget
-spell             ; tasing you for misspelling mispelling
+;; (spell +aspell)             ; tasing you for misspelling mispelling
 grammar           ; tasing grammar mistake every you make
 
 :tools

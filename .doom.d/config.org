@@ -13,6 +13,7 @@
 - [[#org-directory][org directory]]
 - [[#recursive-agenda-files][recursive agenda files]]
 - [[#no-line-numbers][no line numbers]]
+- [[#80-char-ruler][80 char ruler]]
 - [[#begin-org-section][begin org section]]
   - [[#buffer-opening-settings-for-speed][buffer opening settings for speed]]
   - [[#fixed-flush-left-indentation][fixed flush left indentation]]
@@ -41,6 +42,7 @@
   - [[#org-fontify-quote-and-verse-blocks-disabled][org fontify quote and verse blocks [DISABLED]]]
   - [[#prevent-invisible-edits-commented-out][prevent invisible edits [Commented out]]]
 - [[#end-org-section][end org section]]
+- [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
 - [[#personal-keybindings][personal keybindings]]
 - [[#roam][roam]]
@@ -230,6 +232,26 @@ This will open documentation for it, including demos of how they are used.
 You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 they are implemented.
 
+
+* 80 char ruler
+:PROPERTIES:
+:ID:       afa21908-f444-43d4-a5fb-19b770cf13ec
+:END:
+- [2021-07-10 Sat 16:10]
+- Since last =doom upgrade= a couple minutes ago, the ruler at 80 characters
+  was gone. Also the =fill-column= module in =init.el=, specifically the
+  =:ui= section was also gone.
+- I got it back with this elisp but now also that ruler appears in the home
+  view for Doom which is something new lol. Anyway, gets the job done but
+  takes elegancy of Doom a little down. Still invaluable tool tho.
+
+
+
+#+begin_src elisp
+(global-display-fill-column-indicator-mode)
+(setq display-fill-column-indicator t)
+#+end_src
+
 * begin org section
 :PROPERTIES:
 :ID:       72258b79-1e04-4a73-95b8-515f48143e5d
@@ -262,7 +284,6 @@ to later changes in heading level. CLI 80 chars FTW.
       org-fontify-whole-heading-line nil
       org-hide-leading-stars nil
       org-startup-indented nil
-      ;; flyspell-mode t
       )
 #+end_src
 
@@ -375,10 +396,12 @@ Set global Column View format.
 :ID:       e4bd5984-7063-44f3-973d-51c298645761
 :END:
 
+
 #+begin_src elisp
 (custom-set-variables
  '(org-agenda-custom-commands
-   '(( "h" "Custom agenda, ignore 'habit' tag"
+   '(
+     ( "h" "Custom agenda, ignore 'habit' tag"
        ((agenda ""))
        ;; ((org-agenda-tag-filter-preset '("-habit")))
        )
@@ -389,8 +412,11 @@ Set global Column View format.
                 ))
        ;; The bigger the agenda span, the longer the process
        ;; ((org-agenda-tag-filter-preset '("-habit")))
-       ("~/org/agenda.html") ;; enables html export of this agenda view
+       ;; ("~/org/agenda.html") ;; enables html export of this agenda view
        )
+     ( "n" "Custom agenda, only 'today' tag"
+       ((agenda ""))
+       ((org-agenda-tag-filter-preset '("+today"))))
      ( "H" "Custom agenda, only 'habit' tag"
        ((agenda ""))
        ((org-agenda-tag-filter-preset '("+habit"))))
@@ -450,9 +476,9 @@ That line is counterintuitive sometimes when checking agenda remotely.
 Orgmode latex export: new page after TOC
 - https://emacs.stackexchange.com/questions/42558/org-mode-export-force-page-break-after-toc
 
-#+begin_src elisp
-(setq org-latex-toc-command "\\tableofcontents \\clearpage")
-#+end_src
+# #+begin_src elisp
+# (setq org-latex-toc-command "\\tableofcontents \\clearpage")
+# #+end_src
 
 ** mu4e store links
 But when enabling this, it overrides the other org-store-link* protocols.
@@ -706,14 +732,25 @@ mistake. I'll simply have to be more careful.
 ;; END AFTER ORG
 #+end_src
 
-* ispell config
-  :PROPERTIES:
-  :ID:       71aa1a7e-7cf6-4eb3-8fe5-e3d824003528
-  :END:
+* flyspell-mode t
+:PROPERTIES:
+:ID:       12e43ea2-162e-4a48-8115-da3fb00a32c1
+:END:
 
 #+begin_src elisp
-;;(setq ispell-dictionary "en")
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
 #+end_src
+
+
+* ispell config
+:PROPERTIES:
+:ID:       71aa1a7e-7cf6-4eb3-8fe5-e3d824003528
+:END:
+
+# #+begin_src elisp
+# (setq ispell-dictionary "en")
+# #+end_src
 
 - Seems unnecessary.
 
