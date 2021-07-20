@@ -249,7 +249,9 @@ latex             ; writing papers in Emacs has never been so fun
 #+end_src
 ;;lean
 ;;factor
-;;ledger            ; an accounting system in Emacs
+#+begin_src elisp
+ledger            ; an accounting system in Emacs
+#+end_src
 ;;lua               ; one-based indices? one-based indices
 #+begin_src elisp
 markdown          ; writing docs for people to ignore
@@ -258,7 +260,7 @@ markdown          ; writing docs for people to ignore
 ;;nix               ; I hereby declare "nix geht mehr!"
 ;;ocaml             ; an objective camel
 #+begin_src elisp
-(org +roam)               ; organize your plain life in plain text
+(org +roam +gnuplot +jupyter +brain) ; organize your plain life in plain text
 #+end_src
 ;;perl              ; write code no one else can comprehend
 ;;php               ; perl's insecure younger brother

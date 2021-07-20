@@ -58,9 +58,11 @@ emacs-lisp        ; drown in parentheses
 
 latex             ; writing papers in Emacs has never been so fun
 
+ledger            ; an accounting system in Emacs
+
 markdown          ; writing docs for people to ignore
 
-(org +roam)               ; organize your plain life in plain text
+(org +roam +gnuplot +jupyter +brain) ; organize your plain life in plain text
 
 sh                ; she sells {ba,z,fi}sh shells on the C xor
 

@@ -1,6 +1,6 @@
 #+TITLE: Config File
-#+FILETAGS: :literate:config:
 #+PROPERTY: header-args :tangle ~/.doom.d/config.el :results silent
+#+latex_header: \usepackage[utf8x]{inputenc}
 
 * Table of Contents :TOC_2:noexport:
 - [[#shebang][shebang]]
@@ -411,8 +411,8 @@ Set global Column View format.
                 ((org-agenda-span 28))
                 ))
        ;; The bigger the agenda span, the longer the process
-       ;; ((org-agenda-tag-filter-preset '("-habit")))
-       ;; ("~/org/agenda.html") ;; enables html export of this agenda view
+       ((org-agenda-tag-filter-preset '("-habit")))
+       ("~/org/agenda.html") ;; enables html export of this agenda view
        )
      ( "n" "Custom agenda, only 'today' tag"
        ((agenda ""))
@@ -480,6 +480,24 @@ Orgmode latex export: new page after TOC
 # (setq org-latex-toc-command "\\tableofcontents \\clearpage")
 # #+end_src
 
+** latex utf8x instead of utf8 :noexport:
+:PROPERTIES:
+:ID:       748118f7-db21-46af-b1c1-628faa6f3a49
+:END:
+# noexport tag since it does not solve the original problem:
+# [[id:9448d2f9-a00f-458b-b608-bca78e151138][how to print small greek epsilon in pdf orgmode export? (ε)]]
+
+- https://emacs.stackexchange.com/questions/20062/exporting-unicode-characters-to-pdf-using-latex-from-org-mode
+
+
+Seems like the default is =utf8=, and that is a problem when you want to
+write something weird like _/ε/_ for authors/ in =pdf= export;
+the =html= export has not presented this problem so far.
+
+# #+begin_src elisp
+# (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
+# #+end_src
+
 ** mu4e store links
 But when enabling this, it overrides the other org-store-link* protocols.
 Have to enable, compile and restart emacs when wanting to use, and disable
@@ -508,7 +526,7 @@ Throws error. Disabling since not essential.
 )
 ##+end_src
 
-** how many todos left info in heading 
+** how many todos left info in heading
 :PROPERTIES:
 :ID:       485fa339-fde6-47bb-9873-59bf7e3d5ded
 :END:

@@ -90,8 +90,8 @@
                 ((org-agenda-span 28))
                 ))
        ;; The bigger the agenda span, the longer the process
-       ;; ((org-agenda-tag-filter-preset '("-habit")))
-       ;; ("~/org/agenda.html") ;; enables html export of this agenda view
+       ((org-agenda-tag-filter-preset '("-habit")))
+       ("~/org/agenda.html") ;; enables html export of this agenda view
        )
      ( "n" "Custom agenda, only 'today' tag"
        ((agenda ""))
