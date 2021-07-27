@@ -6,6 +6,7 @@
 # REMEMBER NOT TO USE A TRAILING SLASH
 #https://stackoverflow.com/questions/1260748/how-do-i-remove-a-submodule/36593218#36593218
 #https://gist.github.com/myusuf3/7f645819ded92bda6677
+
 if [[ -z $2 ]]
 then
 #git commit -am "Automatic commit pre submodule deletion"
