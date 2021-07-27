@@ -40,7 +40,7 @@ alias gunstage="git restore --staged" # remove file from staging area, '-r' flag
 alias guntrack='git rm -r --cached" # untrack files currently tracked by git, '-r' flag for directorie'
 alias gamend='git commit --amend'
 alias grestore='git restore'
-alias gsm='git submodule'
+alias gsm='git submodule | cut -d " " -f3'
 # shell interaction
 alias c='clear'
 alias cnd='clear &&'
