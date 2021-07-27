@@ -1,41 +1,28 @@
 #!/usr/bin/env bash
+
+set -o pipefail
+
 manuclone(){
 	if [[ -z "$1"  ]]
 	then
 		echo "example: 'manuclone foo bar' is the same as"
 		echo "'git clone git@github.com:Ma-Nu-El/foo bar'"
 	else
-	git clone git@github.com:Ma-Nu-El/$1
+	git clone git@github.com:Ma-Nu-El/"$1"
 	fi
-}
-
-# quick roam
-r(){
-pushd .
-~/org/auxRoam
 }
 
 #quick useful defaults
 
-# smarter org
-# https://unix.stackexchange.com/questions/6435/how-to-check-if-pwd-is-a-subdirectory-of-a-given-path
-org(){
-if [[ "$PWD" = "$HOME/org" ]]
-then
-cd org
-else
-cd ~/org
-fi
-}
 
 # cd and git status into directory
 cd-and-git-status(){
 if [ -d "$1" ] # if argument is a directory
 then
-	cd $1
+	cd "$1" || exit
 	clear && pwd && echo "-----" && git status
 else
-	if [ -z $1 ]
+	if [ -z "$1" ]
 	then
 		clear && pwd && git status
 	fi
@@ -44,5 +31,103 @@ fi
 
 # cd and ls
 ue(){
-cd $1 && clear && pwd && echo '-----' && ls
+cd "$1" && clear && pwd && echo '-----' && ls
 }
+
+# quick jumps to ~/myDrive
+drive(){
+
+if [[ "$1" ]]
+then
+    cd "$HOME"/myDrive/"$1" || return
+    pwd
+fi
+
+if [[ -z "$1" ]]
+then
+    cd "$HOME"/myDrive/ || return
+    pwd
+fi
+
+# HELP SYSTEM
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
+then
+	echo "'~'/.bash/functions drive"
+	echo "Bash function for quick navigation to directories located in ~/myDrive"
+	echo "USAGE"
+	echo "    drive OPTIONS"
+	echo "OPTIONS"
+	echo "  --help, -h, -?, help"
+	echo "      Display this page."
+	echo "  foo"
+	echo "      'cd ~/myDrive/foo"
+	echo "  bar"
+	echo "      'cd ~/myDrive/bar"
+fi
+}
+
+# https://unix.stackexchange.com/questions/6435/how-to-check-if-pwd-is-a-subdirectory-of-a-given-path
+org(){
+
+if [[ "$1" ]]
+then
+    cd "$HOME"/org/"$1" || return
+    pwd
+fi
+
+if [[ -z "$1" ]]
+then
+    cd "$HOME"/org/ || return
+    pwd
+fi
+
+# HELP SYSTEM
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
+then
+	echo "'~'/.bash/functions org"
+	echo "Bash function for quick navigation to directories located in ~/org"
+	echo "USAGE"
+	echo "    drive OPTIONS"
+	echo "OPTIONS"
+	echo "  --help, -h, -?, help"
+	echo "      Display this page."
+	echo "  foo"
+	echo "      'cd ~/org/foo"
+	echo "  bar"
+	echo "      'cd ~/org/bar"
+fi
+}
+
+# sort by size
+dusort() {
+
+if [[ -z "$1" ]]
+then
+	du -sh ./* | sort -h
+fi
+
+if [[ "$1" == "-1" ]]
+then
+	du -h ./* -d 1 | sort -h
+fi
+
+# HELP SYSTEM
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
+then
+	echo "'~'/.bash/functions dusort"
+	echo "Bash function for sorting files/directories by size"
+	echo "USAGE"
+	echo "    dusort OPTIONS"
+	echo "OPTIONS"
+	echo "  --help, -h, -?, help"
+	echo "      Display this page."
+	echo "  -1"
+	echo "      With 1 more depth level."
+fi
+
+}
+
+

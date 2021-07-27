@@ -1,114 +1,123 @@
 #!/usr/bin/env bash
 ### git ###
-alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
+alias config='/usr/bin/git --git-dir="$HOME"/.cfg/ --work-tree="$HOME"'
 ### home bare repo ###
-alias home="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME"
-alias he="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME status" # same idea as 'te'
-alias hf="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME diff"
-alias hgraph="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME log --all --decorate --oneline --graph"
-alias htree="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME ls-tree --name-only master"
-alias hunstage="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME restore --staged"
-alias huntrack="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME rm -r --cached"
-alias hamend="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME commit --amend"
-alias hadd="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME add"
-alias hommit="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME commit"
-alias hpush="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME push"
-alias hpull="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME pull"
-alias hfetch="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME fetch"
-alias hmerge="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME merge"
-alias hbranch="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME branch"
-alias hch="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME checkout"
-alias hchm="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME checkout master"
-alias hrestore="/usr/bin/git --git-dir=$HOME/.home/ --work-tree=$HOME restore"
+alias home='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME"'
+alias he="/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" status" # same idea as "te" 
+alias hf='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" diff'
+alias hgraph='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" log --all --decorate --oneline --graph'
+alias htree='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" ls-tree --name-only master'
+alias hunstage='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" restore --staged'
+alias huntrack='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" rm -r --cached'
+alias hamend='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" commit --amend'
+alias hadd='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" add'
+alias hommit='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" commit'
+alias hpush='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" push'
+alias hpull='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" pull'
+alias hfetch='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" fetch'
+alias hmerge='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" merge'
+alias hbranch='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" branch'
+alias hch='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" checkout'
+alias hchm='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" checkout master'
+alias hrestore='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" restore'
 # pure git #
 alias ginit='git init'
 alias gadd='git add'
-alias te="git status"
-alias gommit="git commit"
-alias gcam="git commit -am" 
+alias te='git status'
+alias gommit='git commit'
+alias gcam='git commit -am"'
 alias gpush="git push"
-alias gpull="git pull"
-alias graph="git log --all --decorate --oneline --graph"
-alias gch="git checkout"
-alias gchm="git checkout master"
-alias gbranch="git branch"
-alias gtree="git ls-tree -r --name-only HEAD"
-alias gtreeh="git ls-tree -r --name-only HEAD"
-alias gtreem="git ls-tree -r --name-only master"
-alias gf="git diff"
-alias gunstage="git restore --staged" # remove file from staging area, '-r' flag for directories
-alias guntrack="git rm -r --cached" # untrack files currently tracked by git, '-r' flag for directories
-alias gamend="git commit --amend"
-alias grestore="git restore"
-alias gsm="git submodule"
+alias gpull='git pull'
+alias graph='git log --all --decorate --oneline --graph'
+alias gch='git checkout'
+alias gchm='git checkout master'
+alias gbranch='git branch'
+alias gtree='git ls-tree -r --name-only HEAD'
+alias gtreeh='git ls-tree -r --name-only HEAD'
+alias gtreem='git ls-tree -r --name-only master'
+alias gf='git diff'
+alias gunstage="git restore --staged" # remove file from staging area, '-r' flag for directorie'
+alias guntrack='git rm -r --cached" # untrack files currently tracked by git, '-r' flag for directorie'
+alias gamend='git commit --amend'
+alias grestore='git restore'
+alias gsm='git submodule | cut -d " " -f3'
 # shell interaction
-alias c="clear"
-alias cnd="clear &&"
-alias p="pwd"
-alias pp="clear && pwd"
-alias lah="ls -lah"
-alias dusort="du -sh * | sort -h" # sort by size
-alias eo="clear && pwd && echo '-----' && ls" # was 'pa', but was the most used one so now is more ergo
+alias c='clear'
+alias cnd='clear &&'
+alias p='pwd'
+alias pp='clear && pwd'
+alias lah='ls -lah'
+# alias dusort='du -sh * | sort -h' # sort by siz # made function: ./functions
+alias eo='clear && pwd && echo '-----' && ls' # was 'pa', but was the most used one so now is more ergo
 # https://superuser.com/questions/250227/how-do-i-see-what-my-most-used-linux-command-are
-alias eoe="clear && pwd && echo '-----' && ls -a" # same deal
-alias hpa="cd ~ && clear && pwd && echo '-----' && ls"
-alias hpaa="cd ~ && clear && pwd && echo '-----' && ls -a"
-alias lagrep='ls -a | grep -i' # append your simple grep search
+alias eoa='clear && pwd && echo '-----' && ls -a' # same deal but with hidden files
+alias eol='clear && pwd && echo '-----' && ls -1' # was 'pa', but was the most used one so now is more ergo
+alias eola='clear && pwd && echo '-----' && ls -1a' # was 'pa', but was the most used one so now is more ergo
+alias hpa='cd ~ && clear && pwd && echo '-----' && ls'
+alias hpaa='cd ~ && clear && pwd && echo '-----' && ls -a'
+alias lagrep='ls -a | grep -i' # append your simple grep search, case insensitive
 # inbox
-alias i="/usr/bin/vi ~/org/inbox.org"
-alias ii="inbox fetch --clean >> *inbox.org"
-alias cati="cat ~/org/inbox.org"
+alias i='/usr/bin/vi ~/org/inbox.org'
+alias ii='inbox fetch --clean >> *inbox.org'
+alias cati='cat ~/org/inbox.org'
 # quick navigation
-alias uni="~/org/uni"
-alias bin="~/bin"
-alias drive="~/myDrive"
-alias E="exit"
-alias 1="~/Desktop"
-alias 2="~/Downloads"
-alias 3="~/Documents"
-alias 4="~/Pictures"
-alias 5="~/Videos"
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias uni='~/org/uni'
+alias bin='~/bin'
+# alias drive="~/myDrive" # aliased to 'dr'
+alias dr='drive' # check ~/.bash/functions::drive()
+alias E='exit'
+alias 1='~/Desktop'
+alias 2='~/Downloads'
+alias 3='~/Documents'
+alias 4='~/Pictures'
+alias 5='~/Videos'
+alias 6='~/Music'
+alias aux='~/org/auxRoam'
 # quick editor
-alias v="vim"
-alias e="emacs -nw" # opens new instance of emacs in the terminal: no GUI
-alias ed="emacs --daemon" # creates default emacs server named 'server'
+alias v='vim'
+alias e='emacs -nw' # opens new instance of emacs in the terminal: no GUI
+alias ed='emacs --daemon' # creates default emacs server named 'server'
 alias ec='emacsclient -t' # attach to the default emacs server
-alias edn="emacs-daemon-new" # creates a custom-named emacs server
-alias els="ls -1 /tmp/emacs${UID}" # get list of running emacs servers
-alias ecs="emacsclient -t -s" # attach to a custom-named emacs server
+alias edn='emacs-daemon-new' # creates a custom-named emacs server
+alias els='ls -1 /tmp/emacs${UID}' # get list of running emacs servers
+alias ecs='emacsclient -t -s' # attach to a custom-named emacs server
 # tmux
-alias t="tmux"
-alias tn="tmux new-session" # create session with default name
-alias tns="tmux new -s" # append your session name to be created
-alias tks="tmux kill-session -t" # append your session name to be killed
-alias tls="tmux ls" # list sessions # <prefix> s
-alias ta="tmux attach-session" # attach to last session
-alias tas="tmux attach-session -t" # append your session name to be attached to
-alias tmupdate="git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm" # install packages on fresh OS
+alias t='tmux'
+alias tn='tmux new-session' # create session with default name
+alias tns='tmux new -s' # append your session name to be created
+alias tks='tmux kill-session -t' # append your session name to be killed
+alias tls='tmux ls' # list sessions # <prefix> s
+alias ta='tmux attach-session' # attach to last session
+alias tas='tmux attach-session -t' # append your session name to be attached to
+alias tmupdate='git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm' # install packages on fresh OS
 #alias tpls="ls ~/.tmuxp/"
 ## misc aliases
-alias hh="echo 'https://github.com/Ma-Nu-El/home'"
-alias match="matchfilename"
-alias x="command -v"
-alias X="command -V"
-alias R="ranger"
-alias V="sxiv -to"
-alias ptt="tree | less"
 alias O="open"
-alias openwith="mimeopen -a"
-alias chmodx="chmod +x"
-alias now="date && cal"
-alias de="deploy encrypt"
-alias dd="deploy decrypt"
-alias fire="firefox --private-window >/dev/null 2>/dev/null &"
-alias rr="rm -rf ~/org/auxRoam && roam dummy"
-alias theo="cd ~ && clear && pwd && echo "-----" && he"
-alias the="cd-and-git-status"
-alias detectdir="detectdirectories"
-alias speed="speedtest --simple --bytes"
-alias dvorak="sudo loadkeys dvorak"
-alias eva="cat ~/org/uni/org/2020-2/evaluaciones.txt"
-alias bat="~/bin/manu-battery"
-alias batn="~/bin/manu-battery -n"
-alias weather="curl wttr.in/"
-alias gpgrestart="gpgconf --kill gpg-agent"
+alias hh='echo 'https://github.com/Ma-Nu-El/home''
+alias match='matchfilename'
+alias x='command -v'
+alias X='command -V'
+# alias R="ranger" # commented out: messes with R called from within orgmode.
+alias V='sxiv -to'
+alias ptt='tree | less'
+alias openwith='mimeopen -a'
+alias chmodx='chmod +x'
+alias now='date && cal'
+alias de='deploy encrypt'
+alias dd='deploy decrypt'
+alias fire='firefox --private-window >/dev/null 2>/dev/null &'
+alias theo="cd ~ && clear && pwd && echo '-----' && he"
+alias the='cd-and-git-status'
+alias detectdir='detectdirectories'
+alias speed='speedtest --simple --bytes'
+alias dvorak='sudo loadkeys dvorak'
+alias eva='cat ~/org/uni/org/2020-2/evaluaciones.txt'
+alias bat='~/bin/manu-battery'
+alias batn='~/bin/manu-battery -n'
+alias weather='curl wttr.in/'
+alias gpgrestart='gpgconf --kill gpg-agent'
+alias ddirs='~/bin/detectdirectories'
+alias sessions='~/Ardour/'
+alias agenda='open ~/org/agenda.html'

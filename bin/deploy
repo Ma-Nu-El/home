@@ -7,55 +7,52 @@ set -o pipefail
 
 #If no argument, display mini-help.
 #
-SCRIPT_HELP_DIRECTORY=deployScripts
-
 if [[ -z $1 ]]
 then
-    . ./$SCRIPT_HELP_DIRECTORY/miniHelp
+    . deployScripts/miniHelp
 fi
 #
 # help page
 if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]
 then
-    . ./$SCRIPT_HELP_DIRECTORY/help
+    . deployScripts/help
 fi
 
 ### ACTIONS
 
 if [[ "$1" == "install" ]]
 then
-
-#ls -al "$HOME" > "$HOME"/auxLs
-#grep "
-#for FILE in $(cat "$HOME"/auxLs); do
-	#if mv "$HOME/$FILE" "$HOME/$FILE.$BACKUP_EXTENSION"
-	#if [[ -f  ]] || [[ -d  ]]
-	#'.pre-deploy' extention
-#	then
-#	echo "There are already files/directories that contain the extension"
-#	echo "'.pre-deploy'. That is a sign that there's someone else's 'home'"
-#	echo "already installed in this \"$HOME" directory."
-#	echo "Please remove or backup the files that contain the '.pre-deploy'"
-#	echo "extension so there won't be any conflicts." 
-#	else
-#	:	
-#	fi
-#done
+    #ls -al "$HOME" > "$HOME"/auxLs
+    #grep "
+    #for FILE in $(cat "$HOME"/auxLs); do
+    #if mv "$HOME/$FILE" "$HOME/$FILE.$BACKUP_EXTENSION"
+    #if [[ -f  ]] || [[ -d  ]]
+    #'.pre-deploy' extention
+    #   then
+    #   echo "There are already files/directories that contain the extension"
+    #   echo "'.pre-deploy'. That is a sign that there's someone else's 'home'"
+    #   echo "already installed in this \"$HOME" directory."
+    #   echo "Please remove or backup the files that contain the '.pre-deploy'"
+    #   echo "extension so there won't be any conflicts."
+    #   else
+    #   :
+    #   fi
+    #done
 
     cd "$HOME" || exit
 
-### BACKUP
+    ### BACKUP
 
-## DEMO OF WHAT IT WAS BEFORE
-#.bash_aliases
-#if [ -f "$HOME"/.bash_aliases ]
-#then
-#echo "Found "$HOME"/.bash_aliases"
-#echo "  Renaming to "$HOME"/.bash_aliases.pre-deploy"
-#mv "$HOME"/.bash_aliases "$HOME"/.bash_aliases.pre-deploy
-#else
-#echo ".bash_aliases not found, installing from github..."
-#fi
+    ## DEMO OF WHAT IT WAS BEFORE
+    #.bash_aliases
+    #if [ -f "$HOME"/.bash_aliases ]
+    #then
+    #echo "Found "$HOME"/.bash_aliases"
+    #echo "  Renaming to "$HOME"/.bash_aliases.pre-deploy"
+    #mv "$HOME"/.bash_aliases "$HOME"/.bash_aliases.pre-deploy
+    #else
+    #echo ".bash_aliases not found, installing from github..."
+    #fi
 
     cd "$HOME"/home || exit
     git ls-tree --name-only master > trackedFiles.txt
@@ -63,29 +60,42 @@ then
 
     BACKUP_EXTENSION=pre-deploy
 
-    for FILE in $(cat "$HOME"/home/trackedFiles.txt); do
-    	if mv "$HOME/$FILE" "$HOME/$FILE.$BACKUP_EXTENSION"
-    	then
-    	    echo "How to do nothing when a command is sucessful?"
-    	else
-    	    :	
-    	fi
-    done
+    # What was done before
+    # for FILE in $(cat "$HOME"/home/trackedFiles.txt); do
+    #     if mv "$HOME/$FILE" "$HOME/$FILE.$BACKUP_EXTENSION"
+    #     then
+    #         echo "How to do nothing when a command is sucessful?"
+    #     else
+    #         :
+    #     fi
+    # done
 
-### IF BACKUP SUCCESS THEN DEPLOY WORK TREE
+    # SC2013 - Shellcheck error 2013 fix from previous
+    while IFS= read -r FILE
+    do
+        if mv "$HOME/$FILE" "$HOME/$FILE.$BACKUP_EXTENSION"
+        then
+            echo "How to do nothing when a command is sucessful?"
+        else
+            :
+        fi
+    done < "$HOME"/home/trackedFiles.txt
+
+    ### IF BACKUP SUCCESS THEN DEPLOY WORK TREE
 
     echo "Converting ~/home repo into"
-    echo "~/.home bare repo"
+    echo "$HOME/.home bare repo"
     mv "$HOME"/home/.git "$HOME"/.home
-    rm -fr "$HOME"/home
+    # rm -fr "$HOME"/home # SC2115
+    rm -fr "${HOME:?}/"home
     cd "$HOME"/.home || exit
     git config --bool core.bare true
     cd "$HOME" || exit
     echo "Checking out master branch in $HOME"
     /usr/bin/git --git-dir="$HOME"/.home --work-tree="$HOME" \
-    checkout master .
+        checkout master .
 fi
-    
+
 ### UNINSTALL
 
 if [[ "$1" == "uninstall" ]]
@@ -93,7 +103,7 @@ then
     cd "$HOME" || exit
     echo "Removing dotfiles and submodules..."
     /usr/bin/git --git-dir="$HOME"/.home --work-tree="$HOME" \
-    rm -rf .
+        rm -rf .
     echo "Creating ~/home directory"
     mkdir "$HOME"/home
     mv "$HOME"/.home "$HOME"/home/.git
@@ -109,23 +119,24 @@ then
 
     BACKUP_EXTENSION=pre-deploy
     cd "$HOME" || exit
-    rename -v "s/\.$BACKUP_EXTENSION$//" *.$BACKUP_EXTENSION
+    # rename -v "s/\.$BACKUP_EXTENSION$//" *.$BACKUP_EXTENSION # SC2035
+    rename -v "s/\.$BACKUP_EXTENSION$//" -- *.$BACKUP_EXTENSION
 fi
 
 ### ENCRYPT AND DECRYPT
 
 if [[ "$1" == "encrypt" ]]
 then
-    if tar cf aux$2 $2
+    if tar cf aux"$2" "$2"
     then
-        if gpg --symmetric aux$2 # if archive and gpg success
+        if gpg --symmetric aux"$2" # if archive and gpg success
         then
-            rm -rf $2 # remove original
+            rm -rf "$2" # remove original
             # $2.tar.gpg is created
-            rm -rf aux$2 # remove tar that is not yet encrypted
+            rm -rf aux"$2" # remove tar that is not yet encrypted
             # So you end up with encrypted and original versions
             # discarting the unencrypted tar 
-            mv aux$2.gpg $2
+            mv aux"$2".gpg "$2"
         else
             exit
         fi
@@ -142,19 +153,19 @@ if [[ "$1" == "decrypt" ]]
    #'dd ^C'
    # the script will simply exit without leaving empty useless files behind
 then
-    if gpg --decrypt $2 > decrypted$2 # decrypt file to auxiliary file
+    if gpg --decrypt "$2" > decrypted"$2" # decrypt file to auxiliary file
     then
-        rm -rf $2
-        mkdir aux$2 # just so tar xf can extract to an archive
-        if tar xf decrypted$2 -C aux$2 # extract content of decrypted into aux
+        rm -rf "$2"
+        mkdir aux"$2" # just so tar xf can extract to an archive
+        if tar xf decrypted"$2" -C aux"$2" # extract content of decrypted into aux
         then
-            rm -rf decrypted$2 # remove decrypted tar archive
-            mv aux$2/* ./ # mv content of extrated archive one level up
-            rm -rf aux$2 # rm the extra extracted archive
+            rm -rf decrypted"$2" # remove decrypted tar archive
+            mv aux"$2"/* ./ # mv content of extrated archive one level up
+            rm -rf aux"$2" # rm the extra extracted archive
         else
             exit
         fi
     else
-        rm -rf decrypted$2
+        rm -rf decrypted"$2"
     fi
 fi
