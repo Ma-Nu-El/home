@@ -35,6 +35,8 @@
 ;; BEGIN AFTER ORG
 (after! org
 
+(add-to-list 'org-export-backends 'org)
+
 (setq org-adapt-indentation nil)
 
 (setq org-fontify-quote-and-verse-blocks nil
@@ -44,9 +46,6 @@
       )
 
 (setq org-startup-folded nil)
-
-(setq org-log-into-drawer "LOGBOOK")
-(setq org-clock-into-drawer "CLOCKBOOK")
 
 ;; https://github.com/pokeefe/Settings/blob/master/emacs-settings/.emacs.d/modules/init-org.el
 ;; Effort and global properties
@@ -59,11 +58,88 @@
 (setq org-columns-default-format '"%34ITEM(Item) %10TAGS(Tags) %5TODO(State)
  %5Effort(Estim){:} %10CLOCKSUM(Actual)")
 
+(setq org-log-into-drawer "LOGBOOK")
+(setq org-clock-into-drawer "CLOCKBOOK")
+
 (setq org-agenda-span 1) ; show today only by default; it's quicker
 (setq org-agenda-start-day "-0d") ; start on current day,
                                         ; useful when exporting html 28-day version.
+(setq org-agenda-start-on-weekday nil)
 
-(add-to-list 'org-export-backends 'org)
+(setq org-agenda-custom-commands
+      '(
+        ( "1" "Last 3 days."
+          ((agenda ""))
+          ;; ((org-agenda-tag-filter-preset '("-habit")))
+          ;; ("~/org/agenda-today.html") ;; enables html export of this agenda view
+                  ((org-agenda-span 3))
+                  ((org-agenda-start-day "-2"))
+          )
+        ( "3" "Next 3 days."
+          ;; Made to be exported to html
+          ((agenda ""))
+                   ((org-agenda-span 3))
+                   ((org-agenda-start-day "+1"))
+          ;; The bigger the agenda span, the longer the process
+          )
+        ( "2" "Last and next 3 days."
+          ;; Made to be exported to html
+          ((agenda ""))
+                   ((org-agenda-span 7))
+                   ((org-agenda-start-day "-2"))
+          )
+        ( "8" "Next 8 days, don't show today."
+          ;; Made to be exported to html
+          ((agenda ""))
+                   ((org-agenda-span 8))
+                   ((org-agenda-start-day "+1d"))
+          )
+        ( "4" "Next 14 days, don't show today."
+          ;; Made to be exported to html
+          ((agenda ""))
+                   ((org-agenda-span 14))
+                   ((org-agenda-start-day "+1d"))
+          )
+        ( "0" "Next 28 days, don't show today."
+          ;; Made to be exported to html
+          ((agenda ""))
+                   ((org-agenda-span 28))
+                   ((org-agenda-start-day "+1d"))
+          )
+        ( "H" "Custom agenda, only 'habit' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+habit"))))
+        ( "u" "Custom agenda, ignore 'university' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("-university"))))
+        ( "U" "Custom agenda, only 'university' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+university"))))
+        ( "c" "Custom agenda, only 'contacts' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+contacts"))))
+        ( "b" "Custom agenda, only 'birthday' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+birthday"))))
+        ( "k" "Custom agenda, ignore 'music' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("-music"))))
+        ( "K" "Custom agenda, only 'music' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+music"))))
+        )
+      )
+
+(setq org-agenda-prefix-format "%t %s")
+
+(setq org-agenda-show-current-time-in-grid nil)
+(setq org-agenda-hide-tags-regexp ".")
+(setq org-agenda-use-time-grid nil)
+
+(add-to-list 'org-modules 'org-habit)
+
+(setq org-habit-preceding-days 21)
+(setq org-habit-following-days 7)
 
 (setq org-todo-keywords
       '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)"
@@ -71,61 +147,6 @@
         )
       )
 (setq org-log-done t)
-
-(add-to-list 'org-modules 'org-habit)
-
-(setq org-habit-preceding-days 21)
-(setq org-habit-following-days 7)
-
-(custom-set-variables
- '(org-agenda-custom-commands
-   '(
-     ( "h" "Custom agenda, ignore 'habit' tag"
-       ((agenda ""))
-       ;; ((org-agenda-tag-filter-preset '("-habit")))
-       )
-     ( "x" "28-day version of h"
-       ;; Made to be exported to html
-       ((agenda ""
-                ((org-agenda-span 28))
-                ))
-       ;; The bigger the agenda span, the longer the process
-       ((org-agenda-tag-filter-preset '("-habit")))
-       ("~/org/agenda.html") ;; enables html export of this agenda view
-       )
-     ( "n" "Custom agenda, only 'today' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+today"))))
-     ( "H" "Custom agenda, only 'habit' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+habit"))))
-     ( "u" "Custom agenda, ignore 'university' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("-university"))))
-     ( "U" "Custom agenda, only 'university' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+university"))))
-     ( "c" "Custom agenda, only 'contacts' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+contacts"))))
-     ( "b" "Custom agenda, only 'birthday' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+birthday"))))
-     ( "k" "Custom agenda, ignore 'music' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("-music"))))
-     ( "K" "Custom agenda, only 'music' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+music"))))
-     )
-   )
- )
-
-(setq org-agenda-prefix-format "%t %s")
-
-(setq org-agenda-show-current-time-in-grid nil)
-(setq org-agenda-hide-tags-regexp ".")
-(setq org-agenda-use-time-grid nil)
 
 (setq org-id-link-to-org-use-id t)
 

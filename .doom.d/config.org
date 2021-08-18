@@ -15,20 +15,20 @@
 - [[#no-line-numbers][no line numbers]]
 - [[#80-char-ruler][80 char ruler]]
 - [[#begin-org-section][begin org section]]
+  - [[#export-backend-enabling][export backend enabling]]
   - [[#buffer-opening-settings-for-speed][buffer opening settings for speed]]
   - [[#fixed-flush-left-indentation][fixed flush left indentation]]
-  - [[#logbook-and-clockbook][logbook and clockbook]]
   - [[#global-properties][global properties]]
   - [[#column-view-settings][column view settings]]
+  - [[#logbook-and-clockbook][logbook and clockbook]]
   - [[#reversed-org-log-states][reversed org log states]]
   - [[#agenda-settings][agenda settings]]
-  - [[#export-backend-enabling][export backend enabling]]
-  - [[#keywords][keywords]]
-  - [[#habit-graph-enabling][habit graph enabling]]
-  - [[#habit-graph-settings][habit graph settings]]
   - [[#agenda-custom-commands][agenda custom commands]]
   - [[#agenda-view-prefix][agenda view prefix]]
   - [[#agenda-view-settings][agenda view settings]]
+  - [[#habit-graph-enabling][habit graph enabling]]
+  - [[#habit-graph-settings][habit graph settings]]
+  - [[#keywords][keywords]]
   - [[#latex-export-table-of-contents-settings][latex export table of contents settings]]
   - [[#mu4e-store-links][mu4e store links]]
   - [[#log][log]]
@@ -260,6 +260,15 @@ they are implemented.
 ;; BEGIN AFTER ORG
 (after! org
 #+end_src
+
+** export backend enabling
+:PROPERTIES:
+:ID:       a794b757-4dcb-4a6b-a515-89e4419b5f19
+:END:
+#+begin_src elisp
+(add-to-list 'org-export-backends 'org)
+#+end_src
+
 ** buffer opening settings for speed
 :PROPERTIES:
 :ID:       f04c5ecf-aba4-4d99-adc0-0527201f84b8
@@ -299,15 +308,6 @@ It's gotta be faster. Useful too when you have a TOC heading first.
 (setq org-startup-folded nil)
 #+end_src
 
-** logbook and clockbook
-:PROPERTIES:
-:ID:       a065fc59-7ecf-4c1a-aa3c-d01f7f36eb28
-:END:
-- https://stackoverflow.com/questions/24686129/how-can-i-make-org-mode-store-state-changes-for-a-repeating-task-in-a-drawer
-#+begin_src elisp
-(setq org-log-into-drawer "LOGBOOK")
-(setq org-clock-into-drawer "CLOCKBOOK")
-#+end_src
 ** global properties
 :PROPERTIES:
 :ID:       64ea25a8-c5a6-4d48-a199-3d5162305169
@@ -320,8 +320,8 @@ It's gotta be faster. Useful too when you have a TOC heading first.
                                4:00 6:00 8:00")
                               )
       )
-
 #+end_src
+
 ** column view settings
 :PROPERTIES:
 :ID:       82451b12-f96d-40b5-9b2a-2908eee6eff4
@@ -330,6 +330,16 @@ Set global Column View format.
 #+begin_src elisp
 (setq org-columns-default-format '"%34ITEM(Item) %10TAGS(Tags) %5TODO(State)
  %5Effort(Estim){:} %10CLOCKSUM(Actual)")
+#+end_src
+
+** logbook and clockbook
+:PROPERTIES:
+:ID:       a065fc59-7ecf-4c1a-aa3c-d01f7f36eb28
+:END:
+- https://stackoverflow.com/questions/24686129/how-can-i-make-org-mode-store-state-changes-for-a-repeating-task-in-a-drawer
+#+begin_src elisp
+(setq org-log-into-drawer "LOGBOOK")
+(setq org-clock-into-drawer "CLOCKBOOK")
 #+end_src
 
 ** reversed org log states
@@ -343,54 +353,12 @@ Set global Column View format.
 (setq org-agenda-span 1) ; show today only by default; it's quicker
 (setq org-agenda-start-day "-0d") ; start on current day,
                                         ; useful when exporting html 28-day version.
-
+(setq org-agenda-start-on-weekday nil)
 #+end_src
 
-** export backend enabling
-:PROPERTIES:
-:ID:       a794b757-4dcb-4a6b-a515-89e4419b5f19
-:END:
-#+begin_src elisp
-(add-to-list 'org-export-backends 'org)
-#+end_src
 
-** todo keywords
-:PROPERTIES:
-:ID:       55c05291-82b3-443f-93ee-68a68b38d3de
-:END:
-#+begin_src elisp
-(setq org-todo-keywords
-      '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)"
-                  "SOMEDAY(s)" "|" "DONE(d@/!)" "CANCELED(c@/!)")
-        )
-      )
-(setq org-log-done t)
-#+end_src
+- https://emacs.stackexchange.com/questions/12517/how-do-i-make-the-timespan-shown-by-org-agenda-start-yesterday
 
-- TRACK TODO STATE CHANGES
-- https://orgmode.org/manual/Tracking-TODO-state-changes.html
-- OrgMode E03S01: Automatic logging of status changes:
-  + https://www.youtube.com/watch?v=R4QSTDco_w8
-** habit graph enabling
-:PROPERTIES:
-:ID:       c6e2c52f-51bd-4fd9-8fd5-080fb2a617be
-:END:
-#+begin_src elisp
-(add-to-list 'org-modules 'org-habit)
-#+end_src
-- https://github.com/hlissner/doom-emacs/issues/3102
-
-** habit graph settings
-:PROPERTIES:
-:ID:       0f4e33a5-1913-457f-ab12-ac5dba3619ef
-:END:
-
-#+begin_src elisp
-(setq org-habit-preceding-days 21)
-(setq org-habit-following-days 7)
-#+end_src
-
-- https://orgmode.org/manual/Tracking-your-habits.html
 ** agenda custom commands
 :PROPERTIES:
 :ID:       e4bd5984-7063-44f3-973d-51c298645761
@@ -398,49 +366,69 @@ Set global Column View format.
 
 
 #+begin_src elisp
-(custom-set-variables
- '(org-agenda-custom-commands
-   '(
-     ( "h" "Custom agenda, ignore 'habit' tag"
-       ((agenda ""))
-       ;; ((org-agenda-tag-filter-preset '("-habit")))
-       )
-     ( "x" "28-day version of h"
-       ;; Made to be exported to html
-       ((agenda ""
-                ((org-agenda-span 28))
-                ))
-       ;; The bigger the agenda span, the longer the process
-       ((org-agenda-tag-filter-preset '("-habit")))
-       ("~/org/agenda.html") ;; enables html export of this agenda view
-       )
-     ( "n" "Custom agenda, only 'today' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+today"))))
-     ( "H" "Custom agenda, only 'habit' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+habit"))))
-     ( "u" "Custom agenda, ignore 'university' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("-university"))))
-     ( "U" "Custom agenda, only 'university' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+university"))))
-     ( "c" "Custom agenda, only 'contacts' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+contacts"))))
-     ( "b" "Custom agenda, only 'birthday' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+birthday"))))
-     ( "k" "Custom agenda, ignore 'music' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("-music"))))
-     ( "K" "Custom agenda, only 'music' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+music"))))
-     )
-   )
- )
+(setq org-agenda-custom-commands
+      '(
+        ( "1" "Last 3 days."
+          ((agenda ""))
+          ;; ((org-agenda-tag-filter-preset '("-habit")))
+          ;; ("~/org/agenda-today.html") ;; enables html export of this agenda view
+                  ((org-agenda-span 3))
+                  ((org-agenda-start-day "-2"))
+          )
+        ( "3" "Next 3 days."
+          ;; Made to be exported to html
+          ((agenda ""))
+                   ((org-agenda-span 3))
+                   ((org-agenda-start-day "+1"))
+          ;; The bigger the agenda span, the longer the process
+          )
+        ( "2" "Last and next 3 days."
+          ;; Made to be exported to html
+          ((agenda ""))
+                   ((org-agenda-span 7))
+                   ((org-agenda-start-day "-2"))
+          )
+        ( "8" "Next 8 days, don't show today."
+          ;; Made to be exported to html
+          ((agenda ""))
+                   ((org-agenda-span 8))
+                   ((org-agenda-start-day "+1d"))
+          )
+        ( "4" "Next 14 days, don't show today."
+          ;; Made to be exported to html
+          ((agenda ""))
+                   ((org-agenda-span 14))
+                   ((org-agenda-start-day "+1d"))
+          )
+        ( "0" "Next 28 days, don't show today."
+          ;; Made to be exported to html
+          ((agenda ""))
+                   ((org-agenda-span 28))
+                   ((org-agenda-start-day "+1d"))
+          )
+        ( "H" "Custom agenda, only 'habit' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+habit"))))
+        ( "u" "Custom agenda, ignore 'university' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("-university"))))
+        ( "U" "Custom agenda, only 'university' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+university"))))
+        ( "c" "Custom agenda, only 'contacts' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+contacts"))))
+        ( "b" "Custom agenda, only 'birthday' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+birthday"))))
+        ( "k" "Custom agenda, ignore 'music' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("-music"))))
+        ( "K" "Custom agenda, only 'music' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+music"))))
+        )
+      )
 #+end_src
 
 - https://emacs.stackexchange.com/questions/38183/how-to-exclude-a-file-from-agenda
@@ -469,6 +457,43 @@ That line is counterintuitive sometimes when checking agenda remotely.
 #+end_src
 - https://orgmode.org/manual/Agenda-Commands.html
 
+** habit graph enabling
+:PROPERTIES:
+:ID:       c6e2c52f-51bd-4fd9-8fd5-080fb2a617be
+:END:
+#+begin_src elisp
+(add-to-list 'org-modules 'org-habit)
+#+end_src
+- https://github.com/hlissner/doom-emacs/issues/3102
+
+** habit graph settings
+:PROPERTIES:
+:ID:       0f4e33a5-1913-457f-ab12-ac5dba3619ef
+:END:
+
+#+begin_src elisp
+(setq org-habit-preceding-days 21)
+(setq org-habit-following-days 7)
+#+end_src
+
+- https://orgmode.org/manual/Tracking-your-habits.html
+** todo keywords
+:PROPERTIES:
+:ID:       55c05291-82b3-443f-93ee-68a68b38d3de
+:END:
+#+begin_src elisp
+(setq org-todo-keywords
+      '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)"
+                  "SOMEDAY(s)" "|" "DONE(d@/!)" "CANCELED(c@/!)")
+        )
+      )
+(setq org-log-done t)
+#+end_src
+
+- TRACK TODO STATE CHANGES
+- https://orgmode.org/manual/Tracking-TODO-state-changes.html
+- OrgMode E03S01: Automatic logging of status changes:
+  + https://www.youtube.com/watch?v=R4QSTDco_w8
 ** latex export table of contents settings
 :PROPERTIES:
 :ID:       994f0f4d-3184-445a-b079-2a1c894dbcaf
