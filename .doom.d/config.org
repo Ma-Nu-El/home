@@ -780,10 +780,10 @@ mistake. I'll simply have to be more careful.
 :ID:       12e43ea2-162e-4a48-8115-da3fb00a32c1
 :END:
 
-#+begin_src elisp
+,#+begin_src elisp
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-#+end_src
+,#+end_src
 
 
 * ispell config
