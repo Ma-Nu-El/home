@@ -147,7 +147,6 @@ vc                ; version-control and Emacs, sitting in a tree
 ibuffer         ; interactive buffer management
 #+end_src
 
-
 ** term
 :term
 ;;eshell            ; the elisp shell that works everywhere
@@ -245,7 +244,7 @@ https://emacs-lsp.github.io/lsp-mode/page/installation/
 ;;julia             ; a better, faster MATLAB
 ;;kotlin            ; a better, slicker Java(Script)
 #+begin_src elisp
-latex             ; writing papers in Emacs has never been so fun
+(latex +lsp)        ; writing papers in Emacs has never been so fun
 #+end_src
 ;;lean
 ;;factor
