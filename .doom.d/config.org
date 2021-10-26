@@ -207,8 +207,9 @@ change `org-directory'. It must be set before org loads!
 :ID:       23918f8e-2350-40a7-b4d8-57520c5a36cf
 :END:
 This determines the style of line numbers in effect. If set to `nil', line
-numbers are disabled. For relative line numbers, set this to `relative'.
+numbers are disabled. For relative line numbers, set this to ='relative=.
 
+# (setq display-line-numbers-type 'relative)
 #+begin_src elisp
 (setq display-line-numbers-type nil)
 #+end_src
