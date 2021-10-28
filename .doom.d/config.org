@@ -30,6 +30,7 @@
   - [[#habit-graph-settings][habit graph settings]]
   - [[#keywords][keywords]]
   - [[#latex-export-table-of-contents-settings][latex export table of contents settings]]
+  - [[#latex-other-languages][latex other languages]]
   - [[#mu4e-store-links][mu4e store links]]
   - [[#log][log]]
   - [[#how-many-todos-left-info-in-heading][how many todos left info in heading]]
@@ -523,6 +524,38 @@ the =html= export has not presented this problem so far.
 # #+begin_src elisp
 # (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
 # #+end_src
+
+** latex other languages
+- [2021-10-28 Thu 00:11]
+=HTML= exports works fine, but when exporting to =PDF=,
+=#+LANGUAGE: <yourLang>= is not enough.
+
+This seems to do the job.
+
+#+begin_center
+This one does not work.
+#+end_center
+
+: #+begin_example elisp
+: (add-to-list 'org-latex-packages-alist '("AUTO" "babel" t ("pdflatex")))
+: #+end_example
+- https://www.reddit.com/r/orgmode/comments/f5unzb/export_setting_language_does_not_work/
+
+
+An alternative not tested solution is to put this in your file.
+
+#+begin_center
+This one works!
+#+end_center
+
+: #+LANGUAGE: es
+: #+LATEX_HEADER: \usepackage[spanish]{babel}
+
+Almost the same except for the extra =#+LATEX_HEADER= part.
+
+
+See also:
+- https://emacs.stackexchange.com/questions/21239/change-table-of-contents-title-in-org-mode-according-to-document-language
 
 ** mu4e store links
 But when enabling this, it overrides the other org-store-link* protocols.
