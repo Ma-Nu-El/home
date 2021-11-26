@@ -115,6 +115,9 @@
         ( "U" "Custom agenda, only 'university' tag"
           ((agenda ""))
           ((org-agenda-tag-filter-preset '("+university"))))
+        ( "E" "Custom agenda, only 'evaluation' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+evaluation"))))
         ( "c" "Custom agenda, only 'contacts' tag"
           ((agenda ""))
           ((org-agenda-tag-filter-preset '("+contacts"))))
