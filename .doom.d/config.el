@@ -29,9 +29,6 @@
 
 (setq display-line-numbers-type nil)
 
-(global-display-fill-column-indicator-mode)
-(setq display-fill-column-indicator t)
-
 ;; BEGIN AFTER ORG
 (after! org
 
@@ -61,7 +58,7 @@
 (setq org-log-into-drawer "LOGBOOK")
 (setq org-clock-into-drawer "CLOCKBOOK")
 
-(setq org-agenda-span 1) ; show today only by default; it's quicker
+(setq org-agenda-span 3) ; show today only by default; it's quicker
 (setq org-agenda-start-day "-0d") ; start on current day,
                                         ; useful when exporting html 28-day version.
 (setq org-agenda-start-on-weekday nil)
@@ -201,3 +198,10 @@
 ;; (custom-set-variables
 ;;  '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
 ;;  )
+
+(global-display-fill-column-indicator-mode)
+(setq-default display-fill-column-indicator-column 60)
+;;(setq display-fill-column-indicator t)
+;;(setq fill-column 80)
+
+(global-git-gutter-mode +1)
