@@ -54,6 +54,7 @@
 - [[#custom-set-variables][custom set variables]]
 - [[#60-char-ruler][60 char ruler]]
 - [[#git-gutter][git gutter]]
+- [[#footnotes][Footnotes]]
 
 * shebang
 :PROPERTIES:
@@ -941,11 +942,16 @@ mistake. I'll simply have to be more careful.
 - [2021-11-28 Sun 19:39]
   - [[id:4e935b6d-a359-4a08-9a86-7c07951ff3ef][now 60]]
 * git gutter
+:PROPERTIES:
+:ID:       74f03acd-57b5-487d-af07-716129320bac
+:END:
 - [2021-11-30 Tue 20:28]
 - https://github.com/hlissner/doom-emacs/issues/4369
 
-#+begin_src emacs-lisp
+#+begin_src elisp
 (global-git-gutter-mode +1)
-#+end_src* Footnotes
+#+end_src
+
+* Footnotes
 
 [fn:1] Check the =EXCLUDE_TAGS= section.
