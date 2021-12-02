@@ -13,7 +13,6 @@
 - [[#org-directory][org directory]]
 - [[#recursive-agenda-files][recursive agenda files]]
 - [[#no-line-numbers][no line numbers]]
-- [[#80-char-ruler][80 char ruler]]
 - [[#begin-org-section][begin org section]]
   - [[#export-backend-enabling][export backend enabling]]
   - [[#buffer-opening-settings-for-speed][buffer opening settings for speed]]
@@ -53,7 +52,8 @@
 - [[#disable-backup][disable backup]]
 - [[#custom-set-faces][custom set faces]]
 - [[#custom-set-variables][custom set variables]]
-- [[#footnotes][Footnotes]]
+- [[#60-char-ruler][60 char ruler]]
+- [[#git-gutter][git gutter]]
 
 * shebang
 :PROPERTIES:
@@ -234,26 +234,6 @@ This will open documentation for it, including demos of how they are used.
 You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 they are implemented.
 
-
-* 80 char ruler
-:PROPERTIES:
-:ID:       afa21908-f444-43d4-a5fb-19b770cf13ec
-:END:
-- [2021-07-10 Sat 16:10]
-- Since last =doom upgrade= a couple minutes ago, the ruler at 80 characters
-  was gone. Also the =fill-column= module in =init.el=, specifically the
-  =:ui= section was also gone.
-- I got it back with this elisp but now also that ruler appears in the home
-  view for Doom which is something new lol. Anyway, gets the job done but
-  takes elegancy of Doom a little down. Still invaluable tool tho.
-
-
-
-#+begin_src elisp
-(global-display-fill-column-indicator-mode)
-(setq display-fill-column-indicator t)
-#+end_src
-
 * begin org section
 :PROPERTIES:
 :ID:       72258b79-1e04-4a73-95b8-515f48143e5d
@@ -352,7 +332,7 @@ Set global Column View format.
 :ID:       4790fa62-de1b-4118-a722-f41212854368
 :END:
 #+begin_src elisp
-(setq org-agenda-span 1) ; show today only by default; it's quicker
+(setq org-agenda-span 3) ; show today only by default; it's quicker
 (setq org-agenda-start-day "-0d") ; start on current day,
                                         ; useful when exporting html 28-day version.
 (setq org-agenda-start-on-weekday nil)
@@ -822,7 +802,6 @@ mistake. I'll simply have to be more careful.
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 ,#+end_src
 
-
 * ispell config
 :PROPERTIES:
 :ID:       71aa1a7e-7cf6-4eb3-8fe5-e3d824003528
@@ -889,7 +868,6 @@ mistake. I'll simply have to be more careful.
 (setq +treemacs-git-mode 'simple)
 #+end_src
 
-
 * disable backup
 :PROPERTIES:
 :ID:       9a8a2efc-9871-4f88-9231-8017e44186e5
@@ -924,6 +902,50 @@ mistake. I'll simply have to be more careful.
 ;;  )
 #+end_src
 
-* Footnotes
+* 60 char ruler :line:width:80char:terminal:
+:PROPERTIES:
+:ID:       afa21908-f444-43d4-a5fb-19b770cf13ec
+:END:
+- [2021-07-10 Sat 16:10]
+- Since last =doom upgrade= a couple minutes ago, the ruler
+  at 80 characters was gone. Also the =fill-column= module
+  in =init.el=, specifically the =:ui= section was also gone.
+- I got it back with this elisp but now also that ruler appears
+  in the home view for Doom which is something new lol.
+  Anyway, gets the job done but takes elegancy of Doom a
+  little down. Still invaluable tool tho.
+- https://stackoverflow.com/questions/578059/studies-on-optimal-code-width
+- https://www.reddit.com/r/emacs/comments/kab809/for_those_who_dont_already_know_emacs_supports/
+- https://www.reddit.com/r/emacs/comments/hezzwb/fillcolumnindicator_issue/
+- https://www.reddit.com/r/emacs/comments/k895t5/displayfillcolumnindicatorcolumn_not_applying_on/
+
+
+#+begin_src elisp
+(global-display-fill-column-indicator-mode)
+(setq-default display-fill-column-indicator-column 60)
+;;(setq display-fill-column-indicator t)
+;;(setq fill-column 80)
+#+end_src
+
+- [2021-11-27 Sat 17:07] 65
+- New update to '65' was actually not easy lol.
+- [2021-11-27 Sat 22:52] 56
+- Because of the terminal zoom mechanism
+- [2021-11-28 Sun 15:19] 55
+- See here
+  - [[id:09354657-bb03-47ee-a5b2-ba91f2113050][Line width: 37 characters]]
+- [2021-11-28 Sun 19:15]
+  - [[id:668a9d2e-9ee9-47f7-a988-9fc3eac8b602][now 66]]
+- [2021-11-28 Sun 19:32]
+  - [[id:5ac9a42a-b152-4d31-ae69-9601c02cc0d1][now 70]]
+- [2021-11-28 Sun 19:39]
+  - [[id:4e935b6d-a359-4a08-9a86-7c07951ff3ef][now 60]]
+* git gutter
+- [2021-11-30 Tue 20:28]
+- https://github.com/hlissner/doom-emacs/issues/4369
+
+#+begin_src emacs-lisp
+(global-git-gutter-mode +1)
+#+end_src* Footnotes
 
 [fn:1] Check the =EXCLUDE_TAGS= section.
