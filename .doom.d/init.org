@@ -110,7 +110,9 @@ The ~+lsp~ flag in treemacs enables keyboard shortcuts.
 ;;pretty-code       ; ligatures or substitute text with pretty symbols
 ;;tabs              ; an tab bar for Emacs
 ;;unicode           ; extended unicode support for various languages
-;;vc-gutter         ; vcs diff in the fringe
+#+begin_src elisp
+vc-gutter         ; vcs diff in the fringe
+#+end_src
 ;;zen               ; distraction-free coding or writing
 
 ** editor

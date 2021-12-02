@@ -22,6 +22,8 @@ vi-tilde-fringe   ; fringe tildes to mark beyond EOB
 (treemacs +lsp)          ; a project drawer, like neotree but cooler
 workspaces        ; tab emulation, persistence & separate workspaces
 
+vc-gutter         ; vcs diff in the fringe
+
 :editor
 (evil +everywhere); come to the dark side, we have cookies
 file-templates    ; auto-snippets for empty files
@@ -56,7 +58,7 @@ emacs-lisp        ; drown in parentheses
 
 (java +lsp)         ; Added by Ma Nu from
 
-latex             ; writing papers in Emacs has never been so fun
+(latex +lsp)        ; writing papers in Emacs has never been so fun
 
 ledger            ; an accounting system in Emacs
 
