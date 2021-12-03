@@ -292,7 +292,7 @@ sh                ; she sells {ba,z,fi}sh shells on the C xor
 :END:
 #+begin_src elisp
 :email
-(mu4e +gmail)
+(mu4e +gmail +org)
 #+end_src
 ;;notmuch
 ;;(wanderlust +gmail)
