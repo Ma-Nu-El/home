@@ -65,66 +65,72 @@
 
 (setq org-agenda-custom-commands
       '(
-        ( "1" "Last 3 days."
-          ((agenda ""))
-          ;; ((org-agenda-tag-filter-preset '("-habit")))
-          ;; ("~/org/agenda-today.html") ;; enables html export of this agenda view
-                  ((org-agenda-span 3))
-                  ((org-agenda-start-day "-2"))
-          )
-        ( "3" "Next 3 days."
-          ;; Made to be exported to html
-          ((agenda ""))
-                   ((org-agenda-span 3))
-                   ((org-agenda-start-day "+1"))
-          ;; The bigger the agenda span, the longer the process
-          )
-        ( "2" "Last and next 3 days."
-          ;; Made to be exported to html
-          ((agenda ""))
-                   ((org-agenda-span 7))
-                   ((org-agenda-start-day "-2"))
-          )
-        ( "8" "Next 8 days, don't show today."
-          ;; Made to be exported to html
-          ((agenda ""))
-                   ((org-agenda-span 8))
-                   ((org-agenda-start-day "+1d"))
-          )
-        ( "4" "Next 14 days, don't show today."
-          ;; Made to be exported to html
-          ((agenda ""))
-                   ((org-agenda-span 14))
-                   ((org-agenda-start-day "+1d"))
-          )
-        ( "0" "Next 28 days, don't show today."
-          ;; Made to be exported to html
-          ((agenda ""))
-                   ((org-agenda-span 28))
-                   ((org-agenda-start-day "+1d"))
-          )
-        ( "H" "Custom agenda, only 'habit' tag"
-          ((agenda ""))
-          ((org-agenda-tag-filter-preset '("+habit"))))
-        ( "u" "Custom agenda, ignore 'university' tag"
+        ;; ( "1" "Last 3 days."
+        ;;   ((agenda ""))
+        ;;   ;; ((org-agenda-tag-filter-preset '("-habit")))
+        ;;   ;; ("~/org/agenda-today.html") ;; enables html export of this agenda view
+        ;;           ((org-agenda-span 3))
+        ;;           ((org-agenda-start-day "-2"))
+        ;;   )
+        ;; ( "3" "Next 3 days."
+        ;;   ;; Made to be exported to html
+        ;;   ((agenda ""))
+        ;;            ((org-agenda-span 3))
+        ;;            ((org-agenda-start-day "+1"))
+        ;;   ;; The bigger the agenda span, the longer the process
+        ;;   )
+        ;; ( "2" "Last and next 3 days."
+        ;;   ;; Made to be exported to html
+        ;;   ((agenda ""))
+        ;;            ((org-agenda-span 7))
+        ;;            ((org-agenda-start-day "-2"))
+        ;;   )
+        ;; ( "8" "Next 8 days, don't show today."
+        ;;   ;; Made to be exported to html
+        ;;   ((agenda ""))
+        ;;            ((org-agenda-span 8))
+        ;;            ((org-agenda-start-day "+1d"))
+        ;;   )
+        ;; ( "4" "Next 14 days, don't show today."
+        ;;   ;; Made to be exported to html
+        ;;   ((agenda ""))
+        ;;            ((org-agenda-span 14))
+        ;;            ((org-agenda-start-day "+1d"))
+        ;;   )
+        ;; ( "0" "Next 28 days, don't show today."
+        ;;   ;; Made to be exported to html
+        ;;   ((agenda ""))
+        ;;            ((org-agenda-span 28))
+        ;;            ((org-agenda-start-day "+1d"))
+        ;;   )
+        ;; ( "H" "Custom agenda, only 'habit' tag"
+        ;;   ((agenda ""))
+        ;;   ((org-agenda-tag-filter-preset '("+habit"))))
+        ( "u" "Exclude 'university' tag."
           ((agenda ""))
           ((org-agenda-tag-filter-preset '("-university"))))
-        ( "U" "Custom agenda, only 'university' tag"
+        ( "U" "Only 'university' tag."
           ((agenda ""))
           ((org-agenda-tag-filter-preset '("+university"))))
-        ( "E" "Custom agenda, only 'evaluation' tag"
+        ( "E" "Only 'evaluation' tag."
           ((agenda ""))
           ((org-agenda-tag-filter-preset '("+evaluation"))))
-        ( "c" "Custom agenda, only 'contacts' tag"
+        ( "l" "All 'university' except 'lecture' and 'assistantship'."
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+university" "-lecture" "-assistantship"))))
+        ( "L" "Only lectures and assistantships."
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+lecture" "+assistantship"))))
+        ( "c" "Only 'contacts' tag."
           ((agenda ""))
           ((org-agenda-tag-filter-preset '("+contacts"))))
-        ( "b" "Custom agenda, only 'birthday' tag"
+        ( "b" "Only 'birthday' tag."
           ((agenda ""))
           ((org-agenda-tag-filter-preset '("+birthday"))))
-        ( "k" "Custom agenda, ignore 'music' tag"
+        ( "k" "Exclude 'music' tag."
           ((agenda ""))
           ((org-agenda-tag-filter-preset '("-music"))))
-        ( "K" "Custom agenda, only 'music' tag"
+        ( "K" "Only 'music' tag."
           ((agenda ""))
           ((org-agenda-tag-filter-preset '("+music"))))
         )
