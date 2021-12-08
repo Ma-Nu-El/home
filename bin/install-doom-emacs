@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# https://github.com/hlissner/doom-emacs
+#   https://github.com/hlissner/doom-emacs#install
+
+set -o pipefail
+
+git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
+~/.emacs.d/bin/doom install
+
+
