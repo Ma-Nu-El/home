@@ -130,4 +130,11 @@ fi
 
 }
 
-
+weather(){
+	if [[ -z "$1"  ]]
+	then
+		wget -qO- wttr.in/Villarrica+Chile?Fm | less -R
+	else
+		wget -qO- wttr.in/"$1"?Fm | less -R
+	fi
+}
