@@ -66,10 +66,14 @@ markdown          ; writing docs for people to ignore
 
 (org +roam +gnuplot +jupyter +brain) ; organize your plain life in plain text
 
+plantuml          ; diagrams for confusing people more
+
+(python +lsp)            ; beautiful is better than ugly
+
 sh                ; she sells {ba,z,fi}sh shells on the C xor
 
 :email
-(mu4e +gmail)
+(mu4e +gmail +org)
 
 :app
 calendar
