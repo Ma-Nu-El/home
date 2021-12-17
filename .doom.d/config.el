@@ -106,6 +106,9 @@
         ;; ( "H" "Custom agenda, only 'habit' tag"
         ;;   ((agenda ""))
         ;;   ((org-agenda-tag-filter-preset '("+habit"))))
+        ( "n" "Only 'today' tag."
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+today"))))
         ( "u" "Exclude 'university' tag."
           ((agenda ""))
           ((org-agenda-tag-filter-preset '("-university"))))
@@ -153,6 +156,8 @@
         )
       )
 (setq org-log-done t)
+
+(setq org-babel-python-command "python3")
 
 (setq org-id-link-to-org-use-id t)
 
