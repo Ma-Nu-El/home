@@ -211,7 +211,7 @@
 ;;  )
 
 (global-display-fill-column-indicator-mode)
-(setq-default display-fill-column-indicator-column 60)
+(setq-default display-fill-column-indicator-column 55)
 ;;(setq display-fill-column-indicator t)
 ;;(setq fill-column 80)
 

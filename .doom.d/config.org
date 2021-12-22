@@ -945,7 +945,7 @@ mistake. I'll simply have to be more careful.
 
 #+begin_src elisp
 (global-display-fill-column-indicator-mode)
-(setq-default display-fill-column-indicator-column 60)
+(setq-default display-fill-column-indicator-column 55)
 ;;(setq display-fill-column-indicator t)
 ;;(setq fill-column 80)
 #+end_src
@@ -953,7 +953,8 @@ mistake. I'll simply have to be more careful.
 - [2021-11-27 Sat 17:07] 65
 - New update to '65' was actually not easy lol.
 - [2021-11-27 Sat 22:52] 56
-- Because of the terminal zoom mechanism
+  - Because of the terminal zoom mechanism
+  - Useful for two windows.
 - [2021-11-28 Sun 15:19] 55
 - See here
   - [[id:09354657-bb03-47ee-a5b2-ba91f2113050][Line width: 37 characters]]
@@ -963,6 +964,11 @@ mistake. I'll simply have to be more careful.
   - [[id:5ac9a42a-b152-4d31-ae69-9601c02cc0d1][now 70]]
 - [2021-11-28 Sun 19:39]
   - [[id:4e935b6d-a359-4a08-9a86-7c07951ff3ef][now 60]]
+- [2021-12-18 Sat 14:22]
+  - now 56
+  - Same as above.
+- [2021-12-18 Sat 14:25]
+  - 55
 * git gutter
 :PROPERTIES:
 :ID:       74f03acd-57b5-487d-af07-716129320bac
