@@ -201,9 +201,20 @@ change `org-directory'. It must be set before org loads!
 :PROPERTIES:
 :ID:       7e605bae-b5f5-41ad-b95e-c02f621b7926
 :END:
-#+begin_src elisp
+
 (setq org-agenda-files (directory-files-recursively "~/org/" "\\.org$"))
+
+
+#+begin_src elisp
+(setq org-agenda-files "~/org/agenda-files.txt")
 #+end_src
+
+- https://orgmode.org/worg/org-tutorials/orgtutorial_dto.html
+- https://orgmode.org/manual/Agenda-Files.html
+
+(setq org-agenda-files (list "~/org/auxRoam/.org"
+                             "~/org/school.org"
+                             "~/org/home.org"))
 
 * no line numbers
 :PROPERTIES:

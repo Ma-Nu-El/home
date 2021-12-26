@@ -25,7 +25,7 @@
 
 (setq org-directory "~/org/")
 
-(setq org-agenda-files (directory-files-recursively "~/org/" "\\.org$"))
+(setq org-agenda-files "~/org/agenda-files.txt")
 
 (setq display-line-numbers-type nil)
 
