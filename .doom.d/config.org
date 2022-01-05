@@ -42,6 +42,7 @@
   - [[#org-transclusion][org-transclusion]]
   - [[#org-fontify-quote-and-verse-blocks-disabled][org fontify quote and verse blocks [DISABLED]]]
   - [[#prevent-invisible-edits-commented-out][prevent invisible edits [Commented out]]]
+  - [[#org-depend][org-depend]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
@@ -311,8 +312,7 @@ It's gotta be faster. Useful too when you have a TOC heading first.
 ;; https://github.com/pokeefe/Settings/blob/master/emacs-settings/.emacs.d/modules/init-org.el
 ;; Effort and global properties
 (setq org-global-properties '(
-                              ("Effort_ALL". "0 0:01 0:03 0:05 0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00
-                               4:00 6:00 8:00")
+                              ("Effort_ALL". "0 0:01 0:03 0:05 0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00 4:00 6:00 8:00 10:00 12:00 16:00 20:00 25:00 30:00 35:00 40:00")
                               )
       )
 #+end_src
@@ -323,9 +323,11 @@ It's gotta be faster. Useful too when you have a TOC heading first.
 :END:
 Set global Column View format.
 #+begin_src elisp
+(setq org-columns-default-format '"%30ITEM(Item) %6Effort(Estim){:} %6CLOCKSUM(Actual)")
+#+end_src
+
 (setq org-columns-default-format '"%34ITEM(Item) %10TAGS(Tags) %5TODO(State)
  %5Effort(Estim){:} %10CLOCKSUM(Actual)")
-#+end_src
 
 ** logbook and clockbook
 :PROPERTIES:
@@ -816,6 +818,12 @@ more careful. It's not something that I do a lot so low signal-to-noise ratio.
 
 Commented out since it does not fail and does not let me know that I did a
 mistake. I'll simply have to be more careful.
+
+** org-depend
+
+#+begin_src elisp
+(require 'org-depend)
+#+end_src
 
 * end org section
 :PROPERTIES:

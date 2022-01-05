@@ -47,13 +47,11 @@
 ;; https://github.com/pokeefe/Settings/blob/master/emacs-settings/.emacs.d/modules/init-org.el
 ;; Effort and global properties
 (setq org-global-properties '(
-                              ("Effort_ALL". "0 0:01 0:03 0:05 0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00
-                               4:00 6:00 8:00")
+                              ("Effort_ALL". "0 0:01 0:03 0:05 0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00 4:00 6:00 8:00 10:00 12:00 16:00 20:00 25:00 30:00 35:00 40:00")
                               )
       )
 
-(setq org-columns-default-format '"%34ITEM(Item) %10TAGS(Tags) %5TODO(State)
- %5Effort(Estim){:} %10CLOCKSUM(Actual)")
+(setq org-columns-default-format '"%30ITEM(Item) %6Effort(Estim){:} %6CLOCKSUM(Actual)")
 
 (setq org-log-into-drawer "LOGBOOK")
 (setq org-clock-into-drawer "CLOCKBOOK")
@@ -180,6 +178,8 @@
 (setq org-tags-exclude-from-inheritance '("crypt"))
 
 (use-package! org-transclusion)
+
+(require 'org-depend)
 
 )
 ;; END AFTER ORG
