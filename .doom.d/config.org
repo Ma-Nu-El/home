@@ -406,18 +406,21 @@ Set global Column View format.
         ;; ( "H" "Custom agenda, only 'habit' tag"
         ;;   ((agenda ""))
         ;;   ((org-agenda-tag-filter-preset '("+habit"))))
-        ( "n" "Only 'today' tag."
+        ;; ( "n" "Only 'today' tag."
+        ;;   ((agenda ""))
+        ;;   ((org-agenda-tag-filter-preset '("+today"))))
+        ( "O" "Only 'oneoff' tag."
           ((agenda ""))
-          ((org-agenda-tag-filter-preset '("+today"))))
+          ((org-agenda-tag-filter-preset '("+oneoff"))))
+        ( "R" "Only 'recurring' tag."
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+recurring"))))
         ( "u" "Exclude 'university' tag."
           ((agenda ""))
           ((org-agenda-tag-filter-preset '("-university"))))
         ( "U" "Only 'university' tag."
           ((agenda ""))
           ((org-agenda-tag-filter-preset '("+university"))))
-        ( "E" "Only 'evaluation' tag."
-          ((agenda ""))
-          ((org-agenda-tag-filter-preset '("+evaluation"))))
         ( "l" "All 'university' except 'lecture' and 'assistantship'."
           ((agenda ""))
           ((org-agenda-tag-filter-preset '("+university" "-lecture" "-assistantship"))))
