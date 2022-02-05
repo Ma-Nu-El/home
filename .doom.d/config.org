@@ -401,12 +401,15 @@ Set global Column View format.
         ;;            ((org-agenda-span 28))
         ;;            ((org-agenda-start-day "+1d"))
         ;;   )
-        ;; ( "H" "Custom agenda, only 'habit' tag"
-        ;;   ((agenda ""))
-        ;;   ((org-agenda-tag-filter-preset '("+habit"))))
-        ( "n" "Only 'today' tag."
+        ( "H" "Only 'habit' tag"
           ((agenda ""))
-          ((org-agenda-tag-filter-preset '("+today"))))
+          ((org-agenda-tag-filter-preset '("+habit"))))
+        ( "h" "Exclude 'habit' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("-habit"))))
+        ;; ( "n" "Only 'today' tag."
+        ;;   ((agenda ""))
+        ;;   ((org-agenda-tag-filter-preset '("+today"))))
         ( "u" "Exclude 'university' tag."
           ((agenda ""))
           ((org-agenda-tag-filter-preset '("-university"))))
