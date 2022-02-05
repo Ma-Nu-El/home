@@ -9,6 +9,7 @@
 - [[#org-transclusion][org-transclusion]]
 - [[#org-sidebar][org-sidebar]]
 - [[#org-contrib][org-contrib]]
+- [[#org-depend][org-depend]]
 
 * shebang
 :PROPERTIES:
@@ -102,12 +103,14 @@
   )
 ~#+end_src
 
-I tried it, but it was not intuitive enough. The only useful feature is
-~org-sidebar~, but that can be achieved using a buffer restriction of
-~org-agenda~ anyway.
+I tried it, but it was not intuitive enough.
+The only useful feature is ~org-sidebar~, but that
+can be achieved using a buffer restriction
+of ~org-agenda~ anyway.
 
-And as for the ~org-sidebar-tree~ feature, Doom already has ~treemacs~ and
-it does a better job --- more intuitive, DWIM vibe.
+And as for the ~org-sidebar-tree~ feature,
+Doom already has ~treemacs~ and it does a better
+job --- more intuitive, DWIM vibe.
 
 Still, good promise. But not for me right now.
 
@@ -119,9 +122,23 @@ Still, good promise. But not for me right now.
 
 This seemed to do the work.
 
-#+begin_example elisp
+,#+begin_src elisp
 (package! org-contrib
   :recipe (:host github
            :repo "emacsmirror/org-contrib")
   )
-#+end_example
+,#+end_src
+
+,#+begin_src elisp
+(package! org-contrib)
+,#+end_src
+
+* org-depend
+- [2021-12-28 Tue 16:45]
+
+
+,#+begin_src elisp
+(package! org-depend)
+,#+end_src
+
+Contained in [[https://github.com/emacsmirror/org-contrib][org-contrib]].

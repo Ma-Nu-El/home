@@ -7,3 +7,8 @@
            :files ("*.el")
            )
   )
+
+(package! org-contrib
+  :recipe (:host github
+           :repo "emacsmirror/org-contrib")
+  )
