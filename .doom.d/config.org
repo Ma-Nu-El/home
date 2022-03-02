@@ -188,8 +188,9 @@ available. You can either set `doom-theme' or manually load a theme with the
 :ID:       86d962a4-8100-483a-a739-59cfcdfb0655
 :END:
 
-If you use `org' and don't want your org files in the default location below,
-change `org-directory'. It must be set before org loads!
+If you use `org' and don't want your org files in
+the default location below, change `org-directory'.
+It must be set before org loads!
 
 #+begin_src elisp
 (setq org-directory "~/org/")
@@ -829,6 +830,7 @@ mistake. I'll simply have to be more careful.
 
 #+begin_src elisp
 (require 'org-depend)
+;; (require 'ox-epub)
 #+end_src
 
 * end org section
