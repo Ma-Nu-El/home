@@ -250,9 +250,24 @@ https://emacs-lsp.github.io/lsp-mode/page/installation/
 #+end_src
 ;;lean
 ;;factor
+
+
 #+begin_src elisp
 ledger            ; an accounting system in Emacs
 #+end_src
+
+Make sure to have installed the ledger backend
+aswell.
+
+#+begin_example shell
+apt search ledger | grep "installed"
+#+end_example
+
+
+#+RESULTS:
+: ledger/hirsute,now 3.2.1-7build2 amd64 [installed]
+
+
 ;;lua               ; one-based indices? one-based indices
 #+begin_src elisp
 markdown          ; writing docs for people to ignore
