@@ -1,0 +1,25 @@
+# Warning: lazy programmer - file format is fixed.
+# do not rearrange, add or delete lines.
+# if you hose the file up, just delete and restart clockywock.
+0 alarm on
+0 alarm hour
+0 alarm minute
+0 alarm ringing
+0 alarm length
+0 snooze length
+0 slider mode
+0 color mode
+3 hour color
+4 minute color
+6 second color
+5 face color
+5 bg color
+H hour char 
+m minute char 
+. second char 
+1.777777 aspect ratio
+99 num lines
+0 user_lines toggle
+0 rolex toggle
+0 bouncy toggle
+0 bozo toggle
