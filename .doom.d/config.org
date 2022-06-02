@@ -463,8 +463,10 @@ Hide filename in agenda view
 :PROPERTIES:
 :ID:       197f9212-94e5-4475-8d03-f9118493320a
 :END:
-Disable "now" line in org agenda view
-That line is counterintuitive sometimes when checking agenda remotely.
+
+Disable "now" line in org agenda view.
+That line is counterintuitive sometimes
+when checking agenda remotely.
 
 #+begin_src elisp
 (setq org-agenda-show-current-time-in-grid nil)
