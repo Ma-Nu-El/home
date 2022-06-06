@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# [2022-06-05 Sun 23:21]
+# https://superuser.com/questions/611538/is-there-a-way-to-display-a-countdown-or-stopwatch-timer-in-a-terminal
+#
+# example for 2 minutes
+#   timer "$((2 * 60))"
+# example for 2 hours
+#   timer "$((2 * 60 * 60))"
+# example for 2 days
+#   timer "$((2 * 24 * 60 * 60))"
+start="$(( $(date '+%s') + $1))"
+   while [ $start -ge "$(date +%s)" ]; do
+       time="$(( start - $(date +%s) ))"
+       printf '%s\r' "$(date -u -d "@$time" +%H:%M:%S)"
+       sleep 0.1
+   done

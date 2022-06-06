@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# https://stackoverflow.com/questions/37986523/how-can-i-create-a-stopwatch-in-bash
+# [2022-06-05 Sun 23:21]
+# https://superuser.com/questions/611538/is-there-a-way-to-display-a-countdown-or-stopwatch-timer-in-a-terminal
 #
-now="$(date +%s)"sec
-while true; do
-   printf "%s\r" "$(TZ=UTC date --date now-"$now +%H:%M:%S.%N")"
-   sleep 0.1
-done
+start=$(date +%s)
+   while true; do
+       time="$(( $(date +%s) - start))"
+       printf '%s\r' "$(date -u -d "@$time" +%H:%M:%S)"
+       sleep 0.1
+   done
