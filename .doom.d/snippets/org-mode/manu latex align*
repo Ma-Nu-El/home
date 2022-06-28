@@ -1,0 +1,6 @@
+# key: nil
+# name: manu latex align*
+# --
+\begin{align*}
+  ${1:insert your fancy equations}
+\end{align*}
