@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key: tilde_n
+# name: tilde letter n
+# --
+ñ${0:}
