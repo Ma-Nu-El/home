@@ -2,7 +2,8 @@
 # detect OS from Bash
 
 # Solution 1
-#https://stackoverflow.com/questions/394230/how-to-detect-the-os-from-a-bash-script
+# - https://stackoverflow.com/questions/394230/how-to-detect-the-os-from-a-bash-script
+# - https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
 #if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 #echo "os: linux"
 #elif [[ "$OSTYPE" == "darwin"* ]]; then
