@@ -2,4 +2,4 @@
 # name: acute letter i
 # key: acute_i
 # --
-í${0}
+í${0:}

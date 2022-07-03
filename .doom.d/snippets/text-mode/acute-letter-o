@@ -2,4 +2,4 @@
 # name: acute letter o
 # key: acute_o
 # --
-ó${0}
+ó${0:}
