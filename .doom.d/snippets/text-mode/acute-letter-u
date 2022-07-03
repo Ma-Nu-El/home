@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# key: acute_u
 # name: acute letter u
+# key: acute_u
 # --
-ú${0:}
+ú${0}

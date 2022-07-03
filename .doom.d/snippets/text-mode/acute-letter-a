@@ -2,4 +2,4 @@
 # name: acute letter a
 # key: acute_a
 # --
-á${0:}
+á${0}

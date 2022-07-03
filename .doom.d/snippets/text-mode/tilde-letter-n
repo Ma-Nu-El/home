@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# key: tilde_n
 # name: tilde letter n
+# key: tilde_n
 # --
-ñ${0:}
+ñ${0}
