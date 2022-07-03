@@ -1,0 +1,6 @@
+# key: manu-latex-align*
+# name: manu-latex-align*
+# --
+\begin{align*}
+  ${0:insert your fancy equations}
+\end{align*}

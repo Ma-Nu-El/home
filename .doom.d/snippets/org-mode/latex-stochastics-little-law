@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Stochastics Little's Law
+# key: stochastics-littles-law
+# --
+L = \lambda \cdot W
+${0:}

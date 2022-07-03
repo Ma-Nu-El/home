@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key: acute_e
+# name: acute letter e
+# --
+é${0:}
