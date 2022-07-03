@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: python-float-to-time
+# key:  float-to-time
+# --
+
+time = float(input)
+print(datetime.timedelta(minutes=time))
