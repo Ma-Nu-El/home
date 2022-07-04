@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: ispell-local-dictionary-spanish
+# key: ispell-local-dictionary-spanish
+# --
+${0:}
+* Local variables :noexport:
+# Local Variables:
+# ispell-local-dictionary: "espanol"
+# End:
