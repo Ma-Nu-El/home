@@ -3,7 +3,15 @@
 # key: ispell-local-dictionary-spanish
 # --
 ${0:}
-* Local variables :noexport:
+#### Paste the following somewhere near the start of the file
+# -----START SNIPPET SEGMENT-----
+#+LANGUAGE: es
+#+LATEX_HEADER:\usepackage[spanish]{babel}
+# -----END SNIPPET SEGMENT-----
+
+#### Paste the following at the very end of the file
+# -----START SNIPPET SEGMENT-----
 # Local Variables:
 # ispell-local-dictionary: "espanol"
 # End:
+# -----END SNIPPET SEGMENT-----
