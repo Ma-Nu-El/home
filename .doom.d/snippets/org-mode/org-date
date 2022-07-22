@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: org-date
+# key: org-date
+# --
+#+DATE: `(format-time-string "%Y-%m-%d")`
+$0

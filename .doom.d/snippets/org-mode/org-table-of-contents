@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: org-table-of-contents
+# key: org-table-of-contents
+# --
+* TOC :TOC_$0:noexport:
+$1
