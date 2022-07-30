@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: python-time-calculator
+# key: python-time-calculator
+# --
+$3#+begin_src python :session :results output
+import datetime # Library needed
+input=${1: insert time here. Example: 2.5}
+time = float(input)
+print(datetime.timedelta(${2: what is the input?: seconds|minutes|hours|days|weeks}=time))
+#+end_src
