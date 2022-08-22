@@ -2,5 +2,5 @@
 # name: org-table-of-contents
 # key: org-table-of-contents
 # --
-* TOC :TOC_$0:noexport:
-$1
+* TOC :TOC_$1:noexport:
+$2
