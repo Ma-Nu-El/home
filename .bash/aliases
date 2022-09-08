@@ -61,6 +61,7 @@ alias i='/usr/bin/vi ~/org/inbox.org'
 alias ii='inbox fetch --clean >> *inbox.org'
 alias cati='cat ~/org/inbox.org'
 # quick navigation
+alias cdc='clear && cd ~ && pwd && echo -----'
 alias ...='cd ../../' # cd up 2 times
 alias ....='cd ../../../' # cd up 3 times
 alias .....='cd ../../../../' # cd up 4 times
