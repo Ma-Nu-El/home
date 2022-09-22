@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: python-time-calculator
-# key: python-time-calculator
+# name: personal-python-time-calculator
+# key: personal-python-time-calculator
 # --
 $3#+begin_src python :session :results output
 import datetime # Library needed

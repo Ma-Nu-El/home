@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: personal-org-table-of-contents
+# key: personal-org-table-of-contents
+# --
+* TOC :TOC_$1:noexport:
+$2
