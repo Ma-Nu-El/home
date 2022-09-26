@@ -194,7 +194,7 @@
 (global-set-key (kbd "\C-cr") 'ispell-region)
 
 ;; ORG-ROAM
-(setq org-roam-directory "~/org/auxRoam")
+(setq org-roam-directory "~/auxRoam")
 (add-hook 'after-init-hook 'org-roam-mode)
 (require 'org-roam-protocol)
 
