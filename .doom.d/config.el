@@ -23,9 +23,9 @@
 
 (setq doom-theme 'doom-gruvbox)
 
-(setq org-directory "~/org/")
+(setq org-directory "~/FilenSync/org/")
 
-(setq org-agenda-files "~/org/agenda-files.txt")
+(setq org-agenda-files "~/FilenSync/org/agenda-files.txt")
 
 (setq display-line-numbers-type nil)
 
