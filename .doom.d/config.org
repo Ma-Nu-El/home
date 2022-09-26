@@ -208,7 +208,7 @@ It must be set before org loads!
 
 
 #+begin_src elisp
-(setq org-agenda-files "~/org/agenda-files.txt")
+(setq org-agenda-files "~/agenda-files.txt")
 #+end_src
 
 - https://orgmode.org/worg/org-tutorials/orgtutorial_dto.html
