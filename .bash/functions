@@ -72,13 +72,13 @@ org(){
 
 if [[ "$1" ]]
 then
-    cd "$HOME"/org/"$1" || return
+    cd "$HOME"/FilenSync/org/"$1" || return
     pwd
 fi
 
 if [[ -z "$1" ]]
 then
-    cd "$HOME"/org/ || return
+    cd "$HOME"/FilenSync/org/ || return
     pwd
 fi
 
@@ -87,16 +87,17 @@ fi
 if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
 then
 	echo "'~'/.bash/functions org"
-	echo "Bash function for quick navigation to directories located in ~/org"
+	echo "Bash function for quick navigation to directories located in"
+    echo "$HOME/FilenSync/org"
 	echo "USAGE"
 	echo "    drive OPTIONS"
 	echo "OPTIONS"
 	echo "  --help, -h, -?, help"
 	echo "      Display this page."
 	echo "  foo"
-	echo "      'cd ~/org/foo"
+	echo "      'cd ~/FilenSync/org/foo"
 	echo "  bar"
-	echo "      'cd ~/org/bar"
+	echo "      'cd ~/FilenSync/org/bar"
 fi
 }
 
