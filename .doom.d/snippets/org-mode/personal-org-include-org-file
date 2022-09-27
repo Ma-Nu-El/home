@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: personal-org-include-org-file
+# key: personal-org-include-org-file
+# --
+$2
+#+INCLUDE:"${1:/insert/path/to/org/file}"

@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: personal-org-latex-beamer-template
+# key: personal-org-latex-beamer-template
+# --
+:ORG_LATEX_BEAMER_CONFIGURATION:
+$1#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [presentation,bigger]
+#+BEAMER_THEME: Berkeley
+#+OPTIONS: H:2
+# The next line enables table of contents
+# for each section. This works only if the
+# '#+OPTIONS: H:2' configuration is set to '2'
+# as is in this template.
+#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{${2: insert name of sectionwide of contents}}\tableofcontents[currentsection]\end{frame}}
+:END:

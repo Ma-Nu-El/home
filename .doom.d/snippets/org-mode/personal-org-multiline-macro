@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: personal-org-multiline-macro
+# key: personal-org-multiline-macro
+# contributor: https://stackoverflow.com/questions/22132603/define-org-mode-macro-with-line-breaks
+# --
+$1
+:ORG_MACRO:
+#+MACRO: nl   src_emacs-lisp[:results raw]{"\n"}
+#+MACRO: yourMacro line 1 of macro {{{nl}}}line 2 of macro
+:END:
+
+Invoke your macro as {{{yourMacro}}}.

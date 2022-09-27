@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: personal-org-noweb-macro
+# key: personal-org-noweb-macro
+# contributor: https://orgmode.org/manual/Noweb-Reference-Syntax.html
+# --
+:ORG_NOWEB_MACRO:
+#+NAME: ${1: name_of_your_macro}
+#+BEGIN_SRC org
+${2: body of your macro}
+#+END_SRC
+:END:
+
+# You can then invoke the macro with:
+src_org[:noweb yes]{<<$1>>}
