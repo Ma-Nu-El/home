@@ -4,12 +4,12 @@
 # --
 :ORG_LATEX_BEAMER_CONFIGURATION:
 $1#+LATEX_CLASS: beamer
-#+LATEX_CLASS_OPTIONS: [presentation,bigger]
+#+LATEX_CLASS_OPTIONS: [bigger]
 #+BEAMER_THEME: Berkeley
-#+OPTIONS: H:2
+#+OPTIONS: H:3 toc:3
 # The next line enables table of contents
 # for each section. This works only if the
-# '#+OPTIONS: H:2' configuration is set to '2'
+# '#+OPTIONS: H:3' configuration is set to '3'
 # as is in this template.
 #+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{${2: insert name of sectionwide of contents}}\tableofcontents[currentsection]\end{frame}}
 :END:
