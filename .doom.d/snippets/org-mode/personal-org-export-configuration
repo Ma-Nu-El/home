@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: personal-org-export-configuration
+# key: personal-org-export-configuration
+# --
+:EXPORT_CONFIGURATION:
+# 'export' tagged headings are exported by default.
+# 'noexport' tagged headings are not exported by default.
+# Add a tag in a heading and put that tag in
+# 'SELECT_TAGS' to make sure that tag is exported.
+# Add a tag in a heading and put that tag in
+# 'EXCLUDE_TAGS' to make sure that tag is not exported.
+# -----
+# Keep appending tags
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+:EXPORT_CONFIGURATION:
