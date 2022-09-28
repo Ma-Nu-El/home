@@ -83,6 +83,7 @@ alias aux='~/org/auxRoam'
 # quick editor
 alias v='vim'
 alias e='emacs -nw' # opens new instance of emacs in the terminal: no GUI
+alias ee='cd ~ && emacs -nw' # same but from home directory
 alias ed='emacs --daemon' # creates default emacs server named 'server'
 alias ec='emacsclient -t' # attach to the default emacs server
 alias edn='emacs-daemon-new' # creates a custom-named emacs server
@@ -96,7 +97,6 @@ alias tks='tmux kill-session -t' # append your session name to be killed
 alias tls='tmux ls' # list sessions # <prefix> s
 alias ta='tmux attach-session' # attach to last session
 alias tas='tmux attach-session -t' # append your session name to be attached to
-alias tmux_install_plugins='git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm' # install packages on fresh OS
 #alias tpls="ls ~/.tmuxp/"
 ## misc aliases
 alias hh='echo 'https://github.com/Ma-Nu-El/home''
@@ -135,4 +135,6 @@ alias timer='~/bin/timer'
 alias auxLock='~/bin/auxRoam lock'
 alias auxUnlock='~/bin/auxRoam unlock'
 alias RR='R --quiet --no-save'
+# fresh install
 alias install_doom='git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d && ~/.emacs.d/bin/doom install'
+alias install_tmux_plugins='git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm' # install packages on fresh OS
