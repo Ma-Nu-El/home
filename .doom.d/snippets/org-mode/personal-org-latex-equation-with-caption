@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: personal-org-latex-equation-with-caption
+# key: personal-org-latex-equation-with-caption
+# --
+#+CAPTION[${2:  optional short caption for the \listoffigures}]: ${1:  main caption of the equation}
+#+NAME: ${3:  name to reference this equation later in this org file: can be ID generated ;)}
+#+begin_figure
+\begin{equation}
+  ${4: body of equation}
+\end{equation}
+#+end_figure
+
+Check equation [[$3]] for more details.
