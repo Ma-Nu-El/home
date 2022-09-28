@@ -43,11 +43,11 @@
   - [[#org-fontify-quote-and-verse-blocks-disabled][org fontify quote and verse blocks [DISABLED]]]
   - [[#prevent-invisible-edits-commented-out][prevent invisible edits [Commented out]]]
   - [[#org-depend][org-depend]]
+- [[#roam][roam]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
 - [[#personal-keybindings][personal keybindings]]
-- [[#roam][roam]]
 - [[#start-week-on-monday][start week on monday]]
 - [[#dailies][dailies]]
 - [[#treemacs][treemacs]]
@@ -834,6 +834,19 @@ mistake. I'll simply have to be more careful.
 (require 'org-depend)
 #+end_src
 
+* roam
+  :PROPERTIES:
+  :ID:       41e53852-03b8-4098-a190-287a30504cfc
+  :END:
+#+begin_src elisp
+;; ORG-ROAM
+(setq org-roam-directory "~/auxRoam")
+(require 'org-roam-protocol)
+#+end_src
+;; (add-hook 'after-init-hook 'org-roam-mode)
+- No longer required in org-roam-v2
+  - https://github.com/magit/magit/issues/3741
+
 * end org section
 :PROPERTIES:
 :ID:       889fe81d-8200-4e4f-b833-a2c20cc295eb
@@ -848,10 +861,10 @@ mistake. I'll simply have to be more careful.
 :ID:       12e43ea2-162e-4a48-8115-da3fb00a32c1
 :END:
 
-,#+begin_src elisp
-(add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
-,#+end_src
+# #+begin_src elisp
+# (add-hook 'text-mode-hook 'flyspell-mode)
+# (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+# #+end_src
 
 * ispell config
 :PROPERTIES:
@@ -871,17 +884,6 @@ mistake. I'll simply have to be more careful.
 #+begin_src elisp
 (define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
 (global-set-key (kbd "\C-cr") 'ispell-region)
-#+end_src
-
-* roam
-  :PROPERTIES:
-  :ID:       41e53852-03b8-4098-a190-287a30504cfc
-  :END:
-#+begin_src elisp
-;; ORG-ROAM
-(setq org-roam-directory "~/auxRoam")
-(add-hook 'after-init-hook 'org-roam-mode)
-(require 'org-roam-protocol)
 #+end_src
 
 * start week on monday

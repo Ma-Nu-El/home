@@ -65,9 +65,11 @@
 #+begin_src elisp
 :completion
 company           ; the ultimate code completion backend
-ivy (+fuzzy)              ; a search engine for love and life
+(ivy +fuzzy)              ; a search engine for love and life
 #+end_src
 - https://www.reddit.com/r/emacs/comments/ga8qtd/noob_here_doom_emacs_projectile_find_file/
+
+;; ivy (+fuzzy)              ; a search engine for love and life
 
 ;;helm              ; the *other* search engine for love and life
 ;;ido               ; the other *other* search engine...
@@ -82,7 +84,9 @@ ivy (+fuzzy)              ; a search engine for love and life
 doom              ; what makes DOOM look the way it does
 doom-dashboard    ; a nifty splash screen for Emacs
 doom-quit         ; DOOM quit-message prompts when you quit Emacs
+#+end_src
 fill-column       ; a `fill-column' indicator
+#+begin_src elisp
 hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
 (modeline +light)          ; snazzy, Atom-inspired modeline, plus API
 #+end_src
@@ -119,9 +123,12 @@ vc-gutter         ; vcs diff in the fringe
 :PROPERTIES:
 :ID:       ae18815c-6111-42ef-8d99-6ab59d8ee433
 :END:
+evil ; come to the dark side, we have cookies
 #+begin_src elisp
 :editor
 (evil +everywhere); come to the dark side, we have cookies
+#+end_src
+#+begin_src elisp
 file-templates    ; auto-snippets for empty files
 fold              ; (nigh) universal code folding
 snippets          ; my elves. They type so I don't have to
@@ -276,7 +283,7 @@ markdown          ; writing docs for people to ignore
 ;;nix               ; I hereby declare "nix geht mehr!"
 ;;ocaml             ; an objective camel
 #+begin_src elisp
-(org +roam +gnuplot +jupyter +brain) ; organize your plain life in plain text
+(org +roam2 +gnuplot +jupyter +brain +present +pandoc) ; organize your plain life in plain text
 #+end_src
 ;;perl              ; write code no one else can comprehend
 ;;php               ; perl's insecure younger brother

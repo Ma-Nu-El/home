@@ -4,13 +4,13 @@
 
 :completion
 company           ; the ultimate code completion backend
-ivy (+fuzzy)              ; a search engine for love and life
+(ivy +fuzzy)              ; a search engine for love and life
 
 :ui
 doom              ; what makes DOOM look the way it does
 doom-dashboard    ; a nifty splash screen for Emacs
 doom-quit         ; DOOM quit-message prompts when you quit Emacs
-fill-column       ; a `fill-column' indicator
+
 hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
 (modeline +light)          ; snazzy, Atom-inspired modeline, plus API
 
@@ -26,6 +26,7 @@ vc-gutter         ; vcs diff in the fringe
 
 :editor
 (evil +everywhere); come to the dark side, we have cookies
+
 file-templates    ; auto-snippets for empty files
 fold              ; (nigh) universal code folding
 snippets          ; my elves. They type so I don't have to
@@ -64,7 +65,7 @@ ledger            ; an accounting system in Emacs
 
 markdown          ; writing docs for people to ignore
 
-(org +roam +gnuplot +jupyter +brain) ; organize your plain life in plain text
+(org +roam2 +gnuplot +jupyter +brain +present +pandoc) ; organize your plain life in plain text
 
 plantuml          ; diagrams for confusing people more
 

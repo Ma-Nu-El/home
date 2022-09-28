@@ -8,7 +8,4 @@
            )
   )
 
-(package! org-contrib
-  :recipe (:host github
-           :repo "emacsmirror/org-contrib")
-  )
+(package! ob-ledger :recipe (:local-repo "lisp/ob-ledger"))

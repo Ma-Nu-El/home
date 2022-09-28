@@ -187,16 +187,15 @@
 
 (require 'org-depend)
 
+;; ORG-ROAM
+(setq org-roam-directory "~/auxRoam")
+(require 'org-roam-protocol)
+
 )
 ;; END AFTER ORG
 
 (define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
 (global-set-key (kbd "\C-cr") 'ispell-region)
-
-;; ORG-ROAM
-(setq org-roam-directory "~/auxRoam")
-(add-hook 'after-init-hook 'org-roam-mode)
-(require 'org-roam-protocol)
 
 (setq calendar-week-start-day 1)
 

@@ -10,6 +10,7 @@
 - [[#org-sidebar][org-sidebar]]
 - [[#org-contrib][org-contrib]]
 - [[#org-depend][org-depend]]
+- [[#ledger-ob-ledger][ledger: ob-ledger]]
 
 * shebang
 :PROPERTIES:
@@ -114,7 +115,6 @@ job --- more intuitive, DWIM vibe.
 
 Still, good promise. But not for me right now.
 
-
 * org-contrib
 - [2021-09-30 Thu 17:22]
 - Tried to update Doom and during cloning of org-contrib install crashed.
@@ -142,3 +142,8 @@ This seemed to do the work.
 ,#+end_src
 
 Contained in [[https://github.com/emacsmirror/org-contrib][org-contrib]].
+* ledger: ob-ledger
+
+#+begin_src elisp
+(package! ob-ledger :recipe (:local-repo "lisp/ob-ledger"))
+#+end_src
