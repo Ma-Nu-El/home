@@ -83,7 +83,7 @@ alias aux='~/org/auxRoam'
 # quick editor
 alias v='vim'
 alias e='emacs -nw' # opens new instance of emacs in the terminal: no GUI
-alias ee='cd ~ && emacs -nw' # same but from home directory
+alias ee='clear && cd ~ && emacs -nw' # same but from home directory
 alias ed='emacs --daemon' # creates default emacs server named 'server'
 alias ec='emacsclient -t' # attach to the default emacs server
 alias edn='emacs-daemon-new' # creates a custom-named emacs server
