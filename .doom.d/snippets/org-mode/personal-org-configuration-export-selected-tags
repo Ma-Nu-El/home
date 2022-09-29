@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: personal-org-export-configuration
-# key: personal-org-export-configuration
+# name: personal-org-configuration-export-selected-tags
+# key: personal-org-configuration-export-selected-tags
 # --
 :EXPORT_CONFIGURATION:
 # 'export' tagged headings are exported by default.

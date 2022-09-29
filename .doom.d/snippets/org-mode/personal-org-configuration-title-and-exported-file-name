@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: personal-org-configuration-title-and-exported-file-name
+# key: personal-org-configuration-title-and-exported-file-name
+# --
+#+TITLE: ${1:  title the exported document}
+#+EXPORT_FILE_NAME: ${2: ./export/name_of_the_exported_file}

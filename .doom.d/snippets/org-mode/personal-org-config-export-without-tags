@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: personal-org-config-export-without-tags
-# key: personal-org-config-export-without-tags
-# --
-$2#+OPTIONS: tags:${1: 'nil' or 't'}

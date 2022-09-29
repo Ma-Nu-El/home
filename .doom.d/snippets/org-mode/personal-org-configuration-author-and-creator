@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: personal-org-configuration-author-and-creator
+# key: personal-org-configuration-author-and-creator
+# --
+#+AUTHOR: ${1:  the author of the content of the document}
+#+CREATOR: ${2: entity responsible for output generation}
