@@ -7,7 +7,7 @@ ${0:}
 #+LANGUAGE: es
 #+LATEX_HEADER:\usepackage[spanish]{babel}
 :END:
-# somewhere at beggining of file
+# somewhere at beginning of file
 
 # at the very end of file
 * Local Variables :noexport:
