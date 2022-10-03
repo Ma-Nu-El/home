@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: personal-org-configuration-session
+# key: personal-org-configuration-session
+# --
+$4
+:SESSION_CONFIGURATION_$1:
+#+PROPERTY: header-args:${1: language} :session ${2: session name} :tangle ./tangle/${3: tangled file}
+:END:
