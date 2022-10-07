@@ -11,6 +11,7 @@
 - [[#org-contrib][org-contrib]]
 - [[#org-depend][org-depend]]
 - [[#ledger-ob-ledger][ledger: ob-ledger]]
+- [[#org-roam-bibtex][org-roam-bibtex]]
 
 * shebang
 :PROPERTIES:
@@ -147,3 +148,12 @@ Contained in [[https://github.com/emacsmirror/org-contrib][org-contrib]].
 #+begin_src elisp
 (package! ob-ledger :recipe (:local-repo "lisp/ob-ledger"))
 #+end_src
+
+* org-roam-bibtex
+- [2022-10-06 Thu 21:04]
+- [[https://github.com/org-roam/org-roam-bibtex][GitHub - org-roam/org-roam-bibtex: Org Roam integration with bibliography management software]]
+
+,#+begin_src elisp
+;; (package! org-roam-bibtex
+;;   :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+,#+end_src

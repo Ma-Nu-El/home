@@ -43,7 +43,8 @@
   - [[#org-fontify-quote-and-verse-blocks-disabled][org fontify quote and verse blocks [DISABLED]]]
   - [[#prevent-invisible-edits-commented-out][prevent invisible edits [Commented out]]]
   - [[#org-depend][org-depend]]
-- [[#roam][roam]]
+  - [[#roam][roam]]
+  - [[#org-roam-bibtex][org-roam-bibtex]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
@@ -180,8 +181,6 @@ available. You can either set `doom-theme' or manually load a theme with the
 #+end_src
 - Check the different themes
   + https://github.com/hlissner/emacs-doom-themes/tree/screenshots
-
-
 
 * org directory
 :PROPERTIES:
@@ -580,7 +579,6 @@ See also:
 - https://emacs.stackexchange.com/questions/57447/org-babel-loads-different-python
 
 
-
 #+begin_src elisp
 (setq org-babel-python-command "python3")
 #+end_src
@@ -833,19 +831,33 @@ mistake. I'll simply have to be more careful.
 #+begin_src elisp
 (require 'org-depend)
 #+end_src
-
-* roam
-  :PROPERTIES:
+** roam
+:PROPERTIES:
   :ID:       41e53852-03b8-4098-a190-287a30504cfc
   :END:
 #+begin_src elisp
 ;; ORG-ROAM
 (setq org-roam-directory "~/auxRoam")
-(require 'org-roam-protocol)
 #+end_src
+(setq org-roam-directory "~/auxRoam")
+(require 'org-roam-protocol)
 ;; (add-hook 'after-init-hook 'org-roam-mode)
 - No longer required in org-roam-v2
   - https://github.com/magit/magit/issues/3741
+- [2022-10-03 Mon 21:49]
+- Disabled all =org-roam= functionality as
+  I updated to =roam= version 2 and some things
+  broke and don't have time to fix them.
+
+** org-roam-bibtex
+- [2022-10-06 Thu 22:11]
+
+,#+begin_src elisp
+;; (use-package! org-roam-bibtex
+;;   :after org-roam
+;;   :config
+;;   (require 'org-ref))
+,#+end_src
 
 * end org section
 :PROPERTIES:

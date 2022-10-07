@@ -189,7 +189,6 @@
 
 ;; ORG-ROAM
 (setq org-roam-directory "~/auxRoam")
-(require 'org-roam-protocol)
 
 )
 ;; END AFTER ORG

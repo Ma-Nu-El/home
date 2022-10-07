@@ -65,7 +65,9 @@ ledger            ; an accounting system in Emacs
 
 markdown          ; writing docs for people to ignore
 
-(org +roam2 +gnuplot +jupyter +brain +present +pandoc) ; organize your plain life in plain text
+(org +roam2 +gnuplot) ; organize your plain life in plain text
+
+(php +lsp)               ; perl's insecure younger brother
 
 plantuml          ; diagrams for confusing people more
 
