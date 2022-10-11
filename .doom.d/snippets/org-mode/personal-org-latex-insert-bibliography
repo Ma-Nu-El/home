@@ -2,6 +2,5 @@
 # name: personal-org-latex-insert-bibliography
 # key: personal-org-latex-insert-bibliography
 # --
-
 \bibliographystyle{IEEEtran}
 \bibliography{ref.bib}
