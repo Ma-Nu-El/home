@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: personal-org-html-configuration-open-links-in-new-tab
+# key: personal-org-html-configuration-open-links-in-new-tab
+# --
+:ORG_HTML_NEW_TAB:
+# Open links in new tab, filewise.
+#+HTML_HEAD: <base target="_blank">
+:END:
