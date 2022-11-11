@@ -283,7 +283,7 @@ markdown          ; writing docs for people to ignore
 ;;nix               ; I hereby declare "nix geht mehr!"
 ;;ocaml             ; an objective camel
 #+begin_src elisp
-(org +roam2 +gnuplot) ; organize your plain life in plain text
+(org +gnuplot +pomodoro) ; organize your plain life in plain text
 #+end_src
 ;;perl              ; write code no one else can comprehend
 

@@ -10,7 +10,7 @@
 - [[#org-sidebar][org-sidebar]]
 - [[#org-contrib][org-contrib]]
 - [[#org-depend][org-depend]]
-- [[#ledger-ob-ledger][ledger: ob-ledger]]
+- [[#ledger][ledger]]
 - [[#org-roam-bibtex][org-roam-bibtex]]
 
 * shebang
@@ -143,10 +143,10 @@ This seemed to do the work.
 ,#+end_src
 
 Contained in [[https://github.com/emacsmirror/org-contrib][org-contrib]].
-* ledger: ob-ledger
+* ledger
 
 #+begin_src elisp
-(package! ob-ledger :recipe (:local-repo "lisp/ob-ledger"))
+;;(package! ob-ledger :recipe (:local-repo "lisp/ob-ledger"))
 #+end_src
 
 * org-roam-bibtex
