@@ -2,4 +2,4 @@
 # name: personal-org-include-org-file
 # key: personal-org-include-org-file
 # --
-#+INCLUDE:"${1:/insert/path/to/org/file}::${2: *header name or #custom id}"
+#+INCLUDE: "${1:/insert/path/to/org/file}::${2: *header name or #custom id}"
