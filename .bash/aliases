@@ -135,6 +135,7 @@ alias timer='~/bin/timer'
 alias auxLock='~/bin/auxRoam lock'
 alias auxUnlock='~/bin/auxRoam unlock'
 alias RR='R --quiet --no-save'
+alias RRR='R --quiet --no-save -e'
 # fresh install
 alias install_doom='git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d && ~/.emacs.d/bin/doom install'
 alias install_tmux_plugins='git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm' # install packages on fresh OS
