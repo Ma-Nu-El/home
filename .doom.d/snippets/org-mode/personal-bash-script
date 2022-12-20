@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: personal-bash-script
+# key: personal-bash-script
+# condition: t
+# --
+#+begin_src bash :tangle ${1:  insert filename} :shebang "#!/usr/bin/env bash" :tangle-mode (identity #o755)
+set -o pipefail
+
+${2:  body}
+#+end_src
