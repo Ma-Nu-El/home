@@ -28,6 +28,7 @@
   - [[#habit-graph-enabling][habit graph enabling]]
   - [[#habit-graph-settings][habit graph settings]]
   - [[#keywords][keywords]]
+  - [[#latex-custom-classes][latex custom classes]]
   - [[#latex-export-table-of-contents-settings][latex export table of contents settings]]
   - [[#latex-other-languages][latex other languages]]
   - [[#babel-python-3][babel python 3]]
@@ -511,6 +512,44 @@ when checking agenda remotely.
 - https://orgmode.org/manual/Tracking-TODO-state-changes.html
 - OrgMode E03S01: Automatic logging of status changes:
   + https://www.youtube.com/watch?v=R4QSTDco_w8
+** latex custom classes
+
+- [[https://ctan.org/tex-archive/macros/latex/contrib/extsizes][CTAN: /tex-archive/macros/latex/contrib/extsizes]]
+- [[https://emacs.stackexchange.com/questions/29726/org-mode-different-latex-document-class][org export - org-mode different latex document class - Emacs Stack Exchange]]
+- [[https://github.com/djnavarro/rbook/issues/41][Any clue how to source it with 12pt font size? · Issue #41 · djnavarro/rbook · GitHub]]
+
+
+: \documentclass[letter,twoside,14pt,openright]{extbook}
+
+
+
+#+begin_src elisp
+(add-to-list 'org-latex-classes
+             '("extbook"
+               "\\documentclass{extbook}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(add-to-list 'org-latex-classes
+             '("extarticle"
+               "\\documentclass{extarticle}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(add-to-list 'org-latex-classes
+             '("extreport"
+               "\\documentclass{extreport}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+#+end_src
+
 ** latex export table of contents settings
 :PROPERTIES:
 :ID:       994f0f4d-3184-445a-b079-2a1c894dbcaf
