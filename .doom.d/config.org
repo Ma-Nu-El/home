@@ -27,7 +27,7 @@
   - [[#agenda-view-settings][agenda view settings]]
   - [[#habit-graph-enabling][habit graph enabling]]
   - [[#habit-graph-settings][habit graph settings]]
-  - [[#keywords][keywords]]
+  - [[#todo-keywords]['TODO' keywords]]
   - [[#latex-custom-classes][latex custom classes]]
   - [[#latex-export-table-of-contents-settings][latex export table of contents settings]]
   - [[#latex-other-languages][latex other languages]]
@@ -495,7 +495,7 @@ when checking agenda remotely.
 #+end_src
 
 - https://orgmode.org/manual/Tracking-your-habits.html
-** todo keywords
+** 'TODO' keywords
 :PROPERTIES:
 :ID:       55c05291-82b3-443f-93ee-68a68b38d3de
 :END:
