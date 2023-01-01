@@ -517,13 +517,14 @@ when checking agenda remotely.
 - [[https://ctan.org/tex-archive/macros/latex/contrib/extsizes][CTAN: /tex-archive/macros/latex/contrib/extsizes]]
 - [[https://emacs.stackexchange.com/questions/29726/org-mode-different-latex-document-class][org export - org-mode different latex document class - Emacs Stack Exchange]]
 - [[https://github.com/djnavarro/rbook/issues/41][Any clue how to source it with 12pt font size? · Issue #41 · djnavarro/rbook · GitHub]]
+- [[https://superuser.com/questions/896741/how-do-i-configure-org-latex-classes-in-emacs][How do I Configure 'org-latex-classes in .emacs? - Super User]]
 
 
 : \documentclass[letter,twoside,14pt,openright]{extbook}
 
-
-
+(require 'ox-latex)
 #+begin_src elisp
+(with-eval-after-load 'ox-latex
 (add-to-list 'org-latex-classes
              '("extbook"
                "\\documentclass{extbook}"
@@ -548,6 +549,7 @@ when checking agenda remotely.
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+)
 #+end_src
 
 ** latex export table of contents settings

@@ -161,6 +161,7 @@
       )
 (setq org-log-done t)
 
+(with-eval-after-load 'ox-latex
 (add-to-list 'org-latex-classes
              '("extbook"
                "\\documentclass{extbook}"
@@ -185,6 +186,7 @@
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+)
 
 (setq org-babel-python-command "python3")
 
