@@ -518,6 +518,7 @@ when checking agenda remotely.
 - [[https://emacs.stackexchange.com/questions/29726/org-mode-different-latex-document-class][org export - org-mode different latex document class - Emacs Stack Exchange]]
 - [[https://github.com/djnavarro/rbook/issues/41][Any clue how to source it with 12pt font size? · Issue #41 · djnavarro/rbook · GitHub]]
 - [[https://superuser.com/questions/896741/how-do-i-configure-org-latex-classes-in-emacs][How do I Configure 'org-latex-classes in .emacs? - Super User]]
+- [[https://lists.gnu.org/archive/html/emacs-orgmode/2012-10/msg00435.html][Re: [O] #+LATEX_CLASS: IEEEtran]]
 
 
 : \documentclass[letter,twoside,14pt,openright]{extbook}
@@ -544,6 +545,14 @@ when checking agenda remotely.
 (add-to-list 'org-latex-classes
              '("extreport"
                "\\documentclass{extreport}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(add-to-list 'org-latex-classes
+             '("IEEEtran"
+               "\\documentclass{IEEEtran}"
                ("\\section{%s}" . "\\section*{%s}")
                ("\\subsection{%s}" . "\\subsection*{%s}")
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
