@@ -139,3 +139,12 @@ weather(){
 		wget -qO- wttr.in/"$1"?Fm | less -R
 	fi
 }
+
+cheat (){
+	if [[ -z "$1"  ]]
+	then
+                curl cheat.sh | less --RAW-CONTROL-CHARS
+	else
+                curl cheat.sh/"$1" | less --RAW-CONTROL-CHARS
+	fi
+}

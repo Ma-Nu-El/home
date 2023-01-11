@@ -106,6 +106,7 @@ alias match='matchfilename'
 alias x='command -v'
 alias X='command -V'
 alias les='less --RAW-CONTROL-CHARS'
+alias cht='cheat' # defined in ~/.bash/functions
 
 ## alias R="ranger" # commented out: messes with R called from within orgmode.
 
