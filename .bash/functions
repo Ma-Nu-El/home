@@ -148,3 +148,12 @@ cheat (){
                 curl cheat.sh/"$1" | less --RAW-CONTROL-CHARS
 	fi
 }
+
+red (){
+	if [[ -z "$1"  ]]
+	then
+                redshift -x
+	else
+                redshift -O "$1" 
+	fi
+}
