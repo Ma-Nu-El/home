@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: personal-org-export-without-todo-keyword
+# key: personal-org-export-without-todo-keyword
+# --
+#+OPTIONS: todo:nil
