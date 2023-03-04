@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 ### git ###
+
 alias config='/usr/bin/git --git-dir="$HOME"/.cfg/ --work-tree="$HOME"'
+
 ### home bare repo ###
+
 alias home='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME"'
-alias he="/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" status" # same idea as "te" 
+alias he='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" status' # same idea as "te"
 alias hf='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" diff'
 alias hgraph='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" log --all --decorate --oneline --graph'
 alias htree='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" ls-tree --name-only master'
@@ -20,7 +23,9 @@ alias hbranch='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" branch'
 alias hch='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" checkout'
 alias hchm='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" checkout master'
 alias hrestore='/usr/bin/git --git-dir="$HOME"/.home/ --work-tree="$HOME" restore'
+
 # pure git #
+
 alias ginit='git init'
 alias gadd='git add'
 alias te='git status'
@@ -41,7 +46,9 @@ alias guntrack='git rm -r --cached" # untrack files currently tracked by git, '-
 alias gamend='git commit --amend'
 alias grestore='git restore'
 alias gsm='git submodule | cut -d " " -f3'
+
 # shell interaction
+
 alias c='clear'
 alias cnd='clear &&'
 alias p='pwd'
@@ -56,11 +63,15 @@ alias eola='clear && pwd && echo '-----' && ls -1a' # was 'pa', but was the most
 alias hpa='cd ~ && clear && pwd && echo '-----' && ls'
 alias hpaa='cd ~ && clear && pwd && echo '-----' && ls -a'
 alias lagrep='ls -a | grep -i' # append your simple grep search, case insensitive
+
 # inbox
+
 alias i='/usr/bin/vi ~/org/inbox.org'
 alias ii='inbox fetch --clean >> *inbox.org'
 alias cati='cat ~/org/inbox.org'
+
 # quick navigation
+
 alias cdc='clear && cd ~ && pwd && echo -----'
 alias ...='cd ../../' # cd up 2 times
 alias ....='cd ../../../' # cd up 3 times
@@ -80,7 +91,9 @@ alias 4='~/Pictures'
 alias 5='~/Videos'
 alias 6='~/Music'
 alias aux='~/org/auxRoam'
+
 # quick editor
+
 alias v='vim'
 alias e='emacs -nw' # opens new instance of emacs in the terminal: no GUI
 alias ee='clear && cd ~ && emacs -nw' # same but from home directory
@@ -89,7 +102,9 @@ alias ec='emacsclient -t' # attach to the default emacs server
 alias edn='emacs-daemon-new' # creates a custom-named emacs server
 alias els='ls -1 /tmp/emacs${UID}' # get list of running emacs servers
 alias ecs='emacsclient -t -s' # attach to a custom-named emacs server
+
 # tmux
+
 alias t='tmux'
 alias tn='tmux new-session' # create session with default name
 alias tns='tmux new -s' # append your session name to be created
@@ -107,6 +122,8 @@ alias x='command -v'
 alias X='command -V'
 alias les='less --RAW-CONTROL-CHARS'
 alias cht='cheat' # defined in ~/.bash/functions
+alias jj='jobs -l'
+alias kk='kill -9'
 
 ## alias R="ranger" # commented out: messes with R called from within orgmode.
 
