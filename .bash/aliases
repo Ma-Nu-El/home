@@ -64,12 +64,6 @@ alias hpa='cd ~ && clear && pwd && echo '-----' && ls'
 alias hpaa='cd ~ && clear && pwd && echo '-----' && ls -a'
 alias lagrep='ls -a | grep -i' # append your simple grep search, case insensitive
 
-# inbox
-
-alias i='/usr/bin/vi ~/org/inbox.org'
-alias ii='inbox fetch --clean >> *inbox.org'
-alias cati='cat ~/org/inbox.org'
-
 # quick navigation
 
 alias cdc='clear && cd ~ && pwd && echo -----'
@@ -79,10 +73,6 @@ alias .....='cd ../../../../' # cd up 4 times
 alias ......='cd ../../../../../' # cd up 5 times
 alias .......='cd ../../../../../' # cd up 6 times
 alias ........='cd ../../../../../' # cd up 7 times
-alias uni='~/org/uni'
-alias bin='~/bin'
-# alias drive="~/myDrive" # aliased to 'dr'
-alias dr='drive' # check ~/.bash/functions::drive()
 alias E='exit'
 alias 1='~/Desktop'
 alias 2='~/Downloads'
@@ -90,7 +80,7 @@ alias 3='~/Documents'
 alias 4='~/Pictures'
 alias 5='~/Videos'
 alias 6='~/Music'
-alias aux='~/org/auxRoam'
+alias 11='~/FilenSync' # cloud directory
 
 # quick editor
 
@@ -114,6 +104,7 @@ alias ta='tmux attach-session' # attach to last session
 alias tas='tmux attach-session -t' # append your session name to be attached to
 
 #alias tpls="ls ~/.tmuxp/"
+
 ## misc aliases
 
 alias hh='echo 'https://github.com/Ma-Nu-El/home''
@@ -159,8 +150,10 @@ alias auxLock='~/bin/auxRoam lock'
 alias auxUnlock='~/bin/auxRoam unlock'
 alias RR='R --quiet --no-save'
 alias RRR='R --quiet --no-save -e'
+alias cat_public_ssh_key='clear && cat ~/.ssh/id_rsa.pub'
+alias qr='qrencode'
 
 ### fresh install
 
-alias install_doom='git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d && ~/.emacs.d/bin/doom install'
+alias install_doom_emacs='git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d && ~/.emacs.d/bin/doom install'
 alias install_tmux_plugins='git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm' # install packages on fresh OS
