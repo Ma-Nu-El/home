@@ -36,7 +36,7 @@
   - [[#log][log]]
   - [[#how-many-todos-left-info-in-heading][how many todos left info in heading]]
   - [[#use-org-id-to-store-links-when-appropriate][use org-id to store links when appropriate]]
-  - [[#open-links-with-default-application][open links with default application]]
+  - [[#org-file-apps-open-links-with-default-application][org-file-apps: open links with default application]]
   - [[#org-clock][org clock]]
   - [[#global-exclude-tags][global exclude tags]]
   - [[#disable-crypt-tag-inheritance][disable crypt tag inheritance]]
@@ -46,6 +46,8 @@
   - [[#org-depend][org-depend]]
   - [[#roam][roam]]
   - [[#org-roam-bibtex][org-roam-bibtex]]
+  - [[#org-capture][org-capture]]
+  - [[#org-ref][org-ref]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
@@ -686,7 +688,7 @@ something about it.
 (setq org-id-link-to-org-use-id t)
 #+end_src
 
-** open links with default application
+** org-file-apps: open links with default application
 :PROPERTIES:
 :ID:       c9e0a789-0d20-4dfa-b457-ff5a9ed27698
 :END:
@@ -698,6 +700,12 @@ something about it.
         ("\\.pdf\\'" . default)
         ("\\.jpg\\'" . default)
         ("\\.png\\'" . default)
+        ("\\.pptx\\'" . default)
+        ;; Libreoffice (ODF) extensions
+        ("\\.odt\\'" . default) ;; text
+        ("\\.ods\\'" . default) ;; spreadsheet
+        ("\\.odp\\'" . default) ;; presentation
+        ("\\.odg\\'" . default) ;; graphics
         )
       )
 #+end_src
@@ -908,6 +916,63 @@ mistake. I'll simply have to be more careful.
 ;;   :config
 ;;   (require 'org-ref))
 ,#+end_src
+
+** org-capture
+- [2023-02-19 Sun 23:52]
+- [[https://orgmode.org/manual/Capture.html][Capture (The Org Manual)]]
+- [[https://howardism.org/Technical/Emacs/capturing-intro.html][Org Capturing Introduction]]
+- [[https://takeonrules.com/2022/09/06/org-mode-capture-templates-and-time-tracking/][Org Mode Capture Templates and Time Tracking // Take on Rules]]
+- [[https://www.reddit.com/r/emacs/comments/7zqc7b/share_your_org_capture_templates/][Share your Org Capture Templates! : emacs]]
+
+
+#+begin_src elisp
+(setq org-default-notes-file (concat org-directory "default_notes.org"))
+#+end_src
+
+: (setq org-capture-templates
+:       '(("t" "Task Entry" entry
+:          (file org-default-inbox-file)
+:          "* %?\n:PROPERTIES:\n:CREATED:%U\n:END:\n%i\n"
+:          :kill-buffer t)
+:        ))
+
+
+- [[https://orgmode.org/manual/Template-expansion.html][Template expansion (The Org Manual)]]
+
+
+#+begin_src elisp
+(setq org-capture-templates
+     '(
+      ("w" "Work" entry (file "~/FilenSync/org/refile.org")
+         "* %u %?\n# - %U\n\n" :clock-in nil)
+      ("p" "Personal" entry (file "~/auxRoam/refile.org")
+         "* %u %?\n# - %U\n\n" :clock-in nil)
+))
+#+end_src
+
+
+Use with beorg:
+
+#+begin_quote
+I use Beorg on mobile to capture stuff on my phone. And for funsies I set up my dumb Alexa speaker, and also Siri, to take TODOs and notes and save them to a "RobotTODOS.txt" file in Dropbox.
+#+end_quote
+
+** org-ref
+- [2023-02-24 Fri 01:01]
+
+
+#+begin_src elisp
+(use-package! org-ref
+    :after org
+    :commands
+    (org-ref-cite-hydra/body
+     org-ref-bibtex-hydra/body)
+    :init
+    ; code to run before loading org-ref
+    :config
+    (require 'org-ref)
+    )
+#+end_src
 
 * end org section
 :PROPERTIES:
