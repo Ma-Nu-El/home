@@ -120,7 +120,7 @@ alias kk='kill -9'
 
 alias V='sxiv -to'
 alias ptt='tree -C | less -R'
-alias O='xdg-open &>/dev/null'
+alias O='~/bin/open_and_open_with'
 alias openwith='mimeopen -a'
 alias chmodx='chmod +x'
 alias now='date && cal'
