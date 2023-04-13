@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+usage() {
+cat <<EOF
+'open_and_open_with' usage:
+  general:
+    -h, --help     print this message
+    -o, --options  display open options
+EOF
+}
+
+if [[ "$1" == '-h' || "$1" == '--help' || "$1" == '-?' ]]; then
+    usage
+    exit 0
+fi
+
+function linux_case() {
+        xdg-open &>/dev/null "$1"
+}
+
+function darwin_case() {
+        open "$1"
+}
+
+os=$("$HOME"/bin/detectos)
+
+case $os in
+    linux)
+        linux_case "$1" ;;
+    darwin)
+        darwin_case "$1" ;;
+    *)
+        printf "Not either linux nor darwin\n"
+        exit 1;;
+esac
+
