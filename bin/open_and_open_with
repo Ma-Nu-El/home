@@ -6,12 +6,18 @@ usage() {
 cat <<EOF
 'open_and_open_with' usage:
   general:
-    -h, --help     print this message
-    -o, --options  display open options
+    -h, --help, -?      print this message
+
+ if OS is linux it will invoke
+   xdg-open &>/dev/null YOURINPUT
+ if OS is macOS it will invoke
+   open                 YOURINPUT
+
+  See manuals of each if you want to learn more.
 EOF
 }
 
-if [[ "$1" == '-h' || "$1" == '--help' || "$1" == '-?' ]]; then
+if [[ "$1" == '-h' || "$1" == '--help' || "$1" == '-?' || -z "$1" ]]; then
     usage
     exit 0
 fi
