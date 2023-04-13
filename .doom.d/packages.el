@@ -8,4 +8,6 @@
            )
   )
 
-;;(package! ob-ledger :recipe (:local-repo "lisp/ob-ledger"))
+(package! ob-ledger :recipe (:local-repo "lisp/ob-ledger"))
+
+(package! org-ref)
