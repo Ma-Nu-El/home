@@ -114,7 +114,6 @@ alias X='command -V'
 alias les='less --RAW-CONTROL-CHARS'
 alias cht='cheat' # defined in ~/.bash/functions
 alias jj='jobs -l'
-alias kk='kill -9'
 
 ## alias R="ranger" # commented out: messes with R called from within orgmode.
 
