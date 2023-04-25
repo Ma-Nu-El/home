@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
-# Copyright 2020 Nicolas P. Rougier - BSD License
+# Manuel Fuica Morales
+# 2023
+# Built on top of work of
+# # Copyright 2020 Nicolas P. Rougier - BSD License
 #
-# from reading org-mode emacs files, display a formated calendar in the
-# terminal showing holidays and busy days and upcomiing events. 
+# # from reading org-mode emacs files, display a formated calendar in the
+# # terminal showing holidays and busy days and upcomiing events.
 
 import holidays # https://pypi.org/project/holidays/
 import calendar
@@ -12,16 +15,19 @@ import orgparse # https://pypi.org/project/orgparse
 # Enter user information
 user_home="/Users/manuelfuica"
 agenda_file="auxRoam/2023/agenda_2023.org"
+current_year=2023
+# user_country="Chile"
 
 # Country holidays + Personal holidays
 # Import holidays from your country
 # and your own holidays.
 
+# class PersonalHolidays(holidays.user_country):
 class PersonalHolidays(holidays.Chile):
      def _populate(self, year):
          holidays.Chile._populate(self, year)
-         self[datetime.date(2023, 5, 22)] = "RTT"
-         self[datetime.date(2023, 7, 13)] = "RTT"
+         # self[datetime.date(2023, 5, 22)] = "RTT"
+         # self[datetime.date(2023, 7, 13)] = "RTT"
 personal_holidays = PersonalHolidays()
 
 # Colors for displaying things
@@ -167,7 +173,7 @@ n = 4
 lines = []
 print("\033[2J;\033[H") # clear terminal
 for month in range(1, 13, n):
-    months = [format_month(2020, month+i) for i in range(n)]
+    months = [format_month(current_year, month+i) for i in range(n)]
     for i in range(8):
         line = "" 
         for j in range(n):
