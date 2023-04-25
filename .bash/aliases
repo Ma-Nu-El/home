@@ -158,3 +158,6 @@ alias qr='qrencode'
 
 alias install_doom_emacs='git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d && ~/.emacs.d/bin/doom install'
 alias install_tmux_plugins='git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm' # install packages on fresh OS
+
+### Docker
+alias dk='docker'
