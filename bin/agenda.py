@@ -4,8 +4,8 @@
 # Built on top of work of
 # # Copyright 2020 Nicolas P. Rougier - BSD License
 #
-# # from reading org-mode emacs files, display a formated calendar in the
-# # terminal showing holidays and busy days and upcomiing events.
+# # from reading org-mode Emacs files, display a formatted calendar in the
+# # terminal showing holidays and busy days and upcoming events.
 
 import holidays # https://pypi.org/project/holidays/
 import calendar
