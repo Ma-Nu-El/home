@@ -1,5 +1,6 @@
 # -*- mode: snippet -*-
-# name: detectos_and_do
+# name: personal-detect-os-and-do
+# key: personal-detect-os-and-do
 # --
 
 usage() {
@@ -15,7 +16,7 @@ cat <<EOF
 EOF
 }
 
-if [[ "$1" == '-h' || "$1" == '--help' || "$1" == '-?' || -z "$1" ]]; then
+if [[ \$1 == '-h' || \$1 == '--help' || \$1 == '-?' || -z \$1 ]]; then
     usage
     exit 0
 fi
@@ -32,9 +33,9 @@ os=$("$HOME"/bin/detectos)
 
 case $os in
     linux)
-        linux_case "$1" ;;
+        linux_case ;;
     darwin)
-        darwin_case "$1" ;;
+        darwin_case ;;
     *)
         printf "Not either linux nor darwin\n"
         exit 1;;

@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: if_no_input_then
-# --
-if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]; then
-    ${2: body}
-    exit 0
-fi

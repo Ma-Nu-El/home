@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: personal-if-no-input-then
+# key: personal-if-no-input-then
+# --
+if [[ \$1 == '-h' || \$1 == '--help' || \$1 == '-?' || \$1 == 'help' ]]; then
+    ${1: body}
+    exit 0
+fi

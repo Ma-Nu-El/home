@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: python-float-to-time
-# key:  float-to-time
+# name: personal-pytho-float-to-time
+# key: personal-pytho-float-to-time
 # --
 
 time = float(input)
