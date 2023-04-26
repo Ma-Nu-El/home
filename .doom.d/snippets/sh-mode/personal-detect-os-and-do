@@ -29,7 +29,7 @@ function darwin_case() {
        # body
 }
 
-os=$("$HOME"/bin/detectos)
+os=$("$HOME"/bin/detect_os)
 
 case $os in
     linux)
