@@ -30,7 +30,7 @@ function darwin_case() {
         open "$1"
 }
 
-os=$("$HOME"/bin/detectos)
+os=$("$HOME"/bin/detect_os)
 
 case $os in
     linux)

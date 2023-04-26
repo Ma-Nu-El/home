@@ -22,7 +22,7 @@ function darwin_case() {
     ~/bin/macos_start_script
 }
 
-os=$("$HOME"/bin/detectos)
+os=$("$HOME"/bin/detect_os)
 
 case $os in
     linux)
