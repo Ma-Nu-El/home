@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: personal-org-mute-time-stamp
+# key: personal-org-mute-time-stamp
+# --
+# - `(format-time-string "[%Y-%m-%d %a %H:%M]")`
