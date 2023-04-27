@@ -241,17 +241,6 @@
          "* %u %?\n# - %U\n\n" :clock-in nil)
 ))
 
-(use-package! org-ref
-    :after org
-    :commands
-    (org-ref-cite-hydra/body
-     org-ref-bibtex-hydra/body)
-    :init
-    ; code to run before loading org-ref
-    :config
-    (require 'org-ref)
-    )
-
 )
 ;; END AFTER ORG
 

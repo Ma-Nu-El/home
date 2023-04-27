@@ -959,20 +959,24 @@ I use Beorg on mobile to capture stuff on my phone. And for funsies I set up my 
 
 ** org-ref
 - [2023-02-24 Fri 01:01]
+# - [2023-04-27 Thu 16:55]
+# - Using org-cite
 
 
-#+begin_src elisp
+#+begin_example elisp
 (use-package! org-ref
     :after org
     :commands
     (org-ref-cite-hydra/body
      org-ref-bibtex-hydra/body)
+;;    :hook (`org-export-before-parsing-hook' 'org-ref-acronyms-before-parsing' `org-ref-glossary-before-parsing')
     :init
     ; code to run before loading org-ref
     :config
     (require 'org-ref)
-    )
-#+end_src
+    (add-hook 'org-export-before-parsing-hook 'org-ref-acronyms-before-parsing 'org-ref-glossary-before-parsing)
+)
+#+end_example
 
 * end org section
 :PROPERTIES:

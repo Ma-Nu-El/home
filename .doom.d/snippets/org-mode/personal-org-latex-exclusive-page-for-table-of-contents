@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: personal-org-latex-exclusive-page-for-table-of-contents
+# key: personal-org-latex-exclusive-page-for-table-of-contents
+# condition: t
+# --
+#+OPTIONS: toc:nil
+#+begin_export latex
+  \clearpage \tableofcontents \clearpage
+#+end_export
