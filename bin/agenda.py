@@ -2,19 +2,38 @@
 # Manuel Fuica Morales
 # 2023
 # Built on top of work of
+# -----------------------------------------------------
 # # Copyright 2020 Nicolas P. Rougier - BSD License
 #
 # # from reading org-mode Emacs files, display a formatted calendar in the
 # # terminal showing holidays and busy days and upcoming events.
+# -----------------------------------------------------
+#
+# How does it work currently:
+#   Deadlines show with an exclamation point
+#   Inactive timestamps shows as an assignment.
+#   Scheduled doesn't do anything.
+#
+#   The more tasks, the more red.
+#
+# Wanted:
+#   Deadline same behavior
+#   Inactives don't do anything
+#   Scheduled show as assignment.
+#   :holiday: tag shows green.
+#   - Holiday is just a day.
+#   :vacation: tag shows blue.
+#   - Vacation is a period.
 
-import holidays # https://pypi.org/project/holidays/
+import sys               # to read input
+import holidays
 import calendar
 import datetime
-import orgparse # https://pypi.org/project/orgparse
+import orgparse
 
 # Enter user information
 user_home="/Users/manuelfuica"
-agenda_file="auxRoam/2023/agenda_2023.org"
+agenda_file="/auxRoam/2023/agenda_2023.org"
 current_year=2023
 # user_country="Chile"
 
@@ -137,7 +156,7 @@ busydays = { i:0 for i in range(366+1) }
 deadlines = set()
 events = []
 
-for filename in [user_home + "/" + agenda_file]:
+for filename in [user_home + "/" + agenda_file]: # agenda_file can be a vector
     agenda = orgparse.load(filename)
     for node in agenda:
         if hasattr(node, "datelist") and node.datelist:
@@ -168,10 +187,13 @@ for filename in [user_home + "/" + agenda_file]:
 events.sort(key=lambda data: data[0])
 
 
+today = datetime.date.today()
+
 # Print agenda (3 months per line)
 n = 4
 lines = []
 print("\033[2J;\033[H") # clear terminal
+print("Today:", today)
 for month in range(1, 13, n):
     months = [format_month(current_year, month+i) for i in range(n)]
     for i in range(8):
@@ -185,7 +207,6 @@ for line in lines: print(" "+line)
 # Print details for upcoming events
 print("\033[1;30m Upcoming events (next 2 weeks):")
 print(" ───────────────────────────────")
-today = datetime.date.today()
 n = 0
 for start, stop, heading, deadline, tags in events:
     if today <= start < today+datetime.timedelta(days=28):
