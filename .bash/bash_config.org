@@ -9,8 +9,6 @@
 #+begin_src bash :tangle ./aliases :shebang "#!/usr/bin/env bash" :tangle-mode (identity #o755)
 ### git ###
 
-# test
-
 alias config='/usr/bin/git --git-dir="$HOME"/.cfg/ --work-tree="$HOME"'
 
 ### home bare repo ###
