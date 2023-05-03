@@ -48,6 +48,7 @@
   - [[#org-roam-bibtex][org-roam-bibtex]]
   - [[#org-capture][org-capture]]
   - [[#org-ref][org-ref]]
+  - [[#org-glossary][org-glossary]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
@@ -700,6 +701,7 @@ something about it.
         ("\\.pdf\\'" . default)
         ("\\.jpg\\'" . default)
         ("\\.png\\'" . default)
+        ("\\.svg\\'" . default)
         ("\\.pptx\\'" . default)
         ;; Libreoffice (ODF) extensions
         ("\\.odt\\'" . default) ;; text
@@ -960,10 +962,10 @@ I use Beorg on mobile to capture stuff on my phone. And for funsies I set up my 
 ** org-ref
 - [2023-02-24 Fri 01:01]
 # - [2023-04-27 Thu 16:55]
-# - Using org-cite
+# - Using org-glossary and org-cite
 
 
-#+begin_src elisp
+#+begin_example elisp
 (use-package! org-ref
     :after org
     :commands
@@ -975,6 +977,16 @@ I use Beorg on mobile to capture stuff on my phone. And for funsies I set up my 
     (require 'org-ref)
     (add-hook 'org-export-before-parsing-hook 'org-ref-acronyms-before-parsing 'org-ref-glossary-before-parsing)
 )
+#+end_example
+
+** org-glossary
+# - [2023-04-27 Thu 23:36]
+- [[https://github.com/tecosaur/org-glossary][GitHub - tecosaur/org-glossary: Glossary, Acronyms, and Index capability within Org]]
+
+
+#+begin_src emacs-lisp
+(use-package! org-glossary
+  :hook (org-mode . org-glossary-mode))
 #+end_src
 
 * end org section

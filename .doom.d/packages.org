@@ -13,6 +13,7 @@
 - [[#ledger][ledger]]
 - [[#org-roam-bibtex][org-roam-bibtex]]
 - [[#org-ref][org-ref]]
+- [[#org-glossary][org-glossary]]
 
 * shebang
 :PROPERTIES:
@@ -164,6 +165,16 @@ Contained in [[https://github.com/emacsmirror/org-contrib][org-contrib]].
 - [[https://github.com/doomemacs/doomemacs/issues/1573][[HOWTO] install org-ref in doom-emaxy way · Issue #1573 · doomemacs/doomemacs · GitHub]]
 
 
-#+begin_src elisp
+#+begin_example elisp
 (package! org-ref)
+#+end_example
+
+* org-glossary
+# - [2023-04-27 Thu 23:37]
+- [[https://github.com/tecosaur/org-glossary][GitHub - tecosaur/org-glossary: Glossary, Acronyms, and Index capability within Org]]
+
+
+#+begin_src emacs-lisp
+(package! org-glossary
+  :recipe (:host github :repo "tecosaur/org-glossary"))
 #+end_src
