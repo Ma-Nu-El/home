@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: personal-latex-stochastics-law-of-littles
+# key: personal-latex-stochastics-law-of-littles
+# --
+L = \lambda \cdot W
+${0:}

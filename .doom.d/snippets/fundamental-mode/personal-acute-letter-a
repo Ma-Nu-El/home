@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: personal-acute-letter-a
+# key: personal-acute-letter-a
+# --
+á${0:}

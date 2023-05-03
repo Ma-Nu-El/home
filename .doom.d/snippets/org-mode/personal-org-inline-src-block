@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: personal-org-inline-src-block
+# key: personal-org-inline-src-block
+# --
+src_<language>[<header arguments>]{<body>}

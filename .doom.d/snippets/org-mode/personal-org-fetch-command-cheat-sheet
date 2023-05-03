@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: personal-org-fetch-command-cheat-sheet
+# key: personal-org-fetch-command-cheat-sheet
+# condition: t
+# --
+* cheat.sh
+
+#+begin_src bash :results output
+wget -qO- cheat.sh/${1: command name}?T
+#+end_src

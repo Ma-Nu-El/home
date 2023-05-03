@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: personal-tilde-letter-n
+# key: personal-tilde-letter-n
+# --
+ñ${0:}

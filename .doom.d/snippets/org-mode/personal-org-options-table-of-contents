@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: personal-org-options-table-of-contents
+# key: personal-org-options-table-of-contents
+# --
+$2#+OPTIONS: toc:${1: '1,2,...' or 'nil'}

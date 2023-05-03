@@ -138,6 +138,10 @@ then
             # discarting the unencrypted tar 
             mv aux"$2".gpg "$2"
         else
+            # if encryption not successful then
+            rm -rf aux"$2" # remove tar that is not yet encrypted
+            # leaving things as if you didn't invoke
+            # "deploy encrypt" at all
             exit
         fi
     else

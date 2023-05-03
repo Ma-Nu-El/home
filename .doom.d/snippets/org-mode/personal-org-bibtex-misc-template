@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: personal-org-bibtex-misc-template
+# key: personal-org-bibtex-misc-template
+# --
+This goes in your 'ref.bib' file:
+@misc{${1: how you cite it in your '.tex' file},
+  author = {${2: optional}},
+  title = {${3: optional}},
+  year = {${4: optional}},
+  note = {fetched `(format-time-string "%Y-%m-%d")`},
+  url = {${5: optional}}
+}
+
+Then you cite it as \cite{$1} in your '.tex' file.

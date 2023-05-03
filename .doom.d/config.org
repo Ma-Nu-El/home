@@ -13,45 +13,54 @@
 - [[#org-directory][org directory]]
 - [[#recursive-agenda-files][recursive agenda files]]
 - [[#no-line-numbers][no line numbers]]
-- [[#80-char-ruler][80 char ruler]]
 - [[#begin-org-section][begin org section]]
+  - [[#export-backend-enabling][export backend enabling]]
   - [[#buffer-opening-settings-for-speed][buffer opening settings for speed]]
   - [[#fixed-flush-left-indentation][fixed flush left indentation]]
-  - [[#logbook-and-clockbook][logbook and clockbook]]
   - [[#global-properties][global properties]]
   - [[#column-view-settings][column view settings]]
+  - [[#logbook-and-clockbook][logbook and clockbook]]
   - [[#reversed-org-log-states][reversed org log states]]
   - [[#agenda-settings][agenda settings]]
-  - [[#export-backend-enabling][export backend enabling]]
-  - [[#keywords][keywords]]
-  - [[#habit-graph-enabling][habit graph enabling]]
-  - [[#habit-graph-settings][habit graph settings]]
   - [[#agenda-custom-commands][agenda custom commands]]
   - [[#agenda-view-prefix][agenda view prefix]]
   - [[#agenda-view-settings][agenda view settings]]
+  - [[#habit-graph-enabling][habit graph enabling]]
+  - [[#habit-graph-settings][habit graph settings]]
+  - [[#todo-keywords]['TODO' keywords]]
+  - [[#latex-custom-classes][latex custom classes]]
   - [[#latex-export-table-of-contents-settings][latex export table of contents settings]]
+  - [[#latex-other-languages][latex other languages]]
+  - [[#babel-python-3][babel python 3]]
   - [[#mu4e-store-links][mu4e store links]]
   - [[#log][log]]
   - [[#how-many-todos-left-info-in-heading][how many todos left info in heading]]
   - [[#use-org-id-to-store-links-when-appropriate][use org-id to store links when appropriate]]
-  - [[#open-links-with-default-application][open links with default application]]
+  - [[#org-file-apps-open-links-with-default-application][org-file-apps: open links with default application]]
   - [[#org-clock][org clock]]
   - [[#global-exclude-tags][global exclude tags]]
   - [[#disable-crypt-tag-inheritance][disable crypt tag inheritance]]
   - [[#org-transclusion][org-transclusion]]
   - [[#org-fontify-quote-and-verse-blocks-disabled][org fontify quote and verse blocks [DISABLED]]]
   - [[#prevent-invisible-edits-commented-out][prevent invisible edits [Commented out]]]
+  - [[#org-depend][org-depend]]
+  - [[#roam][roam]]
+  - [[#org-roam-bibtex][org-roam-bibtex]]
+  - [[#org-capture][org-capture]]
+  - [[#org-ref][org-ref]]
+  - [[#org-glossary][org-glossary]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
 - [[#personal-keybindings][personal keybindings]]
-- [[#roam][roam]]
 - [[#start-week-on-monday][start week on monday]]
 - [[#dailies][dailies]]
 - [[#treemacs][treemacs]]
 - [[#disable-backup][disable backup]]
 - [[#custom-set-faces][custom set faces]]
 - [[#custom-set-variables][custom set variables]]
+- [[#60-char-ruler][60 char ruler]]
+- [[#git-gutter][git gutter]]
 - [[#footnotes][Footnotes]]
 
 * shebang
@@ -177,18 +186,17 @@ available. You can either set `doom-theme' or manually load a theme with the
 - Check the different themes
   + https://github.com/hlissner/emacs-doom-themes/tree/screenshots
 
-
-
 * org directory
 :PROPERTIES:
 :ID:       86d962a4-8100-483a-a739-59cfcdfb0655
 :END:
 
-If you use `org' and don't want your org files in the default location below,
-change `org-directory'. It must be set before org loads!
+If you use `org' and don't want your org files in
+the default location below, change `org-directory'.
+It must be set before org loads!
 
 #+begin_src elisp
-(setq org-directory "~/org/")
+(setq org-directory "~/FilenSync/org/")
 #+end_src
 
 ;; Added by me
@@ -198,17 +206,29 @@ change `org-directory'. It must be set before org loads!
 :PROPERTIES:
 :ID:       7e605bae-b5f5-41ad-b95e-c02f621b7926
 :END:
-#+begin_src elisp
+
 (setq org-agenda-files (directory-files-recursively "~/org/" "\\.org$"))
+
+
+#+begin_src elisp
+(setq org-agenda-files "~/agenda-files.txt")
 #+end_src
+
+- https://orgmode.org/worg/org-tutorials/orgtutorial_dto.html
+- https://orgmode.org/manual/Agenda-Files.html
+
+(setq org-agenda-files (list "~/org/auxRoam/.org"
+                             "~/org/school.org"
+                             "~/org/home.org"))
 
 * no line numbers
 :PROPERTIES:
 :ID:       23918f8e-2350-40a7-b4d8-57520c5a36cf
 :END:
 This determines the style of line numbers in effect. If set to `nil', line
-numbers are disabled. For relative line numbers, set this to `relative'.
+numbers are disabled. For relative line numbers, set this to ='relative=.
 
+# (setq display-line-numbers-type 'relative)
 #+begin_src elisp
 (setq display-line-numbers-type nil)
 #+end_src
@@ -232,26 +252,6 @@ This will open documentation for it, including demos of how they are used.
 You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 they are implemented.
 
-
-* 80 char ruler
-:PROPERTIES:
-:ID:       afa21908-f444-43d4-a5fb-19b770cf13ec
-:END:
-- [2021-07-10 Sat 16:10]
-- Since last =doom upgrade= a couple minutes ago, the ruler at 80 characters
-  was gone. Also the =fill-column= module in =init.el=, specifically the
-  =:ui= section was also gone.
-- I got it back with this elisp but now also that ruler appears in the home
-  view for Doom which is something new lol. Anyway, gets the job done but
-  takes elegancy of Doom a little down. Still invaluable tool tho.
-
-
-
-#+begin_src elisp
-(global-display-fill-column-indicator-mode)
-(setq display-fill-column-indicator t)
-#+end_src
-
 * begin org section
 :PROPERTIES:
 :ID:       72258b79-1e04-4a73-95b8-515f48143e5d
@@ -260,6 +260,15 @@ they are implemented.
 ;; BEGIN AFTER ORG
 (after! org
 #+end_src
+
+** export backend enabling
+:PROPERTIES:
+:ID:       a794b757-4dcb-4a6b-a515-89e4419b5f19
+:END:
+#+begin_src elisp
+(add-to-list 'org-export-backends 'org)
+#+end_src
+
 ** buffer opening settings for speed
 :PROPERTIES:
 :ID:       f04c5ecf-aba4-4d99-adc0-0527201f84b8
@@ -299,15 +308,6 @@ It's gotta be faster. Useful too when you have a TOC heading first.
 (setq org-startup-folded nil)
 #+end_src
 
-** logbook and clockbook
-:PROPERTIES:
-:ID:       a065fc59-7ecf-4c1a-aa3c-d01f7f36eb28
-:END:
-- https://stackoverflow.com/questions/24686129/how-can-i-make-org-mode-store-state-changes-for-a-repeating-task-in-a-drawer
-#+begin_src elisp
-(setq org-log-into-drawer "LOGBOOK")
-(setq org-clock-into-drawer "CLOCKBOOK")
-#+end_src
 ** global properties
 :PROPERTIES:
 :ID:       64ea25a8-c5a6-4d48-a199-3d5162305169
@@ -316,20 +316,31 @@ It's gotta be faster. Useful too when you have a TOC heading first.
 ;; https://github.com/pokeefe/Settings/blob/master/emacs-settings/.emacs.d/modules/init-org.el
 ;; Effort and global properties
 (setq org-global-properties '(
-                              ("Effort_ALL". "0 0:01 0:03 0:05 0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00
-                               4:00 6:00 8:00")
+                              ("Effort_ALL". "0 0:01 0:03 0:05 0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00 4:00 6:00 8:00 10:00 12:00 16:00 20:00 25:00 30:00 35:00 40:00")
                               )
       )
-
 #+end_src
+
 ** column view settings
 :PROPERTIES:
 :ID:       82451b12-f96d-40b5-9b2a-2908eee6eff4
 :END:
 Set global Column View format.
 #+begin_src elisp
+(setq org-columns-default-format '"%30ITEM(Item) %6Effort(Estim){:} %6CLOCKSUM(Actual)")
+#+end_src
+
 (setq org-columns-default-format '"%34ITEM(Item) %10TAGS(Tags) %5TODO(State)
  %5Effort(Estim){:} %10CLOCKSUM(Actual)")
+
+** logbook and clockbook
+:PROPERTIES:
+:ID:       a065fc59-7ecf-4c1a-aa3c-d01f7f36eb28
+:END:
+- https://stackoverflow.com/questions/24686129/how-can-i-make-org-mode-store-state-changes-for-a-repeating-task-in-a-drawer
+#+begin_src elisp
+(setq org-log-into-drawer "LOGBOOK")
+(setq org-clock-into-drawer "CLOCKBOOK")
 #+end_src
 
 ** reversed org log states
@@ -340,37 +351,133 @@ Set global Column View format.
 :ID:       4790fa62-de1b-4118-a722-f41212854368
 :END:
 #+begin_src elisp
-(setq org-agenda-span 1) ; show today only by default; it's quicker
+(setq org-agenda-span 3) ; show today only by default; it's quicker
 (setq org-agenda-start-day "-0d") ; start on current day,
                                         ; useful when exporting html 28-day version.
-
+(setq org-agenda-start-on-weekday nil)
 #+end_src
 
-** export backend enabling
-:PROPERTIES:
-:ID:       a794b757-4dcb-4a6b-a515-89e4419b5f19
-:END:
-#+begin_src elisp
-(add-to-list 'org-export-backends 'org)
-#+end_src
 
-** todo keywords
+- https://emacs.stackexchange.com/questions/12517/how-do-i-make-the-timespan-shown-by-org-agenda-start-yesterday
+
+** agenda custom commands
 :PROPERTIES:
-:ID:       55c05291-82b3-443f-93ee-68a68b38d3de
+:ID:       e4bd5984-7063-44f3-973d-51c298645761
 :END:
+
+
 #+begin_src elisp
-(setq org-todo-keywords
-      '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)"
-                  "SOMEDAY(s)" "|" "DONE(d@/!)" "CANCELED(c@/!)")
+(setq org-agenda-custom-commands
+      '(
+        ;; ( "1" "Last 3 days."
+        ;;   ((agenda ""))
+        ;;   ;; ((org-agenda-tag-filter-preset '("-habit")))
+        ;;   ;; ("~/org/agenda-today.html") ;; enables html export of this agenda view
+        ;;           ((org-agenda-span 3))
+        ;;           ((org-agenda-start-day "-2"))
+        ;;   )
+        ;; ( "3" "Next 3 days."
+        ;;   ;; Made to be exported to html
+        ;;   ((agenda ""))
+        ;;            ((org-agenda-span 3))
+        ;;            ((org-agenda-start-day "+1"))
+        ;;   ;; The bigger the agenda span, the longer the process
+        ;;   )
+        ;; ( "2" "Last and next 3 days."
+        ;;   ;; Made to be exported to html
+        ;;   ((agenda ""))
+        ;;            ((org-agenda-span 7))
+        ;;            ((org-agenda-start-day "-2"))
+        ;;   )
+        ;; ( "8" "Next 8 days, don't show today."
+        ;;   ;; Made to be exported to html
+        ;;   ((agenda ""))
+        ;;            ((org-agenda-span 8))
+        ;;            ((org-agenda-start-day "+1d"))
+        ;;   )
+        ;; ( "4" "Next 14 days, don't show today."
+        ;;   ;; Made to be exported to html
+        ;;   ((agenda ""))
+        ;;            ((org-agenda-span 14))
+        ;;            ((org-agenda-start-day "+1d"))
+        ;;   )
+        ;; ( "0" "Next 28 days, don't show today."
+        ;;   ;; Made to be exported to html
+        ;;   ((agenda ""))
+        ;;            ((org-agenda-span 28))
+        ;;            ((org-agenda-start-day "+1d"))
+        ;;   )
+        ( "H" "Only 'habit' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+habit"))))
+        ( "h" "Exclude 'habit' tag"
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("-habit"))))
+        ;; ( "n" "Only 'today' tag."
+        ;;   ((agenda ""))
+        ;;   ((org-agenda-tag-filter-preset '("+today"))))
+        ( "O" "Only 'oneoff' tag."
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+oneoff"))))
+        ( "R" "Only 'recurring' tag."
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+recurring"))))
+        ( "u" "Exclude 'university' tag."
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("-university"))))
+        ( "U" "Only 'university' tag."
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+university"))))
+        ( "l" "All 'university' except 'lecture' and 'assistantship'."
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+university" "-lecture" "-assistantship"))))
+        ( "L" "Only lectures and assistantships."
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+lecture" "+assistantship"))))
+        ( "c" "Only 'contacts' tag."
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+contacts"))))
+        ( "b" "Only 'birthday' tag."
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+birthday"))))
+        ( "k" "Exclude 'music' tag."
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("-music"))))
+        ( "K" "Only 'music' tag."
+          ((agenda ""))
+          ((org-agenda-tag-filter-preset '("+music"))))
         )
       )
-(setq org-log-done t)
 #+end_src
 
-- TRACK TODO STATE CHANGES
-- https://orgmode.org/manual/Tracking-TODO-state-changes.html
-- OrgMode E03S01: Automatic logging of status changes:
-  + https://www.youtube.com/watch?v=R4QSTDco_w8
+- https://emacs.stackexchange.com/questions/38183/how-to-exclude-a-file-from-agenda
+
+** agenda view prefix
+:PROPERTIES:
+:ID:       1b805336-7fdb-4b66-b08c-4e346cc9c61e
+:END:
+Hide filename in agenda view
+#+begin_src elisp
+(setq org-agenda-prefix-format "%t %s")
+#+end_src
+- https://lists.gnu.org/archive/html/emacs-orgmode/2010-01/msg00744.html
+
+** agenda view settings
+:PROPERTIES:
+:ID:       197f9212-94e5-4475-8d03-f9118493320a
+:END:
+
+Disable "now" line in org agenda view.
+That line is counterintuitive sometimes
+when checking agenda remotely.
+
+#+begin_src elisp
+(setq org-agenda-show-current-time-in-grid nil)
+(setq org-agenda-hide-tags-regexp ".")
+(setq org-agenda-use-time-grid nil)
+#+end_src
+- https://orgmode.org/manual/Agenda-Commands.html
+
 ** habit graph enabling
 :PROPERTIES:
 :ID:       c6e2c52f-51bd-4fd9-8fd5-080fb2a617be
@@ -391,83 +498,71 @@ Set global Column View format.
 #+end_src
 
 - https://orgmode.org/manual/Tracking-your-habits.html
-** agenda custom commands
+** 'TODO' keywords
 :PROPERTIES:
-:ID:       e4bd5984-7063-44f3-973d-51c298645761
+:ID:       55c05291-82b3-443f-93ee-68a68b38d3de
 :END:
-
-
 #+begin_src elisp
-(custom-set-variables
- '(org-agenda-custom-commands
-   '(
-     ( "h" "Custom agenda, ignore 'habit' tag"
-       ((agenda ""))
-       ;; ((org-agenda-tag-filter-preset '("-habit")))
-       )
-     ( "x" "28-day version of h"
-       ;; Made to be exported to html
-       ((agenda ""
-                ((org-agenda-span 28))
-                ))
-       ;; The bigger the agenda span, the longer the process
-       ((org-agenda-tag-filter-preset '("-habit")))
-       ("~/org/agenda.html") ;; enables html export of this agenda view
-       )
-     ( "n" "Custom agenda, only 'today' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+today"))))
-     ( "H" "Custom agenda, only 'habit' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+habit"))))
-     ( "u" "Custom agenda, ignore 'university' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("-university"))))
-     ( "U" "Custom agenda, only 'university' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+university"))))
-     ( "c" "Custom agenda, only 'contacts' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+contacts"))))
-     ( "b" "Custom agenda, only 'birthday' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+birthday"))))
-     ( "k" "Custom agenda, ignore 'music' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("-music"))))
-     ( "K" "Custom agenda, only 'music' tag"
-       ((agenda ""))
-       ((org-agenda-tag-filter-preset '("+music"))))
-     )
-   )
- )
+(setq org-todo-keywords
+      '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)"
+                  "SOMEDAY(s)" "|" "DONE(d@/!)" "CANCELED(c@/!)")
+        )
+      )
+(setq org-log-done t)
 #+end_src
 
-- https://emacs.stackexchange.com/questions/38183/how-to-exclude-a-file-from-agenda
+- TRACK TODO STATE CHANGES
+- https://orgmode.org/manual/Tracking-TODO-state-changes.html
+- OrgMode E03S01: Automatic logging of status changes:
+  + https://www.youtube.com/watch?v=R4QSTDco_w8
+** latex custom classes
 
-** agenda view prefix
-:PROPERTIES:
-:ID:       1b805336-7fdb-4b66-b08c-4e346cc9c61e
-:END:
-Hide filename in agenda view
+- [[https://ctan.org/tex-archive/macros/latex/contrib/extsizes][CTAN: /tex-archive/macros/latex/contrib/extsizes]]
+- [[https://emacs.stackexchange.com/questions/29726/org-mode-different-latex-document-class][org export - org-mode different latex document class - Emacs Stack Exchange]]
+- [[https://github.com/djnavarro/rbook/issues/41][Any clue how to source it with 12pt font size? · Issue #41 · djnavarro/rbook · GitHub]]
+- [[https://superuser.com/questions/896741/how-do-i-configure-org-latex-classes-in-emacs][How do I Configure 'org-latex-classes in .emacs? - Super User]]
+- [[https://lists.gnu.org/archive/html/emacs-orgmode/2012-10/msg00435.html][Re: [O] #+LATEX_CLASS: IEEEtran]]
+
+
+: \documentclass[letter,twoside,14pt,openright]{extbook}
+
+(require 'ox-latex)
 #+begin_src elisp
-(setq org-agenda-prefix-format "%t %s")
+(with-eval-after-load 'ox-latex
+(add-to-list 'org-latex-classes
+             '("extbook"
+               "\\documentclass{extbook}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(add-to-list 'org-latex-classes
+             '("extarticle"
+               "\\documentclass{extarticle}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(add-to-list 'org-latex-classes
+             '("extreport"
+               "\\documentclass{extreport}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(add-to-list 'org-latex-classes
+             '("IEEEtran"
+               "\\documentclass{IEEEtran}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+)
 #+end_src
-- https://lists.gnu.org/archive/html/emacs-orgmode/2010-01/msg00744.html
-
-** agenda view settings
-:PROPERTIES:
-:ID:       197f9212-94e5-4475-8d03-f9118493320a
-:END:
-Disable "now" line in org agenda view
-That line is counterintuitive sometimes when checking agenda remotely.
-
-#+begin_src elisp
-(setq org-agenda-show-current-time-in-grid nil)
-(setq org-agenda-hide-tags-regexp ".")
-(setq org-agenda-use-time-grid nil)
-#+end_src
-- https://orgmode.org/manual/Agenda-Commands.html
 
 ** latex export table of contents settings
 :PROPERTIES:
@@ -497,6 +592,49 @@ the =html= export has not presented this problem so far.
 # #+begin_src elisp
 # (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
 # #+end_src
+
+** latex other languages
+- [2021-10-28 Thu 00:11]
+=HTML= exports works fine, but when exporting to =PDF=,
+=#+LANGUAGE: <yourLang>= is not enough.
+
+This seems to do the job.
+
+#+begin_center
+This one does not work.
+#+end_center
+
+: #+begin_example elisp
+: (add-to-list 'org-latex-packages-alist '("AUTO" "babel" t ("pdflatex")))
+: #+end_example
+- https://www.reddit.com/r/orgmode/comments/f5unzb/export_setting_language_does_not_work/
+
+
+An alternative not tested solution is to put this in your file.
+
+#+begin_center
+This one works!
+#+end_center
+
+: #+LANGUAGE: es
+: #+LATEX_HEADER: \usepackage[spanish]{babel}
+
+Almost the same except for the extra =#+LATEX_HEADER= part.
+
+
+See also:
+- https://emacs.stackexchange.com/questions/21239/change-table-of-contents-title-in-org-mode-according-to-document-language
+
+** babel python 3
+:PROPERTIES:
+:ID:       0d6b3c80-37fb-4c15-80c3-7a6210827ed0
+:END:
+- https://emacs.stackexchange.com/questions/57447/org-babel-loads-different-python
+
+
+#+begin_src elisp
+(setq org-babel-python-command "python3")
+#+end_src
 
 ** mu4e store links
 But when enabling this, it overrides the other org-store-link* protocols.
@@ -551,7 +689,7 @@ something about it.
 (setq org-id-link-to-org-use-id t)
 #+end_src
 
-** open links with default application
+** org-file-apps: open links with default application
 :PROPERTIES:
 :ID:       c9e0a789-0d20-4dfa-b457-ff5a9ed27698
 :END:
@@ -563,6 +701,13 @@ something about it.
         ("\\.pdf\\'" . default)
         ("\\.jpg\\'" . default)
         ("\\.png\\'" . default)
+        ("\\.svg\\'" . default)
+        ("\\.pptx\\'" . default)
+        ;; Libreoffice (ODF) extensions
+        ("\\.odt\\'" . default) ;; text
+        ("\\.ods\\'" . default) ;; spreadsheet
+        ("\\.odp\\'" . default) ;; presentation
+        ("\\.odg\\'" . default) ;; graphics
         )
       )
 #+end_src
@@ -741,6 +886,109 @@ more careful. It's not something that I do a lot so low signal-to-noise ratio.
 Commented out since it does not fail and does not let me know that I did a
 mistake. I'll simply have to be more careful.
 
+** org-depend
+
+#+begin_src elisp
+(require 'org-depend)
+#+end_src
+** roam
+:PROPERTIES:
+  :ID:       41e53852-03b8-4098-a190-287a30504cfc
+  :END:
+#+begin_src elisp
+;; ORG-ROAM
+(setq org-roam-directory "~/auxRoam")
+#+end_src
+(setq org-roam-directory "~/auxRoam")
+(require 'org-roam-protocol)
+;; (add-hook 'after-init-hook 'org-roam-mode)
+- No longer required in org-roam-v2
+  - https://github.com/magit/magit/issues/3741
+- [2022-10-03 Mon 21:49]
+- Disabled all =org-roam= functionality as
+  I updated to =roam= version 2 and some things
+  broke and don't have time to fix them.
+
+** org-roam-bibtex
+- [2022-10-06 Thu 22:11]
+
+,#+begin_src elisp
+;; (use-package! org-roam-bibtex
+;;   :after org-roam
+;;   :config
+;;   (require 'org-ref))
+,#+end_src
+
+** org-capture
+- [2023-02-19 Sun 23:52]
+- [[https://orgmode.org/manual/Capture.html][Capture (The Org Manual)]]
+- [[https://howardism.org/Technical/Emacs/capturing-intro.html][Org Capturing Introduction]]
+- [[https://takeonrules.com/2022/09/06/org-mode-capture-templates-and-time-tracking/][Org Mode Capture Templates and Time Tracking // Take on Rules]]
+- [[https://www.reddit.com/r/emacs/comments/7zqc7b/share_your_org_capture_templates/][Share your Org Capture Templates! : emacs]]
+
+
+#+begin_src elisp
+(setq org-default-notes-file (concat org-directory "default_notes.org"))
+#+end_src
+
+: (setq org-capture-templates
+:       '(("t" "Task Entry" entry
+:          (file org-default-inbox-file)
+:          "* %?\n:PROPERTIES:\n:CREATED:%U\n:END:\n%i\n"
+:          :kill-buffer t)
+:        ))
+
+
+- [[https://orgmode.org/manual/Template-expansion.html][Template expansion (The Org Manual)]]
+
+
+#+begin_src elisp
+(setq org-capture-templates
+     '(
+      ("w" "Work" entry (file "~/FilenSync/org/refile.org")
+         "* %u %?\n# - %U\n\n" :clock-in nil)
+      ("p" "Personal" entry (file "~/auxRoam/refile.org")
+         "* %u %?\n# - %U\n\n" :clock-in nil)
+))
+#+end_src
+
+
+Use with beorg:
+
+#+begin_quote
+I use Beorg on mobile to capture stuff on my phone. And for funsies I set up my dumb Alexa speaker, and also Siri, to take TODOs and notes and save them to a "RobotTODOS.txt" file in Dropbox.
+#+end_quote
+
+** org-ref
+- [2023-02-24 Fri 01:01]
+# - [2023-04-27 Thu 16:55]
+# - Using org-glossary and org-cite
+
+
+#+begin_example elisp
+(use-package! org-ref
+    :after org
+    :commands
+    (org-ref-cite-hydra/body
+     org-ref-bibtex-hydra/body)
+    :init
+    ; code to run before loading org-ref
+    :config
+    (require 'org-ref)
+    (add-hook 'org-export-before-parsing-hook 'org-ref-acronyms-before-parsing 'org-ref-glossary-before-parsing)
+)
+#+end_example
+
+** org-glossary
+# - [2023-04-27 Thu 23:36]
+- [[https://github.com/tecosaur/org-glossary][GitHub - tecosaur/org-glossary: Glossary, Acronyms, and Index capability within Org]]
+
+
+#+begin_src emacs-lisp
+(use-package! org-glossary
+  :hook (org-mode . org-glossary-mode))
+#+end_src
+
 * end org section
 :PROPERTIES:
 :ID:       889fe81d-8200-4e4f-b833-a2c20cc295eb
@@ -755,11 +1003,10 @@ mistake. I'll simply have to be more careful.
 :ID:       12e43ea2-162e-4a48-8115-da3fb00a32c1
 :END:
 
-#+begin_src elisp
-(add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
-#+end_src
-
+# #+begin_src elisp
+# (add-hook 'text-mode-hook 'flyspell-mode)
+# (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+# #+end_src
 
 * ispell config
 :PROPERTIES:
@@ -779,17 +1026,6 @@ mistake. I'll simply have to be more careful.
 #+begin_src elisp
 (define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
 (global-set-key (kbd "\C-cr") 'ispell-region)
-#+end_src
-
-* roam
-  :PROPERTIES:
-  :ID:       41e53852-03b8-4098-a190-287a30504cfc
-  :END:
-#+begin_src elisp
-;; ORG-ROAM
-(setq org-roam-directory "~/org/auxRoam")
-(add-hook 'after-init-hook 'org-roam-mode)
-(require 'org-roam-protocol)
 #+end_src
 
 * start week on monday
@@ -827,7 +1063,6 @@ mistake. I'll simply have to be more careful.
 (setq +treemacs-git-mode 'simple)
 #+end_src
 
-
 * disable backup
 :PROPERTIES:
 :ID:       9a8a2efc-9871-4f88-9231-8017e44186e5
@@ -860,6 +1095,61 @@ mistake. I'll simply have to be more careful.
 ;; (custom-set-variables
 ;;  '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
 ;;  )
+#+end_src
+
+* 60 char ruler :line:width:80char:terminal:
+:PROPERTIES:
+:ID:       afa21908-f444-43d4-a5fb-19b770cf13ec
+:END:
+- [2021-07-10 Sat 16:10]
+- Since last =doom upgrade= a couple minutes ago, the ruler
+  at 80 characters was gone. Also the =fill-column= module
+  in =init.el=, specifically the =:ui= section was also gone.
+- I got it back with this elisp but now also that ruler appears
+  in the home view for Doom which is something new lol.
+  Anyway, gets the job done but takes elegancy of Doom a
+  little down. Still invaluable tool tho.
+- https://stackoverflow.com/questions/578059/studies-on-optimal-code-width
+- https://www.reddit.com/r/emacs/comments/kab809/for_those_who_dont_already_know_emacs_supports/
+- https://www.reddit.com/r/emacs/comments/hezzwb/fillcolumnindicator_issue/
+- https://www.reddit.com/r/emacs/comments/k895t5/displayfillcolumnindicatorcolumn_not_applying_on/
+
+
+#+begin_src elisp
+(global-display-fill-column-indicator-mode)
+(setq-default display-fill-column-indicator-column 55)
+;;(setq display-fill-column-indicator t)
+;;(setq fill-column 80)
+#+end_src
+
+- [2021-11-27 Sat 17:07] 65
+- New update to '65' was actually not easy lol.
+- [2021-11-27 Sat 22:52] 56
+  - Because of the terminal zoom mechanism
+  - Useful for two windows.
+- [2021-11-28 Sun 15:19] 55
+- See here
+  - [[id:09354657-bb03-47ee-a5b2-ba91f2113050][Line width: 37 characters]]
+- [2021-11-28 Sun 19:15]
+  - [[id:668a9d2e-9ee9-47f7-a988-9fc3eac8b602][now 66]]
+- [2021-11-28 Sun 19:32]
+  - [[id:5ac9a42a-b152-4d31-ae69-9601c02cc0d1][now 70]]
+- [2021-11-28 Sun 19:39]
+  - [[id:4e935b6d-a359-4a08-9a86-7c07951ff3ef][now 60]]
+- [2021-12-18 Sat 14:22]
+  - now 56
+  - Same as above.
+- [2021-12-18 Sat 14:25]
+  - 55
+* git gutter
+:PROPERTIES:
+:ID:       74f03acd-57b5-487d-af07-716129320bac
+:END:
+- [2021-11-30 Tue 20:28]
+- https://github.com/hlissner/doom-emacs/issues/4369
+
+#+begin_src elisp
+(global-git-gutter-mode +1)
 #+end_src
 
 * Footnotes

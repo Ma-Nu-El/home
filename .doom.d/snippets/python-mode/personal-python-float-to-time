@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: personal-pytho-float-to-time
+# key: personal-pytho-float-to-time
+# --
+
+time = float(input)
+print(datetime.timedelta(minutes=time))

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -o pipefail
+
+open -a firefox &
+sleep 10s
+open -a bitwarden &
+sleep 10s
+open -a cryptomator &
+sleep 10s
+open -a filen &
+sleep 10s
+open -a "macs fan control"

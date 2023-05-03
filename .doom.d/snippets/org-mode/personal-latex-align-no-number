@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: personal-latex-align-no-number
+# key: personal-latex-align-no-number
+# --
+$1
+\begin{align*}
+  insert your fancy equations here
+\end{align*}

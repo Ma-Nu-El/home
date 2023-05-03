@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: personal-org-agenda-template
+# key: personal-org-agenda-template
+# condition: t
+# --
+* Agenda
+** Jan
+** Feb
+** Mar
+** Apr
+** May
+** Jun
+** Jul
+** Aug
+** Sep
+** Oct
+** Nov
+** Dec
+* TODOS without date

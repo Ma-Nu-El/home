@@ -65,9 +65,11 @@
 #+begin_src elisp
 :completion
 company           ; the ultimate code completion backend
-ivy (+fuzzy)              ; a search engine for love and life
+(ivy +fuzzy)              ; a search engine for love and life
 #+end_src
 - https://www.reddit.com/r/emacs/comments/ga8qtd/noob_here_doom_emacs_projectile_find_file/
+
+;; ivy (+fuzzy)              ; a search engine for love and life
 
 ;;helm              ; the *other* search engine for love and life
 ;;ido               ; the other *other* search engine...
@@ -82,7 +84,9 @@ ivy (+fuzzy)              ; a search engine for love and life
 doom              ; what makes DOOM look the way it does
 doom-dashboard    ; a nifty splash screen for Emacs
 doom-quit         ; DOOM quit-message prompts when you quit Emacs
+#+end_src
 fill-column       ; a `fill-column' indicator
+#+begin_src elisp
 hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
 (modeline +light)          ; snazzy, Atom-inspired modeline, plus API
 #+end_src
@@ -110,16 +114,21 @@ The ~+lsp~ flag in treemacs enables keyboard shortcuts.
 ;;pretty-code       ; ligatures or substitute text with pretty symbols
 ;;tabs              ; an tab bar for Emacs
 ;;unicode           ; extended unicode support for various languages
-;;vc-gutter         ; vcs diff in the fringe
+#+begin_src elisp
+vc-gutter         ; vcs diff in the fringe
+#+end_src
 ;;zen               ; distraction-free coding or writing
 
 ** editor
 :PROPERTIES:
 :ID:       ae18815c-6111-42ef-8d99-6ab59d8ee433
 :END:
+evil ; come to the dark side, we have cookies
 #+begin_src elisp
 :editor
 (evil +everywhere); come to the dark side, we have cookies
+#+end_src
+#+begin_src elisp
 file-templates    ; auto-snippets for empty files
 fold              ; (nigh) universal code folding
 snippets          ; my elves. They type so I don't have to
@@ -146,7 +155,6 @@ undo              ; persistent, smarter undo for your inevitable mistakes
 vc                ; version-control and Emacs, sitting in a tree
 ibuffer         ; interactive buffer management
 #+end_src
-
 
 ** term
 :term
@@ -245,13 +253,28 @@ https://emacs-lsp.github.io/lsp-mode/page/installation/
 ;;julia             ; a better, faster MATLAB
 ;;kotlin            ; a better, slicker Java(Script)
 #+begin_src elisp
-latex             ; writing papers in Emacs has never been so fun
+(latex +lsp)        ; writing papers in Emacs has never been so fun
 #+end_src
 ;;lean
 ;;factor
+
+
 #+begin_src elisp
 ledger            ; an accounting system in Emacs
 #+end_src
+
+Make sure to have installed the ledger backend
+aswell.
+
+#+begin_example shell
+apt search ledger | grep "installed"
+#+end_example
+
+
+#+RESULTS:
+: ledger/hirsute,now 3.2.1-7build2 amd64 [installed]
+
+
 ;;lua               ; one-based indices? one-based indices
 #+begin_src elisp
 markdown          ; writing docs for people to ignore
@@ -260,13 +283,22 @@ markdown          ; writing docs for people to ignore
 ;;nix               ; I hereby declare "nix geht mehr!"
 ;;ocaml             ; an objective camel
 #+begin_src elisp
-(org +roam +gnuplot +jupyter +brain) ; organize your plain life in plain text
+(org +gnuplot +pomodoro) ; organize your plain life in plain text
 #+end_src
 ;;perl              ; write code no one else can comprehend
-;;php               ; perl's insecure younger brother
-;;plantuml          ; diagrams for confusing people more
+
+#+begin_src elisp
+(php +lsp)               ; perl's insecure younger brother
+#+end_src
+
+#+begin_src elisp
+plantuml          ; diagrams for confusing people more
+#+end_src
+
 ;;purescript        ; javascript, but functional
-;;python            ; beautiful is better than ugly
+#+begin_src elisp
+(python +lsp)            ; beautiful is better than ugly
+#+end_src
 ;;qt                ; the 'cutest' gui framework ever
 ;;racket            ; a DSL for DSLs
 ;;rest              ; Emacs as a REST client
@@ -291,7 +323,7 @@ sh                ; she sells {ba,z,fi}sh shells on the C xor
 :END:
 #+begin_src elisp
 :email
-(mu4e +gmail)
+(mu4e +gmail +org)
 #+end_src
 ;;notmuch
 ;;(wanderlust +gmail)

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: personal-org-time-stamp
+# key: personal-org-time-stamp
+# --
+* `(format-time-string "[%Y-%m-%d %a]")` ${0: insert text here}
+- `(format-time-string "[%Y-%m-%d %a %H:%M]")`

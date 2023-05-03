@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if [[ -z "$1"  ]]
+then
+    wget -qO- wttr.in/Villarrica+Chile?0TFm
+else
+    wget -qO- wttr.in/"$1"?0TFm
+fi

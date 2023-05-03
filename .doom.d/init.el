@@ -4,13 +4,13 @@
 
 :completion
 company           ; the ultimate code completion backend
-ivy (+fuzzy)              ; a search engine for love and life
+(ivy +fuzzy)              ; a search engine for love and life
 
 :ui
 doom              ; what makes DOOM look the way it does
 doom-dashboard    ; a nifty splash screen for Emacs
 doom-quit         ; DOOM quit-message prompts when you quit Emacs
-fill-column       ; a `fill-column' indicator
+
 hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
 (modeline +light)          ; snazzy, Atom-inspired modeline, plus API
 
@@ -22,8 +22,11 @@ vi-tilde-fringe   ; fringe tildes to mark beyond EOB
 (treemacs +lsp)          ; a project drawer, like neotree but cooler
 workspaces        ; tab emulation, persistence & separate workspaces
 
+vc-gutter         ; vcs diff in the fringe
+
 :editor
 (evil +everywhere); come to the dark side, we have cookies
+
 file-templates    ; auto-snippets for empty files
 fold              ; (nigh) universal code folding
 snippets          ; my elves. They type so I don't have to
@@ -56,18 +59,24 @@ emacs-lisp        ; drown in parentheses
 
 (java +lsp)         ; Added by Ma Nu from
 
-latex             ; writing papers in Emacs has never been so fun
+(latex +lsp)        ; writing papers in Emacs has never been so fun
 
 ledger            ; an accounting system in Emacs
 
 markdown          ; writing docs for people to ignore
 
-(org +roam +gnuplot +jupyter +brain) ; organize your plain life in plain text
+(org +gnuplot +pomodoro) ; organize your plain life in plain text
+
+(php +lsp)               ; perl's insecure younger brother
+
+plantuml          ; diagrams for confusing people more
+
+(python +lsp)            ; beautiful is better than ugly
 
 sh                ; she sells {ba,z,fi}sh shells on the C xor
 
 :email
-(mu4e +gmail)
+(mu4e +gmail +org)
 
 :app
 calendar

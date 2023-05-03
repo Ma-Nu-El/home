@@ -1,0 +1,42 @@
+# -*- mode: snippet -*-
+# name: personal-detect-os-and-do
+# key: personal-detect-os-and-do
+# --
+
+usage() {
+cat <<EOF
+'NAME_OF_SCRIPT' usage:
+  general:
+    -h, --help, -?      print this message
+
+ if OS is linux it will ...
+
+ if OS is macOS it will ...
+
+EOF
+}
+
+if [[ \$1 == '-h' || \$1 == '--help' || \$1 == '-?' || -z \$1 ]]; then
+    usage
+    exit 0
+fi
+
+function linux_case() {
+       # body
+}
+
+function darwin_case() {
+       # body
+}
+
+os=$("$HOME"/bin/detect_os)
+
+case $os in
+    linux)
+        linux_case ;;
+    darwin)
+        darwin_case ;;
+    *)
+        printf "Not either linux nor darwin\n"
+        exit 1;;
+esac

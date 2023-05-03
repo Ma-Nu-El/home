@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# shellcheck shell=bash
+#
+# - [2023-04-26 Wed 11:30]
+# https://superuser.com/questions/885414/linux-command-get-unused-port
+
+set -o pipefail
+
+usage() {
+        cat <<EOF
+'get_free_port' usage:
+  general:
+    -h, --help, -?      print this message
+
+ GNU/Linux not implemented
+
+ if OS is macOS it will
+
+        python3 -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()'
+
+EOF
+}
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
+            usage
+            exit 0
+fi
+
+function darwin_case() {
+        python3 -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()'
+}
+
+os=$("$HOME"/bin/detect_os)
+
+case $os in
+        darwin)
+                darwin_case ;;
+        *)
+                printf "Not either linux nor darwin\n"
+                exit 1;;
+esac

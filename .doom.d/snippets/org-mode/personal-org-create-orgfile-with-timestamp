@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: personal-org-create-orgfile-with-timestamp
+# --
+`(format-time-string "%Y%m%d%H%M%S")`_${0: filename}.org

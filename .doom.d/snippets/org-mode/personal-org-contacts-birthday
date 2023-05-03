@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: personal-org-contacts-birthday
+# key: personal-org-contacts-birthday
+# --
+*** Cakeday :cakeday:birthday:
+SCHEDULED: <2001-01-01 Mon 08:59 +1y>
+- Cakeday: 01 jan 2001.

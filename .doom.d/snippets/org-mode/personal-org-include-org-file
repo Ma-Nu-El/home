@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: personal-org-include-org-file
+# key: personal-org-include-org-file
+# --
+#+INCLUDE: "${1:/insert/path/to/org/file}::${2: *header name or #custom id}"${3: :only-contents t}

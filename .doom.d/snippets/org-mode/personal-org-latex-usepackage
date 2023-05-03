@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: personal-org-latex-usepackage
+# key: personal-org-latex-usepackage
+# --
+#+LATEX_HEADER:\usepackage{tikzit}

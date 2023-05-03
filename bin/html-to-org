@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# html-to-org: convert html pages to org format.
+
+set -o pipefail
+
+usage() {
+cat <<EOF
+html-to-org: convert html pages to org format.
+  html-to-org PAGE_LINK
+
+  This bash script will download the specified
+  PAGE_LINK using wget, and convert that
+  downloaded file to org format. Then you
+  just have to visit the created org file
+  with emacs and do whatever you want with
+  it.
+EOF
+}
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
+    usage
+    exit 0
+fi
+
+download_page(){
+
+}
+
+convert_to_org(){
+
+}
+
+delete_downloaded_html(){
+
+}

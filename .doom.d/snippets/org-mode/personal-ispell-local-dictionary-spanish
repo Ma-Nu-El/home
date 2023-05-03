@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: personal-ispell-local-dictionary-spanish
+# key: personal-ispell-local-dictionary-spanish
+# --
+${0:}
+:ORG_SPANISH_CONFIG:
+#+LANGUAGE: es
+#+LATEX_HEADER:\usepackage[spanish]{babel}
+:END:
+# somewhere at beginning of file
+
+# at the very end of file
+* Local Variables :noexport:
+# Local Variables:
+# ispell-local-dictionary: "espanol"
+# End:

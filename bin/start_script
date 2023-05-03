@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -o pipefail
+
+usage() {
+    cat <<EOF
+'start_script'
+ Fire up some commands and apps that I have always on.
+ The commands depend on the OS.
+EOF
+}
+
+if [[ "" == '-h' || "" == '--help' || "" == '-?' || -z "" ]]; then
+    usage
+    exit 0
+fi
+
+function linux_case() {
+    echo "Linux case not implemented"
+}
+
+function darwin_case() {
+    ~/bin/macos_start_script
+}
+
+os=$("$HOME"/bin/detect_os)
+
+case $os in
+    linux)
+        linux_case ;;
+    darwin)
+        darwin_case "" ;;
+    *)
+        printf "Not either linux nor darwin\n"
+        exit 1;;
+esac

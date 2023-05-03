@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: personal-org-latex-header
+# key: personal-org-latex-header
+# --
+$1
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper,11pt,twoside,twocolumn]

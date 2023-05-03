@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: personal-acute-letter-e
+# key: personal-acute-letter-e
+# --
+é${0:}
