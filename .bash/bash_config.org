@@ -1,4 +1,12 @@
-#!/usr/bin/env bash
+:TITLE_SUBTITLE_AND_EXPORT_FILE_NAME:
+#+TITLE: My Bash Configuration
+#+SUBTITLE: in orgmode format
+#+EXPORT_FILE_NAME: ./export/bash_configuration
+:END:
+
+* Aliases
+
+#+begin_src bash :tangle ./aliases :shebang "#!/usr/bin/env bash" :tangle-mode (identity #o755)
 ### git ###
 
 # test
@@ -169,3 +177,184 @@ alias dk='docker'
 ### lights off and on
 alias loff='lights off'
 alias lon='lights on'
+#+end_src
+
+* Functions
+
+#+begin_src bash :tangle ./functions :shebang "#!/usr/bin/env bash" :tangle-mode (identity #o755)
+#!/usr/bin/env bash
+
+set -o pipefail
+
+manuclone(){
+	if [[ -z "$1"  ]]
+	then
+		echo "example: 'manuclone foo bar' is the same as"
+		echo "'git clone git@github.com:Ma-Nu-El/foo bar'"
+	else
+	git clone git@github.com:Ma-Nu-El/"$1"
+	fi
+}
+
+#quick useful defaults
+
+
+# cd and git status into directory
+cd-and-git-status(){
+if [ -d "$1" ] # if argument is a directory
+then
+	cd "$1" || exit
+	clear && pwd && echo "-----" && git status
+else
+	if [ -z "$1" ]
+	then
+		clear && pwd && git status
+	fi
+fi
+}
+
+# cd and ls
+ue(){
+cd "$1" && clear && pwd && echo '-----' && ls
+}
+
+# quick jumps to ~/myDrive
+drive(){
+
+if [[ "$1" ]]
+then
+    cd "$HOME"/myDrive/"$1" || return
+    pwd
+fi
+
+if [[ -z "$1" ]]
+then
+    cd "$HOME"/myDrive/ || return
+    pwd
+fi
+
+# HELP SYSTEM
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
+then
+	echo "'~'/.bash/functions drive"
+	echo "Bash function for quick navigation to directories located in ~/myDrive"
+	echo "USAGE"
+	echo "    drive OPTIONS"
+	echo "OPTIONS"
+	echo "  --help, -h, -?, help"
+	echo "      Display this page."
+	echo "  foo"
+	echo "      'cd ~/myDrive/foo"
+	echo "  bar"
+	echo "      'cd ~/myDrive/bar"
+fi
+}
+
+# https://unix.stackexchange.com/questions/6435/how-to-check-if-pwd-is-a-subdirectory-of-a-given-path
+org(){
+
+if [[ "$1" ]]
+then
+    cd "$HOME"/FilenSync/org/"$1" || return
+    pwd
+fi
+
+if [[ -z "$1" ]]
+then
+    cd "$HOME"/FilenSync/org/ || return
+    pwd
+fi
+
+# HELP SYSTEM
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
+then
+	echo "'~'/.bash/functions org"
+	echo "Bash function for quick navigation to directories located in"
+    echo "$HOME/FilenSync/org"
+	echo "USAGE"
+	echo "    drive OPTIONS"
+	echo "OPTIONS"
+	echo "  --help, -h, -?, help"
+	echo "      Display this page."
+	echo "  foo"
+	echo "      'cd ~/FilenSync/org/foo"
+	echo "  bar"
+	echo "      'cd ~/FilenSync/org/bar"
+fi
+}
+
+# sort by size
+dusort() {
+
+if [[ -z "$1" ]]
+then
+	du -sh ./* | sort -h
+fi
+
+if [[ "$1" == "-1" ]]
+then
+	du -h ./* -d 1 | sort -h
+fi
+
+# HELP SYSTEM
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
+then
+	echo "'~'/.bash/functions dusort"
+	echo "Bash function for sorting files/directories by size"
+	echo "USAGE"
+	echo "    dusort OPTIONS"
+	echo "OPTIONS"
+	echo "  --help, -h, -?, help"
+	echo "      Display this page."
+	echo "  -1"
+	echo "      With 1 more depth level."
+fi
+
+}
+
+weather(){
+	if [[ -z "$1"  ]]
+	then
+		wget -qO- wttr.in/Villarrica+Chile?Fm | less -R
+	else
+		wget -qO- wttr.in/"$1"?Fm | less -R
+	fi
+}
+
+cheat (){
+	if [[ -z "$1"  ]]
+	then
+                curl cheat.sh | less --RAW-CONTROL-CHARS
+	else
+                curl cheat.sh/"$1" | less --RAW-CONTROL-CHARS
+	fi
+}
+
+red (){
+	if [[ -z "$1"  ]]
+	then
+                redshift -x
+	else
+                redshift -O "$1"
+	fi
+}
+
+psaux(){
+  # select 2nd and lats field with awk
+  ps aux | awk '{print $2, $NF}' | less -S
+}
+
+lights(){
+case "$1" in
+    on)
+	  ~/bin/set_theme_to_light ;;
+    off)
+	  ~/bin/set_theme_to_dark ;;
+esac
+}
+#+end_src
+
+* Environments
