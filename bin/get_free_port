@@ -12,9 +12,11 @@ usage() {
   general:
     -h, --help, -?      print this message
 
- if OS is linux it will ...
+ GNU/Linux not implemented
 
- if OS is macOS it will ...
+ if OS is macOS it will
+
+        python3 -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()'
 
 EOF
 }

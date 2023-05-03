@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+usage() {
+    cat <<EOF
+'set_theme_to_dark' usage:
+  general:
+    -h, --help, -?      print this message
+
+ GNU/Linux not implemented.
+
+ if OS is macOS it will run the following:
+
+    osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to false'
+
+EOF
+}
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
+    usage
+    exit 0
+fi
+
+# function linux_case() {}
+
+function darwin_case() {
+    osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to false'
+}
+
+os=$("$HOME"/bin/detect_os)
+
+case $os in
+    linux)
+        linux_case ;;
+    darwin)
+        darwin_case ;;
+    *)
+        printf "Not either linux nor darwin\n"
+        exit 1;;
+esac
