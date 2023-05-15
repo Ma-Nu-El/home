@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: personal-org-latex-table-of-equations
+# key: personal-org-latex-table-of-equations
+# condition: t
+# --
+#+latex_header: \usepackage{tocloft}
+
+#+begin_src latex
+\newcommand{\listequationsname}{List of Equations}
+\newlistof{myequations}{equ}{\listequationsname}
+\newcommand{\myequations}[1]{%
+\addcontentsline{equ}{myequations}{\protect\numberline{\theequation}#1}\par}
+#+end_src
+
+# Insert table of equations here:
+
+@@latex:\listofmyequations@@

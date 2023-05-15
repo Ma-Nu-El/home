@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: personal-python3-script
+# key: personal-python3-script
+# condition: t
+# --
+#+begin_src bash :tangle ${1:  insert filename} :shebang "#!/usr/bin/env python3" :tangle-mode (identity #o755)
+
+${2:  body}
+#+end_src

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: personal-simple-time-stamp
+# key: personal-simple-time-stamp
+# --
+`(format-time-string "%Y%m%d%H%M%S")`
