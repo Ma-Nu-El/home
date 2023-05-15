@@ -65,11 +65,9 @@ alias lah='ls -lah'
 # alias dusort='du -sh * | sort -h' # sort by siz # made function: ./functions
 alias eo='clear && pwd && echo '-----' && ls' # was 'pa', but was the most used one so now is more ergo
 # https://superuser.com/questions/250227/how-do-i-see-what-my-most-used-linux-command-are
-alias eoa='clear && pwd && echo '-----' && ls -a' # same deal but with hidden files
-alias eol='clear && pwd && echo '-----' && ls -1' # was 'pa', but was the most used one so now is more ergo
-alias eola='clear && pwd && echo '-----' && ls -1a' # was 'pa', but was the most used one so now is more ergo
-alias hpa='cd ~ && clear && pwd && echo '-----' && ls'
-alias hpaa='cd ~ && clear && pwd && echo '-----' && ls -a'
+alias eoa='clear && pwd && echo '-----' && ls -a' # with hidden files
+alias eou='clear && pwd && echo '-----' && ls -1' # as list
+alias eoua='clear && pwd && echo '-----' && ls -1a' # as list with hidden files
 alias lagrep='ls -a | grep -i' # append your simple grep search, case insensitive
 
 # quick navigation
