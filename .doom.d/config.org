@@ -1022,7 +1022,7 @@ or
 : ~/FilenSync/org/bibliography.bib
 
 but the one that works is
-#+begin_src emacs-lisp :results value
+#+begin_src elisp
 (setq org-cite-global-bibliography '("~/FilenSync/org/bibliography.bib"))
 #+end_src
 
