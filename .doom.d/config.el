@@ -238,12 +238,18 @@
      '(
       ("w" "Work" entry (file "~/FilenSync/org/refile.org")
          "* %u %?\n# - %U\n\n" :clock-in nil)
+      ("W" "Work Citation" entry (file "~/FilenSync/org/bibliography.org")
+         "* %u\n# - %U\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
       ("p" "Personal" entry (file "~/auxRoam/refile.org")
          "* %u %?\n# - %U\n\n" :clock-in nil)
+      ("P" "Personal Citation" entry (file "~/auxRoam/bibliography.org")
+         "* %u\n# - %U\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
 ))
 
 (use-package! org-glossary
   :hook (org-mode . org-glossary-mode))
+
+(setq org-cite-global-bibliography '("~/FilenSync/org/bibliography.bib"))
 
 )
 ;; END AFTER ORG

@@ -50,6 +50,7 @@ lookup            ; navigate your code and its documentation
 lsp
 pdf               ; pdf enhancements
 magit             ; a git porcelain for Emacs
+biblio
 
 :lang
 

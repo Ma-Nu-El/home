@@ -1,6 +1,8 @@
 #+TITLE: Config File
 #+PROPERTY: header-args :tangle ~/.doom.d/config.el :results silent
-#+latex_header: \usepackage[utf8x]{inputenc}
+
+#+bibliography: "~/FilenSync/org/bibliography.bib"
+#+cite_export: basic
 
 * Table of Contents :TOC_2:noexport:
 - [[#shebang][shebang]]
@@ -49,6 +51,7 @@
   - [[#org-capture][org-capture]]
   - [[#org-ref][org-ref]]
   - [[#org-glossary][org-glossary]]
+  - [[#org-cite][org-cite]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
@@ -61,6 +64,7 @@
 - [[#custom-set-variables][custom set variables]]
 - [[#60-char-ruler][60 char ruler]]
 - [[#git-gutter][git gutter]]
+- [[#bibliography][Bibliography]]
 - [[#footnotes][Footnotes]]
 
 * shebang
@@ -947,8 +951,12 @@ mistake. I'll simply have to be more careful.
      '(
       ("w" "Work" entry (file "~/FilenSync/org/refile.org")
          "* %u %?\n# - %U\n\n" :clock-in nil)
+      ("W" "Work Citation" entry (file "~/FilenSync/org/bibliography.org")
+         "* %u\n# - %U\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
       ("p" "Personal" entry (file "~/auxRoam/refile.org")
          "* %u %?\n# - %U\n\n" :clock-in nil)
+      ("P" "Personal Citation" entry (file "~/auxRoam/bibliography.org")
+         "* %u\n# - %U\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
 ))
 #+end_src
 
@@ -988,6 +996,43 @@ I use Beorg on mobile to capture stuff on my phone. And for funsies I set up my 
 (use-package! org-glossary
   :hook (org-mode . org-glossary-mode))
 #+end_src
+
+** org-cite
+# - [2023-05-03 Wed 12:35]
+
+- As in [cite:@ref_20230503125135]
+
+
+I want to use either:
+
+#+begin_example emacs-lisp
+(setq org-cite-global-bibliography (concat org-directory "bibliography.bib"))
+#+end_example
+
+#+RESULTS:
+: ~/FilenSync/org/bibliography.bib
+
+or
+
+#+begin_example emacs-lisp
+(setq org-cite-global-bibliography (concat (file-name-as-directory org-directory) "bibliography.bib"))
+#+end_example
+
+#+RESULTS:
+: ~/FilenSync/org/bibliography.bib
+
+but the one that works is
+#+begin_src emacs-lisp :results value
+(setq org-cite-global-bibliography '("~/FilenSync/org/bibliography.bib"))
+#+end_src
+
+#+RESULTS:
+: (~/FilenSync/org/bibliography.bib)
+
+Notice that the one that works outputs
+: ("~/FilenSync/org/bibliography.bib")
+where as the others output
+: "~/FilenSync/org/bibliography.bib"
 
 * end org section
 :PROPERTIES:
@@ -1151,6 +1196,8 @@ I use Beorg on mobile to capture stuff on my phone. And for funsies I set up my 
 #+begin_src elisp
 (global-git-gutter-mode +1)
 #+end_src
+* Bibliography
+: #+print_bibliography:
 
 * Footnotes
 
