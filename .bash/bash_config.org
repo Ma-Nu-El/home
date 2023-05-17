@@ -169,6 +169,8 @@ alias install_tmux_plugins='git clone https://github.com/tmux-plugins/tpm ~/.tmu
 
 ### Docker
 alias dk='docker'
+alias dkc='docker-compose'
+alias dkn='docker network'
 
 ### lights off and on
 alias loff='lights off'
