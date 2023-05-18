@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# - [2023-05-18 Thu 12:01]
+#
+
+usage() {
+    cat <<EOF
+'custom_docker_general_status' usage:
+  general:
+    -h, --help, -?      print this message
+
+ GNU/Linux not implemented
+
+ if OS is macOS it will print a general status
+ of docker networks, images and containers
+
+EOF
+}
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
+    usage
+    exit 0
+fi
+
+function darwin_case() {
+    clear
+    cd "$HOME" || exit
+    printf "\n"
+    printf "=============== \n"
+    printf "Docker networks \n"
+    printf "=============== \n"
+    printf "\n"
+    docker network ls
+    printf "\n"
+    printf "============= \n"
+    printf "Docker images \n"
+    printf "============= \n"
+    printf "\n"
+    docker images
+    printf "\n"
+    printf "================= \n"
+    printf "Docker containers \n"
+    printf "================= \n"
+    printf "\n"
+    docker ps -a
+}
+
+os=$("$HOME"/bin/detect_os)
+
+case $os in
+    linux)
+        linux_case ;;
+    darwin)
+        darwin_case ;;
+    *)
+        printf "Not either linux nor darwin\n"
+        exit 1;;
+esac
