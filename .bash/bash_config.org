@@ -80,6 +80,7 @@ alias ......='cd ../../../../../' # cd up 5 times
 alias .......='cd ../../../../../' # cd up 6 times
 alias ........='cd ../../../../../' # cd up 7 times
 alias E='exit'
+alias q='exit'
 alias 1='~/Desktop'
 alias 2='~/Downloads'
 alias 3='~/Documents'
@@ -117,7 +118,7 @@ alias hh='echo 'https://github.com/Ma-Nu-El/home''
 alias match='matchfilename'
 alias x='command -v'
 alias X='command -V'
-alias les='less --RAW-CONTROL-CHARS'
+alias L='less --RAW-CONTROL-CHARS'
 alias cht='cheat' # defined in ~/.bash/functions
 alias jj='jobs -l'
 alias agenda="~/bin/agenda.py | less -R"
@@ -168,15 +169,26 @@ alias install_doom_emacs='git clone --depth 1 https://github.com/doomemacs/doome
 alias install_tmux_plugins='git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm' # install packages on fresh OS
 
 ### Docker
+
 alias dk='docker'
-alias dkc='docker-compose'
-alias dkn='docker network'
-alias dkg='custom_docker_general_status | less --RAW-CONTROL-CHARS'
+alias dknet='docker network'
+alias dkcont='docker container'
+alias dkimg='docker image'
+alias dknets='docker network ls'
+alias dkconts='docker ps -a'
+alias dkimgs='docker images'
+alias dkcomp='docker-compose'
+alias dkg='custom_docker_general_status | less --RAW-CONTROL-CHARS --chop-long-lines'
 
 ### lights off and on
 alias loff='lights off'
 alias lon='lights on'
+
+## autogpt (chat-GPT)
+alias agpt='~/bin/auto_gpt_fire_up'
 #+end_src
+
+#+RESULTS:
 
 * Functions
 
