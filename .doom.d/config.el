@@ -249,7 +249,7 @@
 (use-package! org-glossary
   :hook (org-mode . org-glossary-mode))
 
-(setq org-cite-global-bibliography '("~/FilenSync/org/bibliography.bib"))
+(setq org-hierarchical-todo-statistics nil)
 
 )
 ;; END AFTER ORG

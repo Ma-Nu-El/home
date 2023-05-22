@@ -1,6 +1,5 @@
 #+TITLE: Config File
 #+PROPERTY: header-args :tangle ~/.doom.d/config.el :results silent
-
 #+bibliography: "~/FilenSync/org/bibliography.bib"
 #+cite_export: basic
 
@@ -52,6 +51,7 @@
   - [[#org-ref][org-ref]]
   - [[#org-glossary][org-glossary]]
   - [[#org-cite][org-cite]]
+  - [[#recursive-todo-cookie-statistics][recursive TODO cookie statistics]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
@@ -1022,9 +1022,9 @@ or
 : ~/FilenSync/org/bibliography.bib
 
 but the one that works is
-#+begin_src elisp
+#+begin_example elisp
 (setq org-cite-global-bibliography '("~/FilenSync/org/bibliography.bib"))
-#+end_src
+#+end_example
 
 #+RESULTS:
 : (~/FilenSync/org/bibliography.bib)
@@ -1033,6 +1033,18 @@ Notice that the one that works outputs
 : ("~/FilenSync/org/bibliography.bib")
 where as the others output
 : "~/FilenSync/org/bibliography.bib"
+
+** recursive TODO cookie statistics
+# - [2023-05-18 Thu 11:20]
+- [cite:@org_recursive_todo_statistics]
+
+#+begin_src elisp
+(setq org-hierarchical-todo-statistics nil)
+#+end_src
+: (setq org-hierarchical-todo-statistics 'recursive)
+: (setq org-hierarchical-todo-statistics '(recursive))
+: (setq org-hierarchical-todo-statistics "recursive")
+: (setq org-hierarchical-todo-statistics '("recursive"))
 
 * end org section
 :PROPERTIES:
