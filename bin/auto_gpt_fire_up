@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+usage() {
+    cat <<EOF
+'auto_gpt_fire_up' usage:
+  general:
+    -h, --help, -?      print this message
+
+ GNU/Linux not implemented
+
+ if OS is macOS it will fire up a
+ container with auto-gpt
+
+EOF
+}
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
+    usage
+    exit 0
+fi
+
+function darwin_case() {
+    # body
+    cd ~/opt/auto-gpt/ || exit
+    docker compose run --rm auto-gpt
+}
+
+os=$("$HOME"/bin/detect_os)
+
+case $os in
+    linux)
+        linux_case ;;
+    darwin)
+        darwin_case ;;
+    *)
+        printf "Not either linux nor darwin\n"
+        exit 1;;
+esac

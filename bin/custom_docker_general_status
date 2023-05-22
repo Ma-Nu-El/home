@@ -31,17 +31,17 @@ function darwin_case() {
     printf "\n"
     docker network ls
     printf "\n"
-    printf "============= \n"
-    printf "Docker images \n"
-    printf "============= \n"
-    printf "\n"
-    docker images
-    printf "\n"
     printf "================= \n"
     printf "Docker containers \n"
     printf "================= \n"
     printf "\n"
     docker ps -a
+    printf "\n"
+    printf "============= \n"
+    printf "Docker images \n"
+    printf "============= \n"
+    printf "\n"
+    docker images
 }
 
 os=$("$HOME"/bin/detect_os)
