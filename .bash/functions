@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-#!/usr/bin/env bash
-
 set -o pipefail
 
 manuclone(){
@@ -14,7 +12,6 @@ manuclone(){
 }
 
 #quick useful defaults
-
 
 # cd and git status into directory
 cd-and-git-status(){
@@ -35,51 +32,36 @@ ue(){
 cd "$1" && clear && pwd && echo '-----' && ls
 }
 
-# quick jumps to ~/myDrive
+# quick jumps to $MY_DRIVE
 drive(){
 
 if [[ "$1" ]]
 then
-    cd "$HOME"/myDrive/"$1" || return
+    cd "$MY_DRIVE"/"$1" || return
     pwd
 fi
 
 if [[ -z "$1" ]]
 then
-    cd "$HOME"/myDrive/ || return
+    cd "$MY_DRIVE" || return
     pwd
 fi
 
-# HELP SYSTEM
-
-if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
-then
-	echo "'~'/.bash/functions drive"
-	echo "Bash function for quick navigation to directories located in ~/myDrive"
-	echo "USAGE"
-	echo "    drive OPTIONS"
-	echo "OPTIONS"
-	echo "  --help, -h, -?, help"
-	echo "      Display this page."
-	echo "  foo"
-	echo "      'cd ~/myDrive/foo"
-	echo "  bar"
-	echo "      'cd ~/myDrive/bar"
-fi
 }
+
 
 # https://unix.stackexchange.com/questions/6435/how-to-check-if-pwd-is-a-subdirectory-of-a-given-path
 org(){
 
 if [[ "$1" ]]
 then
-    cd "$HOME"/FilenSync/org/"$1" || return
+    cd "$HOME"/"$MY_DRIVE"/org/"$1" || return
     pwd
 fi
 
 if [[ -z "$1" ]]
 then
-    cd "$HOME"/FilenSync/org/ || return
+    cd "$HOME"/"$MY_DRIVE"/org/ || return
     pwd
 fi
 
@@ -89,16 +71,16 @@ if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
 then
 	echo "'~'/.bash/functions org"
 	echo "Bash function for quick navigation to directories located in"
-    echo "$HOME/FilenSync/org"
+    echo "$HOME/"$MY_DRIVE"/org"
 	echo "USAGE"
 	echo "    drive OPTIONS"
 	echo "OPTIONS"
 	echo "  --help, -h, -?, help"
 	echo "      Display this page."
 	echo "  foo"
-	echo "      'cd ~/FilenSync/org/foo"
+	echo "      'cd ~/"$MY_DRIVE"/org/foo"
 	echo "  bar"
-	echo "      'cd ~/FilenSync/org/bar"
+	echo "      'cd ~/"$MY_DRIVE"/org/bar"
 fi
 }
 

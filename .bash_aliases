@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # TODO directory history?
 # environment variables
-. ~/.bash/env
+. "$HOME"/.bash/env
 # prompt
-. ~/.bash/prompt
+. "$HOME"/.bash/prompt
 ### shopt ###
-. ~/.bash/shopt
+. "$HOME"/.bash/shopt
 ### aliases ###
-. ~/.bash/aliases
+. "$HOME"/.bash/aliases
 ### functions ###
-. ~/.bash/functions
+. "$HOME"/.bash/functions
 ### MISC
 ### vi ###
 git config --global core.editor "vi"

@@ -79,7 +79,7 @@ alias 3='~/Documents'
 alias 4='~/Pictures'
 alias 5='~/Videos'
 alias 6='~/Music'
-alias 11='~/FilenSync' # cloud directory
+alias 11='~/"$MY_DRIVE"' # cloud directory
 
 # quick editor
 
@@ -166,11 +166,14 @@ alias dk='docker'
 alias dknet='docker network'
 alias dkcont='docker container'
 alias dkimg='docker image'
+alias dkvol='docker volume'
 alias dknets='docker network ls'
 alias dkconts='docker ps -a'
 alias dkimgs='docker images'
+alias dkvols='docker volume ls'
 alias dkcomp='docker-compose'
 alias dkg='custom_docker_general_status | less --RAW-CONTROL-CHARS --chop-long-lines'
+alias dkshell='docker run --rm --name custom_dkshell -it --privileged --pid=host walkerlee/nsenter -t 1 -m -u -i -n sh'
 
 ### lights off and on
 alias loff='lights off'

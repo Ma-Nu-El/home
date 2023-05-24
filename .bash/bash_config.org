@@ -87,7 +87,7 @@ alias 3='~/Documents'
 alias 4='~/Pictures'
 alias 5='~/Videos'
 alias 6='~/Music'
-alias 11='~/FilenSync' # cloud directory
+alias 11='~/"$MY_DRIVE"' # cloud directory
 
 # quick editor
 
@@ -174,11 +174,14 @@ alias dk='docker'
 alias dknet='docker network'
 alias dkcont='docker container'
 alias dkimg='docker image'
+alias dkvol='docker volume'
 alias dknets='docker network ls'
 alias dkconts='docker ps -a'
 alias dkimgs='docker images'
+alias dkvols='docker volume ls'
 alias dkcomp='docker-compose'
 alias dkg='custom_docker_general_status | less --RAW-CONTROL-CHARS --chop-long-lines'
+alias dkshell='docker run --rm --name custom_dkshell -it --privileged --pid=host walkerlee/nsenter -t 1 -m -u -i -n sh'
 
 ### lights off and on
 alias loff='lights off'
@@ -193,7 +196,6 @@ alias agpt='~/bin/auto_gpt_fire_up'
 * Functions
 
 #+begin_src bash :tangle ./functions :shebang "#!/usr/bin/env bash" :tangle-mode (identity #o755)
-#!/usr/bin/env bash
 
 set -o pipefail
 
@@ -208,7 +210,6 @@ manuclone(){
 }
 
 #quick useful defaults
-
 
 # cd and git status into directory
 cd-and-git-status(){
@@ -229,36 +230,18 @@ ue(){
 cd "$1" && clear && pwd && echo '-----' && ls
 }
 
-# quick jumps to ~/myDrive
+# quick jumps to $MY_DRIVE
 drive(){
-
 if [[ "$1" ]]
 then
-    cd "$HOME"/myDrive/"$1" || return
+    cd "$MY_DRIVE"/"$1" || return
     pwd
 fi
 
 if [[ -z "$1" ]]
 then
-    cd "$HOME"/myDrive/ || return
+    cd "$MY_DRIVE" || return
     pwd
-fi
-
-# HELP SYSTEM
-
-if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
-then
-	echo "'~'/.bash/functions drive"
-	echo "Bash function for quick navigation to directories located in ~/myDrive"
-	echo "USAGE"
-	echo "    drive OPTIONS"
-	echo "OPTIONS"
-	echo "  --help, -h, -?, help"
-	echo "      Display this page."
-	echo "  foo"
-	echo "      'cd ~/myDrive/foo"
-	echo "  bar"
-	echo "      'cd ~/myDrive/bar"
 fi
 }
 
@@ -267,13 +250,13 @@ org(){
 
 if [[ "$1" ]]
 then
-    cd "$HOME"/FilenSync/org/"$1" || return
+    cd "$HOME"/"$MY_DRIVE"/org/"$1" || return
     pwd
 fi
 
 if [[ -z "$1" ]]
 then
-    cd "$HOME"/FilenSync/org/ || return
+    cd "$HOME"/"$MY_DRIVE"/org/ || return
     pwd
 fi
 
@@ -283,16 +266,16 @@ if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || $1 == 'help' ]]
 then
 	echo "'~'/.bash/functions org"
 	echo "Bash function for quick navigation to directories located in"
-    echo "$HOME/FilenSync/org"
+    echo "$HOME/"$MY_DRIVE"/org"
 	echo "USAGE"
 	echo "    drive OPTIONS"
 	echo "OPTIONS"
 	echo "  --help, -h, -?, help"
 	echo "      Display this page."
 	echo "  foo"
-	echo "      'cd ~/FilenSync/org/foo"
+	echo "      'cd ~/"$MY_DRIVE"/org/foo"
 	echo "  bar"
-	echo "      'cd ~/FilenSync/org/bar"
+	echo "      'cd ~/"$MY_DRIVE"/org/bar"
 fi
 }
 
@@ -369,3 +352,18 @@ esac
 #+end_src
 
 * Environments
+
+#+begin_src bash :tangle ./env :shebang "#!/usr/bin/env bash" :tangle-mode (identity #o755)
+# https://google.github.io/styleguide/shellguide.html#s7-naming-conventions
+# https://unix.stackexchange.com/questions/42847/are-there-naming-conventions-for-variables-in-shell-scripts
+export MY_ALIASES="$HOME/.bash/aliases"
+export MY_PROMPT="$HOME/.bash/prompt"
+export MY_FUNCTIONS="$HOME/.bash/functions"
+export LV2_PATH="/usr/local/lib/lv2:/usr/lib/lv2:$HOME/.lv2"
+# https://discourse.ardour.org/t/lsp-plugins-package-version-1-0-20-is-out/90340/5
+# https://stackoverflow.com/questions/21131590/how-to-add-multiple-path-in-path-variable-linux
+export PASSWORD_STORE_ENABLE_EXTENSIONS=true
+# https://www.passwordstore.org/
+# https://git.zx2c4.com/password-store/about/
+export MY_DRIVE="$HOME"/FilenSync
+#+end_src

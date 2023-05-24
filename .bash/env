@@ -10,3 +10,4 @@ export LV2_PATH="/usr/local/lib/lv2:/usr/lib/lv2:$HOME/.lv2"
 export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 # https://www.passwordstore.org/
 # https://git.zx2c4.com/password-store/about/
+export MY_DRIVE="$HOME"/FilenSync
