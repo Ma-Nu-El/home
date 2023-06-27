@@ -251,7 +251,7 @@
 
 (setq org-hierarchical-todo-statistics nil)
 
-(setq org-use-sub-superscripts "{}")
+(setq org-export-with-sub-superscripts nil)
 
 )
 ;; END AFTER ORG

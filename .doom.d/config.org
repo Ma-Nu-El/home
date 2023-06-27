@@ -1050,8 +1050,11 @@ where as the others output
 ** underscore and hat handling
 # - [2023-06-23 Fri 16:52]
 
+
+For some reasong this won't work.
+
 #+begin_src elisp
-(setq org-use-sub-superscripts "{}")
+(setq org-export-with-sub-superscripts nil)
 #+end_src
 
 - [[https://www.gnu.org/software/emacs/manual/html_node/org/Subscripts-and-Superscripts.html][Subscripts and Superscripts (The Org Manual)]]
