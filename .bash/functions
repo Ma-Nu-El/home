@@ -34,7 +34,6 @@ cd "$1" && clear && pwd && echo '-----' && ls
 
 # quick jumps to $MY_DRIVE
 drive(){
-
 if [[ "$1" ]]
 then
     cd "$MY_DRIVE"/"$1" || return
@@ -46,9 +45,7 @@ then
     cd "$MY_DRIVE" || return
     pwd
 fi
-
 }
-
 
 # https://unix.stackexchange.com/questions/6435/how-to-check-if-pwd-is-a-subdirectory-of-a-given-path
 org(){
@@ -112,15 +109,6 @@ then
 	echo "      With 1 more depth level."
 fi
 
-}
-
-weather(){
-	if [[ -z "$1"  ]]
-	then
-		wget -qO- wttr.in/Villarrica+Chile?Fm | less -R
-	else
-		wget -qO- wttr.in/"$1"?Fm | less -R
-	fi
 }
 
 cheat (){

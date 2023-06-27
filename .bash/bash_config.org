@@ -150,7 +150,7 @@ alias gpgrestart='gpgconf --kill gpg-agent'
 alias ddirs='~/bin/detectdirectories'
 alias sessions='~/Ardour/'
 #alias agenda='xdg-open &>/dev/null ~/org/agenda.html'
-alias wea='weather'
+alias wea='"$HOME"/bin/weather'
 alias syncthing_gui='echo 'http://localhost:8384/''
 alias cw='clockywock'
 alias ow='mimeopen -d'
@@ -307,15 +307,6 @@ then
 	echo "      With 1 more depth level."
 fi
 
-}
-
-weather(){
-	if [[ -z "$1"  ]]
-	then
-		wget -qO- wttr.in/Villarrica+Chile?Fm | less -R
-	else
-		wget -qO- wttr.in/"$1"?Fm | less -R
-	fi
 }
 
 cheat (){

@@ -1,7 +1,39 @@
 #!/usr/bin/env bash
-if [[ -z "$1"  ]]
-then
-    wget -qO- wttr.in/Villarrica+Chile?TFm
-else
-    wget -qO- wttr.in/"$1"?TFm
+
+set -o pipefail
+
+usage() {
+    cat <<EOF
+'NAME_OF_SCRIPT' usage:
+  general:
+    -h, --help, -?      print this message
+
+ GNU/Linux not implemented.
+
+ if OS is macOS it will fetch weather
+ from wttr.in via wget.
+
+EOF
+}
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
+    usage
+    exit 0
 fi
+
+function darwin_case() {
+  if [[ -z "$1"  ]]
+  then
+      wget -qO- wttr.in/"$1"?TFm | less -R
+  fi
+}
+
+os=$("$HOME"/bin/detect_os)
+
+case $os in
+    darwin)
+        darwin_case "$1" ;;
+    *)
+        printf "Not either linux nor darwin\n"
+        exit 1;;
+esac
