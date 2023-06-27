@@ -142,3 +142,8 @@ case "$1" in
 	  ~/bin/set_theme_to_dark ;;
 esac
 }
+
+now(){
+    date "+%Y-%m-%d %H:%M:%S" && \
+    gcal --starting-day=1 --with-week-number --highlighting=no
+}

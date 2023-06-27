@@ -131,7 +131,6 @@ alias ptt='tree -C | less -R'
 alias O='~/bin/open_and_open_with'
 alias openwith='mimeopen -a'
 alias chmodx='chmod +x'
-alias now='date && cal'
 alias de='deploy encrypt'
 alias dd='deploy decrypt'
 alias fire='firefox --private-window >/dev/null 2>/dev/null &'
@@ -339,6 +338,11 @@ case "$1" in
     off)
 	  ~/bin/set_theme_to_dark ;;
 esac
+}
+
+now(){
+    date "+%Y-%m-%d %H:%M:%S" && \
+    gcal --starting-day=1 --with-week-number --highlighting=no
 }
 #+end_src
 
