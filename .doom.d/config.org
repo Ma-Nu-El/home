@@ -52,6 +52,7 @@
   - [[#org-glossary][org-glossary]]
   - [[#org-cite][org-cite]]
   - [[#recursive-todo-cookie-statistics][recursive TODO cookie statistics]]
+  - [[#underscore-and-hat-handling][underscore and hat handling]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
@@ -64,7 +65,6 @@
 - [[#custom-set-variables][custom set variables]]
 - [[#60-char-ruler][60 char ruler]]
 - [[#git-gutter][git gutter]]
-- [[#bibliography][Bibliography]]
 - [[#footnotes][Footnotes]]
 
 * shebang
@@ -1041,10 +1041,20 @@ where as the others output
 #+begin_src elisp
 (setq org-hierarchical-todo-statistics nil)
 #+end_src
+
 : (setq org-hierarchical-todo-statistics 'recursive)
 : (setq org-hierarchical-todo-statistics '(recursive))
 : (setq org-hierarchical-todo-statistics "recursive")
 : (setq org-hierarchical-todo-statistics '("recursive"))
+
+** underscore and hat handling
+# - [2023-06-23 Fri 16:52]
+
+#+begin_src elisp
+(setq org-use-sub-superscripts "{}")
+#+end_src
+
+- [[https://www.gnu.org/software/emacs/manual/html_node/org/Subscripts-and-Superscripts.html][Subscripts and Superscripts (The Org Manual)]]
 
 * end org section
 :PROPERTIES:
@@ -1208,8 +1218,6 @@ where as the others output
 #+begin_src elisp
 (global-git-gutter-mode +1)
 #+end_src
-* Bibliography
-: #+print_bibliography:
 
 * Footnotes
 
