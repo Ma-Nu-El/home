@@ -1,3 +1,4 @@
+# - [2021-05-31 Mon]
 # home
 dotfiles and submodules
 
