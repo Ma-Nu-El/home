@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# - [2023-07-09 Sun 02:44]
+# Personal docker aliases
+# Implemented:
+#   R
+
+set -o pipefail
+
+docker run \
+    --name docky-R \
+    --rm \
+    -it \
+    r-base
