@@ -41,7 +41,7 @@ ibuffer         ; interactive buffer management
 :checkers
 syntax            ; tasing you for every semicolon you forget
 ;; (spell +aspell)             ; tasing you for misspelling mispelling
-grammar           ; tasing grammar mistake every you make
+;; grammar           ; tasing grammar mistake every you make
 
 :tools
 (debugger +lsp)          ; FIXME stepping through code, to help you add bugs
