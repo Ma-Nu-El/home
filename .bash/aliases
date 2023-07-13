@@ -58,13 +58,14 @@ alias lah='ls -lah'
 alias eo='clear && pwd && echo '-----' && ls' # was 'pa', but was the most used one so now is more ergo
 # https://superuser.com/questions/250227/how-do-i-see-what-my-most-used-linux-command-are
 alias eoa='clear && pwd && echo '-----' && ls -a' # with hidden files
-alias eou='clear && pwd && echo '-----' && ls -1' # as list
+alias e='clear && pwd && echo '-----' && ls -1' # as list
 alias eoua='clear && pwd && echo '-----' && ls -1a' # as list with hidden files
 alias lagrep='ls -a | grep -i' # append your simple grep search, case insensitive
 
 # quick navigation
 
 alias cdc='clear && cd ~ && pwd && echo -----'
+alias k='cd ../ && clear && pwd && echo '-----' && ls -1'
 alias ...='cd ../../' # cd up 2 times
 alias ....='cd ../../../' # cd up 3 times
 alias .....='cd ../../../../' # cd up 4 times
@@ -84,7 +85,6 @@ alias 11='~/"$MY_DRIVE"' # cloud directory
 # quick editor
 
 alias v='vim'
-alias e='emacs -nw' # opens new instance of emacs in the terminal: no GUI
 alias ee='clear && cd ~ && emacs -nw' # same but from home directory
 alias ed='emacs --daemon' # creates default emacs server named 'server'
 alias ec='emacsclient -t' # attach to the default emacs server
@@ -132,7 +132,6 @@ alias the='cd-and-git-status'
 alias detectdir='detectdirectories'
 alias speed='speedtest --simple --bytes'
 alias dvorak='sudo loadkeys dvorak'
-alias eva='cat ~/org/uni/org/2020-2/evaluaciones.txt'
 #alias bat='~/bin/manu-battery'
 alias bat='~/bin/battery'
 alias batp='~/bin/battery -p'
