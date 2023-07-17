@@ -4,11 +4,73 @@
 # Personal docker aliases
 # Implemented:
 #   R
+# TODO : implement arguments to R so
+# it gives silent output ?
+#
+# TODO : ubuntu server
+# - to test apps
+# TODO : bash
+# - to test fun bash scripts
 
 set -o pipefail
 
-docker run \
-    --name docky-R \
-    --rm \
-    -it \
-    r-base
+usage() {
+    cat <<EOF
+'docky' usage:
+  general:
+    -h, --help, -?      print this message
+
+ Suite for docker aliases
+
+EOF
+}
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || -z $1 ]]; then
+    usage
+    exit 0
+fi
+
+function hello () {
+    printf "hello world. \n"
+}
+
+function quick_r (){
+  docker run \
+      --name docky-R \
+      --rm \
+      -it \
+      r-base bash -c "R --quiet --no-save"
+}
+
+#docker run \
+#    --name ubuntu \
+#    --rm \
+#    -it \
+#    ubuntu ? 
+
+#docker run \
+#    --name ubuntu \
+#    --rm \
+#    -it \
+#    bash ?
+
+function darwin_case() {
+    var=$1
+    case $var in
+        "quick_r")
+            quick_r ;;
+        *)
+            printf "Function not found. \n"
+            exit 2;;
+    esac
+}
+
+os=$("$HOME"/bin/detect_os)
+
+case $os in
+    darwin)
+        darwin_case "$@" ;;
+    *)
+        printf "Not darwin OS \n"
+        exit 1;;
+esac
