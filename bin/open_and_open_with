@@ -17,17 +17,25 @@ cat <<EOF
 EOF
 }
 
-if [[ "$1" == '-h' || "$1" == '--help' || "$1" == '-?' || -z "$1" ]]; then
+if [[ "$1" == '-h' || "$1" == '--help' || "$1" == '-?' ]]; then
     usage
     exit 0
 fi
 
 function linux_case() {
+    if [[ -z "$1" ]]; then
+        xdg-open &>/dev/null ./
+    else
         xdg-open &>/dev/null "$1"
+    fi
 }
 
 function darwin_case() {
-        open "$1"
+    if [[ -z "$1" ]]; then
+        open ./
+    else
+        open  "$1"
+    fi
 }
 
 os=$("$HOME"/bin/detect_os)
