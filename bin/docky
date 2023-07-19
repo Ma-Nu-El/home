@@ -4,9 +4,6 @@
 # Personal docker aliases
 # Implemented:
 #   R
-# TODO : implement arguments to R so
-# it gives silent output ?
-#
 # TODO : ubuntu server
 # - to test apps
 # TODO : bash
@@ -30,13 +27,9 @@ if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || -z $1 ]]; then
     exit 0
 fi
 
-function hello () {
-    printf "hello world. \n"
-}
-
 function quick_r (){
   docker run \
-      --name docky-R \
+      --name docky-quick_R \
       --rm \
       -it \
       r-base bash -c "R --quiet --no-save"
