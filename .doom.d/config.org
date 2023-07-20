@@ -1063,9 +1063,9 @@ where as the others output
 - [[https://stackoverflow.com/questions/9092445/how-do-you-remove-numbering-from-headers-when-exporting-from-org-mode][emacs - How do you remove numbering from headers when exporting from org-mode? - Stack Overflow]]
 
 
-#+begin_src elisp
-(setq org-export-with-section-numbers nil)
-#+end_src
+: #+begin_src elisp
+: (setq org-export-with-section-numbers nil)
+: #+end_src
 
 * end org section
 :PROPERTIES:

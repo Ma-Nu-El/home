@@ -253,8 +253,6 @@
 
 (setq org-export-with-sub-superscripts nil)
 
-(setq org-export-with-section-numbers nil)
-
 )
 ;; END AFTER ORG
 
