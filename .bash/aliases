@@ -59,6 +59,7 @@ alias eo='clear && pwd && echo '-----' && ls' # was 'pa', but was the most used 
 # https://superuser.com/questions/250227/how-do-i-see-what-my-most-used-linux-command-are
 alias eoa='clear && pwd && echo '-----' && ls -a' # with hidden files
 alias e='clear && pwd && echo '-----' && ls -1' # as list
+alias h='cd - && clear && pwd && echo '-----' && ls -1' # as list
 alias eoua='clear && pwd && echo '-----' && ls -1a' # as list with hidden files
 alias lagrep='ls -a | grep -i' # append your simple grep search, case insensitive
 

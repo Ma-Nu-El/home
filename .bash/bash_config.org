@@ -74,6 +74,7 @@ alias lagrep='ls -a | grep -i' # append your simple grep search, case insensitiv
 
 alias cdc='clear && cd ~ && pwd && echo -----'
 alias k='cd ../ && clear && pwd && echo '-----' && ls -1'
+alias h='cd - && clear && pwd && echo '-----' && ls -1' # as list
 alias ...='cd ../../' # cd up 2 times
 alias ....='cd ../../../' # cd up 3 times
 alias .....='cd ../../../../' # cd up 4 times
