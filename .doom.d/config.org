@@ -53,7 +53,7 @@
   - [[#org-cite][org-cite]]
   - [[#recursive-todo-cookie-statistics][recursive TODO cookie statistics]]
   - [[#underscore-and-hat-handling][underscore and hat handling]]
-  - [[#disable-heading-numbering-during-exportt][disable heading numbering during exportt]]
+  - [[#disable-heading-numbering-during-export][disable heading numbering during export]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
@@ -1058,7 +1058,7 @@ where as the others output
 
 - [[https://www.gnu.org/software/emacs/manual/html_node/org/Subscripts-and-Superscripts.html][Subscripts and Superscripts (The Org Manual)]]
 
-** disable heading numbering during exportt
+** disable heading numbering during export
 # - [2023-07-08 Sat 23:58]
 - [[https://stackoverflow.com/questions/9092445/how-do-you-remove-numbering-from-headers-when-exporting-from-org-mode][emacs - How do you remove numbering from headers when exporting from org-mode? - Stack Overflow]]
 
