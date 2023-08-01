@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: personal-org-latex-font-size
+# condition: t
+# --
+#+LATEX_CLASS_OPTIONS: [12pt]

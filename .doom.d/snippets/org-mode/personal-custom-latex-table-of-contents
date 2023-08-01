@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: personal-custom-latex-table-of-contents
+# key:
+# --
+
+:TABLE_OF_CONTENTS:
+#+OPTIONS: toc:nil
+#+begin_export latex
+\setcounter{tocdepth}{1}  # set the depth
+\clearpage \tableofcontents \clearpage # exclusive page
+#+end_export
+:END:
