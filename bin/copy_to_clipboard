@@ -28,12 +28,12 @@ function linux_case() {
 }
 
 function darwin_case() {
-  if [[ -f $1 ]]; then # to copy file
+  if [[ -f $1 ]]; then   # to copy file
     pbcopy < "$1"
   elif [[ -z $1 ]]; then # to clean clipboard
     echo "" | pbcopy
   else
-    echo "$1" | pbcopy # to copy text
+    echo "$1" | pbcopy   # to copy text
   fi
 }
 
