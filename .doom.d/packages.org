@@ -174,7 +174,7 @@ Contained in [[https://github.com/emacsmirror/org-contrib][org-contrib]].
 - [[https://github.com/tecosaur/org-glossary][GitHub - tecosaur/org-glossary: Glossary, Acronyms, and Index capability within Org]]
 
 
-#+begin_src emacs-lisp
+# #+begin_src emacs-lisp
 (package! org-glossary
   :recipe (:host github :repo "tecosaur/org-glossary"))
-#+end_src
+# #+end_src

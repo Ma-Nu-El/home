@@ -993,10 +993,10 @@ I use Beorg on mobile to capture stuff on my phone. And for funsies I set up my 
 - [[https://github.com/tecosaur/org-glossary][GitHub - tecosaur/org-glossary: Glossary, Acronyms, and Index capability within Org]]
 
 
-#+begin_src emacs-lisp
+# #+begin_src emacs-lisp
 (use-package! org-glossary
   :hook (org-mode . org-glossary-mode))
-#+end_src
+# #+end_src
 
 ** org-cite
 # - [2023-05-03 Wed 12:35]

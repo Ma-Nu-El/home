@@ -246,9 +246,6 @@
          "* %u\n# - %U\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
 ))
 
-(use-package! org-glossary
-  :hook (org-mode . org-glossary-mode))
-
 (setq org-hierarchical-todo-statistics nil)
 
 (setq org-export-with-sub-superscripts nil)
