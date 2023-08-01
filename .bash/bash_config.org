@@ -124,6 +124,7 @@ alias cht='cheat' # defined in ~/.bash/functions
 alias jj='jobs -l'
 alias agenda="~/bin/agenda.py | less -R"
 alias ag="agenda"
+alias copy="~/bin/copy_to_clipboard"
 
 ## alias R="ranger" # commented out: messes with R called from within orgmode.
 

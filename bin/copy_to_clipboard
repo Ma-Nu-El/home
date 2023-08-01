@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# copy the content of a file to clipboard
+# https://askubuntu.com/questions/210413/what-is-the-command-line-equivalent-of-copying-a-file-to-clipboard
+
+usage() {
+    cat <<EOF
+'~bin/copy' usage:
+  general:
+    -h, --help, -?      print this message
+  1) copy < FILE
+  2) echo "TEXT" | copy
+EOF
+}
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || -z $1 ]]; then
+  usage
+  exit 0
+fi
+
+function linux_case() {
+  if [[ -f $1 ]]; then
+    xclip -i -selection clipboard < "$1"
+  else
+    echo "$1" | xclip -i -selection clipboard
+  fi
+}
+
+function darwin_case() {
+  if [[ -f $1 ]]; then
+    pbcopy < "$1"
+  else
+    echo "$1" | pbcopy
+  fi
+}
+
+os=$("$HOME"/bin/detect_os)
+
+case $os in
+    linux)
+        linux_case "$@" ;;
+    darwin)
+        darwin_case "$@" ;;
+    *)
+        printf "Not either linux nor darwin\n"
+        exit 1;;
+esac

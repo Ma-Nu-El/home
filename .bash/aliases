@@ -59,7 +59,6 @@ alias eo='clear && pwd && echo '-----' && ls' # was 'pa', but was the most used 
 # https://superuser.com/questions/250227/how-do-i-see-what-my-most-used-linux-command-are
 alias eoa='clear && pwd && echo '-----' && ls -a' # with hidden files
 alias e='clear && pwd && echo '-----' && ls -1' # as list
-alias h='cd - && clear && pwd && echo '-----' && ls -1' # as list
 alias eoua='clear && pwd && echo '-----' && ls -1a' # as list with hidden files
 alias lagrep='ls -a | grep -i' # append your simple grep search, case insensitive
 
@@ -67,6 +66,7 @@ alias lagrep='ls -a | grep -i' # append your simple grep search, case insensitiv
 
 alias cdc='clear && cd ~ && pwd && echo -----'
 alias k='cd ../ && clear && pwd && echo '-----' && ls -1'
+alias h='cd - && clear && pwd && echo '-----' && ls -1' # as list
 alias ...='cd ../../' # cd up 2 times
 alias ....='cd ../../../' # cd up 3 times
 alias .....='cd ../../../../' # cd up 4 times
@@ -116,6 +116,7 @@ alias cht='cheat' # defined in ~/.bash/functions
 alias jj='jobs -l'
 alias agenda="~/bin/agenda.py | less -R"
 alias ag="agenda"
+alias copy="~/bin/copy_to_clipboard"
 
 ## alias R="ranger" # commented out: messes with R called from within orgmode.
 
