@@ -5,31 +5,35 @@
 usage() {
     cat <<EOF
 '~bin/copy' usage:
-  general:
-    -h, --help, -?      print this message
-  1) copy < FILE
-  2) echo "TEXT" | copy
+  0) -h, --help, -?     # print this message
+  1) copy < FILE        # copy file content
+  2) copy               # clean clipboard
+  3) echo "TEXT" | copy # copy text
 EOF
 }
 
-if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' || -z $1 ]]; then
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
   usage
   exit 0
 fi
 
 function linux_case() {
-  if [[ -f $1 ]]; then
+  if [[ -f $1 ]]; then                        # to copy file
     xclip -i -selection clipboard < "$1"
+  elif [[ -z $1 ]]; then                      # to clean clipboard
+    echo "" | xclip -i -selection clipboard
   else
-    echo "$1" | xclip -i -selection clipboard
+    echo "$1" | xclip -i -selection clipboard # to copy text
   fi
 }
 
 function darwin_case() {
-  if [[ -f $1 ]]; then
+  if [[ -f $1 ]]; then # to copy file
     pbcopy < "$1"
+  elif [[ -z $1 ]]; then # to clean clipboard
+    echo "" | pbcopy
   else
-    echo "$1" | pbcopy
+    echo "$1" | pbcopy # to copy text
   fi
 }
 
