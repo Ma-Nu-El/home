@@ -19,6 +19,8 @@ usage() {
 
  Suite for docker aliases
 
+ - 'docky RR' quick, silent R console
+    as in 'R --quiet --no-save'
 EOF
 }
 
@@ -50,7 +52,7 @@ function quick_r (){
 function darwin_case() {
     var=$1
     case $var in
-        "quick_r")
+        "RR")
             quick_r ;;
         *)
             printf "Function not found. \n"
