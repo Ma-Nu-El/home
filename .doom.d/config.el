@@ -155,8 +155,8 @@
 (setq org-habit-following-days 7)
 
 (setq org-todo-keywords
-      '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJ(p)"
-                  "SOMEDAY(s)" "|" "DONE(d@/!)" "CANCELED(c@/!)")
+      '((sequence "TODO(t/!)" "NEXT(n/!)" "WAIT(w@/!)" "PROJECT(p)" "INCUBATE(i)"
+                  "SOMEDAY(s)" "|" "DONE(d@/!)" "CANCELED(c@/!)" "REFERENCE(r@/!)")
         )
       )
 (setq org-log-done t)
