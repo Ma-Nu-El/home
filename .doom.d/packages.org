@@ -10,10 +10,11 @@
 - [[#org-sidebar][org-sidebar]]
 - [[#org-contrib][org-contrib]]
 - [[#org-depend][org-depend]]
-- [[#ledger][ledger]]
+- [[#ob-ledger][ob-ledger]]
 - [[#org-roam-bibtex][org-roam-bibtex]]
 - [[#org-ref][org-ref]]
 - [[#org-glossary][org-glossary]]
+- [[#org-kanban][org-kanban]]
 
 * shebang
 :PROPERTIES:
@@ -75,13 +76,11 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
                                         ;(unpin! t)
 
-
-
-
 * org-transclusion
 :PROPERTIES:
 :ID:       9fad3042-79dd-4315-ae0a-96777e74e714
 :END:
+
 #+begin_src elisp
 (package! org-transclusion
   :recipe (:host github
@@ -91,6 +90,7 @@
            )
   )
 #+end_src
+
 * org-sidebar
 :PROPERTIES:
 :ID:       c8eb829b-a1c2-4ef3-a1b2-a2f1e7cc5899
@@ -145,7 +145,7 @@ This seemed to do the work.
 ,#+end_src
 
 Contained in [[https://github.com/emacsmirror/org-contrib][org-contrib]].
-* ledger
+* ob-ledger
 
 #+begin_src elisp
 (package! ob-ledger :recipe (:local-repo "lisp/ob-ledger"))
@@ -178,3 +178,14 @@ Contained in [[https://github.com/emacsmirror/org-contrib][org-contrib]].
 (package! org-glossary
   :recipe (:host github :repo "tecosaur/org-glossary"))
 # #+end_src
+
+* org-kanban
+# - [2023-08-25 Fri 18:10]
+
+#+begin_src emacs-lisp
+(package! org-glossary
+  :recipe (:host github
+           :repo "gizmomogwai/org-kanban"
+           )
+)
+#+end_src

@@ -11,4 +11,7 @@
 (package! ob-ledger :recipe (:local-repo "lisp/ob-ledger"))
 
 (package! org-glossary
-  :recipe (:host github :repo "tecosaur/org-glossary"))
+  :recipe (:host github
+           :repo "gizmomogwai/org-kanban"
+           )
+)
