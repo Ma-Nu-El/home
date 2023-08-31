@@ -29,6 +29,8 @@
 
 (setq display-line-numbers-type nil)
 
+(setq mouse-wheel-tilt-scroll t)
+
 ;; BEGIN AFTER ORG
 (after! org
 
@@ -156,15 +158,15 @@
 
 (setq org-todo-keywords
       '((sequence
-         "TODO(t)"
-         "NEXT(n)"
-         "DOING(d)"
          "WAIT(w)"
-         "INCUBATE(i)"
-         "PROJECT(p)"
+         "NEXT(n)"
+         "DOIN(d)"
+         "TODO(t)"
+         "PROJ(p)"
+         "INCU(i)"
          "|"
          "DONE(D)"
-         "CANCELED(C)" )
+         "CNLD(C)" )
         )
       )
 (setq org-log-done t)
