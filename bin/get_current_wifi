@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+usage() {
+    cat <<EOF
+'get_current_wifi' usage:
+  general:
+    -h, --help, -?   print this message
+
+ if OS is linux it will ...
+
+ if OS is macOS it will ...
+
+EOF
+}
+
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
+    usage
+    exit 0
+fi
+
+function darwin_case1() {
+    ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
+}
+
+function darwin_case2() {
+    ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'
+}
+
+os=$("$HOME"/bin/detect_os)
+
+case $os in
+    darwin)
+        echo "with grep and ifconfig"
+        darwin_case1
+        echo "with grep and ifconfig"
+        darwin_case2 ;;
+    *)
+        printf "Not either linux nor darwin\n"
+        exit 1;;
+esac
