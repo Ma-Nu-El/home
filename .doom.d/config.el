@@ -169,7 +169,7 @@
          "CNLD(C)" )
         )
       )
-(setq org-log-done t)
+(setq org-log-done nil)
 
 (with-eval-after-load 'ox-latex
 (add-to-list 'org-latex-classes

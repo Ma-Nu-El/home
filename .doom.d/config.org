@@ -529,7 +529,7 @@ when checking agenda remotely.
          "CNLD(C)" )
         )
       )
-(setq org-log-done t)
+(setq org-log-done nil)
 #+end_src
 
 - TRACK TODO STATE CHANGES
