@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# How to get the primary IP address of the local machine on Linux and OS X? [closed]
+# https://stackoverflow.com/questions/13322485/how-to-get-the-primary-ip-address-of-the-local-machine-on-linux-and-os-x
 
 usage() {
     cat <<EOF
