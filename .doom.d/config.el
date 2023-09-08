@@ -290,3 +290,17 @@
 ;;(setq fill-column 80)
 
 (global-git-gutter-mode +1)
+
+(map! :leader
+      (:prefix-map ("k" . "custom key bindings")
+        (:prefix-map ("k" . "org-kanban")
+         :desc "Insert kanban here" "i" #'org-kanban/initialize-here
+         :desc "Configure kanban block at point" "c" #'org-kanban/configure-block
+         :desc "Shift TODO state of current entry" "s" #'org-kanban/shift
+        )
+        (:prefix-map ("r" . "reload")
+         :desc "Current dynamic block" "d" #'org-update-dblock
+         :desc "All  dynamic blocks" "D" #'org-update-all-dblocks
+        )
+      )
+)

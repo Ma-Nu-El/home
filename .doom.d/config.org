@@ -67,7 +67,7 @@
 - [[#custom-set-variables][custom set variables]]
 - [[#60-char-ruler][60 char ruler]]
 - [[#git-gutter][git gutter]]
-- [[#footnotes][Footnotes]]
+- [[#keyboard-shortcuts][keyboard shortcuts]]
 
 * shebang
 :PROPERTIES:
@@ -775,7 +775,9 @@ Very useful combined with a first heading containing a table of contents.
 
 That table of contents combined with start [[id:964fd048-37ad-4bff-a09e-dbf48ab72124][unfolded]], the first thing
 you see when opening a buffer will be a local and always updated table
-of contents that also [[https://orgmode.org/manual/Export-Settings.html][won't be exported]] [fn:1] so it doesn't conflict with other
+of contents that also [[https://orgmode.org/manual/Export-Settings.html][won't be exported]]
+(Check the =EXCLUDE_TAGS= section)
+so it doesn't conflict with other
 exports like html, latex or markup.
 
 Neat thing indeed.
@@ -1246,6 +1248,24 @@ where as the others output
 (global-git-gutter-mode +1)
 #+end_src
 
-* Footnotes
+* keyboard shortcuts
+# - [2023-09-07 Thu 16:31]
+- [[https://www.dschapman.com/notes/bde6e938-0984-4d60-974d-77178f1ecd9b][How to Add Shortcuts to Doom Emacs]]
+- [[https://rameezkhan.me/posts/2020/2020-07-03--adding-keybindings-to-doom-emacs/][Adding keybindings to Doom Emacs | rameezkhan.me]]
 
-[fn:1] Check the =EXCLUDE_TAGS= section.
+
+#+begin_src elisp
+(map! :leader
+      (:prefix-map ("k" . "custom key bindings")
+        (:prefix-map ("k" . "org-kanban")
+         :desc "Insert kanban here" "i" #'org-kanban/initialize-here
+         :desc "Configure kanban block at point" "c" #'org-kanban/configure-block
+         :desc "Shift TODO state of current entry" "s" #'org-kanban/shift
+        )
+        (:prefix-map ("r" . "reload")
+         :desc "Current dynamic block" "d" #'org-update-dblock
+         :desc "All  dynamic blocks" "D" #'org-update-all-dblocks
+        )
+      )
+)
+#+end_src
