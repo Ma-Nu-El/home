@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -o pipefail
+
 ### git ###
 
 alias config='/usr/bin/git --git-dir="$HOME"/.cfg/ --work-tree="$HOME"'
@@ -104,7 +106,7 @@ alias ta='tmux attach-session' # attach to last session
 alias tas='tmux attach-session -t' # append your session name to be attached to
 
 #alias tpls="ls ~/.tmuxp/"
-
+#+end_example
 ## misc aliases
 
 alias hh='echo 'https://github.com/Ma-Nu-El/home''
@@ -154,12 +156,53 @@ alias RR='R --quiet --no-save'
 alias RRR='R --quiet --no-save -e'
 alias cat_public_ssh_key='clear && cat ~/.ssh/id_rsa.pub'
 alias qr='qrencode'
+# quick editor
 
+alias v='vim'
+alias ee='clear && cd ~ && emacs -nw' # same but from home directory
+alias ed='emacs --daemon' # creates default emacs server named 'server'
+alias ec='emacsclient -t' # attach to the default emacs server
+alias edn='emacs-daemon-new' # creates a custom-named emacs server
+alias els='ls -1 /tmp/emacs${UID}' # get list of running emacs servers
+alias ecs='emacsclient -t -s' # attach to a custom-named emacs server
+
+# tmux
+
+alias t='tmux'
+alias tn='tmux new-session' # create session with default name
+alias tns='tmux new -s' # append your session name to be created
+alias tks='tmux kill-session -t' # append your session name to be killed
+alias tls='tmux ls' # list sessions # <prefix> s
+alias ta='tmux attach-session' # attach to last session
+alias tas='tmux attach-session -t' # append your session name to be attached to
+
+#alias tpls="ls ~/.tmuxp/"
+#+end_example
 ### fresh install
 
 alias install_doom_emacs='git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d && ~/.emacs.d/bin/doom install'
 alias install_tmux_plugins='git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm' # install packages on fresh OS
+# quick editor
 
+alias v='vim'
+alias ee='clear && cd ~ && emacs -nw' # same but from home directory
+alias ed='emacs --daemon' # creates default emacs server named 'server'
+alias ec='emacsclient -t' # attach to the default emacs server
+alias edn='emacs-daemon-new' # creates a custom-named emacs server
+alias els='ls -1 /tmp/emacs${UID}' # get list of running emacs servers
+alias ecs='emacsclient -t -s' # attach to a custom-named emacs server
+
+# tmux
+
+alias t='tmux'
+alias tn='tmux new-session' # create session with default name
+alias tns='tmux new -s' # append your session name to be created
+alias tks='tmux kill-session -t' # append your session name to be killed
+alias tls='tmux ls' # list sessions # <prefix> s
+alias ta='tmux attach-session' # attach to last session
+alias tas='tmux attach-session -t' # append your session name to be attached to
+
+#alias tpls="ls ~/.tmuxp/"
 ### Docker
 
 alias dk='docker'
@@ -174,10 +217,8 @@ alias dkvols='docker volume ls'
 alias dkcomp='docker-compose'
 alias dkg='custom_docker_general_status | less --RAW-CONTROL-CHARS --chop-long-lines'
 alias dkshell='docker run --rm --name custom_dkshell -it --privileged --pid=host walkerlee/nsenter -t 1 -m -u -i -n sh'
-
 ### lights off and on
 alias loff='lights off'
 alias lon='lights on'
-
 ## autogpt (chat-GPT)
 alias agpt='~/bin/auto_gpt_fire_up'

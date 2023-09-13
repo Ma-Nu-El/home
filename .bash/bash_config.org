@@ -5,8 +5,25 @@
 :END:
 
 * Aliases
+** nowebable
 
-#+begin_src bash :tangle ./aliases :shebang "#!/usr/bin/env bash" :tangle-mode (identity #o755)
+#+begin_src bash :tangle aliases :shebang "#!/usr/bin/env bash" :tangle-mode (identity #o755) :noweb yes
+set -o pipefail
+
+<<bash-alias-git>>
+<<bash_alias_shell_interaction_and_quick_navigation>>
+<<bash_alias_misc>>
+<<bash_alias_fresh_install>>
+<<bash_alias_quick_editor>>
+<<bash_alias_docker>>
+<<bash_alias_lights>>
+<<bash_alias_chatgpt>>
+#+end_src
+
+** git
+
+#+name: bash-alias-git
+#+begin_src bash
 ### git ###
 
 alias config='/usr/bin/git --git-dir="$HOME"/.cfg/ --work-tree="$HOME"'
@@ -54,6 +71,13 @@ alias guntrack='git rm -r --cached" # untrack files currently tracked by git, '-
 alias gamend='git commit --amend'
 alias grestore='git restore'
 alias gsm='git submodule | cut -d " " -f3'
+#+end_src
+
+
+** shell interaction and quick navigation
+
+#+name: bash_alias_shell_interaction_and_quick_navigation
+#+begin_src bash :tangle no
 
 # shell interaction
 
@@ -91,6 +115,9 @@ alias 5='~/Videos'
 alias 6='~/Music'
 alias 11='~/"$MY_DRIVE"' # cloud directory
 
+#+end_src
+
+#+begin_src bash :tangle no
 # quick editor
 
 alias v='vim'
@@ -112,7 +139,34 @@ alias ta='tmux attach-session' # attach to last session
 alias tas='tmux attach-session -t' # append your session name to be attached to
 
 #alias tpls="ls ~/.tmuxp/"
+#+end_src
 
+** misc
+
+#+name: bash_alias_misc
+#+begin_src bash :tangle no
+# quick editor
+
+alias v='vim'
+alias ee='clear && cd ~ && emacs -nw' # same but from home directory
+alias ed='emacs --daemon' # creates default emacs server named 'server'
+alias ec='emacsclient -t' # attach to the default emacs server
+alias edn='emacs-daemon-new' # creates a custom-named emacs server
+alias els='ls -1 /tmp/emacs${UID}' # get list of running emacs servers
+alias ecs='emacsclient -t -s' # attach to a custom-named emacs server
+
+# tmux
+
+alias t='tmux'
+alias tn='tmux new-session' # create session with default name
+alias tns='tmux new -s' # append your session name to be created
+alias tks='tmux kill-session -t' # append your session name to be killed
+alias tls='tmux ls' # list sessions # <prefix> s
+alias ta='tmux attach-session' # attach to last session
+alias tas='tmux attach-session -t' # append your session name to be attached to
+
+#alias tpls="ls ~/.tmuxp/"
+#+end_example
 ## misc aliases
 
 alias hh='echo 'https://github.com/Ma-Nu-El/home''
@@ -162,12 +216,71 @@ alias RR='R --quiet --no-save'
 alias RRR='R --quiet --no-save -e'
 alias cat_public_ssh_key='clear && cat ~/.ssh/id_rsa.pub'
 alias qr='qrencode'
+#+end_src
 
+** fresh install
+
+#+name: bash_alias_fresh_install
+#+begin_src bash :tangle no
+# quick editor
+
+alias v='vim'
+alias ee='clear && cd ~ && emacs -nw' # same but from home directory
+alias ed='emacs --daemon' # creates default emacs server named 'server'
+alias ec='emacsclient -t' # attach to the default emacs server
+alias edn='emacs-daemon-new' # creates a custom-named emacs server
+alias els='ls -1 /tmp/emacs${UID}' # get list of running emacs servers
+alias ecs='emacsclient -t -s' # attach to a custom-named emacs server
+
+# tmux
+
+alias t='tmux'
+alias tn='tmux new-session' # create session with default name
+alias tns='tmux new -s' # append your session name to be created
+alias tks='tmux kill-session -t' # append your session name to be killed
+alias tls='tmux ls' # list sessions # <prefix> s
+alias ta='tmux attach-session' # attach to last session
+alias tas='tmux attach-session -t' # append your session name to be attached to
+
+#alias tpls="ls ~/.tmuxp/"
+#+end_example
 ### fresh install
 
 alias install_doom_emacs='git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d && ~/.emacs.d/bin/doom install'
 alias install_tmux_plugins='git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm' # install packages on fresh OS
+#+end_src
 
+** quick editor
+
+#+name: bash_alias_quick_editor
+#+begin_src bash :tangle no
+# quick editor
+
+alias v='vim'
+alias ee='clear && cd ~ && emacs -nw' # same but from home directory
+alias ed='emacs --daemon' # creates default emacs server named 'server'
+alias ec='emacsclient -t' # attach to the default emacs server
+alias edn='emacs-daemon-new' # creates a custom-named emacs server
+alias els='ls -1 /tmp/emacs${UID}' # get list of running emacs servers
+alias ecs='emacsclient -t -s' # attach to a custom-named emacs server
+
+# tmux
+
+alias t='tmux'
+alias tn='tmux new-session' # create session with default name
+alias tns='tmux new -s' # append your session name to be created
+alias tks='tmux kill-session -t' # append your session name to be killed
+alias tls='tmux ls' # list sessions # <prefix> s
+alias ta='tmux attach-session' # attach to last session
+alias tas='tmux attach-session -t' # append your session name to be attached to
+
+#alias tpls="ls ~/.tmuxp/"
+#+end_src
+
+** docker
+
+#+name: bash_alias_docker
+#+begin_src bash :tangle no
 ### Docker
 
 alias dk='docker'
@@ -182,23 +295,47 @@ alias dkvols='docker volume ls'
 alias dkcomp='docker-compose'
 alias dkg='custom_docker_general_status | less --RAW-CONTROL-CHARS --chop-long-lines'
 alias dkshell='docker run --rm --name custom_dkshell -it --privileged --pid=host walkerlee/nsenter -t 1 -m -u -i -n sh'
+#+end_src
 
+** lights on and off and autogpt
+
+#+name: bash_alias_lights
+#+begin_src bash :tangle no
 ### lights off and on
 alias loff='lights off'
 alias lon='lights on'
+#+end_src
 
+** chatgpt
+
+#+name: bash_alias_chatgpt
+#+begin_src bash :tangle no
 ## autogpt (chat-GPT)
 alias agpt='~/bin/auto_gpt_fire_up'
 #+end_src
 
-#+RESULTS:
-
 * Functions
+** source
 
-#+begin_src bash :tangle ./functions :shebang "#!/usr/bin/env bash" :tangle-mode (identity #o755)
+#+begin_src bash :tangle ./functions :shebang "#!/usr/bin/env bash" :tangle-mode (identity #o755) :noweb yes
 
 set -o pipefail
 
+<<bash_function_manuclone>>
+<<bash_function_cd_and_git_status>>
+<<bash_function_cd_and_ls>>
+<<bash_function_quickjump>>
+<<bash_function_dusort>>
+<<bash_function_cheat>>
+<<bash_function_redshift>>
+<<bash_function_psaux>>
+<<bash_function_now>>
+#+end_src
+
+** manuclone
+
+#+name: bash_function_manuclone
+#+begin_src bash :tangle no
 manuclone(){
 	if [[ -z "$1"  ]]
 	then
@@ -208,9 +345,12 @@ manuclone(){
 	git clone git@github.com:Ma-Nu-El/"$1"
 	fi
 }
+#+end_src
 
-#quick useful defaults
+** cd_and_git_status
 
+#+name: bash_function_cd_and_git_status
+#+begin_src bash :tangle no
 # cd and git status into directory
 cd-and-git-status(){
 if [ -d "$1" ] # if argument is a directory
@@ -224,12 +364,22 @@ else
 	fi
 fi
 }
+#+end_src
 
+** cd_and_ls
+
+#+name: bash_function_cd_and_ls
+#+begin_src bash :tangle no
 # cd and ls
 ue(){
 cd "$1" && clear && pwd && echo '-----' && ls
 }
+#+end_src
 
+** quick jump to DRIVE
+
+#+name: bash_function_quickjump
+#+begin_src bash :tangle no
 # quick jumps to $MY_DRIVE
 drive(){
 if [[ "$1" ]]
@@ -278,7 +428,12 @@ then
 	echo "      'cd ~/"$MY_DRIVE"/org/bar"
 fi
 }
+#+end_src
 
+** sort by size
+
+#+name: bash_function_dusort
+#+begin_src bash :tangle no
 # sort by size
 dusort() {
 
@@ -308,7 +463,12 @@ then
 fi
 
 }
+#+end_src
 
+** cheat
+
+#+name: bash_function_cheat
+#+begin_src bash :tangle no
 cheat (){
 	if [[ -z "$1"  ]]
 	then
@@ -317,7 +477,12 @@ cheat (){
                 curl cheat.sh/"$1" | less --RAW-CONTROL-CHARS
 	fi
 }
+#+end_src
 
+** red
+
+#+name: bash_function_redshift
+#+begin_src bash :tangle no
 red (){
 	if [[ -z "$1"  ]]
 	then
@@ -326,12 +491,22 @@ red (){
                 redshift -O "$1"
 	fi
 }
+#+end_src
 
+** psaux
+
+#+name: bash_function_psaux
+#+begin_src bash :tangle no
 psaux(){
   # select 2nd and lats field with awk
   ps aux | awk '{print $2, $NF}' | less -S
 }
+#+end_src
 
+** lights
+
+#+name: bash_function_lights
+#+begin_src bash :tangle no
 lights(){
 case "$1" in
     on)
@@ -340,7 +515,12 @@ case "$1" in
 	  ~/bin/set_theme_to_dark ;;
 esac
 }
+#+end_src
 
+** now
+
+#+name: bash_function_now
+#+begin_src bash :tangle no
 now(){
     date "+%Y-%m-%d %H:%M:%S" && \
     gcal --starting-day=1 --with-week-number --highlighting=no
