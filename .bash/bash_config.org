@@ -73,7 +73,6 @@ alias grestore='git restore'
 alias gsm='git submodule | cut -d " " -f3'
 #+end_src
 
-
 ** shell interaction and quick navigation
 
 #+name: bash_alias_shell_interaction_and_quick_navigation
@@ -216,6 +215,7 @@ alias RR='R --quiet --no-save'
 alias RRR='R --quiet --no-save -e'
 alias cat_public_ssh_key='clear && cat ~/.ssh/id_rsa.pub'
 alias qr='qrencode'
+alias p3='python3'
 #+end_src
 
 ** fresh install
