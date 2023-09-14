@@ -300,7 +300,7 @@
         )
         (:prefix-map ("r" . "reload")
          :desc "Current dynamic block" "d" #'org-update-dblock
-         :desc "All  dynamic blocks" "D" #'org-update-all-dblocks
+         :desc "All dynamic blocks" "D" #'org-update-all-dblocks
         )
       )
 )
