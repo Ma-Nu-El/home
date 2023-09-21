@@ -302,5 +302,8 @@
          :desc "Current dynamic block" "d" #'org-update-dblock
          :desc "All dynamic blocks" "D" #'org-update-all-dblocks
         )
+        (:prefix-map ("a" . "align")
+         :desc "by regexp" "r" #'align-regexp
+        )
       )
 )
