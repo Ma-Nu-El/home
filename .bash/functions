@@ -124,6 +124,14 @@ psaux(){
   # select 2nd and lats field with awk
   ps aux | awk '{print $2, $NF}' | less -S
 }
+lights(){
+case "$1" in
+    on)
+	  ~/bin/set_theme_to_light ;;
+    off)
+	  ~/bin/set_theme_to_dark ;;
+esac
+}
 now(){
     date "+%Y-%m-%d %H:%M:%S" && \
     gcal --starting-day=1 --with-week-number --highlighting=no

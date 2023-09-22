@@ -329,6 +329,7 @@ set -o pipefail
 <<bash_function_cheat>>
 <<bash_function_redshift>>
 <<bash_function_psaux>>
+<<bash_function_lights>>
 <<bash_function_now>>
 #+end_src
 
