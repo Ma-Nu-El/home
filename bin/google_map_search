@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+import webbrowser, sys, pyperclip
+
+# Check if command line arguments were passed
+
+if len(sys.argv) > 1:
+    # 'command' 'param1' 'param2' ... -> 'param1' 'param2' ...
+    address = ' '.join(sys.argv[1:])
+else:
+    address = pyperclip.paste()
+
+
+# https://www.google.com/maps/place/<ADDRESS>
+webbrowser.open('https://www.google.com/maps/place/' + address)
