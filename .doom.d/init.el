@@ -69,7 +69,8 @@ markdown          ; writing docs for people to ignore
 ocaml             ; an objective camel
 (org +gnuplot +pomodoro) ; organize your plain life in plain text
 
-perl              ; write code no one else can comprehend
+;; perl              ; write code no one else can comprehend
+raku
 
 (php +lsp)               ; perl's insecure younger brother
 
