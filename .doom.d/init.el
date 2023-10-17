@@ -66,7 +66,10 @@ ledger            ; an accounting system in Emacs
 
 markdown          ; writing docs for people to ignore
 
+ocaml             ; an objective camel
 (org +gnuplot +pomodoro) ; organize your plain life in plain text
+
+perl              ; write code no one else can comprehend
 
 (php +lsp)               ; perl's insecure younger brother
 
@@ -75,6 +78,8 @@ plantuml          ; diagrams for confusing people more
 (python +lsp)            ; beautiful is better than ugly
 
 sh                ; she sells {ba,z,fi}sh shells on the C xor
+
+yaml              ; JSON, but readable
 
 :email
 (mu4e +gmail +org)
