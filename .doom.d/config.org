@@ -67,6 +67,7 @@
 - [[#custom-set-variables][custom set variables]]
 - [[#60-char-ruler][60 char ruler]]
 - [[#git-gutter][git gutter]]
+- [[#org-ai][org-ai]]
 - [[#keyboard-shortcuts][keyboard shortcuts]]
 
 * shebang
@@ -364,7 +365,7 @@ Set global Column View format.
 :ID:       4790fa62-de1b-4118-a722-f41212854368
 :END:
 #+begin_src elisp
-(setq org-agenda-span 3) ; show today only by default; it's quicker
+(setq org-agenda-span 3)
 (setq org-agenda-start-day "-0d") ; start on current day,
                                         ; useful when exporting html 28-day version.
 (setq org-agenda-start-on-weekday nil)
@@ -382,20 +383,19 @@ Set global Column View format.
 #+begin_src elisp
 (setq org-agenda-custom-commands
       '(
-        ;; ( "1" "Last 3 days."
+        ;; ( "1" "Next 28 days."
         ;;   ((agenda ""))
         ;;   ;; ((org-agenda-tag-filter-preset '("-habit")))
-        ;;   ;; ("~/org/agenda-today.html") ;; enables html export of this agenda view
-        ;;           ((org-agenda-span 3))
-        ;;           ((org-agenda-start-day "-2"))
+          ;; ("~/agenda-today.html") ;; enables html export of this agenda view
+        ;;   ((org-agenda-span 28))
+        ;;   ((org-agenda-start-day "-0d"))
         ;;   )
-        ;; ( "3" "Next 3 days."
-        ;;   ;; Made to be exported to html
-        ;;   ((agenda ""))
-        ;;            ((org-agenda-span 3))
-        ;;            ((org-agenda-start-day "+1"))
-        ;;   ;; The bigger the agenda span, the longer the process
-        ;;   )
+        ("1" "Next 28 days" agenda ""
+         ((org-agenda-span 28)
+          (org-agenda-start-day "-0d")
+          (org-agenda-remove-tags t)
+         )
+         ("~/test.pdf"))
         ;; ( "2" "Last and next 3 days."
         ;;   ;; Made to be exported to html
         ;;   ((agenda ""))
@@ -1248,6 +1248,27 @@ where as the others output
 (global-git-gutter-mode +1)
 #+end_src
 
+* org-ai
+# - [2023-11-15 Wed 22:37]
+
+
+#+begin_src elisp :tangle no
+(setq org-ai-openai-api-token "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")
+
+(use-package! org-ai
+  :ensure t
+  :defer t
+  :commands (org-ai-mode
+             org-ai-global-mode);;
+  :init
+  (add-hook 'org-mode-hook #'org-ai-mode) ; enable org-ai in org-mode
+  (org-ai-global-mode) ; installs global keybindings on C-c M-a
+  :config
+  (setq org-ai-default-chat-model "gpt-3.5-turbo") ; if you are on the free gpt-3.5-turbo:
+  ;; (setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
+  (org-ai-install-yasnippets)) ; if you are using yasnippet and want ai snippets
+#+end_src
+
 * keyboard shortcuts
 # - [2023-09-07 Thu 16:31]
 - [[https://www.dschapman.com/notes/bde6e938-0984-4d60-974d-77178f1ecd9b][How to Add Shortcuts to Doom Emacs]]
@@ -1269,6 +1290,25 @@ where as the others output
         (:prefix-map ("a" . "align")
          :desc "by regexp" "r" #'align-regexp
         )
+        (:prefix-map ("e" . "edit")
+         :desc "org-edit-src-block" "c" #'org-edit-src-code
+        )
       )
 )
+#+end_src
+
+- [2023-11-24 Fri 17:09]
+- [[https://github.com/doomemacs/doomemacs/blob/master/modules/lang/data/config.el][doomemacs/modules/lang/data/config.el at master · doomemacs/doomemacs · GitHub]]
+
+#+begin_src elisp
+;;;###package csv-mode
+(map! :after csv-mode
+      :localleader
+      :map csv-mode-map
+      "a" #'csv-align-fields
+      "u" #'csv-unalign-fields
+      "s" #'csv-sort-fields
+      "S" #'csv-sort-numeric-fields
+      "k" #'csv-kill-fields
+      "t" #'csv-transpose)
 #+end_src

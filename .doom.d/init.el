@@ -54,11 +54,16 @@ biblio
 
 :lang
 
+data              ; config/data formats
+
 emacs-lisp        ; drown in parentheses
 
 (ess +lsp)               ; emacs speaks statistics
 
+json              ; At least it ain't XML
 (java +lsp)         ; Added by Ma Nu from
+
+javascript        ; all(hope(abandon(ye(who(enter(here))))))
 
 (latex +lsp)        ; writing papers in Emacs has never been so fun
 
@@ -69,7 +74,7 @@ markdown          ; writing docs for people to ignore
 ocaml             ; an objective camel
 (org +gnuplot +pomodoro) ; organize your plain life in plain text
 
-;; perl              ; write code no one else can comprehend
+perl              ; write code no one else can comprehend
 raku
 
 (php +lsp)               ; perl's insecure younger brother
@@ -80,6 +85,7 @@ plantuml          ; diagrams for confusing people more
 
 sh                ; she sells {ba,z,fi}sh shells on the C xor
 
+web               ; the tubes
 yaml              ; JSON, but readable
 
 :email

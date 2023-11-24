@@ -58,27 +58,26 @@
 (setq org-log-into-drawer "LOGBOOK")
 (setq org-clock-into-drawer "CLOCKBOOK")
 
-(setq org-agenda-span 3) ; show today only by default; it's quicker
+(setq org-agenda-span 3)
 (setq org-agenda-start-day "-0d") ; start on current day,
                                         ; useful when exporting html 28-day version.
 (setq org-agenda-start-on-weekday nil)
 
 (setq org-agenda-custom-commands
       '(
-        ;; ( "1" "Last 3 days."
+        ;; ( "1" "Next 28 days."
         ;;   ((agenda ""))
         ;;   ;; ((org-agenda-tag-filter-preset '("-habit")))
-        ;;   ;; ("~/org/agenda-today.html") ;; enables html export of this agenda view
-        ;;           ((org-agenda-span 3))
-        ;;           ((org-agenda-start-day "-2"))
+          ;; ("~/agenda-today.html") ;; enables html export of this agenda view
+        ;;   ((org-agenda-span 28))
+        ;;   ((org-agenda-start-day "-0d"))
         ;;   )
-        ;; ( "3" "Next 3 days."
-        ;;   ;; Made to be exported to html
-        ;;   ((agenda ""))
-        ;;            ((org-agenda-span 3))
-        ;;            ((org-agenda-start-day "+1"))
-        ;;   ;; The bigger the agenda span, the longer the process
-        ;;   )
+        ("1" "Next 28 days" agenda ""
+         ((org-agenda-span 28)
+          (org-agenda-start-day "-0d")
+          (org-agenda-remove-tags t)
+         )
+         ("~/test.pdf"))
         ;; ( "2" "Last and next 3 days."
         ;;   ;; Made to be exported to html
         ;;   ((agenda ""))
@@ -305,5 +304,19 @@
         (:prefix-map ("a" . "align")
          :desc "by regexp" "r" #'align-regexp
         )
+        (:prefix-map ("e" . "edit")
+         :desc "org-edit-src-block" "c" #'org-edit-src-code
+        )
       )
 )
+
+;;;###package csv-mode
+(map! :after csv-mode
+      :localleader
+      :map csv-mode-map
+      "a" #'csv-align-fields
+      "u" #'csv-unalign-fields
+      "s" #'csv-sort-fields
+      "S" #'csv-sort-numeric-fields
+      "k" #'csv-kill-fields
+      "t" #'csv-transpose)
