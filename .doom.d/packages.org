@@ -15,6 +15,7 @@
 - [[#org-ref][org-ref]]
 - [[#org-glossary][org-glossary]]
 - [[#org-kanban][org-kanban]]
+- [[#org-ai][org-ai]]
 
 * shebang
 :PROPERTIES:
@@ -188,4 +189,17 @@ Contained in [[https://github.com/emacsmirror/org-contrib][org-contrib]].
            :repo "gizmomogwai/org-kanban"
            )
 )
+#+end_src
+
+* org-ai
+# - [2023-11-15 Wed 22:33]
+- [[https://github.com/rksm/org-ai/issues/50][doom-emacs configuration · Issue #50 · rksm/org-ai · GitHub]]
+
+
+
+#+begin_src emacs-lisp :tangle no
+(package! org-ai
+  :recipe (:host github
+           :repo "rksm/org-ai"
+           :files ("*.el" "README.md" "snippets")))
 #+end_src
