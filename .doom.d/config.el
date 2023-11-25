@@ -319,4 +319,6 @@
       "s" #'csv-sort-fields
       "S" #'csv-sort-numeric-fields
       "k" #'csv-kill-fields
-      "t" #'csv-transpose)
+      "t" #'csv-transpose
+      "h" #'csv-header-line
+      )

@@ -1253,7 +1253,7 @@ where as the others output
 
 
 #+begin_src elisp :tangle no
-(setq org-ai-openai-api-token "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")
+(setq org-ai-openai-api-token "")
 
 (use-package! org-ai
   :ensure t
@@ -1299,6 +1299,8 @@ where as the others output
 
 - [2023-11-24 Fri 17:09]
 - [[https://github.com/doomemacs/doomemacs/blob/master/modules/lang/data/config.el][doomemacs/modules/lang/data/config.el at master · doomemacs/doomemacs · GitHub]]
+- [[https://emacs.stackexchange.com/questions/71553/in-huge-csv-files-how-can-i-easily-find-out-in-which-csv-column-the-cursor-is][minor mode - In huge CSV files how can I easily find out in which CSV column the cursor is? - Emacs Stack Exchange]]
+
 
 #+begin_src elisp
 ;;;###package csv-mode
@@ -1310,5 +1312,7 @@ where as the others output
       "s" #'csv-sort-fields
       "S" #'csv-sort-numeric-fields
       "k" #'csv-kill-fields
-      "t" #'csv-transpose)
+      "t" #'csv-transpose
+      "h" #'csv-header-line
+      )
 #+end_src
