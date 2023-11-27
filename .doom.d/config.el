@@ -292,22 +292,29 @@
 
 (map! :leader
       (:prefix-map ("k" . "custom key bindings")
-        (:prefix-map ("k" . "org-kanban")
-         :desc "Insert kanban here" "i" #'org-kanban/initialize-here
-         :desc "Configure kanban block at point" "c" #'org-kanban/configure-block
-         :desc "Shift TODO state of current entry" "s" #'org-kanban/shift
-        )
         (:prefix-map ("r" . "reload")
          :desc "Current dynamic block" "d" #'org-update-dblock
          :desc "All dynamic blocks" "D" #'org-update-all-dblocks
         )
         (:prefix-map ("a" . "align")
-         :desc "by regexp" "r" #'align-regexp
+         :desc "align-regexp" "r" #'align-regexp
         )
-        (:prefix-map ("e" . "edit")
+        (:prefix-map ("e" . "code")
          :desc "org-edit-src-block" "c" #'org-edit-src-code
         )
-      )
+        (:prefix-map ("o" . "orgmode")
+          (:prefix-map ("k" . "org-kanban")
+           :desc "Insert kanban here" "i" #'org-kanban/initialize-here
+           :desc "Configure kanban block at point" "c" #'org-kanban/configure-block
+           :desc "Shift TODO state of current entry" "s" #'org-kanban/shift
+          )
+          (:prefix-map ("t" . "table")
+             :desc "org-table-shrink" "s" #'org-table-shrink
+             :desc "org-table-expand" "e" #'org-table-expand
+             :desc "org-table-toggle-column-width" "t" #'org-table-toggle-column-width
+            )
+          )
+        )
 )
 
 ;;;###package csv-mode
