@@ -69,6 +69,7 @@
 - [[#git-gutter][git gutter]]
 - [[#org-ai][org-ai]]
 - [[#keyboard-shortcuts][keyboard shortcuts]]
+- [[#fix-zo-not-working-in-macos][fix =zo= not working in macOS]]
 
 * shebang
 :PROPERTIES:
@@ -330,7 +331,8 @@ It's gotta be faster. Useful too when you have a TOC heading first.
 ;; https://github.com/pokeefe/Settings/blob/master/emacs-settings/.emacs.d/modules/init-org.el
 ;; Effort and global properties
 (setq org-global-properties '(
-                              ("Effort_ALL". "0 0:01 0:03 0:05 0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00")
+                              ("Effort_ALL" .
+                               "0 0:01 0:03 0:05 0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 2:30 3:00 3:30 4:00 4:30 5:00 5:30 6:00 6:30 7:00 7:30 8:00")
                               )
       )
 #+end_src
@@ -352,6 +354,7 @@ Set global Column View format.
 :ID:       a065fc59-7ecf-4c1a-aa3c-d01f7f36eb28
 :END:
 - https://stackoverflow.com/questions/24686129/how-can-i-make-org-mode-store-state-changes-for-a-repeating-task-in-a-drawer
+
 #+begin_src elisp
 (setq org-log-into-drawer "LOGBOOK")
 (setq org-clock-into-drawer "CLOCKBOOK")
@@ -740,11 +743,14 @@ something about it.
 :ID:       21d12421-59e2-484c-ace5-95dfc13b67dd
 :END:
 Persistent org clock.
+
 #+begin_src elisp
 (setq org-clock-persist 'history)
 (setq org-clock-persist-file "~/.doom.d/.org-clock-save.el")
 (setq org-clock-persistence-insinuate t)
+(setq org-clock-auto-clock-resolution nil)
 #+end_src
+
 Also check this at:
 - https://github.com/pokeefe/Settings/blob/master/emacs-settings/.emacs.d/modules/init-org.el
   - (setq org-clock-persist-file (concat user-emacs-directory "persistence/org-clock-save.el"))
@@ -1237,6 +1243,7 @@ where as the others output
   - Same as above.
 - [2021-12-18 Sat 14:25]
   - 55
+
 * git gutter
 :PROPERTIES:
 :ID:       74f03acd-57b5-487d-af07-716129320bac
@@ -1326,4 +1333,10 @@ where as the others output
       "t" #'csv-transpose
       "h" #'csv-header-line
       )
+#+end_src
+* fix =zo= not working in macOS
+# - [2024-01-03 Wed 16:24]
+
+#+begin_src elisp
+(after! org (setq org-fold-core-style 'overlays) )
 #+end_src

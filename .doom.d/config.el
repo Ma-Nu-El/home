@@ -49,7 +49,8 @@
 ;; https://github.com/pokeefe/Settings/blob/master/emacs-settings/.emacs.d/modules/init-org.el
 ;; Effort and global properties
 (setq org-global-properties '(
-                              ("Effort_ALL". "0 0:01 0:03 0:05 0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00")
+                              ("Effort_ALL" .
+                               "0 0:01 0:03 0:05 0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 2:30 3:00 3:30 4:00 4:30 5:00 5:30 6:00 6:30 7:00 7:30 8:00")
                               )
       )
 
@@ -229,6 +230,7 @@
 (setq org-clock-persist 'history)
 (setq org-clock-persist-file "~/.doom.d/.org-clock-save.el")
 (setq org-clock-persistence-insinuate t)
+(setq org-clock-auto-clock-resolution nil)
 
 (setq org-export-exclude-tags '("noexport"))
 
@@ -329,3 +331,5 @@
       "t" #'csv-transpose
       "h" #'csv-header-line
       )
+
+(after! org (setq org-fold-core-style 'overlays) )
