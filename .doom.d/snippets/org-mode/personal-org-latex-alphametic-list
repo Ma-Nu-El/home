@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: personal-org-latex-alphametic-list
+# key: trigger-key
+# condition: t
+# --
+
+#+ATTR_LATEX: :options [(a)]
+a) ${1: text}

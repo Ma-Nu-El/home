@@ -1,9 +1,9 @@
 # -*- mode: snippet -*-
-# name: personal-org-agenda-template
-# key: personal-org-agenda-template
+# name: personal-org-calendar-template
+# key: personal-org-calendar-template
 # condition: t
 # --
-* Agenda
+* Calendar [/][%]
 ** Jan
 ** Feb
 ** Mar

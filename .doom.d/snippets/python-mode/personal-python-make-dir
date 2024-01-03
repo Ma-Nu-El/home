@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: personal-python-make-dir
+# key: trigger-key
+# condition: t
+# --
+
+import os
+os.makedirs(${0: string(s)})

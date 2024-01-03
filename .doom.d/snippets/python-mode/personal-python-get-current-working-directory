@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: personal-python-get-current-working-directory
+# key: trigger-key
+# condition: t
+# --
+
+import os
+os.getcwd()

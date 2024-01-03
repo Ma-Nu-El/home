@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: personal-python-get-home-directory
+# key: trigger-key
+# condition: t
+# --
+
+import os
+os.path.expanduser("~")

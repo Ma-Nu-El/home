@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: personal-python-src-block
+# key: trigger-key
+# condition: t
+# --
+
+#+begin_src python :results output
+${0:  body}
+#+end_src

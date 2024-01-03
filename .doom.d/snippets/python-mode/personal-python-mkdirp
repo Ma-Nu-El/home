@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: personal-python-mkdirp 
+# key: trigger-key
+# condition: t
+# --
+import pathlib
+pathlib.Path('/my/directory').mkdir(parents=True, exist_ok=True) 

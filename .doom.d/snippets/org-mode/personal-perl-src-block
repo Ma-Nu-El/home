@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: personal-perl-src-block
+# key: trigger-key
+# condition: t
+# --
+
+#+begin_src perl :results output
+use strict;
+use warnings;
+
+${0:  body}
+#+end_src
