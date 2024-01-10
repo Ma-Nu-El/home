@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: personal-org-src-block-eval-no
+# key: personal-org-src-block-eval-no
+# condition: t
+# --
+#+begin_src ${0:  language} :eval no
+${1:  body}
+#+end_src
