@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+year=$(date +%Y)
+month=$(date +%m)
+day=$(date +%d)
+
+case $month in
+  "01"|"03"|"05"|"07"|"08"|"10"|"12")
+    days_in_month=31
+    ;;
+  "04"|"06"|"09"|"11")
+    days_in_month=30
+    ;;
+  "02")
+    if (( year % 4 == 0 && (year % 100 != 0 || year % 400 == 0) )); then
+      days_in_month=29
+    else
+      days_in_month=28
+    fi
+    ;;
+esac
+
+month_percentage=$(echo "scale=4; $day/$days_in_month" | bc -l)
+
+printf "$month_percentage\n"
+
+

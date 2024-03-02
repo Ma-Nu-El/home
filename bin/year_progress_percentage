@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+day_of_year=$(date +%j)
+
+year=$(date +%Y)
+
+if (( year % 400 == 0 || ( year % 4 == 0 && year % 100 != 0 ) )); then
+  days_in_year=366
+else
+  days_in_year=365
+fi
+
+year_percentage=$(echo "scale=4; $day_of_year / $days_in_year" | bc)
+
+printf "$year_percentage\n"
