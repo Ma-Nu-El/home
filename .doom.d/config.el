@@ -261,6 +261,14 @@
 
 (setq org-export-with-sub-superscripts nil)
 
+(setq org-tag-alist '(
+                      ("@work" . ?w)
+                      ("@home" . ?h)
+                      ("laptop" . ?l)
+                      ("read_only" . ?R)
+                      )
+)
+
 )
 ;; END AFTER ORG
 
@@ -292,31 +300,70 @@
 
 (global-git-gutter-mode +1)
 
+(after! org (setq org-fold-core-style 'overlays) )
+
+(defun org-mark-readonly ()
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (let* ((element (org-element-at-point))
+            (begin (org-element-property :begin element))
+            (end (org-element-property :end element)))
+       (add-text-properties begin (- end 1) '(read-only t))))
+   "read_only")
+)
+
+(defun org-remove-readonly ()
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (let* ((element (org-element-at-point))
+            (begin (org-element-property :begin element))
+            (end (org-element-property :end element))
+            (inhibit-read-only t))
+         (remove-text-properties begin (- end 1) '(read-only t))))
+     "read_only")
+     (message "readonly disabled")
+  )
+
+(add-hook 'org-mode-hook 'org-mark-readonly)
+
 (map! :leader
-      (:prefix-map ("k" . "custom key bindings")
-        (:prefix-map ("r" . "reload")
-         :desc "Current dynamic block" "d" #'org-update-dblock
-         :desc "All dynamic blocks" "D" #'org-update-all-dblocks
-        )
-        (:prefix-map ("a" . "align")
-         :desc "align-regexp" "r" #'align-regexp
-        )
-        (:prefix-map ("e" . "code")
-         :desc "org-edit-src-block" "c" #'org-edit-src-code
-        )
-        (:prefix-map ("o" . "orgmode")
-          (:prefix-map ("k" . "org-kanban")
-           :desc "Insert kanban here" "i" #'org-kanban/initialize-here
-           :desc "Configure kanban block at point" "c" #'org-kanban/configure-block
-           :desc "Shift TODO state of current entry" "s" #'org-kanban/shift
-          )
-          (:prefix-map ("t" . "table")
-             :desc "org-table-shrink" "s" #'org-table-shrink
-             :desc "org-table-expand" "e" #'org-table-expand
-             :desc "org-table-toggle-column-width" "t" #'org-table-toggle-column-width
-            )
-          )
-        )
+  (:prefix-map ("k" . "custom key bindings")
+
+    (:prefix-map ("r" . "reload")
+     :desc "Current dynamic block" "d" #'org-update-dblock
+     :desc "All dynamic blocks" "D" #'org-update-all-dblocks
+    )
+
+    (:prefix-map ("a" . "align")
+     :desc "align-regexp" "r" #'align-regexp
+    )
+
+    (:prefix-map ("e" . "code")
+     :desc "org-edit-src-block" "c" #'org-edit-src-code
+    )
+
+    (:prefix-map ("o" . "orgmode")
+
+      (:prefix-map ("k" . "org-kanban")
+       :desc "Insert kanban here" "i" #'org-kanban/initialize-here
+       :desc "Configure kanban block at point" "c" #'org-kanban/configure-block
+       :desc "Shift TODO state of current entry" "s" #'org-kanban/shift
+      )
+
+      (:prefix-map ("t" . "table")
+         :desc "org-table-shrink" "s" #'org-table-shrink
+         :desc "org-table-expand" "e" #'org-table-expand
+         :desc "org-table-toggle-column-width" "t" #'org-table-toggle-column-width
+      )
+
+      (:prefix-map ("r" . "readonly")
+         :desc "org-mark-readonly" "e" #'org-mark-readonly
+         :desc "org-remove-readonly" "d" #'org-remove-readonly
+      )
+    )
+  )
 )
 
 ;;;###package csv-mode
@@ -331,5 +378,3 @@
       "t" #'csv-transpose
       "h" #'csv-header-line
       )
-
-(after! org (setq org-fold-core-style 'overlays) )

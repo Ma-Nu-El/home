@@ -55,6 +55,7 @@
   - [[#recursive-todo-cookie-statistics][recursive TODO cookie statistics]]
   - [[#underscore-and-hat-handling][underscore and hat handling]]
   - [[#disable-heading-numbering-during-export][disable heading numbering during export]]
+  - [[#global-tags][global tags]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
@@ -68,8 +69,9 @@
 - [[#60-char-ruler][60 char ruler]]
 - [[#git-gutter][git gutter]]
 - [[#org-ai][org-ai]]
-- [[#keyboard-shortcuts][keyboard shortcuts]]
 - [[#fix-zo-not-working-in-macos][fix =zo= not working in macOS]]
+- [[#orgmode-readonly-custom-functions][orgmode readonly custom functions]]
+- [[#keyboard-shortcuts][keyboard shortcuts]]
 
 * shebang
 :PROPERTIES:
@@ -1091,6 +1093,20 @@ where as the others output
 : (setq org-export-with-section-numbers nil)
 : #+end_src
 
+** global tags
+# - [2024-01-26 Fri 12:43]
+
+#+begin_src elisp
+(setq org-tag-alist '(
+                      ("@work" . ?w)
+                      ("@home" . ?h)
+                      ("laptop" . ?l)
+                      ("read_only" . ?R)
+                      )
+)
+#+end_src
+
+
 * end org section
 :PROPERTIES:
 :ID:       889fe81d-8200-4e4f-b833-a2c20cc295eb
@@ -1276,6 +1292,47 @@ where as the others output
   (org-ai-install-yasnippets)) ; if you are using yasnippet and want ai snippets
 #+end_src
 
+* fix =zo= not working in macOS
+# - [2024-01-03 Wed 16:24]
+
+#+begin_src elisp
+(after! org (setq org-fold-core-style 'overlays) )
+#+end_src
+
+* orgmode readonly custom functions
+# - [2024-02-07 Wed 16:10]
+
+
+
+#+begin_src elisp
+(defun org-mark-readonly ()
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (let* ((element (org-element-at-point))
+            (begin (org-element-property :begin element))
+            (end (org-element-property :end element)))
+       (add-text-properties begin (- end 1) '(read-only t))))
+   "read_only")
+)
+
+(defun org-remove-readonly ()
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (let* ((element (org-element-at-point))
+            (begin (org-element-property :begin element))
+            (end (org-element-property :end element))
+            (inhibit-read-only t))
+         (remove-text-properties begin (- end 1) '(read-only t))))
+     "read_only")
+     (message "readonly disabled")
+  )
+
+(add-hook 'org-mode-hook 'org-mark-readonly)
+
+#+end_src
+
 * keyboard shortcuts
 # - [2023-09-07 Thu 16:31]
 - [[https://www.dschapman.com/notes/bde6e938-0984-4d60-974d-77178f1ecd9b][How to Add Shortcuts to Doom Emacs]]
@@ -1288,30 +1345,41 @@ where as the others output
 
 #+begin_src elisp
 (map! :leader
-      (:prefix-map ("k" . "custom key bindings")
-        (:prefix-map ("r" . "reload")
-         :desc "Current dynamic block" "d" #'org-update-dblock
-         :desc "All dynamic blocks" "D" #'org-update-all-dblocks
-        )
-        (:prefix-map ("a" . "align")
-         :desc "align-regexp" "r" #'align-regexp
-        )
-        (:prefix-map ("e" . "code")
-         :desc "org-edit-src-block" "c" #'org-edit-src-code
-        )
-        (:prefix-map ("o" . "orgmode")
-          (:prefix-map ("k" . "org-kanban")
-           :desc "Insert kanban here" "i" #'org-kanban/initialize-here
-           :desc "Configure kanban block at point" "c" #'org-kanban/configure-block
-           :desc "Shift TODO state of current entry" "s" #'org-kanban/shift
-          )
-          (:prefix-map ("t" . "table")
-             :desc "org-table-shrink" "s" #'org-table-shrink
-             :desc "org-table-expand" "e" #'org-table-expand
-             :desc "org-table-toggle-column-width" "t" #'org-table-toggle-column-width
-            )
-          )
-        )
+  (:prefix-map ("k" . "custom key bindings")
+
+    (:prefix-map ("r" . "reload")
+     :desc "Current dynamic block" "d" #'org-update-dblock
+     :desc "All dynamic blocks" "D" #'org-update-all-dblocks
+    )
+
+    (:prefix-map ("a" . "align")
+     :desc "align-regexp" "r" #'align-regexp
+    )
+
+    (:prefix-map ("e" . "code")
+     :desc "org-edit-src-block" "c" #'org-edit-src-code
+    )
+
+    (:prefix-map ("o" . "orgmode")
+
+      (:prefix-map ("k" . "org-kanban")
+       :desc "Insert kanban here" "i" #'org-kanban/initialize-here
+       :desc "Configure kanban block at point" "c" #'org-kanban/configure-block
+       :desc "Shift TODO state of current entry" "s" #'org-kanban/shift
+      )
+
+      (:prefix-map ("t" . "table")
+         :desc "org-table-shrink" "s" #'org-table-shrink
+         :desc "org-table-expand" "e" #'org-table-expand
+         :desc "org-table-toggle-column-width" "t" #'org-table-toggle-column-width
+      )
+
+      (:prefix-map ("r" . "readonly")
+         :desc "org-mark-readonly" "e" #'org-mark-readonly
+         :desc "org-remove-readonly" "d" #'org-remove-readonly
+      )
+    )
+  )
 )
 #+end_src
 
@@ -1333,10 +1401,4 @@ where as the others output
       "t" #'csv-transpose
       "h" #'csv-header-line
       )
-#+end_src
-* fix =zo= not working in macOS
-# - [2024-01-03 Wed 16:24]
-
-#+begin_src elisp
-(after! org (setq org-fold-core-style 'overlays) )
 #+end_src
