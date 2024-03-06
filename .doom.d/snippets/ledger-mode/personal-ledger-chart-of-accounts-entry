@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: personal-ledger-chart-of-accounts-entry
+# key: trigger-key
+# condition: t
+# --
+<<coa.org:{0: entry in chart of accounts}>>    {1: currency}  {2: amount}
