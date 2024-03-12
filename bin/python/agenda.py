@@ -33,7 +33,7 @@ import orgparse
 
 # Enter user information
 user_home="/Users/manuelfuica"
-agenda_file="/auxRoam/2023/agenda_2023.org"
+agenda_file="/auxRoam/2024/calendar.org"
 current_year=2023
 # user_country="Chile"
 
