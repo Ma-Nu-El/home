@@ -1,10 +1,22 @@
 #!/usr/bin/env python3
 
+import os                # for tilde expansion
 import sys               # to read input
 import holidays
 import calendar
 import datetime
 import orgparse
+import logging
+
+logging_level=logging.DEBUG         # select debug level
+logging_format='%(asctime)s - %(levelname)s - %(message)s'
+logging.basicConfig(level=logging_level, format=logging_format)
+# logging.disable(logging.DEBUG)    # disable only DEBUG messages
+# logging.disable(logging.INFO)     # disable INFO and upwards
+# logging.disable(logging.WARNING)  # disable WARNING and upwards
+# logging.disable(logging.ERROR)    # disable ERROR and upwards
+# logging.disable(logging.CRITICAL) # disable all logging messsages
+
 
 current_year = datetime.datetime.now().year
 today = datetime.date.today()
@@ -12,41 +24,88 @@ today = datetime.date.today()
 class PersonalHolidays(holidays.Chile):
      def _populate(self, year):
          holidays.Chile._populate(self, year)
-         self[datetime.date(2024, 1, 1)] = "Holiday Name"
-         self[datetime.date(2024, 3, 29)] = "Holiday Name"
-         self[datetime.date(2024, 3, 30)] = "Holiday Name"
-         self[datetime.date(2024, 5, 1)] = "Holiday Name"
-         self[datetime.date(2024, 5, 21)] = "Holiday Name"
-         self[datetime.date(2024, 6, 9)] = "Holiday Name"
-         self[datetime.date(2024, 6, 20)] = "Holiday Name"
-         self[datetime.date(2024, 6, 29)] = "Holiday Name"
-         self[datetime.date(2024, 7, 16)] = "Holiday Name"
-         self[datetime.date(2024, 8, 15)] = "Holiday Name"
-         self[datetime.date(2024, 9, 18)] = "Holiday Name"
-         self[datetime.date(2024, 9, 19)] = "Holiday Name"
-         self[datetime.date(2024, 9, 20)] = "Holiday Name"
+         # National holidays
+         self[datetime.date(2024, 1, 1)]   = "Holiday Name"
+         self[datetime.date(2024, 3, 29)]  = "Holiday Name"
+         self[datetime.date(2024, 3, 30)]  = "Holiday Name"
+         self[datetime.date(2024, 5, 1)]   = "Holiday Name"
+         self[datetime.date(2024, 5, 21)]  = "Holiday Name"
+         self[datetime.date(2024, 6, 9)]   = "Holiday Name"
+         self[datetime.date(2024, 6, 20)]  = "Holiday Name"
+         self[datetime.date(2024, 6, 29)]  = "Holiday Name"
+         self[datetime.date(2024, 7, 16)]  = "Holiday Name"
+         self[datetime.date(2024, 8, 15)]  = "Holiday Name"
+         self[datetime.date(2024, 9, 18)]  = "Holiday Name"
+         self[datetime.date(2024, 9, 19)]  = "Holiday Name"
+         self[datetime.date(2024, 9, 20)]  = "Holiday Name"
          self[datetime.date(2024, 10, 12)] = "Holiday Name"
          self[datetime.date(2024, 10, 27)] = "Holiday Name"
          self[datetime.date(2024, 10, 31)] = "Holiday Name"
-         self[datetime.date(2024, 11, 1)] = "Holiday Name"
+         self[datetime.date(2024, 11, 1)]  = "Holiday Name"
          self[datetime.date(2024, 11, 24)] = "Holiday Name"
-         self[datetime.date(2024, 12, 8)] = "Holiday Name"
+         self[datetime.date(2024, 12, 8)]  = "Holiday Name"
          self[datetime.date(2024, 12, 25)] = "Holiday Name"
+         # University holydays and vacations
+         self[datetime.date(2024, 1, 29)] = "Holiday Name"
+         self[datetime.date(2024, 1, 30)] = "Holiday Name"
+         self[datetime.date(2024, 1, 31)] = "Holiday Name"
+         self[datetime.date(2024, 2, 1)] = "Holiday Name"
+         self[datetime.date(2024, 2, 2)] = "Holiday Name"
+         self[datetime.date(2024, 2, 5)] = "Holiday Name"
+         self[datetime.date(2024, 2, 6)] = "Holiday Name"
+         self[datetime.date(2024, 2, 7)] = "Holiday Name"
+         self[datetime.date(2024, 2, 8)] = "Holiday Name"
+         self[datetime.date(2024, 2, 9)] = "Holiday Name"
+         self[datetime.date(2024, 2, 12)] = "Holiday Name"
+         self[datetime.date(2024, 2, 13)] = "Holiday Name"
+         self[datetime.date(2024, 2, 14)] = "Holiday Name"
+         self[datetime.date(2024, 2, 15)] = "Holiday Name"
+         self[datetime.date(2024, 2, 16)] = "Holiday Name"
+         self[datetime.date(2024, 2, 19)] = "Holiday Name"
+         self[datetime.date(2024, 2, 20)] = "Holiday Name"
+         self[datetime.date(2024, 2, 21)] = "Holiday Name"
+         self[datetime.date(2024, 2, 22)] = "Holiday Name"
+         self[datetime.date(2024, 2, 23)] = "Holiday Name"
+         self[datetime.date(2024, 5, 6)] = "Holiday Name"
+         self[datetime.date(2024, 5, 7)] = "Holiday Name"
+         self[datetime.date(2024, 5, 8)] = "Holiday Name"
+         self[datetime.date(2024, 5, 9)] = "Holiday Name"
+         self[datetime.date(2024, 5, 10)] = "Holiday Name"
+         self[datetime.date(2024, 5, 20)] = "Holiday Name"
+         self[datetime.date(2024, 6, 21)] = "Holiday Name"
+         self[datetime.date(2024, 7, 22)] = "Holiday Name"
+         self[datetime.date(2024, 7, 23)] = "Holiday Name"
+         self[datetime.date(2024, 7, 24)] = "Holiday Name"
+         self[datetime.date(2024, 7, 25)] = "Holiday Name"
+         self[datetime.date(2024, 7, 26)] = "Holiday Name"
+         self[datetime.date(2024, 8, 16)] = "Holiday Name"
+         self[datetime.date(2024, 9, 16)] = "Holiday Name"
+         self[datetime.date(2024, 9, 17)] = "Holiday Name"
+         self[datetime.date(2024, 10, 3)] = "Holiday Name"
+         self[datetime.date(2024, 12, 23)] = "Holiday Name"
+         self[datetime.date(2024, 12, 24)] = "Holiday Name"
+         self[datetime.date(2024, 12, 25)] = "Holiday Name"
+         self[datetime.date(2024, 12, 26)] = "Holiday Name"
+         self[datetime.date(2024, 12, 27)] = "Holiday Name"
+         self[datetime.date(2024, 12, 28)] = "Holiday Name"
+         self[datetime.date(2024, 12, 29)] = "Holiday Name"
+         self[datetime.date(2024, 12, 30)] = "Holiday Name"
+         self[datetime.date(2024, 12, 31)] = "Holiday Name"
 
 
 personal_holidays = PersonalHolidays()
 
 
 # Colors for displaying things
-color = { "month"     : "\033[1;37;40m"  , # Bright white text, black background
-          "week"      : "\033[3m"        , # Gray text (text color set to black, but no background color specified)
-          "weekend"   : "\033[0;2m"      , # Dim text
-          "busy-0"  :   "\033[0m",
-          "personal"  : "\033[0;31m"     , # sty: na, txt, na, bg: red
-          "deadline"  : "\033[1;31m"     , # sty: bold, txt: na, bg: red
-          "scheduled" : "\033[1;32m"     , # sty: bold, txt: na, bg: green
-          "today"     : "\033[1;31;42m"  , # sty: bold, txt: black, bg: green
-          "reset"     : "\033[0m"          # Resets the color to the terminal's default
+color = { "month"     : "\033[1;30;47m"   ,
+          "week"      : "\033[30;47m"   ,
+          "weekend"   : "\033[2;30;47m" ,
+          "busy-0"    : "\033[47m"      ,
+          "personal"  : "\033[0;31;47m"   ,
+          "deadline"  : "\033[1;31;47m" ,
+          "scheduled" : "\033[1;32;47m" ,
+          "today"     : "\033[1;37;40m" ,
+          "reset"     : "\033[0m"
          }
 
 markers = {
@@ -143,34 +202,45 @@ deadlines = set()
 schedules = set()
 # events = []
 
-def readFile(agenda_file):
-    for filename in [agenda_file]: # agenda_file can be a vector
-        agenda = orgparse.load(filename)
-        for node in agenda:
+def readFile(agenda_files):
 
-            if hasattr(node, "datelist") and node.datelist:
-                for date in node.datelist:
-                    d = date.start
-                    d = datetime.date(d.year,d.month,d.day)
-                    busydays[yearday(d)] += 1
+    logging.debug(f"Agenda files file  : {agenda_files}")
 
-            if hasattr(node, "rangelist") and node.rangelist:
-                for date in node.rangelist:
-                    ds,de = date.start, date.end
-                    ds = datetime.date(ds.year, ds.month, ds.day)
-                    de = datetime.date(de.year, de.month, de.day)
-                    for i,d in enumerate(daterange(date.start, date.end)):
-                        busydays[yearday(d)] += 1
+    with open(agenda_files, 'r') as file:
+        for line in file:
+            line = line.strip()
+            logging.debug(f"Line read  : {line}")
 
-            if hasattr(node, "deadline") and node.deadline:
-                d = node.deadline.start
-                d = datetime.date(d.year,d.month,d.day)
-                deadlines.add(yearday(d))
+            if not line.startswith(";"):
+                logging.debug(f"Line not ignored  : {line}")
+                full_path = os.path.expanduser(line)
 
-            if hasattr(node, "scheduled") and node.scheduled:
-                s = node.scheduled.start
-                s = datetime.date(s.year,s.month,s.day)
-                schedules.add(yearday(s))
+                agenda = orgparse.load(full_path)
+
+                for node in agenda:
+                    if hasattr(node, "datelist") and node.datelist:
+                        for date in node.datelist:
+                            d = date.start
+                            d = datetime.date(d.year, d.month, d.day)
+                            busydays[yearday(d)] += 1
+
+                    if hasattr(node, "rangelist") and node.rangelist:
+                        for date in node.rangelist:
+                            ds, de = date.start, date.end
+                            ds = datetime.date(ds.year, ds.month, ds.day)
+                            de = datetime.date(de.year, de.month, de.day)
+                            for i, d in enumerate(daterange(ds, de)):
+                                busydays[yearday(d)] += 1
+
+                    if hasattr(node, "deadline") and node.deadline:
+                        d = node.deadline.start
+                        d = datetime.date(d.year, d.month, d.day)
+                        deadlines.add(yearday(d))
+
+                    if hasattr(node, "scheduled") and node.scheduled:
+                        s = node.scheduled.start
+                        s = datetime.date(s.year, s.month, s.day)
+                        schedules.add(yearday(s))
 
 
 
@@ -191,7 +261,9 @@ def printAgenda():
     for line in lines: print(" "+line)
 
 
-agenda_file="/Users/manuelfuica/auxRoam/2024/calendar.org"
+agenda_files="~/agenda-files.txt"
 
-readFile(agenda_file)
+agenda_files_path = os.path.expanduser(agenda_files)
+
+readFile(agenda_files_path)
 printAgenda()
