@@ -97,14 +97,14 @@ personal_holidays = PersonalHolidays()
 
 
 # Colors for displaying things
-color = { "month"     : "\033[0;1;30;47m" ,
-          "week"      : "\033[0;30;47m"   ,
-          "weekend"   : "\033[0;2;30;47m" ,
-          "busy-0"    : "\033[0;47m"      ,
-          "personal"  : "\033[0;31;47m" ,
-          "deadline"  : "\033[0;1;31;47m" ,
-          "scheduled" : "\033[0;1;32;47m" ,
-          "today"     : "\033[0;1;37;40m" ,
+color = { "month"     : "\033[0m" ,
+          "week"      : "\033[0m"   ,
+          "weekend"   : "\033[0;2m" ,
+          "busy-0"    : "\033[0m"      ,
+          "personal"  : "\033[0;31m" ,
+          "deadline"  : "\033[0;1;31m" ,
+          "scheduled" : "\033[0;1;32m" ,
+          "today"     : "\033[0;43m" ,
           "reset"     : "\033[0m"
          }
 
@@ -246,7 +246,7 @@ def printAgenda():
     month_per_row = 4
     lines = []
     print("\033[2J\033[H") # clear terminal
-    print("Today:", today)
+    print("Calendar for year: ", current_year, "| Today : ", today)
     for month in range(1, 13, month_per_row):
         months = [format_month(current_year, month+i) for i in range(month_per_row)]
         for i in range(8):
