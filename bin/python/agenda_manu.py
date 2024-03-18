@@ -8,7 +8,7 @@ import datetime
 import orgparse
 import logging
 
-logging_level=logging.DEBUG         # select debug level
+logging_level=logging.ERROR         # select debug level
 logging_format='%(asctime)s - %(levelname)s - %(message)s'
 logging.basicConfig(level=logging_level, format=logging_format)
 # logging.disable(logging.DEBUG)    # disable only DEBUG messages
@@ -97,19 +97,19 @@ personal_holidays = PersonalHolidays()
 
 
 # Colors for displaying things
-color = { "month"     : "\033[1;30;47m"   ,
-          "week"      : "\033[30;47m"   ,
-          "weekend"   : "\033[2;30;47m" ,
-          "busy-0"    : "\033[47m"      ,
-          "personal"  : "\033[0;31;47m"   ,
-          "deadline"  : "\033[1;31;47m" ,
-          "scheduled" : "\033[1;32;47m" ,
-          "today"     : "\033[1;37;40m" ,
+color = { "month"     : "\033[0;1;30;47m" ,
+          "week"      : "\033[0;30;47m"   ,
+          "weekend"   : "\033[0;2;30;47m" ,
+          "busy-0"    : "\033[0;47m"      ,
+          "personal"  : "\033[0;31;47m" ,
+          "deadline"  : "\033[0;1;31;47m" ,
+          "scheduled" : "\033[0;1;32;47m" ,
+          "today"     : "\033[0;1;37;40m" ,
           "reset"     : "\033[0m"
          }
 
 markers = {
-    "busy-0" : " "
+    "busy-0" : " ",
     }
 
 def yearday(date):
@@ -185,10 +185,11 @@ def format_month(year, month):
                     c += color["personal"]
                 s += c + "%2d" % day
                 # s += color["reset"]
-                if is_deadline(year, month, day):
-                    s += color["deadline"] + "!"
+
                 if is_scheduled(year, month, day):
                     s += color["scheduled"] + "!"
+                elif is_deadline(year, month, day):
+                    s += color["deadline"] + "!"
                 else:
                     s += markers["busy-" + str(min(is_busy(year, month, day),0))]
                 s += color["reset"]
@@ -198,8 +199,8 @@ def format_month(year, month):
 
 # Fill in busy days from agenda.org
 busydays = { i:0 for i in range(366+1) }
-deadlines = set()
 schedules = set()
+deadlines = set()
 # events = []
 
 def readFile(agenda_files):
@@ -207,23 +208,24 @@ def readFile(agenda_files):
     logging.debug(f"Agenda files file  : {agenda_files}")
 
     with open(agenda_files, 'r') as file:
+
         for line in file:
             line = line.strip()
             logging.debug(f"Line read  : {line}")
 
             if not line.startswith(";"):
+
                 logging.debug(f"Line not ignored  : {line}")
                 full_path = os.path.expanduser(line)
-
                 agenda = orgparse.load(full_path)
 
                 for node in agenda:
+
                     if hasattr(node, "datelist") and node.datelist:
                         for date in node.datelist:
                             d = date.start
                             d = datetime.date(d.year, d.month, d.day)
                             busydays[yearday(d)] += 1
-
                     if hasattr(node, "rangelist") and node.rangelist:
                         for date in node.rangelist:
                             ds, de = date.start, date.end
@@ -231,30 +233,25 @@ def readFile(agenda_files):
                             de = datetime.date(de.year, de.month, de.day)
                             for i, d in enumerate(daterange(ds, de)):
                                 busydays[yearday(d)] += 1
-
+                    if hasattr(node, "scheduled") and node.scheduled:
+                        s = node.scheduled.start
+                        s = datetime.date(s.year, s.month, s.day)
+                        schedules.add(yearday(s))
                     if hasattr(node, "deadline") and node.deadline:
                         d = node.deadline.start
                         d = datetime.date(d.year, d.month, d.day)
                         deadlines.add(yearday(d))
 
-                    if hasattr(node, "scheduled") and node.scheduled:
-                        s = node.scheduled.start
-                        s = datetime.date(s.year, s.month, s.day)
-                        schedules.add(yearday(s))
-
-
-
-# Print agenda (3 months per line)
 def printAgenda():
-    n = 4
+    month_per_row = 4
     lines = []
     print("\033[2J\033[H") # clear terminal
     print("Today:", today)
-    for month in range(1, 13, n):
-        months = [format_month(current_year, month+i) for i in range(n)]
+    for month in range(1, 13, month_per_row):
+        months = [format_month(current_year, month+i) for i in range(month_per_row)]
         for i in range(8):
             line = ""
-            for j in range(n):
+            for j in range(month_per_row):
                 line += months[j][i] + " "
             lines.append(line)
         lines.append("\033[0m")
