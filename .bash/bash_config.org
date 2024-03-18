@@ -175,7 +175,7 @@ alias X='command -V'
 alias L='less --RAW-CONTROL-CHARS'
 alias cht='cheat' # defined in ~/.bash/functions
 alias jj='jobs -l'
-alias agenda="~/bin/agenda.py | less -R"
+alias agenda="~/bin/python/agenda_manu.py | less --RAW-CONTROL-CHARS"
 alias ag="agenda"
 alias copy="~/bin/copy_to_clipboard"
 
@@ -202,7 +202,6 @@ alias batp='~/bin/battery -p'
 alias gpgrestart='gpgconf --kill gpg-agent'
 alias ddirs='~/bin/detectdirectories'
 alias sessions='~/Ardour/'
-#alias agenda='xdg-open &>/dev/null ~/org/agenda.html'
 alias wea='"$HOME"/bin/weather'
 alias syncthing_gui='echo 'http://localhost:8384/''
 alias cw='clockywock'
