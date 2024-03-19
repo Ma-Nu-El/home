@@ -136,3 +136,11 @@ now(){
     date "+%Y-%m-%d %H:%M:%S" && \
     gcal --starting-day=1 --with-week-number --highlighting=no
 }
+agenda(){
+	if [[ -z "$1"  ]]
+	then
+                "$HOME"/bin/python/agenda_manu.py --today | less --RAW-CONTROL-CHARS
+	else
+                "$HOME"/bin/python/agenda_manu.py "$1" | less --RAW-CONTROL-CHARS
+	fi
+}

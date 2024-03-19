@@ -175,7 +175,6 @@ alias X='command -V'
 alias L='less --RAW-CONTROL-CHARS'
 alias cht='cheat' # defined in ~/.bash/functions
 alias jj='jobs -l'
-alias agenda="~/bin/python/agenda_manu.py | less --RAW-CONTROL-CHARS"
 alias ag="agenda"
 alias copy="~/bin/copy_to_clipboard"
 
@@ -330,6 +329,7 @@ set -o pipefail
 <<bash_function_psaux>>
 <<bash_function_lights>>
 <<bash_function_now>>
+<<bash_function_agenda>>
 #+end_src
 
 ** manuclone
@@ -524,6 +524,20 @@ esac
 now(){
     date "+%Y-%m-%d %H:%M:%S" && \
     gcal --starting-day=1 --with-week-number --highlighting=no
+}
+#+end_src
+
+** agenda
+
+#+name: bash_function_agenda
+#+begin_src bash :tangle no
+agenda(){
+	if [[ -z "$1"  ]]
+	then
+                "$HOME"/bin/python/agenda_manu.py --today | less --RAW-CONTROL-CHARS
+	else
+                "$HOME"/bin/python/agenda_manu.py "$1" | less --RAW-CONTROL-CHARS
+	fi
 }
 #+end_src
 

@@ -116,7 +116,6 @@ alias X='command -V'
 alias L='less --RAW-CONTROL-CHARS'
 alias cht='cheat' # defined in ~/.bash/functions
 alias jj='jobs -l'
-alias agenda="~/bin/python/agenda_manu.py | less --RAW-CONTROL-CHARS"
 alias ag="agenda"
 alias copy="~/bin/copy_to_clipboard"
 
