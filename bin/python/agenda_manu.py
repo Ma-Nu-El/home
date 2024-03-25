@@ -2,7 +2,8 @@
 
 import os                # for tilde expansion
 import sys               # to read input
-import holidays
+# import holidays
+from holidays.countries import Chile
 import calendar
 import datetime
 import orgparse
@@ -21,9 +22,12 @@ logging.basicConfig(level=logging_level, format=logging_format)
 current_year = datetime.datetime.now().year
 today = datetime.date.today()
 
-class PersonalHolidays(holidays.Chile):
+# class PersonalHolidays(holidays.Chile):
+class PersonalHolidays(Chile):
      def _populate(self, year):
-         holidays.Chile._populate(self, year)
+         # holidays.Chile._populate(self, year)
+         Chile._populate(self, year)
+         super()._populate(year)
          # National holidays
          self[datetime.date(2024, 1, 1)]   = "Holiday Name"
          self[datetime.date(2024, 3, 29)]  = "Holiday Name"
