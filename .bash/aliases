@@ -221,3 +221,6 @@ alias loff='lights off'
 alias lon='lights on'
 ## autogpt (chat-GPT)
 alias agpt='~/bin/auto_gpt_fire_up'
+## python_environments
+alias p11='. "$HOME"/venv/python3.11.8/bin/activate'
+alias p12='. "$HOME"/venv/python3.12.2/bin/activate'

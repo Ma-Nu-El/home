@@ -18,6 +18,7 @@ set -o pipefail
 <<bash_alias_docker>>
 <<bash_alias_lights>>
 <<bash_alias_chatgpt>>
+<<bash_alias_python_environments>>
 #+end_src
 
 ** git
@@ -310,6 +311,15 @@ alias lon='lights on'
 #+begin_src bash :tangle no
 ## autogpt (chat-GPT)
 alias agpt='~/bin/auto_gpt_fire_up'
+#+end_src
+
+** python_environments
+
+#+name: bash_alias_python_environments
+#+begin_src bash :tangle no
+## python_environments
+alias p11='. "$HOME"/venv/python3.11.8/bin/activate'
+alias p12='. "$HOME"/venv/python3.12.2/bin/activate'
 #+end_src
 
 * Functions
