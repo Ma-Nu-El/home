@@ -56,6 +56,7 @@
   - [[#underscore-and-hat-handling][underscore and hat handling]]
   - [[#disable-heading-numbering-during-export][disable heading numbering during export]]
   - [[#global-tags][global tags]]
+  - [[#python-command][python command]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
@@ -1106,6 +1107,13 @@ where as the others output
 )
 #+end_src
 
+** python command
+# - [2024-03-28 Thu 11:26]
+
+
+#+begin_src elisp
+(setq org-babel-python-command "~/venv/python3.12.2/bin/python")
+#+end_src
 
 * end org section
 :PROPERTIES:

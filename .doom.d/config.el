@@ -269,6 +269,8 @@
                       )
 )
 
+(setq org-babel-python-command "~/venv/python3.12.2/bin/python")
+
 )
 ;; END AFTER ORG
 
