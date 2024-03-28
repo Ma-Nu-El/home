@@ -249,8 +249,9 @@ To enable R in Doom Emacs use:
 ;;idris             ;
 #+begin_src elisp
 json              ; At least it ain't XML
-(java +lsp)         ; Added by Ma Nu from
+(java +lsp)
 #+end_src
+; Added by Ma Nu from
 https://emacs-lsp.github.io/lsp-mode/page/installation/
 ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
 
