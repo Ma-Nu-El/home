@@ -57,11 +57,11 @@ alias p='pwd'
 alias pp='clear && pwd'
 alias lah='ls -lah'
 # alias dusort='du -sh * | sort -h' # sort by siz # made function: ./functions
-alias eo='clear && pwd && echo '-----' && ls' # was 'pa', but was the most used one so now is more ergo
 # https://superuser.com/questions/250227/how-do-i-see-what-my-most-used-linux-command-are
-alias eoa='clear && pwd && echo '-----' && ls -a' # with hidden files
-alias e='clear && pwd && echo '-----' && ls -1' # as list
-alias eoua='clear && pwd && echo '-----' && ls -1a' # as list with hidden files
+alias e='clear && pwd && echo '-----' && ls -1'   # list
+alias eu='clear && pwd && echo '-----' && ls -1a' # list include hidden
+alias eo='clear && pwd && echo '-----' && ls'     # classic
+alias eou='clear && pwd && echo '-----' && ls -a' # classic hidden
 alias lagrep='ls -a | grep -i' # append your simple grep search, case insensitive
 
 # quick navigation
@@ -84,7 +84,6 @@ alias 4='~/Pictures'
 alias 5='~/Videos'
 alias 6='~/Music'
 alias 11='~/"$MY_DRIVE"' # cloud directory
-
 # quick editor
 
 alias v='vim'
