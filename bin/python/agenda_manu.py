@@ -101,14 +101,14 @@ personal_holidays = PersonalHolidays()
 
 
 # Colors for displaying things
-color = { "month"     : "\033[0m" ,
-          "week"      : "\033[0m"   ,
-          "weekend"   : "\033[0;2m" ,
-          "busy-0"    : "\033[0m"      ,
-          "personal"  : "\033[0;31m" ,
-          "deadline"  : "\033[0;1;31m" ,
-          "scheduled" : "\033[0;1;32m" ,
-          "today"     : "\033[0;43m" ,
+color = { "month"     : "\033[m"     ,
+          "week"      : "\033[m"     ,
+          "weekend"   : "\033[2m"    ,
+          "busy-0"    : "\033[m"     ,
+          "personal"  : "\033[31m"   ,
+          "deadline"  : "\033[1;31m" ,
+          "scheduled" : "\033[1;32m" ,
+          "today"     : "\033[43m"   ,
           "reset"     : "\033[0m"
          }
 
