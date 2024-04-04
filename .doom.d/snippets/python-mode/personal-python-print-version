@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: personal-python-print-version
+# key: trigger-key
+# condition: t
+# --
+import platform;
+print(platform.sys.version);
