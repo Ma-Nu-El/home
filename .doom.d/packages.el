@@ -15,3 +15,10 @@
            :repo "gizmomogwai/org-kanban"
            )
 )
+
+(package! org-web-tools
+  :recipe (:host github
+           :repo "alphapapa/org-web-tools"
+           :branch "master"
+           )
+)

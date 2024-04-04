@@ -16,6 +16,7 @@
 - [[#org-glossary][org-glossary]]
 - [[#org-kanban][org-kanban]]
 - [[#org-ai][org-ai]]
+- [[#org-web-tools][org-web-tools]]
 
 * shebang
 :PROPERTIES:
@@ -202,4 +203,18 @@ Contained in [[https://github.com/emacsmirror/org-contrib][org-contrib]].
   :recipe (:host github
            :repo "rksm/org-ai"
            :files ("*.el" "README.md" "snippets")))
+#+end_src
+
+* org-web-tools
+# - [2024-04-03 Wed 16:56]
+- [[https://github.com/alphapapa/org-web-tools][GitHub - alphapapa/org-web-tools: View, capture, and archive Web pages in Org-mode]]
+
+
+#+begin_src emacs-lisp
+(package! org-web-tools
+  :recipe (:host github
+           :repo "alphapapa/org-web-tools"
+           :branch "master"
+           )
+)
 #+end_src
