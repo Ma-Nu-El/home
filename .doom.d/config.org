@@ -57,6 +57,7 @@
   - [[#disable-heading-numbering-during-export][disable heading numbering during export]]
   - [[#global-tags][global tags]]
   - [[#python-command][python command]]
+  - [[#created-property][=CREATED= property]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
@@ -524,15 +525,15 @@ when checking agenda remotely.
 #+begin_src elisp
 (setq org-todo-keywords
       '((sequence
-         "WAIT(w)"
-         "NEXT(n)"
-         "DOIN(d)"
-         "TODO(t)"
-         "PROJ(p)"
-         "INCU(i)"
+         "WAIT(w!)"
+         "NEXT(n!)"
+         "DOIN(d!)"
+         "TODO(t!)"
+         "PROJ(p!)"
+         "INCU(i!)"
          "|"
-         "DONE(D)"
-         "CNLD(C)" )
+         "DONE(D!)"
+         "CNLD(C@)" )
         )
       )
 (setq org-log-done nil)
@@ -542,6 +543,7 @@ when checking agenda remotely.
 - https://orgmode.org/manual/Tracking-TODO-state-changes.html
 - OrgMode E03S01: Automatic logging of status changes:
   + https://www.youtube.com/watch?v=R4QSTDco_w8
+
 ** latex custom classes
 
 - [[https://ctan.org/tex-archive/macros/latex/contrib/extsizes][CTAN: /tex-archive/macros/latex/contrib/extsizes]]
@@ -730,6 +732,7 @@ something about it.
         ("\\.png\\'" . default)
         ("\\.svg\\'" . default)
         ("\\.pptx\\'" . default)
+        ("\\.tar.xz\\'" . default) ;; for org-mode extensions
         ;; Libreoffice (ODF) extensions
         ("\\.odt\\'" . default) ;; text
         ("\\.ods\\'" . default) ;; spreadsheet
@@ -974,7 +977,10 @@ mistake. I'll simply have to be more careful.
 - [[https://orgmode.org/manual/Template-expansion.html][Template expansion (The Org Manual)]]
 
 
-#+begin_src elisp
+- [2024-04-10 Wed] This one inserts timestamps
+
+
+#+begin_src elisp :tangle no
 (setq org-capture-templates
      '(
       ("w" "Work" entry (file "~/FilenSync/org/refile.org")
@@ -988,6 +994,26 @@ mistake. I'll simply have to be more careful.
 ))
 #+end_src
 
+
+- [2024-04-10 Wed] Now, since using
+  =org-set-created-property= custom function
+  ([[https://emacs.stackexchange.com/questions/21291/add-created-timestamp-to-logbook][org mode - Add "created" timestamp to LOGBOOK - Emacs Stack Exchange]]),
+  I'm disabling the inactive timestamp in the
+  line below heading.
+
+#+begin_src elisp :tangle no
+(setq org-capture-templates
+     '(
+      ("w" "Work" entry (file "~/FilenSync/org/refile.org")
+         "* %u %?\n\n" :clock-in nil)
+      ("W" "Work Citation" entry (file "~/FilenSync/org/bibliography.org")
+         "* %u %?\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
+      ("p" "Personal" entry (file "~/auxRoam/refile.org")
+         "* %u %?\n\n" :clock-in nil)
+      ("P" "Personal Citation" entry (file "~/auxRoam/bibliography.org")
+         "* %u %?\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
+))
+#+end_src
 
 Use with beorg:
 
@@ -1115,6 +1141,33 @@ where as the others output
 (setq org-babel-python-command "~/venv/python3.12.2/bin/python")
 #+end_src
 
+** =CREATED= property
+:PROPERTIES:
+:CREATED:  [2024-04-10 Wed 12:12]
+:END:
+
+- [[https://emacs.stackexchange.com/questions/21291/add-created-timestamp-to-logbook][org mode - Add "created" timestamp to LOGBOOK - Emacs Stack Exchange]]
+
+
+#+begin_src elisp
+(defvar org-created-property-name "CREATED"
+  "The name of the org-mode property that stores the creation date of the entry")
+
+(defun org-set-created-property (&optional active NAME)
+  "Set a property on the entry giving the creation time.
+
+By default the property is called CREATED. If given the `NAME'
+argument will be used instead. If the property already exists, it
+will not be modified."
+  (interactive)
+  (let* ((created (or NAME org-created-property-name))
+         (fmt (if active "<%s>" "[%s]"))
+         (now  (format fmt (format-time-string "%Y-%m-%d %a %H:%M"))))
+    (unless (org-entry-get (point) created nil)
+      (org-set-property created now))))
+(add-hook 'org-capture-before-finalize-hook #'org-set-created-property)
+#+end_src
+
 * end org section
 :PROPERTIES:
 :ID:       889fe81d-8200-4e4f-b833-a2c20cc295eb
@@ -1223,7 +1276,7 @@ where as the others output
 ;;  )
 #+end_src
 
-* 60 char ruler :line:width:80char:terminal:
+* 60 char ruler :line:width:80char:terminal:ATTACH:
 :PROPERTIES:
 :ID:       afa21908-f444-43d4-a5fb-19b770cf13ec
 :END:
@@ -1245,7 +1298,7 @@ where as the others output
 (global-display-fill-column-indicator-mode)
 (setq-default display-fill-column-indicator-column 55)
 ;;(setq display-fill-column-indicator t)
-;;(setq fill-column 80)
+(setq-default fill-column 55)
 #+end_src
 
 - [2021-11-27 Sat 17:07] 65
@@ -1267,7 +1320,8 @@ where as the others output
   - Same as above.
 - [2021-12-18 Sat 14:25]
   - 55
-
+- [2024-04-04 Thu 18:14]
+  - [[https://stackoverflow.com/questions/3566727/how-to-set-the-default-width-of-fill-mode-to-80-with-emacs][How to set the default width of fill mode to 80 with emacs? - Stack Overflow]]
 * git gutter
 :PROPERTIES:
 :ID:       74f03acd-57b5-487d-af07-716129320bac
@@ -1369,6 +1423,9 @@ where as the others output
     )
 
     (:prefix-map ("o" . "orgmode")
+      (:prefix-map ("p" . "Add property")
+       :desc "CREATED" "c" #'org-set-created-property
+       )
 
       (:prefix-map ("k" . "org-kanban")
        :desc "Insert kanban here" "i" #'org-kanban/initialize-here

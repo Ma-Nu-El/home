@@ -158,15 +158,15 @@
 
 (setq org-todo-keywords
       '((sequence
-         "WAIT(w)"
-         "NEXT(n)"
-         "DOIN(d)"
-         "TODO(t)"
-         "PROJ(p)"
-         "INCU(i)"
+         "WAIT(w!)"
+         "NEXT(n!)"
+         "DOIN(d!)"
+         "TODO(t!)"
+         "PROJ(p!)"
+         "INCU(i!)"
          "|"
-         "DONE(D)"
-         "CNLD(C)" )
+         "DONE(D!)"
+         "CNLD(C@)" )
         )
       )
 (setq org-log-done nil)
@@ -219,6 +219,7 @@
         ("\\.png\\'" . default)
         ("\\.svg\\'" . default)
         ("\\.pptx\\'" . default)
+        ("\\.tar.xz\\'" . default) ;; for org-mode extensions
         ;; Libreoffice (ODF) extensions
         ("\\.odt\\'" . default) ;; text
         ("\\.ods\\'" . default) ;; spreadsheet
@@ -245,18 +246,6 @@
 
 (setq org-default-notes-file (concat org-directory "default_notes.org"))
 
-(setq org-capture-templates
-     '(
-      ("w" "Work" entry (file "~/FilenSync/org/refile.org")
-         "* %u %?\n# - %U\n\n" :clock-in nil)
-      ("W" "Work Citation" entry (file "~/FilenSync/org/bibliography.org")
-         "* %u\n# - %U\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
-      ("p" "Personal" entry (file "~/auxRoam/refile.org")
-         "* %u %?\n# - %U\n\n" :clock-in nil)
-      ("P" "Personal Citation" entry (file "~/auxRoam/bibliography.org")
-         "* %u\n# - %U\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
-))
-
 (setq org-hierarchical-todo-statistics nil)
 
 (setq org-export-with-sub-superscripts nil)
@@ -270,6 +259,23 @@
 )
 
 (setq org-babel-python-command "~/venv/python3.12.2/bin/python")
+
+(defvar org-created-property-name "CREATED"
+  "The name of the org-mode property that stores the creation date of the entry")
+
+(defun org-set-created-property (&optional active NAME)
+  "Set a property on the entry giving the creation time.
+
+By default the property is called CREATED. If given the `NAME'
+argument will be used instead. If the property already exists, it
+will not be modified."
+  (interactive)
+  (let* ((created (or NAME org-created-property-name))
+         (fmt (if active "<%s>" "[%s]"))
+         (now  (format fmt (format-time-string "%Y-%m-%d %a %H:%M"))))
+    (unless (org-entry-get (point) created nil)
+      (org-set-property created now))))
+(add-hook 'org-capture-before-finalize-hook #'org-set-created-property)
 
 )
 ;; END AFTER ORG
@@ -298,7 +304,7 @@
 (global-display-fill-column-indicator-mode)
 (setq-default display-fill-column-indicator-column 55)
 ;;(setq display-fill-column-indicator t)
-;;(setq fill-column 80)
+(setq-default fill-column 55)
 
 (global-git-gutter-mode +1)
 
@@ -347,6 +353,9 @@
     )
 
     (:prefix-map ("o" . "orgmode")
+      (:prefix-map ("p" . "Add property")
+       :desc "CREATED" "c" #'org-set-created-property
+       )
 
       (:prefix-map ("k" . "org-kanban")
        :desc "Insert kanban here" "i" #'org-kanban/initialize-here
