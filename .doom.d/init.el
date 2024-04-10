@@ -19,7 +19,7 @@ ophints           ; highlight the region an operation acts on
 (popup +defaults)   ; tame sudden yet inevitable temporary windows
 vi-tilde-fringe   ; fringe tildes to mark beyond EOB
 (window-select +numbers)     ; visually switch windows
-(treemacs +lsp)          ; a project drawer, like neotree but cooler
+;; (treemacs +lsp)          ; a project drawer, like neotree but cooler
 workspaces        ; tab emulation, persistence & separate workspaces
 
 vc-gutter         ; vcs diff in the fringe
@@ -61,7 +61,7 @@ emacs-lisp        ; drown in parentheses
 (ess +lsp)               ; emacs speaks statistics
 
 json              ; At least it ain't XML
-(java +lsp)         ; Added by Ma Nu from
+(java +lsp)
 
 javascript        ; all(hope(abandon(ye(who(enter(here))))))
 
@@ -75,9 +75,9 @@ ocaml             ; an objective camel
 (org +gnuplot +pomodoro) ; organize your plain life in plain text
 
 perl              ; write code no one else can comprehend
-raku
+(raku +lsp)
 
-(php +lsp)               ; perl's insecure younger brother
+;; (php +lsp)               ; perl's insecure younger brother
 
 plantuml          ; diagrams for confusing people more
 
