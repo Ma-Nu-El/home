@@ -1001,7 +1001,7 @@ mistake. I'll simply have to be more careful.
   I'm disabling the inactive timestamp in the
   line below heading.
 
-#+begin_src elisp :tangle no
+#+begin_src elisp
 (setq org-capture-templates
      '(
       ("w" "Work" entry (file "~/FilenSync/org/refile.org")

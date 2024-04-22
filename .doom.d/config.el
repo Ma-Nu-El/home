@@ -246,6 +246,18 @@
 
 (setq org-default-notes-file (concat org-directory "default_notes.org"))
 
+(setq org-capture-templates
+     '(
+      ("w" "Work" entry (file "~/FilenSync/org/refile.org")
+         "* %u %?\n\n" :clock-in nil)
+      ("W" "Work Citation" entry (file "~/FilenSync/org/bibliography.org")
+         "* %u %?\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
+      ("p" "Personal" entry (file "~/auxRoam/refile.org")
+         "* %u %?\n\n" :clock-in nil)
+      ("P" "Personal Citation" entry (file "~/auxRoam/bibliography.org")
+         "* %u %?\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
+))
+
 (setq org-hierarchical-todo-statistics nil)
 
 (setq org-export-with-sub-superscripts nil)
