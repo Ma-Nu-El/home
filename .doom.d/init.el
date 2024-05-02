@@ -58,7 +58,7 @@ data              ; config/data formats
 
 emacs-lisp        ; drown in parentheses
 
-(ess +lsp)               ; emacs speaks statistics
+(ess)               ; emacs speaks statistics
 
 json              ; At least it ain't XML
 (java +lsp)

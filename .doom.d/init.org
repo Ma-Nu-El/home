@@ -236,7 +236,7 @@ emacs-lisp        ; drown in parentheses
 
 To enable R in Doom Emacs use:
 #+begin_src elisp
-(ess +lsp)               ; emacs speaks statistics
+(ess)               ; emacs speaks statistics
 #+end_src
 
 ;;faust             ; dsp, but you get to keep your soul
