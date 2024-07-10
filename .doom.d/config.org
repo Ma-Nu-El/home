@@ -56,7 +56,6 @@
   - [[#underscore-and-hat-handling][underscore and hat handling]]
   - [[#disable-heading-numbering-during-export][disable heading numbering during export]]
   - [[#global-tags][global tags]]
-  - [[#python-command][python command]]
   - [[#created-property][=CREATED= property]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
@@ -656,13 +655,14 @@ See also:
 
 ** babel python 3
 :PROPERTIES:
-:ID:       0d6b3c80-37fb-4c15-80c3-7a6210827ed0
+:CREATED:   [2024-03-28 Thu 11:26]
 :END:
+
 - https://emacs.stackexchange.com/questions/57447/org-babel-loads-different-python
 
 
 #+begin_src elisp
-(setq org-babel-python-command "python3")
+(setq org-babel-python-command "~/venv/python3.12.2/bin/python")
 #+end_src
 
 ** mu4e store links
@@ -1131,14 +1131,6 @@ where as the others output
                       ("read_only" . ?R)
                       )
 )
-#+end_src
-
-** python command
-# - [2024-03-28 Thu 11:26]
-
-
-#+begin_src elisp
-(setq org-babel-python-command "~/venv/python3.12.2/bin/python")
 #+end_src
 
 ** =CREATED= property

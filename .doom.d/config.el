@@ -206,7 +206,7 @@
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 )
 
-(setq org-babel-python-command "python3")
+(setq org-babel-python-command "~/venv/python3.12.2/bin/python")
 
 (setq org-id-link-to-org-use-id t)
 
@@ -269,8 +269,6 @@
                       ("read_only" . ?R)
                       )
 )
-
-(setq org-babel-python-command "~/venv/python3.12.2/bin/python")
 
 (defvar org-created-property-name "CREATED"
   "The name of the org-mode property that stores the creation date of the entry")
