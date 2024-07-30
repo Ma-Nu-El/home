@@ -311,10 +311,15 @@ will not be modified."
 ;;  '(safe-local-variable-values (quote ((ispell-dictionary . "español"))))
 ;;  )
 
-(global-display-fill-column-indicator-mode)
-(setq-default display-fill-column-indicator-column 55)
-;;(setq display-fill-column-indicator t)
-(setq-default fill-column 55)
+;; Load environment variables from the shell
+;; (exec-path-from-shell-initialize)
+
+;; Access the custom line length from the environment variable
+(let ((line-length (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55"))))
+  ;;(setq display-fill-column-indicator t)
+  (setq-default display-fill-column-indicator-column line-length)
+  (setq-default fill-column line-length)
+  (global-display-fill-column-indicator-mode))
 
 (global-git-gutter-mode +1)
 
