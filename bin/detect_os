@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# - [2024-07-30 Tue 17:50]
 # detect OS from Bash
 
 # Solution 1
@@ -13,9 +14,10 @@
 # Solution 2
 # https://gist.github.com/prabirshrestha/3080525
 
-UNAME=$( command -v uname)
+# Get the output of uname and convert to lowercase
+UNAME=$(command -v uname)
 
-case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
+case $("${UNAME}" | tr '[:upper:]' '[:lower:]') in
   linux*)
     printf 'linux\n'
     ;;
@@ -23,7 +25,6 @@ case $( "${UNAME}" | tr '[:upper:]' '[:lower:]') in
     printf 'darwin\n'
     ;;
   msys*|cygwin*|mingw*)
-    # or possible 'bash on windows'
     printf 'windows\n'
     ;;
   nt|win*)

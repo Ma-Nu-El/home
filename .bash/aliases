@@ -84,28 +84,7 @@ alias 4='~/Pictures'
 alias 5='~/Videos'
 alias 6='~/Music'
 alias 11='~/"$MY_DRIVE"' # cloud directory
-# quick editor
-
-alias v='vim'
-alias ee='clear && cd ~ && emacs -nw' # same but from home directory
-alias ed='emacs --daemon' # creates default emacs server named 'server'
-alias ec='emacsclient -t' # attach to the default emacs server
-alias edn='emacs-daemon-new' # creates a custom-named emacs server
-alias els='ls -1 /tmp/emacs${UID}' # get list of running emacs servers
-alias ecs='emacsclient -t -s' # attach to a custom-named emacs server
-
-# tmux
-
-alias t='tmux'
-alias tn='tmux new-session' # create session with default name
-alias tns='tmux new -s' # append your session name to be created
-alias tks='tmux kill-session -t' # append your session name to be killed
-alias tls='tmux ls' # list sessions # <prefix> s
-alias ta='tmux attach-session' # attach to last session
-alias tas='tmux attach-session -t' # append your session name to be attached to
-
-#alias tpls="ls ~/.tmuxp/"
-#+end_example
+alias del='delete'
 ## misc aliases
 
 alias hh='echo 'https://github.com/Ma-Nu-El/home''
@@ -154,28 +133,7 @@ alias RRR='R --quiet --no-save -e'
 alias cat_public_ssh_key='clear && cat ~/.ssh/id_rsa.pub'
 alias qr='qrencode'
 alias p3='python3'
-# quick editor
-
-alias v='vim'
-alias ee='clear && cd ~ && emacs -nw' # same but from home directory
-alias ed='emacs --daemon' # creates default emacs server named 'server'
-alias ec='emacsclient -t' # attach to the default emacs server
-alias edn='emacs-daemon-new' # creates a custom-named emacs server
-alias els='ls -1 /tmp/emacs${UID}' # get list of running emacs servers
-alias ecs='emacsclient -t -s' # attach to a custom-named emacs server
-
-# tmux
-
-alias t='tmux'
-alias tn='tmux new-session' # create session with default name
-alias tns='tmux new -s' # append your session name to be created
-alias tks='tmux kill-session -t' # append your session name to be killed
-alias tls='tmux ls' # list sessions # <prefix> s
-alias ta='tmux attach-session' # attach to last session
-alias tas='tmux attach-session -t' # append your session name to be attached to
-
-#alias tpls="ls ~/.tmuxp/"
-#+end_example
+alias dups='find_duplicates'
 ### fresh install
 
 alias install_doom_emacs='git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d && ~/.emacs.d/bin/doom install'
@@ -189,7 +147,6 @@ alias ec='emacsclient -t' # attach to the default emacs server
 alias edn='emacs-daemon-new' # creates a custom-named emacs server
 alias els='ls -1 /tmp/emacs${UID}' # get list of running emacs servers
 alias ecs='emacsclient -t -s' # attach to a custom-named emacs server
-
 # tmux
 
 alias t='tmux'
@@ -199,8 +156,6 @@ alias tks='tmux kill-session -t' # append your session name to be killed
 alias tls='tmux ls' # list sessions # <prefix> s
 alias ta='tmux attach-session' # attach to last session
 alias tas='tmux attach-session -t' # append your session name to be attached to
-
-#alias tpls="ls ~/.tmuxp/"
 ### Docker
 
 alias dk='docker'

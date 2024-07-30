@@ -144,3 +144,18 @@ agenda(){
                 "$HOME"/bin/python/agenda_manu.py "$1" | less --RAW-CONTROL-CHARS
 	fi
 }
+# Function to sort the file and find duplicate lines
+find_duplicates() {
+  if [ -z "$1" ]; then
+    echo "Usage: find_duplicates FILE"
+    echo "This script find duplicate lines in FILE"
+    return 1
+  fi
+
+  if [ ! -f "$1" ]; then
+    echo "Error: File '$1' not found."
+    return 1
+  fi
+
+  sort "$1" | uniq -d
+}
