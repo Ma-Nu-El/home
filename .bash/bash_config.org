@@ -519,6 +519,9 @@ find_duplicates() {
 #+begin_src bash :tangle ./env :shebang "#!/usr/bin/env bash" :tangle-mode (identity #o755)
 # https://google.github.io/styleguide/shellguide.html#s7-naming-conventions
 # https://unix.stackexchange.com/questions/42847/are-there-naming-conventions-for-variables-in-shell-scripts
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_CACHE_HOME=$HOME/.cache
 export MY_ALIASES="$HOME/.bash/aliases"
 export MY_PROMPT="$HOME/.bash/prompt"
 export MY_FUNCTIONS="$HOME/.bash/functions"
@@ -530,7 +533,7 @@ export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 # https://git.zx2c4.com/password-store/about/
 export MY_DRIVE="$HOME"/FilenSync
 export PYTHONSTARTUP="$HOME/.config/pythonenv/.pythonrc.py"
-export XDG_CONFIG_HOME=$HOME/.config
 export CUSTOM_CLI_LINE_LENGTH=55
+export PANDOC_PATH=$XDG_CONFIG_HOME/pandoc
 set -o vi
 #+end_src
