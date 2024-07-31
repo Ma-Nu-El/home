@@ -16,5 +16,4 @@ export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 export MY_DRIVE="$HOME"/FilenSync
 export PYTHONSTARTUP="$HOME/.config/pythonenv/.pythonrc.py"
 export CUSTOM_CLI_LINE_LENGTH=55
-export PANDOC_PATH=$XDG_CONFIG_HOME/pandoc
 set -o vi

@@ -250,17 +250,21 @@ alias wea='"$HOME"/bin/weather'
 alias syncthing_gui='echo 'http://localhost:8384/''
 alias cw='clockywock'
 alias ow='mimeopen -d'
-alias sw='~/bin/stopwatch'
-alias timer='~/bin/timer'
-alias auxLock='~/bin/auxRoam lock'
-alias auxUnlock='~/bin/auxRoam unlock'
+alias sw='"$HOME"/bin/stopwatch'
+alias timer='"$HOME"/bin/timer'
+alias auxLock='"$HOME"/bin/auxRoam lock'
+alias auxUnlock='"$HOME"/bin/auxRoam unlock'
 alias RR='R --quiet --no-save'
 alias RRR='R --quiet --no-save -e'
-alias cat_public_ssh_key='clear && cat ~/.ssh/id_rsa.pub'
+alias cat_public_ssh_key='clear && cat "$HOME"/.ssh/id_rsa.pub'
 alias qr='qrencode'
 alias p3='python3'
 alias dups='find_duplicates'
+
+## pandoc
+alias cpandoc='pandoc --defaults=$XDG_DATA_HOME/pandoc/cli.conf'
 #+end_src
+
 
 * Functions
 ** source
@@ -534,6 +538,5 @@ export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 export MY_DRIVE="$HOME"/FilenSync
 export PYTHONSTARTUP="$HOME/.config/pythonenv/.pythonrc.py"
 export CUSTOM_CLI_LINE_LENGTH=55
-export PANDOC_PATH=$XDG_CONFIG_HOME/pandoc
 set -o vi
 #+end_src

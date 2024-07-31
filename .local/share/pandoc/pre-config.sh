@@ -8,7 +8,7 @@
 LINE_LENGTH=${CUSTOM_CLI_LINE_LENGTH:-80}
 
 # Create the Pandoc configuration file dynamically
-cat << EOF > pandoc.yaml
+cat << EOF > cli.conf
 wrap: auto
 columns: $LINE_LENGTH
 EOF
