@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+set -e # exit on any orrer
+
+usage() {
+    cat <<EOF
+Usage: delete [file1 file2 ...]
+Move files to the trash directory.
+
+Options:
+  -h, --help, -?    Display this help message
+EOF
+}
+
+# Show usage and exit if help flag is provided
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
+    usage
+    exit 0
+fi
+
+# Function to move files to the Linux trash directory
+linux_case() {
+  if [ ! -d ~/.local/share/Trash/files ]; then
+    mkdir -p ~/.local/share/Trash/files
+  fi
+  for file in "$@"; do
+    mv "$file" ~/.local/share/Trash/files/
+  done
+}
+
+# Function to move files to the macOS trash directory
+darwin_case() {
+  for file in "$@"; do
+    mv "$file" ~/.Trash/
+  done
+}
+
+# Detect the operating system
+os=$("$HOME"/bin/detect_os)
+
+# Call the appropriate function based on the operating system
+case $os in
+    linux)
+        linux_case "$@"
+        ;;
+    darwin)
+        darwin_case "$@"
+        ;;
+    *)
+        printf "OS is neither linux nor darwin\n"
+        exit 1
+        ;;
+esac
