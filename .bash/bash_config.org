@@ -263,7 +263,6 @@ alias dups='find_duplicates'
 
 ## pandoc
 alias cpandoc='pandoc --defaults=$XDG_DATA_HOME/pandoc/cli.conf'
-alias save_tabs='"$HOME"/bin/copy_to_clipboard "$HOME"/bin/browser_save_tabs_in_orgmode_format.js'
 #+end_src
 
 
