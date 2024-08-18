@@ -263,8 +263,11 @@ alias dups='find_duplicates'
 
 ## pandoc
 alias cpandoc='pandoc --defaults=$XDG_DATA_HOME/pandoc/cli.conf'
+alias tt='"$HOME"/bin/today'
+alias ttc='"$HOME"/bin/today -c'
+alias ttt='"$HOME"/bin/today time'
+alias tttc='"$HOME"/bin/today -c time'
 #+end_src
-
 
 * Functions
 ** source
