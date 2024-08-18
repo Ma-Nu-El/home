@@ -1,44 +1,58 @@
 #!/usr/bin/env bash
-# copy the content of a file to clipboard
+
+# A script to copy the content of a file or text to the clipboard.
+# Compatible with both Linux (using xclip) and macOS (using pbcopy).
+#
 # https://askubuntu.com/questions/210413/what-is-the-command-line-equivalent-of-copying-a-file-to-clipboard
 
 set -o pipefail
 
+# Function to display usage information
 usage() {
     cat <<EOF
-'~bin/copy' usage:
-  0) -h, --help, -?     # print this message
-  1) copy < FILE        # copy file content
-  2) copy               # clean clipboard
-  3) echo "TEXT" | copy # copy text
+Usage: copy_to_clipboard [options] [file|text]
+Options:
+  -h, --help, -?     Show this help message
+Examples:
+  copy_to_clipboard <FILE>          Copy the contents of a file to the clipboard
+  copy_to_clipboard                  Clear the clipboard
+  echo "TEXT" | copy_to_clipboard    Copy text from standard input to the clipboard
 EOF
 }
 
+# Check if the help flag is provided
 if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
-  usage
-  exit 0
+    usage
+    exit 0
 fi
 
-function linux_case() {
-  if [[ -f $1 ]]; then                        # to copy file
-    xclip -i -selection clipboard < "$1"
-  elif [[ -z $1 ]]; then                      # to clean clipboard
-    echo "" | xclip -i -selection clipboard
-  else
-    echo "$1" | xclip -i -selection clipboard # to copy text
-  fi
+# Function to handle clipboard operations on Linux
+linux_case() {
+    if [[ -p /dev/stdin ]]; then                 # Check if there's piped input
+        cat | xclip -i -selection clipboard
+    elif [[ -f $1 ]]; then                       # Copy file content to clipboard
+        xclip -i -selection clipboard < "$1"
+    elif [[ -z $1 ]]; then                       # Clear clipboard
+        echo -n "" | xclip -i -selection clipboard
+    else                                         # Copy text to clipboard
+        echo -n "$1" | xclip -i -selection clipboard
+    fi
 }
 
-function darwin_case() {
-  if [[ -f $1 ]]; then   # to copy file
-    pbcopy < "$1"
-  elif [[ -z $1 ]]; then # to clean clipboard
-    echo "" | pbcopy
-  else
-    echo "$1" | pbcopy   # to copy text
-  fi
+# Function to handle clipboard operations on macOS (Darwin)
+darwin_case() {
+    if [[ -p /dev/stdin ]]; then                 # Check if there's piped input
+        cat | pbcopy
+    elif [[ -f $1 ]]; then                       # Copy file content to clipboard
+        pbcopy < "$1"
+    elif [[ -z $1 ]]; then                       # Clear clipboard
+        echo -n "" | pbcopy
+    else                                         # Copy text to clipboard
+        echo -n "$1" | pbcopy
+    fi
 }
 
+# Detect operating system and execute appropriate function
 os=$("$HOME"/bin/detect_os)
 
 case $os in
@@ -47,6 +61,6 @@ case $os in
     darwin)
         darwin_case "$@" ;;
     *)
-        printf "Not either linux nor darwin\n"
-        exit 1;;
+        echo "Unsupported OS: $os"
+        exit 1 ;;
 esac
