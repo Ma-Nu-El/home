@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# - [2024-08-18 Sun 18:18]
+set -o pipefail
+
+# Function to display usage information
+usage() {
+    cat <<EOF
+'Today' usage:
+  -h, --help, -?         Print this help message
+  today                  Print today's date in YYYY-MM-DD format
+  today time             Print today's date and time in YYYY-MM-DD_hhmmss format
+  today -c [time]        Copy the output to clipboard (via "$HOME/bin/copy_to_clipboard")
+EOF
+}
+
+# Check if the help flag is provided
+if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
+    usage
+    exit 0
+fi
+
+# Function to print today's date
+print_date() {
+    date +'%Y-%m-%d'
+}
+
+# Function to print today's date and time
+print_datetime() {
+    date +'%Y-%m-%d_%H%M%S'
+}
+
+# Main script logic
+if [[ -z $1 ]]; then
+    # If no arguments are provided, print the date
+    print_date
+elif [[ $1 == 'time' ]]; then
+    # If the argument is "time", print the date and time
+    print_datetime
+elif [[ $1 == '-c' ]]; then
+    # If the option is "-c", check if the next argument is "time"
+    if [[ $2 == 'time' ]]; then
+        print_datetime | "$HOME"/bin/copy_to_clipboard
+    else
+        print_date | "$HOME"/bin/copy_to_clipboard
+    fi
+else
+    echo "Invalid option or argument. Use -h for help."
+    exit 1
+fi
