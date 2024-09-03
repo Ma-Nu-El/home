@@ -287,6 +287,11 @@ will not be modified."
       (org-set-property created now))))
 (add-hook 'org-capture-before-finalize-hook #'org-set-created-property)
 
+(setq org-enable-priority-commands t
+    org-priority-highest 1
+    org-priority-default 5
+    org-priority-lowest 9)
+
 )
 ;; END AFTER ORG
 

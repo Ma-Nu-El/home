@@ -29,7 +29,7 @@
   - [[#agenda-view-settings][agenda view settings]]
   - [[#habit-graph-enabling][habit graph enabling]]
   - [[#habit-graph-settings][habit graph settings]]
-  - [[#todo-keywords]['TODO' keywords]]
+  - [[#todo-keywords][~TODO~ keywords]]
   - [[#latex-custom-classes][latex custom classes]]
   - [[#latex-export-table-of-contents-settings][latex export table of contents settings]]
   - [[#latex-other-languages][latex other languages]]
@@ -42,21 +42,22 @@
   - [[#org-clock][org clock]]
   - [[#global-exclude-tags][global exclude tags]]
   - [[#disable-crypt-tag-inheritance][disable crypt tag inheritance]]
-  - [[#org-transclusion][org-transclusion]]
+  - [[#org-transclusion][~org-transclusion~]]
   - [[#org-fontify-quote-and-verse-blocks-disabled][org fontify quote and verse blocks [DISABLED]]]
   - [[#prevent-invisible-edits-commented-out][prevent invisible edits [Commented out]]]
-  - [[#org-depend][org-depend]]
+  - [[#org-depend][~org-depend~]]
   - [[#roam][roam]]
-  - [[#org-roam-bibtex][org-roam-bibtex]]
-  - [[#org-capture][org-capture]]
-  - [[#org-ref][org-ref]]
-  - [[#org-glossary][org-glossary]]
-  - [[#org-cite][org-cite]]
-  - [[#recursive-todo-cookie-statistics][recursive TODO cookie statistics]]
+  - [[#org-roam-bibtex][~org-roam-bibtex~]]
+  - [[#org-capture][~org-capture~]]
+  - [[#org-ref][~org-ref~]]
+  - [[#org-glossary][~org-glossary~]]
+  - [[#org-cite][~org-cite~]]
+  - [[#recursive-todo-cookie-statistics][recursive ~TODO~ cookie statistics]]
   - [[#underscore-and-hat-handling][underscore and hat handling]]
   - [[#disable-heading-numbering-during-export][disable heading numbering during export]]
   - [[#global-tags][global tags]]
   - [[#created-property][=CREATED= property]]
+  - [[#org-priority-highestdefaultlowest][~org-priority-[highest|default|lowest]~]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
@@ -517,7 +518,7 @@ when checking agenda remotely.
 #+end_src
 
 - https://orgmode.org/manual/Tracking-your-habits.html
-** 'TODO' keywords
+** ~TODO~ keywords
 :PROPERTIES:
 :ID:       55c05291-82b3-443f-93ee-68a68b38d3de
 :END:
@@ -804,11 +805,11 @@ Neat thing indeed.
 (setq org-tags-exclude-from-inheritance '("crypt"))
 #+end_src
 
-** org-transclusion
+** ~org-transclusion~
 :PROPERTIES:
 :ID:       0d747be6-fc5d-4270-bf63-123fd81cd6c2
+:CREATED:  [2021-06-02 Wed]
 :END:
-- [2021-06-02 Wed]
 - Useful for Doom Emacs users.
 
 In your ~~/.doom.d/package.el~ add the following
@@ -854,9 +855,10 @@ Details here:
     - https://github.com/Ma-Nu-El/home/tree/master/.doom.d
 
 
-The core point of transclusion is probably not the syncronization of
-info across files, but the live sync and the saved space in storage. For
-static sync you could use the #+INCLUDE keyword. In fact I use it for
+The core point of transclusion is probably not the
+syncronization of info across files, but the live sync
+and the saved space in storage. For static sync you
+could use the #+INCLUDE keyword. In fact I use it for
 university stuff. Check ~/org/uni/docs/index.html
 
 ** org fontify quote and verse blocks [DISABLED]
@@ -921,11 +923,12 @@ more careful. It's not something that I do a lot so low signal-to-noise ratio.
 Commented out since it does not fail and does not let me know that I did a
 mistake. I'll simply have to be more careful.
 
-** org-depend
+** ~org-depend~
 
 #+begin_src elisp
 (require 'org-depend)
 #+end_src
+
 ** roam
 :PROPERTIES:
   :ID:       41e53852-03b8-4098-a190-287a30504cfc
@@ -944,8 +947,10 @@ mistake. I'll simply have to be more careful.
   I updated to =roam= version 2 and some things
   broke and don't have time to fix them.
 
-** org-roam-bibtex
-- [2022-10-06 Thu 22:11]
+** ~org-roam-bibtex~
+:PROPERTIES:
+:CREATED:  [2022-10-06 Thu 22:11]
+:END:
 
 ,#+begin_src elisp
 ;; (use-package! org-roam-bibtex
@@ -954,8 +959,10 @@ mistake. I'll simply have to be more careful.
 ;;   (require 'org-ref))
 ,#+end_src
 
-** org-capture
-- [2023-02-19 Sun 23:52]
+** ~org-capture~
+:PROPERTIES:
+:CREATED:  [2023-02-19 Sun 23:52]
+:END:
 - [[https://orgmode.org/manual/Capture.html][Capture (The Org Manual)]]
 - [[https://howardism.org/Technical/Emacs/capturing-intro.html][Org Capturing Introduction]]
 - [[https://takeonrules.com/2022/09/06/org-mode-capture-templates-and-time-tracking/][Org Mode Capture Templates and Time Tracking // Take on Rules]]
@@ -1021,8 +1028,10 @@ Use with beorg:
 I use Beorg on mobile to capture stuff on my phone. And for funsies I set up my dumb Alexa speaker, and also Siri, to take TODOs and notes and save them to a "RobotTODOS.txt" file in Dropbox.
 #+end_quote
 
-** org-ref
-- [2023-02-24 Fri 01:01]
+** ~org-ref~
+:PROPERTIES:
+:CREATED:  [2023-02-24 Fri 01:01]
+:END:
 # - [2023-04-27 Thu 16:55]
 # - Using org-glossary and org-cite
 
@@ -1041,8 +1050,10 @@ I use Beorg on mobile to capture stuff on my phone. And for funsies I set up my 
 )
 #+end_example
 
-** org-glossary
-# - [2023-04-27 Thu 23:36]
+** ~org-glossary~
+:PROPERTIES:
+:CREATED:  [2023-04-27 Thu 23:36]
+:END:
 - [[https://github.com/tecosaur/org-glossary][GitHub - tecosaur/org-glossary: Glossary, Acronyms, and Index capability within Org]]
 
 
@@ -1051,8 +1062,10 @@ I use Beorg on mobile to capture stuff on my phone. And for funsies I set up my 
   :hook (org-mode . org-glossary-mode))
 # #+end_src
 
-** org-cite
-# - [2023-05-03 Wed 12:35]
+** ~org-cite~
+:PROPERTIES:
+:CREATED:  [2023-05-03 Wed 12:35]
+:END:
 
 - As in [cite:@ref_20230503125135]
 
@@ -1088,7 +1101,7 @@ Notice that the one that works outputs
 where as the others output
 : "~/FilenSync/org/bibliography.bib"
 
-** recursive TODO cookie statistics
+** recursive ~TODO~ cookie statistics
 # - [2023-05-18 Thu 11:20]
 - [cite:@org_recursive_todo_statistics]
 
@@ -1158,6 +1171,25 @@ will not be modified."
     (unless (org-entry-get (point) created nil)
       (org-set-property created now))))
 (add-hook 'org-capture-before-finalize-hook #'org-set-created-property)
+#+end_src
+
+** ~org-priority-[highest|default|lowest]~
+:PROPERTIES:
+:CREATED:  [2024-09-03 Tue 17:23]
+:END:
+
+Priority can't be more than one character; i.e.: ~10~
+is two characters long where as ~9~ is one only.
+Therefore, lowest is ~9~ instead of ~10~. If you want a
+larger range you can use it with alphabetical
+characters but that would be even more confusing for me
+at least.
+
+#+begin_src elisp
+(setq org-enable-priority-commands t
+    org-priority-highest 1
+    org-priority-default 5
+    org-priority-lowest 9)
 #+end_src
 
 * end org section
