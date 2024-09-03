@@ -21,12 +21,12 @@ fi
 
 # Function to print today's date
 print_date() {
-    date +'%Y-%m-%d'
+    echo -n "$(date +'%Y-%m-%d')"
 }
 
 # Function to print today's date and time
 print_datetime() {
-    date +'%Y-%m-%d_%H%M%S'
+    echo -n "$(date +'%Y-%m-%d_%H%M%S')"
 }
 
 # Main script logic
