@@ -292,6 +292,82 @@ will not be modified."
     org-priority-default 5
     org-priority-lowest 9)
 
+(defun my/org-get-parent-heading ()
+  "Return the name of the parent heading of the current task."
+  (save-excursion
+    (outline-up-heading 1 t)  ;; Move to the parent heading
+    (org-get-heading t t t t)))  ;; Get the parent heading name without tags or properties
+
+(defun my/org-dynamic-archive-location ()
+  "Dynamically set the archive location based on the parent heading and current year."
+  (let* ((year (format-time-string "%Y"))  ;; Get the current year
+         (parent-heading (my/org-get-parent-heading))  ;; Get the parent heading
+         (sanitized-heading (replace-regexp-in-string " " "_" (downcase parent-heading)))  ;; Convert parent heading to lowercase and replace spaces with underscores
+         (archive-file (concat "calendar/" year "/" sanitized-heading "_gtd_archive.org")))  ;; Create the archive file path
+    (setq org-archive-location (concat archive-file "::"))))  ;; Set the archive location
+
+(defun my/org-archive-done-tasks ()
+  "Archive DONE tasks using a dynamically generated archive location based on the parent heading and year."
+  (interactive)
+  (my/org-dynamic-archive-location)  ;; Set the archive location dynamically
+  (org-archive-subtree))  ;; Archive the current subtree
+
+(defun my/org-agenda-custom-search (&optional place-tag energy-tag min-effort max-effort)
+  "Search Org mode agenda for entries with TODO='NEXT', PLACE tags, ENERGY tags, and EFFORT range.
+PLACE tags like '@home', '@work', '@computer', etc.
+ENERGY tags like '#focus', '#light', '#active', '#passive'.
+EFFORT is filtered by a minimum and maximum value provided by the user.
+EFFORT can be entered in either 'HOUR:MINUTE' or 'MINUTE' format.
+If no value is given for PLACE, ENERGY, MIN EFFORT, or MAX EFFORT, those filters are ignored."
+  (interactive
+   (list
+    ;; Ask for PLACE tag (optional)
+    (read-string "Enter PLACE tag (e.g., @home, @work, etc., leave empty to ignore): " nil nil "")
+    ;; Ask for ENERGY tag (optional)
+    (read-string "Enter ENERGY tag (e.g., #focus, #light, #active, #passive, leave empty to ignore): " nil nil "")
+    ;; Ask for Minimum EFFORT in HOUR:MINUTE or MINUTE format (optional)
+    (read-string "Minimum EFFORT (HOUR:MINUTE or MINUTE, leave empty to ignore): " nil nil "")
+    ;; Ask for Maximum EFFORT in HOUR:MINUTE or MINUTE format (optional)
+    (read-string "Maximum EFFORT (HOUR:MINUTE or MINUTE, leave empty to ignore): " nil nil "")))
+  (let (query)
+    ;; Helper function to convert HOUR:MINUTE or MINUTE format to total minutes
+    (defun effort-to-minutes (effort-string)
+      "Convert an EFFORT string in HOUR:MINUTE or MINUTE format to total minutes."
+      (if (string-match-p ":" effort-string)
+          ;; If format is HOUR:MINUTE (contains ":")
+          (let* ((time-split (split-string effort-string ":"))
+                 (hours (string-to-number (car time-split)))
+                 (minutes (string-to-number (cadr time-split))))
+            (+ (* hours 60) minutes))
+        ;; If format is just MINUTE
+        (string-to-number effort-string)))
+
+    ;; Always filter by TODO="NEXT"
+    (setq query "TODO=\"NEXT\"")
+
+    ;; Filter by PLACE tag if provided
+    (when (and place-tag (not (string= place-tag "")))
+      (setq query (concat query (format "+%s" place-tag))))
+
+    ;; Filter by ENERGY tag if provided
+    (when (and energy-tag (not (string= energy-tag "")))
+      (setq query (concat query (format "+%s" energy-tag))))
+
+    ;; Filter by Minimum EFFORT if provided
+    (when (and min-effort (not (string= min-effort "")))
+      (setq query (concat query (format "+EFFORT>=\"%d\""
+                                        (effort-to-minutes min-effort)))))
+
+    ;; Filter by Maximum EFFORT if provided
+    (when (and max-effort (not (string= max-effort "")))
+      (setq query (concat query (format "+EFFORT<=\"%d\""
+                                        (effort-to-minutes max-effort)))))
+
+    ;; Perform the search with the query
+    (if query
+        (org-tags-view nil query)
+      (message "No valid filters provided"))))
+
 )
 ;; END AFTER ORG
 
@@ -392,6 +468,10 @@ will not be modified."
       (:prefix-map ("r" . "readonly")
          :desc "org-mark-readonly" "e" #'org-mark-readonly
          :desc "org-remove-readonly" "d" #'org-remove-readonly
+      )
+      :desc "my/org-archive-done-tasks" "a" #'my/org-archive-done-tasks
+      (:prefix-map ("A" . "agenda")
+         :desc "NEXT actions" "n" #'my/org-agenda-custom-search
       )
     )
   )

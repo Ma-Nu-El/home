@@ -58,6 +58,8 @@
   - [[#global-tags][global tags]]
   - [[#created-property][=CREATED= property]]
   - [[#org-priority-highestdefaultlowest][~org-priority-[highest|default|lowest]~]]
+  - [[#dynamic-archive-filename][dynamic archive filename]]
+  - [[#org-agenda-macro][org agenda macro]]
 - [[#end-org-section][end org section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
@@ -70,7 +72,7 @@
 - [[#custom-set-variables][custom set variables]]
 - [[#60-char-ruler][60 char ruler]]
 - [[#git-gutter][git gutter]]
-- [[#org-ai][org-ai]]
+- [[#org-ai][~org-ai~]]
 - [[#fix-zo-not-working-in-macos][fix =zo= not working in macOS]]
 - [[#orgmode-readonly-custom-functions][orgmode readonly custom functions]]
 - [[#keyboard-shortcuts][keyboard shortcuts]]
@@ -917,11 +919,13 @@ This variable was added, or its default value changed, in Emacs 24.1.
 (setq-default org-catch-invisible-edits 'error)
 ~#+end_src
 
-I did not understand the =smart= option. Simply fail and let me know so I'm
-more careful. It's not something that I do a lot so low signal-to-noise ratio.
+I did not understand the =smart= option. Simply fail
+and let me know so I'm more careful. It's not something
+that I do a lot so low signal-to-noise ratio.
 
-Commented out since it does not fail and does not let me know that I did a
-mistake. I'll simply have to be more careful.
+Commented out since it does not fail and does not let
+me know that I did a mistake. I'll simply have to be
+more careful.
 
 ** ~org-depend~
 
@@ -1192,6 +1196,98 @@ at least.
     org-priority-lowest 9)
 #+end_src
 
+** dynamic archive filename
+:PROPERTIES:
+:CREATED:  [2024-09-21 Sat 16:06]
+:END:
+
+#+begin_src elisp
+(defun my/org-get-parent-heading ()
+  "Return the name of the parent heading of the current task."
+  (save-excursion
+    (outline-up-heading 1 t)  ;; Move to the parent heading
+    (org-get-heading t t t t)))  ;; Get the parent heading name without tags or properties
+
+(defun my/org-dynamic-archive-location ()
+  "Dynamically set the archive location based on the parent heading and current year."
+  (let* ((year (format-time-string "%Y"))  ;; Get the current year
+         (parent-heading (my/org-get-parent-heading))  ;; Get the parent heading
+         (sanitized-heading (replace-regexp-in-string " " "_" (downcase parent-heading)))  ;; Convert parent heading to lowercase and replace spaces with underscores
+         (archive-file (concat "calendar/" year "/" sanitized-heading "_gtd_archive.org")))  ;; Create the archive file path
+    (setq org-archive-location (concat archive-file "::"))))  ;; Set the archive location
+
+(defun my/org-archive-done-tasks ()
+  "Archive DONE tasks using a dynamically generated archive location based on the parent heading and year."
+  (interactive)
+  (my/org-dynamic-archive-location)  ;; Set the archive location dynamically
+  (org-archive-subtree))  ;; Archive the current subtree
+
+#+end_src
+
+** org agenda macro
+:PROPERTIES:
+:CREATED:  [2024-09-21 Sat 17:02]
+:END:
+
+#+begin_src elisp
+(defun my/org-agenda-custom-search (&optional place-tag energy-tag min-effort max-effort)
+  "Search Org mode agenda for entries with TODO='NEXT', PLACE tags, ENERGY tags, and EFFORT range.
+PLACE tags like '@home', '@work', '@computer', etc.
+ENERGY tags like '#focus', '#light', '#active', '#passive'.
+EFFORT is filtered by a minimum and maximum value provided by the user.
+EFFORT can be entered in either 'HOUR:MINUTE' or 'MINUTE' format.
+If no value is given for PLACE, ENERGY, MIN EFFORT, or MAX EFFORT, those filters are ignored."
+  (interactive
+   (list
+    ;; Ask for PLACE tag (optional)
+    (read-string "Enter PLACE tag (e.g., @home, @work, etc., leave empty to ignore): " nil nil "")
+    ;; Ask for ENERGY tag (optional)
+    (read-string "Enter ENERGY tag (e.g., #focus, #light, #active, #passive, leave empty to ignore): " nil nil "")
+    ;; Ask for Minimum EFFORT in HOUR:MINUTE or MINUTE format (optional)
+    (read-string "Minimum EFFORT (HOUR:MINUTE or MINUTE, leave empty to ignore): " nil nil "")
+    ;; Ask for Maximum EFFORT in HOUR:MINUTE or MINUTE format (optional)
+    (read-string "Maximum EFFORT (HOUR:MINUTE or MINUTE, leave empty to ignore): " nil nil "")))
+  (let (query)
+    ;; Helper function to convert HOUR:MINUTE or MINUTE format to total minutes
+    (defun effort-to-minutes (effort-string)
+      "Convert an EFFORT string in HOUR:MINUTE or MINUTE format to total minutes."
+      (if (string-match-p ":" effort-string)
+          ;; If format is HOUR:MINUTE (contains ":")
+          (let* ((time-split (split-string effort-string ":"))
+                 (hours (string-to-number (car time-split)))
+                 (minutes (string-to-number (cadr time-split))))
+            (+ (* hours 60) minutes))
+        ;; If format is just MINUTE
+        (string-to-number effort-string)))
+
+    ;; Always filter by TODO="NEXT"
+    (setq query "TODO=\"NEXT\"")
+
+    ;; Filter by PLACE tag if provided
+    (when (and place-tag (not (string= place-tag "")))
+      (setq query (concat query (format "+%s" place-tag))))
+
+    ;; Filter by ENERGY tag if provided
+    (when (and energy-tag (not (string= energy-tag "")))
+      (setq query (concat query (format "+%s" energy-tag))))
+
+    ;; Filter by Minimum EFFORT if provided
+    (when (and min-effort (not (string= min-effort "")))
+      (setq query (concat query (format "+EFFORT>=\"%d\""
+                                        (effort-to-minutes min-effort)))))
+
+    ;; Filter by Maximum EFFORT if provided
+    (when (and max-effort (not (string= max-effort "")))
+      (setq query (concat query (format "+EFFORT<=\"%d\""
+                                        (effort-to-minutes max-effort)))))
+
+    ;; Perform the search with the query
+    (if query
+        (org-tags-view nil query)
+      (message "No valid filters provided"))))
+
+#+end_src
+
 * end org section
 :PROPERTIES:
 :ID:       889fe81d-8200-4e4f-b833-a2c20cc295eb
@@ -1363,8 +1459,10 @@ at least.
 (global-git-gutter-mode +1)
 #+end_src
 
-* org-ai
-# - [2023-11-15 Wed 22:37]
+* ~org-ai~
+:PROPERTIES:
+:CREATED:  [2023-11-15 Wed 22:37]
+:END:
 
 
 #+begin_src elisp :tangle no
@@ -1392,9 +1490,9 @@ at least.
 #+end_src
 
 * orgmode readonly custom functions
-# - [2024-02-07 Wed 16:10]
-
-
+:PROPERTIES:
+:CREATED:  [2024-02-07 Wed 16:10]
+:END:
 
 #+begin_src elisp
 (defun org-mark-readonly ()
@@ -1472,6 +1570,10 @@ at least.
       (:prefix-map ("r" . "readonly")
          :desc "org-mark-readonly" "e" #'org-mark-readonly
          :desc "org-remove-readonly" "d" #'org-remove-readonly
+      )
+      :desc "my/org-archive-done-tasks" "a" #'my/org-archive-done-tasks
+      (:prefix-map ("A" . "agenda")
+         :desc "NEXT actions" "n" #'my/org-agenda-custom-search
       )
     )
   )
