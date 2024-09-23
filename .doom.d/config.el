@@ -299,11 +299,16 @@ will not be modified."
     (org-get-heading t t t t)))  ;; Get the parent heading name without tags or properties
 
 (defun my/org-dynamic-archive-location ()
-  "Dynamically generate the archive location based on the parent heading and current year."
+  "Dynamically generate the archive location based on the parent heading and current year.
+The heading is sanitized to remove brackets, tags, and other non-alphabetic characters."
   (let* ((year (format-time-string "%Y"))  ;; Get the current year
          (parent-heading (my/org-get-parent-heading))  ;; Get the parent heading
-         (sanitized-heading (replace-regexp-in-string " " "_" (downcase parent-heading)))  ;; Convert parent heading to lowercase and replace spaces with underscores
-         (archive-file (concat "calendar/" year "/" sanitized-heading "_gtd_archive.org")))  ;; Create the archive file path
+         ;; Remove bracketed content (like [1/2][50%]) and tags (like :personal:)
+         (clean-heading (replace-regexp-in-string "\\[.*?\\]\\|:[^:]*:" "" parent-heading))
+         ;; Sanitize the heading: strip extra spaces and convert to lowercase with underscores
+         (sanitized-heading (replace-regexp-in-string " +" "_" (downcase (string-trim clean-heading))))
+         ;; Construct the archive file path
+         (archive-file (concat "calendar/" year "/" sanitized-heading "_gtd_archive.org")))
     archive-file))  ;; Return the archive file path
 
 (defun my/org-archive-done-tasks ()
