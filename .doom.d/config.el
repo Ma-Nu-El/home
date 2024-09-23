@@ -160,7 +160,7 @@
       '((sequence
          "WAIT(w!)"
          "NEXT(n!)"
-         "DOIN(d!)"
+         ;; "DOIN(d!)"
          "TODO(t!)"
          "PROJ(p!)"
          "INCU(i!)"
@@ -299,74 +299,151 @@ will not be modified."
     (org-get-heading t t t t)))  ;; Get the parent heading name without tags or properties
 
 (defun my/org-dynamic-archive-location ()
-  "Dynamically set the archive location based on the parent heading and current year."
+  "Dynamically generate the archive location based on the parent heading and current year."
   (let* ((year (format-time-string "%Y"))  ;; Get the current year
          (parent-heading (my/org-get-parent-heading))  ;; Get the parent heading
          (sanitized-heading (replace-regexp-in-string " " "_" (downcase parent-heading)))  ;; Convert parent heading to lowercase and replace spaces with underscores
          (archive-file (concat "calendar/" year "/" sanitized-heading "_gtd_archive.org")))  ;; Create the archive file path
-    (setq org-archive-location (concat archive-file "::"))))  ;; Set the archive location
+    archive-file))  ;; Return the archive file path
 
 (defun my/org-archive-done-tasks ()
-  "Archive DONE tasks using a dynamically generated archive location based on the parent heading and year."
+  "Archive DONE tasks using a dynamically generated archive location based on the parent heading and year.
+The default archive behavior is restored after the custom archiving."
   (interactive)
-  (my/org-dynamic-archive-location)  ;; Set the archive location dynamically
-  (org-archive-subtree))  ;; Archive the current subtree
+  (let ((org-archive-location (concat (my/org-dynamic-archive-location) "::")))  ;; Temporarily set archive location
+    (org-archive-subtree)))  ;; Archive the current subtree
 
-(defun my/org-agenda-custom-search (&optional place-tag energy-tag min-effort max-effort)
-  "Search Org mode agenda for entries with TODO='NEXT', PLACE tags, ENERGY tags, and EFFORT range.
-PLACE tags like '@home', '@work', '@computer', etc.
-ENERGY tags like '#focus', '#light', '#active', '#passive'.
-EFFORT is filtered by a minimum and maximum value provided by the user.
-EFFORT can be entered in either 'HOUR:MINUTE' or 'MINUTE' format.
-If no value is given for PLACE, ENERGY, MIN EFFORT, or MAX EFFORT, those filters are ignored."
-  (interactive
-   (list
-    ;; Ask for PLACE tag (optional)
-    (read-string "Enter PLACE tag (e.g., @home, @work, etc., leave empty to ignore): " nil nil "")
-    ;; Ask for ENERGY tag (optional)
-    (read-string "Enter ENERGY tag (e.g., #focus, #light, #active, #passive, leave empty to ignore): " nil nil "")
-    ;; Ask for Minimum EFFORT in HOUR:MINUTE or MINUTE format (optional)
-    (read-string "Minimum EFFORT (HOUR:MINUTE or MINUTE, leave empty to ignore): " nil nil "")
-    ;; Ask for Maximum EFFORT in HOUR:MINUTE or MINUTE format (optional)
-    (read-string "Maximum EFFORT (HOUR:MINUTE or MINUTE, leave empty to ignore): " nil nil "")))
-  (let (query)
-    ;; Helper function to convert HOUR:MINUTE or MINUTE format to total minutes
-    (defun effort-to-minutes (effort-string)
-      "Convert an EFFORT string in HOUR:MINUTE or MINUTE format to total minutes."
-      (if (string-match-p ":" effort-string)
-          ;; If format is HOUR:MINUTE (contains ":")
-          (let* ((time-split (split-string effort-string ":"))
-                 (hours (string-to-number (car time-split)))
-                 (minutes (string-to-number (cadr time-split))))
-            (+ (* hours 60) minutes))
-        ;; If format is just MINUTE
-        (string-to-number effort-string)))
+(defun create-prompt-from-list (prompt lst)
+  "Helper function for numbered options with dots for alignment."
+  (let ((max-length (apply 'max (mapcar 'length lst)))  ;; Get the max length of the items
+        (choices ""))
+    (cl-loop for x in lst
+             for idx from 1
+             do (let ((dots (make-string (- (+ max-length 5) (length x)) ?.)))  ;; Create the dots
+                  (setq choices (concat choices (format "%s %s (%d)\n" x dots idx)))))
+    (let ((choice (read-string (concat prompt "\n" choices "\nPress Enter to skip: "))))
+      (if (and (string-match "^[0-9]+$" choice)  ;; Only accept numeric input
+               (<= (string-to-number choice) (length lst)))
+          (nth (1- (string-to-number choice)) lst)  ;; Return the selected tag
+        nil))))  ;; Return nil if input is empty or invalid
 
-    ;; Always filter by TODO="NEXT"
-    (setq query "TODO=\"NEXT\"")
+;; Helper function to convert effort to HH:MM format
+(defun effort-to-hhmm (effort-string)
+  "Convert an EFFORT string in MINUTES or HOUR:MINUTE format to 'HH:MM'."
+  (if (string-match-p ":" effort-string)
+      ;; If format is HOUR:MINUTE (contains ":")
+      effort-string
+    ;; If format is just MINUTE, convert to HOUR:MINUTE
+    (let* ((minutes (string-to-number effort-string))
+           (hours (/ minutes 60))
+           (mins (% minutes 60)))
+      (format "%d:%02d" hours mins))))
 
-    ;; Filter by PLACE tag if provided
-    (when (and place-tag (not (string= place-tag "")))
-      (setq query (concat query (format "+%s" place-tag))))
+;; Main function
+(defun my/org-agenda-custom-search-next-action ()
+  "Search Org mode agenda for entries with TODO='NEXT', CONTEXT, PLACE, ENERGY, EFFORT range, and optionally filter by PROJ ancestors.
+If any argument is empty, the filter is ignored."
+  (interactive)
+  (let* (
+         ;; CONTEXT filter selection (using `my-custom-tags-personal` from personal.el)
+         (context-choice
+          (create-prompt-from-list "Context (optional):" my-custom-tags-personal))
 
-    ;; Filter by ENERGY tag if provided
-    (when (and energy-tag (not (string= energy-tag "")))
-      (setq query (concat query (format "+%s" energy-tag))))
+         ;; PLACE filter selection (using `my-custom-tags-place` from personal.el)
+         (place-choice
+          (create-prompt-from-list "Place (optional):" my-custom-tags-place))
 
-    ;; Filter by Minimum EFFORT if provided
-    (when (and min-effort (not (string= min-effort "")))
-      (setq query (concat query (format "+EFFORT>=\"%d\""
-                                        (effort-to-minutes min-effort)))))
+         ;; ENERGY filter selection (using `my-custom-tags-energy` from personal.el)
+         (energy-choice
+          (create-prompt-from-list "Energy (optional):" my-custom-tags-energy))
 
-    ;; Filter by Maximum EFFORT if provided
-    (when (and max-effort (not (string= max-effort "")))
-      (setq query (concat query (format "+EFFORT<=\"%d\""
-                                        (effort-to-minutes max-effort)))))
+         ;; Minimum EFFORT
+         (min-effort (read-string "Minimum EFFORT (HOUR:MINUTE or MINUTE, leave empty to ignore): " nil nil ""))
 
-    ;; Perform the search with the query
-    (if query
-        (org-tags-view nil query)
-      (message "No valid filters provided"))))
+         ;; Maximum EFFORT
+         (max-effort (read-string "Maximum EFFORT (HOUR:MINUTE or MINUTE, leave empty to ignore): " nil nil ""))
+
+         ;; PROJ filter selection (y/n or skip)
+         (proj-only
+          (let ((choice (read-string "Show only tasks with PROJ ancestors (y) or only without PROJ ancestors (n)? (Press Enter to skip): ")))
+            (cond
+             ((string= choice "y") t)   ;; If 'y', return true for project-related tasks
+             ((string= choice "n") nil) ;; If 'n', return false for non-project tasks
+             (t 'skip)))))  ;; If Enter is pressed, skip the PROJ filter entirely
+
+    ;; Build the query, starting with TODO="NEXT"
+    (let (query)
+      (setq query "TODO=\"NEXT\"")
+
+      ;; Add CONTEXT filter
+      (when context-choice
+        (setq query (concat query (format "+%s" context-choice))))
+
+      ;; Add PLACE filter
+      (when place-choice
+        (setq query (concat query (format "+%s" place-choice))))
+
+      ;; Add ENERGY filter
+      (when energy-choice
+        (setq query (concat query (format "+%s" energy-choice))))
+
+      ;; Add Minimum EFFORT filter
+      (when (and min-effort (not (string= min-effort "")))
+        (setq query (concat query (format "+EFFORT>=\"%s\"" (effort-to-hhmm min-effort)))))
+
+      ;; Add Maximum EFFORT filter
+      (when (and max-effort (not (string= max-effort "")))
+        (setq query (concat query (format "+EFFORT<=\"%s\"" (effort-to-hhmm max-effort)))))
+
+      ;; Handle PROJ filtering (t, nil, or skip)
+      (cond
+       ((eq proj-only t)
+        (setq query (concat query "+PROJ")))  ;; Show only project tasks
+       ((eq proj-only nil)
+        (setq query (concat query "-PROJ")))) ;; Exclude project tasks
+
+      ;; Perform the search with the constructed query
+      (org-tags-view nil query))))
+
+(defun my/org-convert-to-next-action ()
+  "Convert a TODO heading to a NEXT action, adding CONTEXT, PLACE, and ENERGY properties.
+Calls `org-set-effort' to assign EFFORT interactively afterward.
+Works if the point is anywhere within the subtree of the heading."
+  (interactive)
+  (save-excursion
+    ;; Move point to the nearest heading, regardless of where it is in the subtree
+    (org-back-to-heading t)
+
+    (let* (
+           ;; CONTEXT prompt with dots
+           (context-choice
+            (create-prompt-from-list "Context (optional):" my-custom-tags-personal))
+
+           ;; PLACE prompt with dots
+           (place-choice
+            (create-prompt-from-list "Place (optional):" my-custom-tags-place))
+
+           ;; ENERGY prompt with dots
+           (energy-choice
+            (create-prompt-from-list "Energy (optional):" my-custom-tags-energy)))
+
+      ;; Replace the TODO keyword with NEXT
+      (org-todo "NEXT")
+
+      ;; Build the tags string from the choices and add it to the heading
+      (let ((tags (concat (or context-choice "")
+                          (if (and context-choice place-choice) ":" "")
+                          (or place-choice "")
+                          (if (and (or context-choice place-choice) energy-choice) ":" "")
+                          (or energy-choice ""))))
+        (org-set-tags-to tags))
+
+      ;; Call org-set-effort for the interactive effort input
+      (org-set-effort nil))))
+
+;; Load personal settings from ~/.doom.d/personal.el, if it exists
+(when (file-exists-p "~/.doom.d/personal.el")
+  (load "~/.doom.d/personal.el"))
 
 )
 ;; END AFTER ORG
@@ -444,14 +521,14 @@ If no value is given for PLACE, ENERGY, MIN EFFORT, or MAX EFFORT, those filters
      :desc "align-regexp" "r" #'align-regexp
     )
 
-    (:prefix-map ("e" . "code")
+    (:prefix-map ("c" . "code")
      :desc "org-edit-src-block" "c" #'org-edit-src-code
     )
 
     (:prefix-map ("o" . "orgmode")
       (:prefix-map ("p" . "Add property")
        :desc "CREATED" "c" #'org-set-created-property
-       )
+      )
 
       (:prefix-map ("k" . "org-kanban")
        :desc "Insert kanban here" "i" #'org-kanban/initialize-here
@@ -459,19 +536,23 @@ If no value is given for PLACE, ENERGY, MIN EFFORT, or MAX EFFORT, those filters
        :desc "Shift TODO state of current entry" "s" #'org-kanban/shift
       )
 
-      (:prefix-map ("t" . "table")
+      (:prefix-map ("T" . "table")
          :desc "org-table-shrink" "s" #'org-table-shrink
          :desc "org-table-expand" "e" #'org-table-expand
          :desc "org-table-toggle-column-width" "t" #'org-table-toggle-column-width
+      )
+
+      (:prefix-map ("t" . "TODO")
+         :desc "my/org-convert-to-next-action" "n" #'my/org-convert-to-next-action
       )
 
       (:prefix-map ("r" . "readonly")
          :desc "org-mark-readonly" "e" #'org-mark-readonly
          :desc "org-remove-readonly" "d" #'org-remove-readonly
       )
-      :desc "my/org-archive-done-tasks" "a" #'my/org-archive-done-tasks
-      (:prefix-map ("A" . "agenda")
-         :desc "NEXT actions" "n" #'my/org-agenda-custom-search
+      :desc "my/org-archive-done-tasks" "A" #'my/org-archive-done-tasks
+      (:prefix-map ("a" . "agenda")
+         :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
       )
     )
   )
