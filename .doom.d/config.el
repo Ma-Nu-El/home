@@ -263,9 +263,7 @@
 (setq org-export-with-sub-superscripts nil)
 
 (setq org-tag-alist '(
-                      ("@work" . ?w)
-                      ("@home" . ?h)
-                      ("laptop" . ?l)
+                      ("PROJ" . ?p)
                       ("read_only" . ?R)
                       )
 )
