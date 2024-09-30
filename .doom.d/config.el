@@ -54,7 +54,7 @@
                               )
       )
 
-(setq org-columns-default-format '"%30ITEM(Item) %6Effort(Estim){:} %6CLOCKSUM(Actual)")
+(setq org-columns-default-format '"%60ITEM(Item) %5Effort(Estim){:} %5CLOCKSUM(Curr)")
 
 (setq org-log-into-drawer "LOGBOOK")
 (setq org-clock-into-drawer "CLOCKBOOK")

@@ -345,7 +345,7 @@ It's gotta be faster. Useful too when you have a TOC heading first.
 Set global Column View format.
 
 #+begin_src elisp
-(setq org-columns-default-format '"%30ITEM(Item) %6Effort(Estim){:} %6CLOCKSUM(Actual)")
+(setq org-columns-default-format '"%60ITEM(Item) %5Effort(Estim){:} %5CLOCKSUM(Curr)")
 #+end_src
 
 (setq org-columns-default-format '"%34ITEM(Item) %10TAGS(Tags) %5TODO(State)
