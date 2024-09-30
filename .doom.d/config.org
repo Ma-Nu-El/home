@@ -18,36 +18,34 @@
 - [[#begin-org-section][begin org section]]
   - [[#export-org-backend-enabling][export org backend enabling]]
   - [[#fixed-flush-left-indentation][fixed flush left indentation]]
-  - [[#global-properties][global properties]]
-  - [[#column-view-settings][column view settings]]
-  - [[#logbook-and-clockbook][logbook and clockbook]]
-  - [[#agenda-settings][agenda settings]]
-  - [[#agenda-custom-commands][agenda custom commands]]
-  - [[#agenda-view-prefix][agenda view prefix]]
-  - [[#agenda-view-settings][agenda view settings]]
-  - [[#habit-graph-enabling][habit graph enabling]]
-  - [[#habit-graph-settings][habit graph settings]]
+  - [[#effort_all-org-global-properties][~Effort_ALL~: ~org-global-properties~]]
+  - [[#org-column-view-format][~org-column~ view format]]
+  - [[#logbook-and-clockbook][~LOGBOOK~ and ~CLOCKBOOK~]]
+  - [[#org-agenda-default-settings][~org-agenda~ default settings]]
+  - [[#org-agenda-custom-commands][~org-agenda-custom-commands~]]
+  - [[#org-habit][~org-habit~]]
   - [[#todo-keywords][~TODO~ keywords]]
-  - [[#latex-custom-classes][latex custom classes]]
+  - [[#org-log-done-insert-closed-when-done][~org-log-done~: insert ~CLOSED~ when ~DONE~]]
+  - [[#org-latex-classes][~org-latex-classes~]]
   - [[#latex-export-table-of-contents-settings][latex export table of contents settings]]
   - [[#latex-other-languages][latex other languages]]
-  - [[#babel-python-3][babel ~python~ 3]]
+  - [[#org-babel-python-command][~org-babel-python-command~]]
   - [[#mu4e-store-links][mu4e store links]]
   - [[#how-many-todos-left-info-in-heading][how many todos left info in heading]]
+  - [[#recursive-todo-cookie-statistics][recursive ~TODO~ cookie statistics]]
   - [[#use-org-id-to-store-links-when-appropriate][use ~org-id~ to store links when appropriate]]
   - [[#org-file-apps-open-links-with-default-application][~org-file-apps~: open links with default application]]
-  - [[#org-clock][org clock]]
-  - [[#global-exclude-tags][global exclude tags]]
-  - [[#disable-crypt-tag-inheritance][disable crypt tag inheritance]]
+  - [[#org-clock][~org-clock~]]
+  - [[#org-export-exclude-tags][~org-export-exclude-tags~]]
+  - [[#disable-crypt-tag-inheritance][disable "crypt" tag inheritance]]
   - [[#org-transclusion][~org-transclusion~]]
   - [[#org-depend][~org-depend~]]
-  - [[#roam][roam]]
+  - [[#org-roam][~org-roam~]]
   - [[#org-roam-bibtex][~org-roam-bibtex~]]
   - [[#org-capture][~org-capture~]]
   - [[#org-ref][~org-ref~]]
   - [[#org-glossary][~org-glossary~]]
   - [[#org-cite][~org-cite~]]
-  - [[#recursive-todo-cookie-statistics][recursive ~TODO~ cookie statistics]]
   - [[#underscore-and-hat-handling][underscore and hat handling]]
   - [[#global-tags][global TAGS]]
   - [[#created-property][=CREATED= property]]
@@ -325,7 +323,7 @@ It's gotta be faster. Useful too when you have a TOC heading first.
 (setq org-startup-folded nil)
 #+end_src
 
-** global properties
+** ~Effort_ALL~: ~org-global-properties~
 :PROPERTIES:
 :ID:       64ea25a8-c5a6-4d48-a199-3d5162305169
 :END:
@@ -339,11 +337,13 @@ It's gotta be faster. Useful too when you have a TOC heading first.
       )
 #+end_src
 
-** column view settings
+** ~org-column~ view format
 :PROPERTIES:
 :ID:       82451b12-f96d-40b5-9b2a-2908eee6eff4
 :END:
+
 Set global Column View format.
+
 #+begin_src elisp
 (setq org-columns-default-format '"%30ITEM(Item) %6Effort(Estim){:} %6CLOCKSUM(Actual)")
 #+end_src
@@ -351,7 +351,7 @@ Set global Column View format.
 (setq org-columns-default-format '"%34ITEM(Item) %10TAGS(Tags) %5TODO(State)
  %5Effort(Estim){:} %10CLOCKSUM(Actual)")
 
-** logbook and clockbook
+** ~LOGBOOK~ and ~CLOCKBOOK~
 :PROPERTIES:
 :ID:       a065fc59-7ecf-4c1a-aa3c-d01f7f36eb28
 :END:
@@ -362,21 +362,35 @@ Set global Column View format.
 (setq org-clock-into-drawer "CLOCKBOOK")
 #+end_src
 
-** agenda settings
-:PROPERTIES:
-:ID:       4790fa62-de1b-4118-a722-f41212854368
-:END:
+** ~org-agenda~ default settings
+
 #+begin_src elisp
 (setq org-agenda-span 3)
 (setq org-agenda-start-day "-0d") ; start on current day,
                                         ; useful when exporting html 28-day version.
 (setq org-agenda-start-on-weekday nil)
 #+end_src
+- [[https://emacs.stackexchange.com/questions/12517/how-do-i-make-the-timespan-shown-by-org-agenda-start-yesterday][org mode - How do I make the timespan shown by org agenda start yesterday? - Emacs Stack Exchange]]
+
+Hide filename in agenda view
+#+begin_src elisp
+(setq org-agenda-prefix-format "%t %s")
+#+end_src
+- https://lists.gnu.org/archive/html/emacs-orgmode/2010-01/msg00744.html
 
 
-- https://emacs.stackexchange.com/questions/12517/how-do-i-make-the-timespan-shown-by-org-agenda-start-yesterday
+Disable "now" line in org agenda view.
+That line is counterintuitive sometimes
+when checking agenda remotely.
 
-** agenda custom commands
+#+begin_src elisp
+(setq org-agenda-show-current-time-in-grid nil)
+(setq org-agenda-hide-tags-regexp ".")
+(setq org-agenda-use-time-grid nil)
+#+end_src
+- https://orgmode.org/manual/Agenda-Commands.html
+
+** ~org-agenda-custom-commands~
 :PROPERTIES:
 :ID:       e4bd5984-7063-44f3-973d-51c298645761
 :END:
@@ -467,33 +481,7 @@ Set global Column View format.
 
 - https://emacs.stackexchange.com/questions/38183/how-to-exclude-a-file-from-agenda
 
-** agenda view prefix
-:PROPERTIES:
-:ID:       1b805336-7fdb-4b66-b08c-4e346cc9c61e
-:END:
-Hide filename in agenda view
-#+begin_src elisp
-(setq org-agenda-prefix-format "%t %s")
-#+end_src
-- https://lists.gnu.org/archive/html/emacs-orgmode/2010-01/msg00744.html
-
-** agenda view settings
-:PROPERTIES:
-:ID:       197f9212-94e5-4475-8d03-f9118493320a
-:END:
-
-Disable "now" line in org agenda view.
-That line is counterintuitive sometimes
-when checking agenda remotely.
-
-#+begin_src elisp
-(setq org-agenda-show-current-time-in-grid nil)
-(setq org-agenda-hide-tags-regexp ".")
-(setq org-agenda-use-time-grid nil)
-#+end_src
-- https://orgmode.org/manual/Agenda-Commands.html
-
-** habit graph enabling
+** ~org-habit~
 :PROPERTIES:
 :ID:       c6e2c52f-51bd-4fd9-8fd5-080fb2a617be
 :END:
@@ -502,10 +490,6 @@ when checking agenda remotely.
 #+end_src
 - https://github.com/hlissner/doom-emacs/issues/3102
 
-** habit graph settings
-:PROPERTIES:
-:ID:       0f4e33a5-1913-457f-ab12-ac5dba3619ef
-:END:
 
 #+begin_src elisp
 (setq org-habit-preceding-days 21)
@@ -513,25 +497,26 @@ when checking agenda remotely.
 #+end_src
 
 - https://orgmode.org/manual/Tracking-your-habits.html
+
 ** ~TODO~ keywords
 :PROPERTIES:
 :ID:       55c05291-82b3-443f-93ee-68a68b38d3de
 :END:
+
 #+begin_src elisp
 (setq org-todo-keywords
       '((sequence
-         "WAIT(w!)"
+         "WAIT(w@)"
          "NEXT(n!)"
          ;; "DOIN(d!)"
          "TODO(t!)"
          "PROJ(p!)"
          "INCU(i!)"
          "|"
-         "DONE(D!)"
+         "DONE(D@)"
          "CNLD(C@)" )
         )
       )
-(setq org-log-done nil)
 #+end_src
 
 - TRACK TODO STATE CHANGES
@@ -539,7 +524,16 @@ when checking agenda remotely.
 - OrgMode E03S01: Automatic logging of status changes:
   + https://www.youtube.com/watch?v=R4QSTDco_w8
 
-** latex custom classes
+** ~org-log-done~: insert ~CLOSED~ when ~DONE~
+:PROPERTIES:
+:CREATED:  [2024-09-30 Mon 00:21]
+:END:
+
+#+begin_src elisp
+(setq org-log-done 'note)
+#+end_src
+
+** ~org-latex-classes~
 
 - [[https://ctan.org/tex-archive/macros/latex/contrib/extsizes][CTAN: /tex-archive/macros/latex/contrib/extsizes]]
 - [[https://emacs.stackexchange.com/questions/29726/org-mode-different-latex-document-class][org export - org-mode different latex document class - Emacs Stack Exchange]]
@@ -618,9 +612,12 @@ the =html= export has not presented this problem so far.
 # #+end_src
 
 ** latex other languages
-- [2021-10-28 Thu 00:11]
-=HTML= exports works fine, but when exporting to =PDF=,
-=#+LANGUAGE: <yourLang>= is not enough.
+:PROPERTIES:
+:CREATED:  [2021-10-28 Thu 00:11]
+:END:
+- =HTML= exports works fine, but when exporting to
+  =PDF=, =#+LANGUAGE: <yourLang>= is not enough.
+
 
 This seems to do the job.
 
@@ -649,7 +646,7 @@ Almost the same except for the extra =#+LATEX_HEADER= part.
 See also:
 - https://emacs.stackexchange.com/questions/21239/change-table-of-contents-title-in-org-mode-according-to-document-language
 
-** babel ~python~ 3
+** ~org-babel-python-command~
 :PROPERTIES:
 :CREATED:   [2024-03-28 Thu 11:26]
 :END:
@@ -690,10 +687,24 @@ Disabled because causes issues. Not investigated.
 (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
 #+end_example
 
-
 also, you have to set the cookie property to 'todo
 recursive'; you can use Doom's 'SPC m o'. Still, it's
 too much work. Have to do something about it.
+
+** recursive ~TODO~ cookie statistics
+:PROPERTIES:
+:CREATED:  [2023-05-18 Thu 11:20]
+:END:
+- [cite:@org_recursive_todo_statistics]
+
+#+begin_src elisp
+(setq org-hierarchical-todo-statistics nil)
+#+end_src
+
+: (setq org-hierarchical-todo-statistics 'recursive)
+: (setq org-hierarchical-todo-statistics '(recursive))
+: (setq org-hierarchical-todo-statistics "recursive")
+: (setq org-hierarchical-todo-statistics '("recursive"))
 
 ** use ~org-id~ to store links when appropriate
 :PROPERTIES:
@@ -731,7 +742,7 @@ too much work. Have to do something about it.
 - https://stackoverflow.com/questions/3973896/emacs-org-mode-file-viewer-associations
 - https://emacs.stackexchange.com/questions/2856/how-to-configure-org-mode-to-respect-system-specific-default-applications-for-ex
 
-** org clock
+** ~org-clock~
 :PROPERTIES:
 :ID:       21d12421-59e2-484c-ace5-95dfc13b67dd
 :END:
@@ -750,7 +761,7 @@ Also check this at:
 
 https://orgmode.org/manual/Clocking-Work-Time.html
 
-** global exclude tags
+** ~org-export-exclude-tags~
 :PROPERTIES:
 :ID:       54b7e29a-55da-4baf-b0a5-10848d35130e
 :CREATED:  [2021-05-30 Sun 11:20]
@@ -782,7 +793,7 @@ exports like html, latex or markup.
 
 Neat thing indeed.
 
-** disable crypt tag inheritance
+** disable "crypt" tag inheritance
 :PROPERTIES:
 :ID:       68153510-2ca9-4d16-ae50-6e916da8142d
 :END:
@@ -854,7 +865,7 @@ university stuff. Check ~/org/uni/docs/index.html
 (require 'org-depend)
 #+end_src
 
-** roam
+** ~org-roam~
 :PROPERTIES:
   :ID:       41e53852-03b8-4098-a190-287a30504cfc
   :END:
@@ -1026,19 +1037,6 @@ Notice that the one that works outputs
 where as the others output
 : "~/FilenSync/org/bibliography.bib"
 
-** recursive ~TODO~ cookie statistics
-# - [2023-05-18 Thu 11:20]
-- [cite:@org_recursive_todo_statistics]
-
-#+begin_src elisp
-(setq org-hierarchical-todo-statistics nil)
-#+end_src
-
-: (setq org-hierarchical-todo-statistics 'recursive)
-: (setq org-hierarchical-todo-statistics '(recursive))
-: (setq org-hierarchical-todo-statistics "recursive")
-: (setq org-hierarchical-todo-statistics '("recursive"))
-
 ** underscore and hat handling
 :PROPERTIES:
 :CREATED:  [2023-06-23 Fri 16:52]
@@ -1105,7 +1103,7 @@ at least.
 #+begin_src elisp
 (setq org-enable-priority-commands t
     org-priority-highest 1
-    org-priority-default 5
+    org-priority-default 9
     org-priority-lowest 9)
 #+end_src
 

@@ -64,6 +64,12 @@
                                         ; useful when exporting html 28-day version.
 (setq org-agenda-start-on-weekday nil)
 
+(setq org-agenda-prefix-format "%t %s")
+
+(setq org-agenda-show-current-time-in-grid nil)
+(setq org-agenda-hide-tags-regexp ".")
+(setq org-agenda-use-time-grid nil)
+
 (setq org-agenda-custom-commands
       '(
         ;; ( "1" "Next 28 days."
@@ -145,12 +151,6 @@
         )
       )
 
-(setq org-agenda-prefix-format "%t %s")
-
-(setq org-agenda-show-current-time-in-grid nil)
-(setq org-agenda-hide-tags-regexp ".")
-(setq org-agenda-use-time-grid nil)
-
 (add-to-list 'org-modules 'org-habit)
 
 (setq org-habit-preceding-days 21)
@@ -158,18 +158,19 @@
 
 (setq org-todo-keywords
       '((sequence
-         "WAIT(w!)"
+         "WAIT(w@)"
          "NEXT(n!)"
          ;; "DOIN(d!)"
          "TODO(t!)"
          "PROJ(p!)"
          "INCU(i!)"
          "|"
-         "DONE(D!)"
+         "DONE(D@)"
          "CNLD(C@)" )
         )
       )
-(setq org-log-done nil)
+
+(setq org-log-done 'note)
 
 (with-eval-after-load 'ox-latex
 (add-to-list 'org-latex-classes
@@ -207,6 +208,8 @@
 )
 
 (setq org-babel-python-command "~/venv/python3.12.2/bin/python")
+
+(setq org-hierarchical-todo-statistics nil)
 
 (setq org-id-link-to-org-use-id t)
 
@@ -258,8 +261,6 @@
          "* %u %?\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
 ))
 
-(setq org-hierarchical-todo-statistics nil)
-
 (setq org-export-with-sub-superscripts nil)
 
 (setq org-tag-alist '(
@@ -287,7 +288,7 @@ will not be modified."
 
 (setq org-enable-priority-commands t
     org-priority-highest 1
-    org-priority-default 5
+    org-priority-default 9
     org-priority-lowest 9)
 
 (defun my/org-get-parent-heading ()
