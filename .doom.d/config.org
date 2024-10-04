@@ -47,7 +47,7 @@
   - [[#org-glossary][~org-glossary~]]
   - [[#org-cite][~org-cite~]]
   - [[#underscore-and-hat-handling][underscore and hat handling]]
-  - [[#global-tags][global TAGS]]
+  - [[#org-tag-alist][~org-tag-alist~]]
   - [[#created-property][=CREATED= property]]
   - [[#org-priority-highestdefaultlowest][~org-priority-[highest|default|lowest]~]]
   - [[#myorg-archive-done-tasks][~my/org-archive-done-tasks~]]
@@ -222,7 +222,7 @@ It must be set before org loads!
 
 
 #+begin_src elisp
-(setq org-agenda-files "~/agenda-files.txt")
+(setq org-agenda-files "~/.doom.d/agenda-files.txt")
 #+end_src
 
 - https://orgmode.org/worg/org-tutorials/orgtutorial_dto.html
@@ -1048,13 +1048,14 @@ where as the others output
 
 - [[https://www.gnu.org/software/emacs/manual/html_node/org/Subscripts-and-Superscripts.html][Subscripts and Superscripts (The Org Manual)]]
 
-** global TAGS
+** ~org-tag-alist~
 :PROPERTIES:
 :CREATED:  [2024-01-26 Fri 12:43]
 :END:
 
 #+begin_src elisp
 (setq org-tag-alist '(
+                      ("noexport" . ?n)
                       ("PROJ" . ?p)
                       ("read_only" . ?R)
                       )

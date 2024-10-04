@@ -25,7 +25,7 @@
 
 (setq org-directory "~/FilenSync/org/")
 
-(setq org-agenda-files "~/agenda-files.txt")
+(setq org-agenda-files "~/.doom.d/agenda-files.txt")
 
 (setq display-line-numbers-type nil)
 
@@ -264,6 +264,7 @@
 (setq org-export-with-sub-superscripts nil)
 
 (setq org-tag-alist '(
+                      ("noexport" . ?n)
                       ("PROJ" . ?p)
                       ("read_only" . ?R)
                       )
