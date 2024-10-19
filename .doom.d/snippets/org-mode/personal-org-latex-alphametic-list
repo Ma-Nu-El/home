@@ -4,5 +4,6 @@
 # condition: t
 # --
 
+#+LATEX_HEADER: \usepackage{enumerate}
 #+ATTR_LATEX: :options [(a)]
 a) ${1: text}

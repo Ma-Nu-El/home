@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: personal-org-count-headings
+# key: trigger-key
+# condition: t
+# --
+#+name: count_headings
+#+begin_src elisp
+(defun my/count-org-level-1-headings ()
+  "Count number of level 1 headings in the current Org file."
+  (interactive)
+  (let ((count 0))
+    (org-map-entries
+     (lambda ()
+       (when (= (org-current-level) 1)
+         (setq count (1+ count))))
+     nil 'file)
+    (message "Number of level 1 headings: %d" count)))
+(my/count-org-level-1-headings)
+#+end_src

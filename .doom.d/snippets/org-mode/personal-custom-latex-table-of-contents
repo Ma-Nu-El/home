@@ -6,7 +6,9 @@
 :TABLE_OF_CONTENTS:
 #+OPTIONS: toc:nil
 #+begin_export latex
-\setcounter{tocdepth}{1}  # set the depth
-\clearpage \tableofcontents \clearpage # exclusive page
+\clearpage
+\setcounter{tocdepth}{2} % depth
+\tableofcontents
+\clearpage
 #+end_export
 :END:
