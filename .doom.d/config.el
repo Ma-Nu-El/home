@@ -71,85 +71,8 @@
 (setq org-agenda-use-time-grid nil)
 
 (setq org-agenda-custom-commands
-      '(
-        ;; ( "1" "Next 28 days."
-        ;;   ((agenda ""))
-        ;;   ;; ((org-agenda-tag-filter-preset '("-habit")))
-          ;; ("~/agenda-today.html") ;; enables html export of this agenda view
-        ;;   ((org-agenda-span 28))
-        ;;   ((org-agenda-start-day "-0d"))
-        ;;   )
-        ("1" "Next 28 days" agenda ""
-         ((org-agenda-span 28)
-          (org-agenda-start-day "-0d")
-          (org-agenda-remove-tags t)
-         )
-         ("~/test.pdf"))
-        ;; ( "2" "Last and next 3 days."
-        ;;   ;; Made to be exported to html
-        ;;   ((agenda ""))
-        ;;            ((org-agenda-span 7))
-        ;;            ((org-agenda-start-day "-2"))
-        ;;   )
-        ;; ( "8" "Next 8 days, don't show today."
-        ;;   ;; Made to be exported to html
-        ;;   ((agenda ""))
-        ;;            ((org-agenda-span 8))
-        ;;            ((org-agenda-start-day "+1d"))
-        ;;   )
-        ;; ( "4" "Next 14 days, don't show today."
-        ;;   ;; Made to be exported to html
-        ;;   ((agenda ""))
-        ;;            ((org-agenda-span 14))
-        ;;            ((org-agenda-start-day "+1d"))
-        ;;   )
-        ;; ( "0" "Next 28 days, don't show today."
-        ;;   ;; Made to be exported to html
-        ;;   ((agenda ""))
-        ;;            ((org-agenda-span 28))
-        ;;            ((org-agenda-start-day "+1d"))
-        ;;   )
-        ( "H" "Only 'habit' tag"
-          ((agenda ""))
-          ((org-agenda-tag-filter-preset '("+habit"))))
-        ( "h" "Exclude 'habit' tag"
-          ((agenda ""))
-          ((org-agenda-tag-filter-preset '("-habit"))))
-        ;; ( "n" "Only 'today' tag."
-        ;;   ((agenda ""))
-        ;;   ((org-agenda-tag-filter-preset '("+today"))))
-        ( "O" "Only 'oneoff' tag."
-          ((agenda ""))
-          ((org-agenda-tag-filter-preset '("+oneoff"))))
-        ( "R" "Only 'recurring' tag."
-          ((agenda ""))
-          ((org-agenda-tag-filter-preset '("+recurring"))))
-        ( "u" "Exclude 'university' tag."
-          ((agenda ""))
-          ((org-agenda-tag-filter-preset '("-university"))))
-        ( "U" "Only 'university' tag."
-          ((agenda ""))
-          ((org-agenda-tag-filter-preset '("+university"))))
-        ( "l" "All 'university' except 'lecture' and 'assistantship'."
-          ((agenda ""))
-          ((org-agenda-tag-filter-preset '("+university" "-lecture" "-assistantship"))))
-        ( "L" "Only lectures and assistantships."
-          ((agenda ""))
-          ((org-agenda-tag-filter-preset '("+lecture" "+assistantship"))))
-        ( "c" "Only 'contacts' tag."
-          ((agenda ""))
-          ((org-agenda-tag-filter-preset '("+contacts"))))
-        ( "b" "Only 'birthday' tag."
-          ((agenda ""))
-          ((org-agenda-tag-filter-preset '("+birthday"))))
-        ( "k" "Exclude 'music' tag."
-          ((agenda ""))
-          ((org-agenda-tag-filter-preset '("-music"))))
-        ( "K" "Only 'music' tag."
-          ((agenda ""))
-          ((org-agenda-tag-filter-preset '("+music"))))
-        )
-      )
+      '(("n" "Agenda without habits"
+         ((agenda "" ((org-habit-show-habits nil)))))))
 
 (add-to-list 'org-modules 'org-habit)
 
@@ -238,7 +161,17 @@
 
 (setq org-export-exclude-tags '("noexport"))
 
+(require 'org-crypt)
+
+(org-crypt-use-before-save-magic)
+
+;; Prevent inherited 'crypt' tags from double-encrypting content.
 (setq org-tags-exclude-from-inheritance '("crypt"))
+
+(setq org-crypt-disable-auto-save t) ;; Disable auto-save to prevent unencrypted copies.
+
+;; Use symmetric encryption by default, switch to public key if CRYPTKEY is set.
+(setq org-crypt-key "")
 
 (use-package! org-transclusion)
 
@@ -514,6 +447,16 @@ Works if the point is anywhere within the subtree of the heading."
 
 (add-hook 'org-mode-hook 'org-mark-readonly)
 
+(defun my/sync-line-in-windows-simple ()
+  "Sync the current line number and cursor position relative to the window in both horizontally split windows."
+  (interactive)
+  (let ((current-line (line-number-at-pos))                     ;; Save current line number
+        (window-line (count-lines (window-start) (point))))     ;; Get how many lines from window top to cursor
+    (other-window 1)                                            ;; Switch to the other window
+    (goto-line current-line)                                    ;; Go to the same line number in the other window
+    (recenter window-line)                                      ;; Move cursor to same number of lines from top
+    (other-window 1)))                                          ;; Return to the original window
+
 (map! :leader
   (:prefix-map ("k" . "custom key bindings")
 
@@ -559,6 +502,9 @@ Works if the point is anywhere within the subtree of the heading."
       (:prefix-map ("a" . "agenda")
          :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
       )
+    )
+    (:prefix-map ("w" . "windows")
+      :desc "my/sync-line-in-windows-simple" "s" #'my/sync-line-in-windows-simple
     )
   )
 )
