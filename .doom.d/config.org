@@ -1567,6 +1567,9 @@ more careful.
 #+end_src
 
 * custom functions
+:PROPERTIES:
+:CREATED:  [2024-10-19 Sat 17:29]
+:END:
 
 #+begin_src elisp
 (defun my/sync-line-in-windows-simple ()
