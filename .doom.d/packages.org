@@ -2,7 +2,6 @@
 #+FILETAGS: :literate:config:
 #+PROPERTY: header-args :tangle ~/.doom.d/packages.el :results silent
 
-
 * Table of Contents :TOC_2:noexport:
 - [[#shebang][shebang]]
 - [[#readme][readme]]
@@ -206,7 +205,9 @@ Contained in [[https://github.com/emacsmirror/org-contrib][org-contrib]].
 #+end_src
 
 * org-web-tools
-# - [2024-04-03 Wed 16:56]
+:PROPERTIES:
+:CREATED:  [2024-04-03 Wed 16:56]
+:END:
 - [[https://github.com/alphapapa/org-web-tools][GitHub - alphapapa/org-web-tools: View, capture, and archive Web pages in Org-mode]]
 
 
