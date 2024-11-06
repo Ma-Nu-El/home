@@ -1,0 +1,17 @@
+** Schedule
+*** TODO Foo
+SCHEDULED: <2024-11-04 Mon 05:00-05:50>
+*** TODO Tennis
+SCHEDULED: <2024-11-04 Mon 06:00-06:50>
+*** TODO Revisar informes
+SCHEDULED: <2024-11-04 Mon 10:00-11:00>
+*** TODO Preparar repaso materia
+SCHEDULED: <2024-11-04 Mon 11:15-11:30>
+*** TODO Comprar cosas 
+SCHEDULED: <2024-11-04 Mon 12:00-12:15>
+*** TODO Estudiar GO
+SCHEDULED: <2024-11-04 Mon 12:30-13:00>
+*** TODO Sleep
+SCHEDULED: <2024-11-04 Mon 21:30-22:00>
+*** TODO Dream
+SCHEDULED: <2024-11-04 Mon 22:30-23:00>
