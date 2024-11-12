@@ -1,0 +1,39 @@
+# DONE calculate FILL for header
+# | :00
+# | :00 FILL | :30 FILL |
+# | :00 FILL | :15 FILL | :30 FILL | :45 FILL |
+
+# if column-width = 15, then fill = 10 since the first
+# content of the row is the minute information which
+# takes up 5 chars " :NN "
+
+FILL = " " * (column-width - 5)
+HLINE_SEGMENT= "| " + "-" * (column-width -2) + " "
+
+if detail = hour
+  header= "|     |:00 {FILL}|"
+  columns=2
+if detail = half
+  header= "|     | :00 {FILL}| :30 {FILL}"
+  columns=3
+if detail = quarter
+  header= "|     | :00 {FILL}| :15 {FILL}| :30 {FILL}| :45{FILL}|"
+  columns=5
+
+header_and_hline="""
+{header}
+{HLINE_SEGMENT*columns}
+"""
+
+# TODO: fix early and late task row
+second_column= "|" + " " * column_width + "|"
+
+early_left_part = "| <" + start # 'start' is given in options
+# since this column in particular is 5 chars then
+early_right_part = 5 - left_part.length
+early_complete_early_cell=left_part + right_part + second_column
+
+late_left_part = "| >" + end-1 # 'end' is given in options
+# since this column in particular is 5 chars then
+late_right_part = 5 - left_part.length
+late_complete_early_cell=left_part + right_part + second-column
