@@ -1,23 +1,15 @@
-** Schedule
-*** Foo
+* Schedule
+** Foo
 SCHEDULED: <2024-11-04 Mon 04:00-04:50>
-*** Foo
-SCHEDULED: <2024-11-04 Mon 05:00-05:50>
-*** Tennis
-SCHEDULED: <2024-11-04 Mon 06:00-07:30>
-*** Revisar informes
-SCHEDULED: <2024-11-04 Mon 10:00-11:00>
-*** Preparar repaso materia
-SCHEDULED: <2024-11-04 Mon 11:15-11:30>
-*** Comprar cosas 
-SCHEDULED: <2024-11-04 Mon 12:00-12:15>
-*** Estudiar GO
-SCHEDULED: <2024-11-04 Mon 12:25-13:30>
-*** Estudiar LOG
-SCHEDULED: <2024-11-04 Mon 17:00-19:00>
-*** Sleep
-SCHEDULED: <2024-11-04 Mon 21:30>
-*** Dream
-SCHEDULED: <2024-11-04 Mon 22:30>
-*** Dream
-SCHEDULED: <2024-11-04 Mon 23:30>
+** Get up
+SCHEDULED: <2024-11-04 Mon 07:00-07:01>
+** Prepare
+SCHEDULED: <2024-11-04 Mon 08:00>
+** Prepare2
+SCHEDULED: <2024-11-04 Mon 10:30>
+** Study
+SCHEDULED: <2024-11-04 Mon 12:30-14:45>
+** Something late
+SCHEDULED: <2024-11-11 Mon 20:30-22:30>
+** Something very late
+SCHEDULED: <2024-11-11 Mon 21:30-22:30>

@@ -154,7 +154,7 @@ def print_schedule_table(cells, detail, column_width, start_hour, end_hour, earl
        # Asuming the end hour is a two digit
        # number so I don't parametrize
        #                     ,--- here
-       hour_column_left = f"| <{end_hour} "
+       hour_column_left = f"| <{end_hour-1} "
        hour_column_right = " "* (len(hour_column_left) - 9)
        hour_column = hour_column_left + hour_column_right
        first_column_left = f"| ({late_tasks}) "
