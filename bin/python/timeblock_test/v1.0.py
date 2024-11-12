@@ -1,8 +1,8 @@
 # daybox.py
 # Display orgmode SCHEDULED entries in timebox manner.
 # Author: Manuel Fuica Morales
-# v: 1.0
 # - [2024-11-12 Tue 12:12]
+# version: 1.0
 
 import orgparse
 import argparse
@@ -105,10 +105,10 @@ def print_schedule_table(cells, detail, column_width, start_hour, end_hour, earl
         header = f"|     | :00{FILL} |"
         columns = 2
     elif detail == 'half':
-        header = f"|     | :00{FILL} | :30{FILL} "
+        header = f"|     | :00{FILL} | :30{FILL} |"
         columns = 3
     elif detail == 'quarter':
-        header = f"|     | :00{FILL} | :15{FILL} | :30{FILL} | :45{FILL} "
+        header = f"|     | :00{FILL} | :15{FILL} | :30{FILL} | :45{FILL} |"
         columns = 5
     else:
         raise ValueError("Invalid DETAIL value")

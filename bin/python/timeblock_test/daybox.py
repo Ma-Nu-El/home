@@ -2,11 +2,15 @@
 # Display orgmode SCHEDULED entries in timebox manner.
 # Author: Manuel Fuica Morales
 # - [2024-11-12 Tue 12:12]
-# version: 1.0
+# version: 1.1
+# Different from 1.0:
+# Filters scheduled tasks by date, and
+# adds the option to diisplay other dates
+# instead of today's.
 
 import orgparse
 import argparse
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 # Read command line options using argparse
 def parse_arguments():
@@ -16,25 +20,45 @@ def parse_arguments():
     parser.add_argument('--detail', '-d', type=str, choices=['hour', 'half', 'quarter'], default='half', help='Detail level for the schedule')
     parser.add_argument('--start', '-s', type=int, default=7, help='Start hour for the schedule')
     parser.add_argument('--end', '-e', type=int, default=21, help='End hour for the schedule')
+    parser.add_argument('--date', '-D', type=str, default='today', help='Specify the date to filter tasks: "today", "tomorrow", "yesterday", or "YYYY-MM-DD"')
+    parser.add_argument('-?', action='help', help='Print this help message and exit')
     return parser.parse_args()
 
-# Read the org file using orgparse
-def read_org_file(filename):
+# Read the org file using orgparse and filter tasks based on the date argument
+def read_org_file(filename, date_filter):
     tasks = []
     orgfile = orgparse.load(filename)
+    target_date = parse_target_date(date_filter)
+
     for node in orgfile[1:]:  # Skipping the root node
         if node.scheduled:  # Use the scheduled attribute directly
             title = node.heading
             start_datetime = node.scheduled.start
-            end_datetime = node.scheduled.end if node.scheduled.end else (start_datetime + timedelta(hours=1))
 
-            tasks.append({
-                'title': title,
-                'start_date': start_datetime.date(),
-                'start_time': start_datetime.hour + start_datetime.minute / 60.0,
-                'end_time': end_datetime.hour + end_datetime.minute / 60.0
-            })
+            # Filter tasks by the specified date
+            if start_datetime.date() == target_date:
+                end_datetime = node.scheduled.end if node.scheduled.end else (start_datetime + timedelta(hours=1))
+                tasks.append({
+                    'title': title,
+                    'start_date': start_datetime.date(),
+                    'start_time': start_datetime.hour + start_datetime.minute / 60.0,
+                    'end_time': end_datetime.hour + end_datetime.minute / 60.0
+                })
     return tasks
+
+# Function to parse the date from the user input
+def parse_target_date(date_filter):
+    if date_filter == 'today':
+        return date.today()
+    elif date_filter == 'tomorrow':
+        return date.today() + timedelta(days=1)
+    elif date_filter == 'yesterday':
+        return date.today() - timedelta(days=1)
+    else:
+        try:
+            return datetime.strptime(date_filter, '%Y-%m-%d').date()
+        except ValueError:
+            raise ValueError(f"Invalid date format: {date_filter}. Please use 'YYYY-MM-DD'.")
 
 # Create schedule cells based on detail level
 def create_schedule_cells(start_hour, end_hour, detail, column_width):
@@ -46,7 +70,7 @@ def create_schedule_cells(start_hour, end_hour, detail, column_width):
         periods = 4
     else:
         raise ValueError("Invalid DETAIL value")
-    
+
     period_length = 1 / periods
     cells = []
     index = 0
@@ -80,7 +104,7 @@ def assign_tasks_to_cells(tasks, cells, start_hour, end_hour, column_width):
 
         if task_start < start_hour:
             early_tasks += 1
-        if task_start > end_hour:
+        if task_end > end_hour:
             late_tasks += 1
 
         for cell in cells:
@@ -93,7 +117,7 @@ def assign_tasks_to_cells(tasks, cells, start_hour, end_hour, column_width):
                     else:
                         cell['status'] = 'busy'
                         cell['content'] = f" {'-' * (column_width - 2)} ".ljust(column_width - 2)
-                        cell['count'] += 1
+                cell['count'] += 1
     return cells, early_tasks, late_tasks
 
 # Print the schedule table
@@ -171,16 +195,13 @@ def print_schedule_table(cells, detail, column_width, start_hour, end_hour, earl
         late_row += "|"
         print(late_row[:len(hline)].ljust(len(hline) - 1, ' '))
 
-
-
 # Main function to tie everything together
 def main():
     args = parse_arguments()
-    tasks = read_org_file(args.filename)
+    tasks = read_org_file(args.filename, args.date)
     cells = create_schedule_cells(args.start, args.end, args.detail, args.column_width)
     cells, early_tasks, late_tasks = assign_tasks_to_cells(tasks, cells, args.start, args.end, args.column_width)
     print_schedule_table(cells, args.detail, args.column_width, args.start, args.end, early_tasks, late_tasks)
 
 if __name__ == "__main__":
     main()
-
