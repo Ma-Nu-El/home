@@ -73,9 +73,9 @@ def assign_tasks_to_cells(tasks, cells, start_hour, end_hour, column_width):
         truncated_title = task['title'][:column_width - 2]
 
         if task_start < start_hour:
-           early_tasks += 1
+            early_tasks += 1
         if task_start > end_hour:
-           late_tasks += 1
+            late_tasks += 1
 
         for cell in cells:
             # Check if the task overlaps with the current cell
@@ -87,7 +87,7 @@ def assign_tasks_to_cells(tasks, cells, start_hour, end_hour, column_width):
                     else:
                         cell['status'] = 'busy'
                         cell['content'] = f" {'-' * (column_width - 2)} ".ljust(column_width - 2)
-                cell['count'] += 1
+                        cell['count'] += 1
     return cells, early_tasks, late_tasks
 
 # Print the schedule table
@@ -113,56 +113,58 @@ def print_schedule_table(cells, detail, column_width, start_hour, end_hour, earl
 
     # Print early tasks count
     if early_tasks > 0:
-       # Asuming the hour column at least ends in
-       # a two digits hour like '19'
-       # Otherwise, I'd have to parameterize
-       #                     ,--- here
-       hour_column_left = f"|  <{start_hour} "
-       hour_column_right = " "* (len(hour_column_left) - 6)
-       hour_column = hour_column_left + hour_column_right
-       first_column_left = f"| ({early_tasks}) "
-       first_column_right = " " * (column_width - len(first_column_left) + 1)
-       first_column = first_column_left + first_column_right
-       second_column = "|" + " " * (column_width) + "|"
-       early_row = hour_column + first_column + second_column
-       print(early_row)
+        # Adjust early task row based on the detail level
+        early_left_part = f"|  <{start_hour} | ({early_tasks})".ljust(column_width + 6) + " "
+        early_row = early_left_part
 
+        # Adding as many empty columns as needed based on the detail level
+        if detail == 'hour':
+            columns = 2
+        elif detail == 'half':
+            columns = 3
+        elif detail == 'quarter':
+            columns = 5
 
+        # Append empty columns to match the rest of the table
+        for _ in range(columns - 2):
+            early_row += "|" + " " * (column_width - 1) + " "
 
-    # Printing cells in a schedule-like manner
+        early_row += "|"
+        print(early_row[:len(hline)].ljust(len(hline) - 1, ' '))
+
+    # Printing cells in a schedule-like manner (already dynamic)
     last_hour = None
     row = ''
     for cell in cells:
         if cell['hour'] != last_hour and last_hour is not None:
-           print(row[:len(hline)].ljust(len(hline) - 1, ' '))
-           row = f"|  {cell['hour']:>2} |"
+            print(row[:len(hline)].ljust(len(hline) - 1, ' '))
+            row = f"|  {cell['hour']:>2} |"
         elif last_hour is None:
-             row = f"|  {cell['hour']:>2} |"
+            row = f"|  {cell['hour']:>2} |"
 
         if cell['status'] == 'free':
-           status = f"{' ' * (column_width - 2)}"
+            status = f"{' ' * (column_width - 2)}"
         else:
-           status = f"{cell['content'].strip()}"
+            status = f"{cell['content'].strip()}"
         row += f" {status:<{column_width - 2}} |"
         last_hour = cell['hour']
 
     if row:
-       print(row[:len(hline)].ljust(len(hline) - 1, ' '))
+        print(row[:len(hline)].ljust(len(hline) - 1, ' '))
 
-       # Print late tasks count
+    # Print late tasks count
     if late_tasks > 0:
-       # Asuming the end hour is a two digit
-       # number so I don't parametrize
-       #                     ,--- here
-       hour_column_left = f"| <{end_hour-1} "
-       hour_column_right = " "* (len(hour_column_left) - 9)
-       hour_column = hour_column_left + hour_column_right
-       first_column_left = f"| ({late_tasks}) "
-       first_column_right = " " * (column_width - len(first_column_left) + 1)
-       first_column = first_column_left + first_column_right
-       second_column = "|" + " " * (column_width) + "|"
-       late_row = hour_column + first_column + second_column
-       print(late_row)
+        # Adjust late task row based on the detail level
+        late_left_part = f"| >{end_hour} | ({late_tasks})".ljust(column_width + 6) + " "
+        late_row = late_left_part
+
+        # Adding as many empty columns as needed based on the detail level
+        for _ in range(columns - 2):
+            late_row += "|" + " " * (column_width - 1) + " "
+
+        late_row += "|"
+        print(late_row[:len(hline)].ljust(len(hline) - 1, ' '))
+
 
 
 # Main function to tie everything together
