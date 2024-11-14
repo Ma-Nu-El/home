@@ -71,8 +71,18 @@
 (setq org-agenda-use-time-grid nil)
 
 (setq org-agenda-custom-commands
-      '(("n" "Agenda without habits"
-         ((agenda "" ((org-habit-show-habits nil)))))))
+      '(("A" "Custom Agenda View"
+         ((agenda "" ;; Regular agenda view
+                  (
+                    ;; Do not include scheduled, due or overdue items here
+                   (org-deadline-warning-days 0)
+                   (org-scheduled-past-days 0)
+                   (org-deadline-past-days 0)
+                   (org-agenda-skip-scheduled-if-done nil)
+                   (org-agenda-skip-timestamp-if-done nil)
+                   (org-agenda-skip-deadline-if-done nil)
+                   ))))
+        ))
 
 (add-to-list 'org-modules 'org-habit)
 
