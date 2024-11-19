@@ -1,11 +1,12 @@
 # daybox.py
 # Display orgmode SCHEDULED entries in timebox manner.
 # Author: Manuel Fuica Morales
-# - [2024-11-12 Tue 12:12]
-# version: 1.1
-# Changes from 1.0:
-# Adds the option to display other dates
-# instead of today's.
+# version: 1.2
+# Changes from 1.1:
+# 1) Parse multiple orgmode files via --agenda-files FILE
+# 2) Accept both DEADLINE and SCHEDULED orgmode entries
+# 3) Accept --time-gone option
+# 3) Accept --now option to visually show current time in output table
 
 import orgparse
 import argparse
@@ -40,6 +41,19 @@ def read_org_file(filename, date_filter):
                 end_datetime = node.scheduled.end if node.scheduled.end else (start_datetime + timedelta(hours=1))
                 tasks.append({
                     'title': title,
+                    'start_date': start_datetime.date(),
+                    'start_time': start_datetime.hour + start_datetime.minute / 60.0,
+                    'end_time': end_datetime.hour + end_datetime.minute / 60.0
+                })
+        if node.deadline:  # Use the deadline attribute directly
+            title = node.heading
+            start_datetime = node.deadline.start
+
+            # Filter tasks by the specified date
+            if start_datetime.date() == target_date:
+                end_datetime = node.deadline.end if node.deadline.end else (start_datetime + timedelta(hours=1))
+                tasks.append({
+                    'title': "!" + title,
                     'start_date': start_datetime.date(),
                     'start_time': start_datetime.hour + start_datetime.minute / 60.0,
                     'end_time': end_datetime.hour + end_datetime.minute / 60.0

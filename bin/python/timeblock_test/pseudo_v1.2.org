@@ -1,0 +1,716 @@
+#+DATE: 2024-11-15
+#+AUTHOR: Manuel Fuica Morales
+
+* TOC :TOC_2:noexport:
+- [[#requirements][Requirements]]
+  - [[#considered-orgmode-input-format-scheduled-and-deadline][Considered orgmode input format: ~SCHEDULED~ and ~DEADLINE~]]
+  - [[#not-considered-timestamps][Not considered: timestamps]]
+- [[#tables-from-start][Tables from start]]
+  - [[#input-example][Input example]]
+  - [[#tasks_table][~tasks_table~]]
+  - [[#cell_index][~cell_index~]]
+- [[#filling-cellindex-according-to-taskstable][Filling ~cell.index~ according to ~tasks.table~]]
+  - [[#table-content][Table content]]
+  - [[#pseudocode][pseudocode]]
+- [[#desired-output-table-format][Desired output table format]]
+- [[#update-to-v12][Update to ~v1.2~]]
+  - [[#read-from-agenda-filestxt][read from ~agenda-files.txt~]]
+  - [[#now-asterisk][=now= asterisk]]
+  - [[#--verbosity--v-control][~--verbosity~, ~-v~ control]]
+  - [[#--time-gone][~--time-gone~]]
+- [[#develop-v12][Develop v1.2]]
+  - [[#part-1-read-org-files][part 1: read org files]]
+  - [[#part-2-parse-into-cell_index][part 2: parse into cell_index]]
+  - [[#part-3-output-cell_index][part 3: output cell_index]]
+  - [[#part-4-optional-for---time-gone][part 4: optional for ~--time-gone~]]
+- [[#raw][Raw]]
+
+* Requirements
+** Considered orgmode input format: ~SCHEDULED~ and ~DEADLINE~
+
+#+begin_src org
+,SCHEDULED: <YYYY-MM-DD Day>
+,SCHEDULED: <YYYY-MM-DD Day hh:mm>
+,SCHEDULED: <YYYY-MM-DD Day hh:mm-hh:mm>
+,DEADLINE: <YYYY-MM-DD Day>
+,DEADLINE: <YYYY-MM-DD Day hh:mm-hh:mm>
+,DEADLINE: <YYYY-MM-DD Day hh:mm-hh:mm>
+#+end_src
+
+** Not considered: timestamps
+
+#+begin_src org
+,<YYYY-MM-DD Day>
+,<YYYY-MM-DD Day hh:mm>
+,<YYYY-MM-DD Day hh:mm-hh:mm>
+
+,[YYYY-MM-DD Day]
+,[YYYY-MM-DD Day hh:mm]
+,[YYYY-MM-DD Day hh:mm-hh:mm]
+#+end_src
+
+* Tables from start
+
+Let's consider the tables
+
+** Input example
+
+After parsing (either via ~--file file.org or
+--agenda-files agenda-files.txt~) you can get this kind
+of input
+
+,*** Foo
+,SCHEDULED: <2024-11-12 Tue 05:00-05:50>
+,*** Tennis
+,SCHEDULED: <2024-11-12 Tue 06:00-07:30>
+,*** Revisar informes
+,DEADLINE: <2024-11-12 Tue 10:00-11:00>
+,*** Preparar repaso materia
+,DEADLINE: <2024-11-12 Tue 11:15-11:30>
+,*** Comprar cosas
+,SCHEDULED: <2024-11-12 Tue 12:00-12:15>
+,*** Estudiar GO
+,DEADLINE: <2024-11-12 Tue 12:25-13:30>
+,*** Sleep
+,SCHEDULED: <2024-11-12 Tue 21:30>
+,*** Dream
+,SCHEDULED: <2024-11-12 Tue 22:30>
+
+** ~tasks_table~
+
+Which is filled with the information
+read from ~--file file.org~ or
+~--agenda-files agenda-files.txt~
+
+which can either be ~SCHEDULED~ or ~DEADLINE~.
+
+Considering the input example you can get something
+like:
+
+| title                   | start date | start time |   end date | end time | type      |
+|-------------------------+------------+------------+------------+----------+-----------|
+| Foo                     | 2024-11-04 |      05.00 | 2024-11-04 |    05.83 | SCHEDULED |
+| Tennis                  | 2024-11-04 |      06.00 | 2024-11-04 |    07.50 | SCHEDULED |
+| Revisar informes        | 2024-11-04 |      10.00 | 2024-11-04 |    11.00 | DEADLINE  |
+| Preparar repaso materia | 2024-11-04 |      11.25 | 2024-11-04 |    11.50 | DEADLINE  |
+| Comprar cosas           | 2024-11-04 |      12.00 | 2024-11-04 |    12.25 | SCHEDULED |
+| Estudiar GO             | 2024-11-04 |      12.42 | 2024-11-04 |    13.50 | DEADLINE  |
+| Sleep                   | 2024-11-04 |      21.50 | 2024-11-04 |          | SCHEDULED |
+| Dream                   | 2024-11-04 |      22.50 | 2024-11-04 |          | SCHEDULED |
+
+Everything is determined by inputi.
+
+** ~cell_index~
+- A cell represents a time period.
+*** examples
+**** possible ~cell.status~
+
+- ~free~:
+  - nothing scheduled in this cell
+- ~start~:
+  - at least one activity starts in this cell
+- ~busy~:
+  - there is at least one on going task in this cell.
+- ~gone~:
+  - cell period is past.
+
+**** for ~detail=hour~, ~start=7~ and ~end=21~
+
+| cell index | hour | minute | start | end | status | content | count |
+|------------+------+--------+-------+-----+--------+---------+-------|
+|          0 |    7 |      0 |     7 |   8 | free   |         |     0 |
+|          1 |    8 |      0 |     8 |   9 | free   |         |     0 |
+|          2 |    9 |      0 |     9 |  10 | free   |         |     0 |
+|          3 |   10 |      0 |    10 |  11 | free   |         |     0 |
+|          4 |   11 |      0 |    11 |  12 | free   |         |     0 |
+|          5 |   12 |      0 |    12 |  13 | free   |         |     0 |
+|          6 |   13 |      0 |    13 |  14 | free   |         |     0 |
+|          7 |   14 |      0 |    14 |  15 | free   |         |     0 |
+|          8 |   15 |      0 |    15 |  16 | free   |         |     0 |
+|          9 |   16 |      0 |    16 |  17 | free   |         |     0 |
+|         10 |   17 |      0 |    17 |  18 | free   |         |     0 |
+|         11 |   18 |      0 |    18 |  19 | free   |         |     0 |
+|         12 |   19 |      0 |    19 |  20 | free   |         |     0 |
+|         13 |   20 |      0 |    20 |  21 | free   |         |     0 |
+
+**** for ~detail=half~, ~start=7~ and ~end=21~
+
+| cell index | hour | minute | start |  end | status | content | count |
+|------------+------+--------+-------+------+--------+---------+-------|
+|          0 |    7 |      0 |     7 |  7.5 | free   |         | 0     |
+|          1 |    7 |     30 |   7.5 |  8.0 | free   |         | 0     |
+|          2 |    8 |      0 |     8 |  8.5 | free   |         | 0     |
+|          3 |    8 |     30 |   8.5 |  9.0 | free   |         | 0     |
+|          4 |    9 |      0 |     9 |  9.5 | free   |         | 0     |
+|          5 |    9 |     30 |   9.5 | 10.0 | free   |         | 0     |
+|          6 |   10 |      0 |    10 | 10.5 | free   |         | 0     |
+|          7 |   10 |     30 |  10.5 | 11.0 | free   |         | 0     |
+|          8 |   11 |      0 |    11 | 11.5 | free   |         | 0     |
+|          9 |   11 |     30 |  11.5 | 12.0 | free   |         | 0     |
+|         10 |   12 |      0 |    12 | 12.5 | free   |         | 0     |
+|         11 |   12 |     30 |  12.5 | 13.0 | free   |         | 0     |
+|         12 |   13 |      0 |    13 | 13.5 | free   |         | 0     |
+|         13 |   13 |     30 |  13.5 | 14.0 | free   |         | 0     |
+|         14 |   14 |      0 |    14 | 14.5 | free   |         | 0     |
+|         15 |   14 |     30 |  14.5 | 15.0 | free   |         | 0     |
+|         16 |   15 |      0 |    15 | 15.5 | free   |         | 0     |
+|         17 |   15 |     30 |  15.5 | 16.0 | free   |         | 0     |
+|         18 |   16 |      0 |    16 | 16.5 | free   |         | 0     |
+|         19 |   16 |     30 |  16.5 | 17.0 | free   |         | 0     |
+|         20 |   17 |      0 |    17 | 17.5 | free   |         | 0     |
+|         21 |   17 |     30 |  17.5 | 18.0 | free   |         | 0     |
+|         22 |   18 |      0 |    18 | 18.5 | free   |         | 0     |
+|         23 |   18 |     30 |  18.5 | 19.0 | free   |         | 0     |
+|         24 |   19 |      0 |    19 | 19.5 | free   |         | 0     |
+|         25 |   19 |     30 |  19.5 | 20.0 | free   |         | 0     |
+|         26 |   20 |      0 |    20 | 20.5 | free   |         | 0     |
+|         27 |   20 |     30 |  20.5 | 21.0 | free   |         | 0     |
+
+**** for ~detail=quarter~, ~start=7~ and ~end=21~
+
+| cell index | hour | minute | start |   end | status | content | count |
+|------------+------+--------+-------+-------+--------+---------+-------|
+|          0 |    7 |      0 |     7 |  7.25 | free   |         |  0    |
+|          1 |    7 |     15 |  7.25 |   7.5 | free   |         |  0    |
+|          2 |    7 |     30 |   7.5 |  7.75 | free   |         |  0    |
+|          3 |    7 |     45 |  7.75 |   8.0 | free   |         |  0    |
+|          4 |    8 |      0 |     8 |  8.25 | free   |         |  0    |
+|          5 |    8 |     15 |  8.25 |   8.5 | free   |         |  0    |
+|          6 |    8 |     30 |   8.5 |  8.75 | free   |         |  0    |
+|          7 |    8 |     45 |  8.75 |   9.0 | free   |         |  0    |
+|          8 |    9 |      0 |     9 |  9.25 | free   |         |  0    |
+|          9 |    9 |     15 |  9.25 |   9.5 | free   |         |  0    |
+|         10 |    9 |     30 |   9.5 |  9.75 | free   |         |  0    |
+|         11 |    9 |     45 |  9.75 |  10.0 | free   |         |  0    |
+|         12 |   10 |      0 |    10 | 10.25 | free   |         |  0    |
+|         13 |   10 |     15 | 10.25 |  10.5 | free   |         |  0    |
+|         14 |   10 |     30 |  10.5 | 10.75 | free   |         |  0    |
+|         15 |   10 |     45 | 10.75 |  11.0 | free   |         |  0    |
+|         16 |   11 |      0 |    11 | 11.25 | free   |         |  0    |
+|         17 |   11 |     15 | 11.25 |  11.5 | free   |         |  0    |
+|         18 |   11 |     30 |  11.5 | 11.75 | free   |         |  0    |
+|         19 |   11 |     45 | 12.75 |  12.0 | free   |         |  0    |
+|         20 |   12 |      0 |    12 | 12.25 | free   |         |  0    |
+|         21 |   12 |     15 | 12.25 |  12.5 | free   |         |  0    |
+|         22 |   12 |     30 |  12.5 | 12.75 | free   |         |  0    |
+|         23 |   12 |     45 | 13.75 |  13.0 | free   |         |  0    |
+|         24 |   13 |      0 |    13 | 13.25 | free   |         |  0    |
+|         25 |   13 |     15 | 13.25 |  13.5 | free   |         |  0    |
+|         26 |   13 |     30 |  13.5 | 13.75 | free   |         |  0    |
+|         27 |   13 |     45 | 14.75 |  14.0 | free   |         |  0    |
+|         28 |   14 |      0 |    14 | 14.25 | free   |         |  0    |
+|         29 |   14 |     15 | 14.25 |  14.5 | free   |         |  0    |
+|         30 |   14 |     30 |  14.5 | 14.75 | free   |         |  0    |
+|         31 |   14 |     45 | 15.75 |  15.0 | free   |         |  0    |
+|         32 |   15 |      0 |    15 | 15.25 | free   |         |  0    |
+|         33 |   15 |     15 | 15.25 |  15.5 | free   |         |  0    |
+|         34 |   15 |     30 |  15.5 | 15.75 | free   |         |  0    |
+|         35 |   15 |     45 | 16.75 |  16.0 | free   |         |  0    |
+|         36 |   16 |      0 |    16 | 16.25 | free   |         |  0    |
+|         37 |   16 |     15 | 16.25 |  16.5 | free   |         |  0    |
+|         38 |   16 |     30 |  16.5 | 16.75 | free   |         |  0    |
+|         39 |   16 |     45 | 17.75 |  17.0 | free   |         |  0    |
+|         40 |   17 |      0 |    17 | 17.25 | free   |         |  0    |
+|         41 |   17 |     15 | 17.25 |  17.5 | free   |         |  0    |
+|         42 |   17 |     30 |  17.5 | 17.75 | free   |         |  0    |
+|         43 |   17 |     45 | 18.75 |  18.0 | free   |         |  0    |
+|         44 |   18 |      0 |    18 | 18.25 | free   |         |  0    |
+|         45 |   18 |     15 | 18.25 |  18.5 | free   |         |  0    |
+|         46 |   18 |     30 |  18.5 | 18.75 | free   |         |  0    |
+|         47 |   18 |     45 | 19.75 |  19.0 | free   |         |  0    |
+|         48 |   19 |      0 |    19 | 19.25 | free   |         |  0    |
+|         49 |   19 |     15 | 19.25 |  19.5 | free   |         |  0    |
+|         50 |   19 |     30 |  19.5 | 19.75 | free   |         |  0    |
+|         51 |   19 |     45 | 20.75 |  20.0 | free   |         |  0    |
+|         52 |   20 |      0 |    20 | 20.25 | free   |         |  0    |
+|         53 |   20 |     15 | 20.25 |  20.5 | free   |         |  0    |
+|         54 |   20 |     30 |  20.5 | 20.75 | free   |         |  0    |
+|         55 |   20 |     45 | 21.75 |  21.0 | free   |         |  0    |
+
+* Filling ~cell.index~ according to ~tasks.table~
+
+** Table content
+
+Filled ~cell_index~ table according to information
+in ~tasks_table~
+
+So we end up with this table for example for
+~detail=half~, ~start=7~ and ~end=21~,
+~column-width=15~
+
+This table does not consider early or late tasks:
+
+| cell index | hour | minute | start |  end | status | content       | count | deadline |
+|------------+------+--------+-------+------+--------+---------------+-------+----------|
+|          0 |    7 |      0 |     7 |  7.5 | busy   |               |     0 |          |
+|          1 |    7 |     30 |   7.5 |  8.0 | free   |               |     0 |          |
+|          2 |    8 |      0 |     8 |  8.5 | free   |               |     0 |          |
+|          3 |    8 |     30 |   8.5 |  9.0 | free   |               |     0 |          |
+|          4 |    9 |      0 |     9 |  9.5 | free   |               |     0 |          |
+|          5 |    9 |     30 |   9.5 | 10.0 | free   |               |     0 |          |
+|          6 |   10 |      0 |    10 | 10.5 | start  | Revisar infor |     1 | TRUE     |
+|          7 |   10 |     30 |  10.5 | 11.0 | busy   |               |     0 |          |
+|          8 |   11 |      0 |    11 | 11.5 | start  | Preparar repa |     1 | TRUE     |
+|          9 |   11 |     30 |  11.5 | 12.0 | free   |               |     0 |          |
+|         10 |   12 |      0 |    12 | 12.5 | start  | (2)           |     2 | TRUE     |
+|         11 |   12 |     30 |  12.5 | 13.0 | busy   |               |     0 |          |
+|         12 |   13 |      0 |    13 | 13.5 | busy   |               |     0 |          |
+|         13 |   13 |     30 |  13.5 | 14.0 | free   |               |     0 |          |
+|         14 |   14 |      0 |    14 | 14.5 | free   |               |     0 |          |
+|         15 |   14 |     30 |  14.5 | 15.0 | free   |               |     0 |          |
+|         16 |   15 |      0 |    15 | 15.5 | free   |               |     0 |          |
+|         17 |   15 |     30 |  15.5 | 16.0 | free   |               |     0 |          |
+|         18 |   16 |      0 |    16 | 16.5 | free   |               |     0 |          |
+|         19 |   16 |     30 |  16.5 | 17.0 | free   |               |     0 |          |
+|         20 |   17 |      0 |    17 | 17.5 | free   |               |     0 |          |
+|         21 |   17 |     30 |  17.5 | 18.0 | free   |               |     0 |          |
+|         22 |   18 |      0 |    18 | 18.5 | free   |               |     0 |          |
+|         23 |   18 |     30 |  18.5 | 19.0 | free   |               |     0 |          |
+|         24 |   19 |      0 |    19 | 19.5 | free   |               |     0 |          |
+|         25 |   19 |     30 |  19.5 | 20.0 | free   |               |     0 |          |
+|         26 |   20 |      0 |    20 | 20.5 | free   |               |     0 |          |
+|         27 |   20 |     30 |  20.5 | 21.0 | free   |               |     0 |          |
+
+Same table for both ~early_and_late~ tasks
+| cell index | type  | hour |   content  | count |
+|------------+-------|------+------------|-------|
+|          0 | early |   <7 |    (2)     | 2     |
+|          1 | late  |  >20 |    (2)     | 2     |
+
+
+** pseudocode
+
+# Determine if tasks are deadlines
+for task in task_table:
+  for cell in cell_index:
+    if task.start >= cell.start && task.start < cell.end:
+      # if task is a deadline
+      # then this cell becomes a deadline cell
+      if task.deadline:
+        cell.deadline-p = TRUE
+
+# Prepend a "!" to all cells that contain a deadline
+# So it shows like that in the output format.
+# Even for early and late tasks
+for cell in cell_index:
+  if cell.deadline = TRUE
+    cell.content = "!" + cell.content
+
+* Desired output table format
+
+According to ~cell_index~, ~early_and_late~ and
+~tasks_table~
+
+for ~detail=half~, ~start=7~, ~end=21~, ~column-width=15~
+
+|     | :00             | :30             |
+|-----+-----------------+-----------------|
+|  <7 | (2)             |                 |
+|   7 | --------------- |                 |
+|   8 |                 |                 |
+|   9 |                 |                 |
+|  10 | !Revisar inform | --------------- |
+|  11 | !Preparar repas |                 |
+|  12 | !(2)            | --------------- |
+|  13 | --------------- |                 |
+|  14 |                 |                 |
+|  15 |                 |                 |
+|  16 |                 |                 |
+|  17 |                 |                 |
+|  18 |                 |                 |
+|  19 |                 |                 |
+|  20 |                 |                 |
+| >20 | (2)             |                 |
+
+* Update to ~v1.2~
+
+** read from ~agenda-files.txt~
+
+Use case:
+
+There is a file called ~/.doom.d/agenda-files.txt
+(configurable via)
+  : --agenda-files-file FILE
+
+Whose content is of the type
+
+#+begin_src elisp :eval no
+; PERSONAL
+~/auxRoam/recurring.org
+~/auxRoam/gtd.org
+~/auxRoam/actionable.org
+~/auxRoam/contacts.org
+; UNI
+~/FilenSync/org/uni/org/2024-2/gtd.org
+
+; MISC
+; ; GEAR
+~/auxRoam/gear.org
+~/auxRoam/calendar/2024/calendar.org
+~/auxRoam/calendar/2025/calendar.org
+~/auxRoam/calendar/2068/calendar.org
+#+end_src
+
+- While parsing, (obviously) ignore comment lines (the
+  ones starting with ";").
+
+
+Each of the files is an orgmode file which musts be
+parsed.
+
+The content of each orgmode file is to be fed
+into ~tasks_table~.
+
+** =now= asterisk
+*** Configuration
+
+asterisk (default) can be changed with option
+
+: --now-character = VALUE
+
+reserved value: ".": ~now-char~ can not be set to "."
+
+*** NOW=current time up to minute
+*** TODO Find 'now' spot in output table.
+
+# Because each cell has 17 chars (15 + 2 of pad) per
+# cell
+# 60/15=4, 30/15=2, 15/15=1
+
+if ~detail = hour~
+  # each character in cell represents 4 minutes
+  cell.unit = 4
+if ~detail = half~
+  # each character in cell represents 2 minutes
+  cell.unit = 2
+if ~detail = quarter~
+  # each character in cell represents 1 minute
+  cell.unit = 1
+
+
+for cell in cell_index
+  if now >= cell.start && now < cell.end && cell.status = free
+    if now >= cell.unit.start && now < cell.unit.end
+      cell.unit.content = "*"
+
+** ~--verbosity~, ~-v~ control
+
+- V=1: just show the table and nothing else
+- V=2: show current time, current period task and date
+  of table displayed and table
+
+** ~--time-gone~
+*** Use case
+
+--time-gone=yes
+--time-gone=no (default)
+
+
+if time-gone=yes && date & today.date
+- (date is read from input, today.date is from system)
+
+  then fill cells of time passed with ". " and
+  automatically turn =now= option to yes.
+
+Example (--verbosity=2):
+
+: Today    : 2024-11-15, 15:22:19
+: Daybox for 2024-11-15
+|     | :00             | :15             | :30             | :45             |
+|-----+-----------------+-----------------+-----------------+-----------------|
+|   8 | . . . . . . . . | . . . . . . . . | . . . . . . . . | . . . . . . . . |
+|   9 | . . . . . . . . | . . . . . . . . | . . . . . . . . | . . . . . . . . |
+|  10 | . . . . . . . . | . . . . . . . . | . . . . . . . . | . . . . . . . . |
+|  11 | . . . . . . . . | . . . . . . . . | . . . . . . . . | . . . . . . . . |
+|  12 | . . . . . . . . | . . . . . . . . | . . . . . . . . | . . . . . . . . |
+|  13 | . . . . . . . . | . . . . . . . . | . . . . . . . . | . . . . . . . . |
+|  14 | . . . . . . . . | . . . . . . . . | . . . . . . . . | . . . . . . . . |
+|  15 | . . . . . . . . | . . . .*        | Intervalos de c | --------------- |
+|  16 | --------------- | --------------- | --------------- | --------------- |
+|  17 | --------------- | --------------- | --------------- |                 |
+|  18 | Clase SSO       | --------------- | --------------- | --------------- |
+|  19 | --------------- | --------------- |                 |                 |
+| >20 | (2)             |                 |                 |                 |
+
+You can see that the asterisk is showing the current
+time (15:22).
+
+Note that the option of ~--time-gone~ works only when
+displaying a daybox for the current day.
+
+*** TODO pseudo
+**** ~unit_index~
+
+
+  if detail = hour
+    duration = 60/15 (= 4)
+  if detail = half
+    duration = 30/15 (=2)
+  if detail = quarter
+    duration = 30/15 (=1)
+
+| index | start      | end                           |
+|-------+------------+-------------------------------|
+|     0 | cell.start | cell.start + duration * index |
+|     1 | cell.start | cell.start + duration * index |
+|     2 | cell.start | cell.start + duration * index |
+|     3 | cell.start | cell.start + duration * index |
+|     4 | cell.start | cell.start + duration * index |
+|     5 | cell.start | cell.start + duration * index |
+|     6 | cell.start | cell.start + duration * index |
+|     7 | cell.start | cell.start + duration * index |
+|     8 | cell.start | cell.start + duration * index |
+|     9 | cell.start | cell.start + duration * index |
+|    10 | cell.start | cell.start + duration * index |
+|    11 | cell.start | cell.start + duration * index |
+|    12 | cell.start | cell.start + duration * index |
+|    13 | cell.start | cell.start + duration * index |
+|    14 | cell.start | cell.start + duration * index |
+|    15 | cell.start | cell.start + duration * index |
+
+**** ~unit_index~ examples for detail levels
+***** Let's say for ~detail=hour~ and hour = 10
+
+| index | start (hh:mm form) | end (hh:mm form) |
+|-------+--------------------+------------------|
+|     0 |              10:00 |            10:04 |
+|     1 |              10:04 |            10:08 |
+|     2 |              10:08 |            10:12 |
+|     3 |              10:12 |            10:16 |
+|     4 |              10:16 |            10:20 |
+|     5 |              10:20 |            10:24 |
+|     6 |              10:24 |            10:28 |
+|     7 |              10:28 |            10:32 |
+|     8 |              10:32 |            10:36 |
+|     9 |              10:36 |            10:40 |
+|    10 |              10:40 |            10:44 |
+|    11 |              10:44 |            10:48 |
+|    12 |              10:48 |            10:52 |
+|    13 |              10:52 |            10:56 |
+|    14 |              10:56 |            11:00 |
+
+***** Let's say for ~detail=half~ and hour = 10
+
+| index | start (hh:mm form) | end (hh:mm form) |
+|-------+--------------------+------------------|
+|     0 |              10:00 |            10:02 |
+|     1 |              10:02 |            10:04 |
+|     2 |              10:04 |            10:06 |
+|     3 |              10:06 |            10:08 |
+|     4 |              10:08 |            10:10 |
+|     5 |              10:10 |            10:12 |
+|     6 |              10:12 |            10:14 |
+|     7 |              10:14 |            10:16 |
+|     8 |              10:16 |            10:18 |
+|     9 |              10:18 |            10:20 |
+|    10 |              10:20 |            10:22 |
+|    11 |              10:22 |            10:24 |
+|    12 |              10:24 |            10:26 |
+|    13 |              10:26 |            10:28 |
+|    14 |              10:28 |            10:30 |
+
+***** Let's say for ~detail=half~ and hour = 10
+
+| index | start (hh:mm form) | end (hh:mm form) |
+|-------+--------------------+------------------|
+|     0 |              10:00 |            10:01 |
+|     1 |              10:01 |            10:02 |
+|     2 |              10:02 |            10:03 |
+|     3 |              10:03 |            10:04 |
+|     4 |              10:04 |            10:05 |
+|     5 |              10:05 |            10:06 |
+|     6 |              10:06 |            10:07 |
+|     7 |              10:07 |            10:08 |
+|     8 |              10:08 |            10:09 |
+|     9 |              10:09 |            10:10 |
+|    10 |              10:10 |            10:11 |
+|    11 |              10:11 |            10:12 |
+|    12 |              10:12 |            10:13 |
+|    13 |              10:13 |            10:14 |
+|    14 |              10:14 |            10:15 |
+
+However in the table the representation has to
+be in decimal form to make arithmetic operations
+with times.
+
+**** Pseudocode
+
+for each cell in cell_index:
+  for unit in unit_index
+
+    unit.start = cell.start
+    unit.end = cell.start + duration * index
+
+
+read --time-gone-character
+read --now-character
+
+if (--time-gone-character = --now-character ):
+  Error("Time gone character and 'Now' character can't be the same")
+  cancel everything
+
+if --time-gone=yes
+  show_now=yes # activates asterisk mechanism # not sure if being used anywhere else?
+  for each cell in cell.index:
+    n=0
+    # if cell period is gone
+    if now > cell.end:
+      cell.status = gone
+    # if cell period is the current
+    # only if cell is free
+    # if cell is start|busy, it will
+    # simply show the task title (or "-"'s if busy)
+    if now >= cell.start && now < cell.end && cell.style=free:
+       # if unit period is gone
+       if now > unit.end
+         # alternate between "." and " " for each unit
+         # to form a cell like "| . . . .*        | "
+         if n%2 = 0
+           cell.content = cell.content + "."
+         if n%2 = 1
+           cell.content = cell.content + " "
+         n++
+       # if unit period is the current
+       if now >=unit.start && now < unit.end:
+         cell.content = cell.content + "*"
+
+if cell.status = gone:
+  cell.content = ". . . . . . . ." # doesn't include padding
+
+
+cell.fill = 15 - cell.content.length # make sure cell content is 15 chars wide
+                                     # regarding of content value
+                                     # (can be zero)
+
+# add padding to each cell
+for each cell in cell_index
+  cell.content = "|" + " " + cell.content + cell.fill + " "
+
+read output.privacy.level = [private|public]
+if output.privacy.level = private:
+  output.style.hidden=yes:
+if output.privacy.level = public:
+  output.style.hidden=no:
+
+# if verbosity = 2
+if now >= cell.start && now < cell.end && cell.style = free:
+  now.message = "Currently: free"
+if now >= cell.start && now < cell.end && cell.style = start:
+  if output.style.hidden=yes:
+    now.message = "Currently: busy"
+  if output.style.hidden=no:
+    now.message = "Currently:" + cell.title(original title, not trimmed)
+if now >= cell.start && now < cell.end && cell.style = busy:
+  now.message = "Currently: still busy"
+
+if output.style.hidden=yes
+  if (cell.style=start | cell.style=busy):
+    cell.style = "busy"
+
+* TODO Develop v1.2
+
+Take as input whatever you need from ~v1.1~ to
+get a head start and implement the solutions for
+update ~v1.2~.
+
+** part 1: read org files
+** part 2: parse into cell_index
+** part 3: output cell_index
+** part 4: optional for ~--time-gone~
+
+* Raw
+:PROPERTIES:
+:CREATED:  [2024-11-18 Mon 17:32]
+:END:
+
+#+begin_src python :tangle ~/bin/python/timeblock_test/v1.2.py
+# daybox.py
+# Display orgmode SCHEDULED entries in timebox manner.
+# Author: Manuel Fuica Morales
+# - [2024-11-18 Mon 17:07]
+# version: 1.2
+# Different from 1.1:
+# 1) Can parse multiple orgmode files via --agenda-files agenda-files.txt
+# 2) Accepts both DEADLINE and SCHEDULED entries
+# 3) Accept --time-gone option
+# 3) Now --now option to visually show current time in output table
+
+import orgparse
+import argparse
+from datetime import datetime, timedelta, date
+import os
+
+# Read command line options using argparse
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Process scheduling information from org files.')
+    parser.add_argument('filename', type=str, nargs='?', help='The org file to be processed (can be omitted if --agenda-files is provided)')
+    parser.add_argument('--agenda-files', '-a', type=str, help='A text file containing a list of org files to be processed')
+    parser.add_argument('--column-width', '-c', type=int, default=15, help='Width of the columns in the output table')
+    parser.add_argument('--detail', '-d', type=str, choices=['hour', 'half', 'quarter'], default='half', help='Detail level for the schedule')
+    parser.add_argument('--start', '-s', type=int, default=7, help='Start hour for the schedule')
+    parser.add_argument('--end', '-e', type=int, default=21, help='End hour for the schedule')
+    parser.add_argument('--date', '-D', type=str, default='today', help='Specify the date to filter tasks: "today", "tomorrow", "yesterday", or "YYYY-MM-DD"')
+    parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose mode to display extra information')
+    parser.add_argument('-?', action='help', help='Print this help message and exit')
+    return parser.parse_args()
+
+# Function to read org files from agenda-files.txt
+def read_agenda_files(file_path):
+    org_files = []
+    if not os.path.isfile(file_path):
+        raise FileNotFoundError(f"The specified agenda file '{file_path}' does not exist.")
+
+    with open(file_path, 'r') as f:
+        for line in f:
+            line = line.strip()
+            # Ignore lines that start with ";" as comments
+            if line.startswith(';') or not line:
+                continue
+            # Add valid orgmode files to list
+            if os.path.isfile(line):
+                org_files.append(line)
+            else:
+                print(f"Warning: The file '{line}' listed in the agenda file does not exist.")
+
+    return org_files
+
+# Function to read tasks from an org file
+def read_org_file(filename, target_date):
+    tasks = []
+    org = orgparse.load(filename)
+    # Implement logic to extract SCHEDULED and DEADLINE entries based on target_date
+    # This is just a placeholder function for now
+    for node in org[1:]:
+        if node.scheduled or node.deadline:
+            tasks.append(node)
+    return tasks
+
+# Main function to tie everything together
+def main():
+    args = parse_arguments()
+    all_tasks = []
+
+    # Read from --agenda-files if provided
+    if args.agenda_files:
+        org_files = read_agenda_files(args.agenda_files)
+        for org_file in org_files:
+            all_tasks.extend(read_org_file(org_file, args.date))
+    elif args.filename:
+        all_tasks = read_org_file(args.filename, args.date)
+    else:
+        raise ValueError("You must provide either a filename or an --agenda-files option.")
+
+    # Print verbose output if enabled
+    if args.verbose:
+        target_date = parse_target_date(args.date)
+        print(f"Daybox for {target_date}")
+
+    cells = create_schedule_cells(args.start, args.end, args.detail, args.column_width)
+    cells, early_tasks, late_tasks = assign_tasks_to_cells(all_tasks, cells, args.start, args.end, args.column_width)
+    print_schedule_table(cells, args.detail, args.column_width, args.start, args.end, early_tasks, late_tasks)
+
+if __name__ == "__main__":
+    main()
+#+end_src
+
+#+RESULTS:
