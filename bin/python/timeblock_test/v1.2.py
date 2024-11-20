@@ -4,60 +4,101 @@
 # version: 1.2
 # Changes from 1.1:
 # 1) Parse multiple orgmode files via --agenda-files FILE
+#    - default agenda files location: ~/.doom.d/agenda-files.txt
 # 2) Accept both DEADLINE and SCHEDULED orgmode entries
-# 3) Accept --time-gone option
-# 3) Accept --now option to visually show current time in output table
+# 3) Enable --debug LEVEL option where default LEVEL is DEBUG
+# 4) Accept --time-gone option
+# 5) Accept --now option to visually show current time in output table
 
-import orgparse
+import logging
 import argparse
+import orgparse
+import os
 from datetime import datetime, timedelta, date
+import re
 
-# Read command line options using argparse
+# Function to parse command line arguments
 def parse_arguments():
-    parser = argparse.ArgumentParser(description='Process scheduling information from an org file.')
-    parser.add_argument('filename', type=str, help='The org file to be processed')
+    parser = argparse.ArgumentParser(description='Process scheduling information from org files.')
+    parser.add_argument('--agenda-files', type=str, nargs='?', const='~/.doom.d/agenda-files.txt', help='Path to agenda files list. If no file is provided, default agenda files are used.')
+    parser.add_argument('--file', type=str, help='The org file to be processed')
+    parser.add_argument('--debug', type=str, nargs='?', const='DEBUG', help='Set the logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL). Default is DEBUG.')
     parser.add_argument('--column-width', '-c', type=int, default=15, help='Width of the columns in the output table')
     parser.add_argument('--detail', '-d', type=str, choices=['hour', 'half', 'quarter'], default='half', help='Detail level for the schedule')
     parser.add_argument('--start', '-s', type=int, default=7, help='Start hour for the schedule')
     parser.add_argument('--end', '-e', type=int, default=21, help='End hour for the schedule')
     parser.add_argument('--date', '-D', type=str, default='today', help='Specify the date to filter tasks: "today", "tomorrow", "yesterday", or "YYYY-MM-DD"')
     parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose mode to display extra information')
-    parser.add_argument('-?', action='help', help='Print this help message and exit')
     return parser.parse_args()
 
-# Read the org file using orgparse and filter tasks based on the date argument
+# Function to configure logging level based on user input
+def configure_logging(level):
+    if level:
+        levels = {
+            'DEBUG': logging.DEBUG,
+            'INFO': logging.INFO,
+            'WARNING': logging.WARNING,
+            'ERROR': logging.ERROR,
+            'CRITICAL': logging.CRITICAL
+        }
+        logging_level = levels.get(level.upper(), logging.DEBUG)
+        logging_format = '%(asctime)s - %(levelname)s - %(message)s'
+        logging.basicConfig(level=logging_level, format=logging_format)
+    else:
+        logging.getLogger().setLevel(logging.CRITICAL)  # Disable logging if no --debug argument
+
+
+# Function to read a list of agenda files
+def read_agenda_files(file_path):
+    agenda_files = []
+    file_path = os.path.expanduser(file_path)  # Expand ~ to the user's home directory
+    try:
+        with open(file_path, 'r') as f:
+            for line in f:
+                agenda_file = line.strip()
+                if agenda_file and not agenda_file.startswith(';'):
+                    agenda_files.append(os.path.expanduser(agenda_file))
+                    logging.debug(f"File read: {agenda_file}")
+    except FileNotFoundError:
+        logging.error(f"Error: File {file_path} not found.")
+    return agenda_files
+
+# Function to read tasks from a specific org file
 def read_org_file(filename, date_filter):
+    logging.debug(f'Reading orgmode file: {filename}')
     tasks = []
-    orgfile = orgparse.load(filename)
-    target_date = parse_target_date(date_filter)
-
-    for node in orgfile[1:]:  # Skipping the root node
-        if node.scheduled:  # Use the scheduled attribute directly
-            title = node.heading
-            start_datetime = node.scheduled.start
-
-            # Filter tasks by the specified date
-            if start_datetime.date() == target_date:
-                end_datetime = node.scheduled.end if node.scheduled.end else (start_datetime + timedelta(hours=1))
-                tasks.append({
-                    'title': title,
-                    'start_date': start_datetime.date(),
-                    'start_time': start_datetime.hour + start_datetime.minute / 60.0,
-                    'end_time': end_datetime.hour + end_datetime.minute / 60.0
-                })
-        if node.deadline:  # Use the deadline attribute directly
-            title = node.heading
-            start_datetime = node.deadline.start
-
-            # Filter tasks by the specified date
-            if start_datetime.date() == target_date:
-                end_datetime = node.deadline.end if node.deadline.end else (start_datetime + timedelta(hours=1))
-                tasks.append({
-                    'title': "!" + title,
-                    'start_date': start_datetime.date(),
-                    'start_time': start_datetime.hour + start_datetime.minute / 60.0,
-                    'end_time': end_datetime.hour + end_datetime.minute / 60.0
-                })
+    try:
+        orgfile = orgparse.load(filename)
+        target_date = parse_target_date(date_filter)
+        for node in orgfile[1:]:  # Skipping the root node
+            if node.scheduled:  # Use the scheduled attribute directly
+                title = node.heading
+                scheduled_string = re.sub(r'\s\+\d+[ymwd]', '', str(node.scheduled.start))  # Remove any trailing +1y, +6m, etc.
+                start_datetime = datetime.strptime(scheduled_string, '%Y-%m-%d %H:%M:%S') if len(scheduled_string) > 10 else datetime.strptime(scheduled_string, '%Y-%m-%d')
+                if start_datetime.date() == target_date:
+                    end_datetime = node.scheduled.end if node.scheduled.end else (start_datetime + timedelta(hours=1))
+                    tasks.append({
+                        'title': title,
+                        'start_date': start_datetime.date(),
+                        'start_time': start_datetime.hour + start_datetime.minute / 60.0,
+                        'end_time': end_datetime.hour + end_datetime.minute / 60.0,
+                        'type': 'SCHEDULED'
+                    })
+            if node.deadline:  # Use the deadline attribute directly
+                title = node.heading
+                deadline_string = re.sub(r'\s-\d+[ymwd]', '', str(node.deadline.start))  # Remove any trailing -1y, -6m, etc.
+                start_datetime = datetime.strptime(deadline_string, '%Y-%m-%d %H:%M:%S') if len(deadline_string) > 10 else datetime.strptime(deadline_string, '%Y-%m-%d')
+                if start_datetime.date() == target_date:
+                    end_datetime = node.deadline.end if node.deadline.end else (start_datetime + timedelta(hours=1))
+                    tasks.append({
+                        'title': "!" + title,
+                        'start_date': start_datetime.date(),
+                        'start_time': start_datetime.hour + start_datetime.minute / 60.0,
+                        'end_time': end_datetime.hour + end_datetime.minute / 60.0,
+                        'type': 'DEADLINE'
+                    })
+    except FileNotFoundError:
+        logging.error(f"Error: File {filename} not found.")
     return tasks
 
 # Function to parse the date from the user input
@@ -212,16 +253,35 @@ def print_schedule_table(cells, detail, column_width, start_hour, end_hour, earl
 # Main function to tie everything together
 def main():
     args = parse_arguments()
+    configure_logging(args.debug)
+
+    logging.debug('Start of program')
+
+    all_tasks = []
+
+    # Read from --agenda-files if provided
+    if args.agenda_files:
+        agenda_files = read_agenda_files(args.agenda_files)
+        for agenda_file in agenda_files:
+            all_tasks.extend(read_org_file(agenda_file, args.date))
+    elif args.file:
+        all_tasks = read_org_file(args.file, args.date)
+    else:
+        logging.error("Error: You must provide either --agenda-files or --file option.")
+        return
 
     # Print verbose output if enabled
     if args.verbose:
         target_date = parse_target_date(args.date)
         print(f"Daybox for {target_date}")
 
-    tasks = read_org_file(args.filename, args.date)
     cells = create_schedule_cells(args.start, args.end, args.detail, args.column_width)
-    cells, early_tasks, late_tasks = assign_tasks_to_cells(tasks, cells, args.start, args.end, args.column_width)
+    cells, early_tasks, late_tasks = assign_tasks_to_cells(all_tasks, cells, args.start, args.end, args.column_width)
     print_schedule_table(cells, args.detail, args.column_width, args.start, args.end, early_tasks, late_tasks)
+
+    logging.debug('End of program')
+
 
 if __name__ == "__main__":
     main()
+
