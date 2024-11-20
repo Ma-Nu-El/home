@@ -23,7 +23,7 @@ def parse_arguments():
     parser.add_argument('--agenda-files', type=str, nargs='?', const='~/.doom.d/agenda-files.txt', help='Path to agenda files list. If no file is provided, default agenda files are used.')
     parser.add_argument('--file', type=str, help='The org file to be processed')
     parser.add_argument('--debug', type=str, nargs='?', const='DEBUG', help='Set the logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL). Default is DEBUG.')
-    parser.add_argument('--column-width', '-c', type=int, default=15, help='Width of the columns in the output table')
+    parser.add_argument('--column-width', '-c', type=int, default=17, help='Width of the columns in the output table')
     parser.add_argument('--detail', '-d', type=str, choices=['hour', 'half', 'quarter'], default='half', help='Detail level for the schedule')
     parser.add_argument('--start', '-s', type=int, default=7, help='Start hour for the schedule')
     parser.add_argument('--end', '-e', type=int, default=21, help='End hour for the schedule')
