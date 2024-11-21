@@ -262,7 +262,7 @@ def printAgenda():
     for line in lines: print(" "+line)
 
 
-agenda_files="~/agenda-files.txt"
+agenda_files="~/.doom.d/agenda-files.txt"
 
 agenda_files_path = os.path.expanduser(agenda_files)
 
