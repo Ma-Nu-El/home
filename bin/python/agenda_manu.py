@@ -208,43 +208,49 @@ deadlines = set()
 # events = []
 
 def readFile(agenda_files):
-
-    logging.debug(f"Agenda files file  : {agenda_files}")
-
-    with open(agenda_files, 'r') as file:
-
-        for line in file:
-            line = line.strip()
-            logging.debug(f"Line read  : {line}")
-
-            if not line.startswith(";"):
-
-                logging.debug(f"Line not ignored  : {line}")
+    logging.debug(f"Agenda files file: {agenda_files}")
+    try:
+        with open(agenda_files, 'r') as file:
+            for line in file:
+                line = line.strip()
+                if not line or line.startswith(";"):  # Skip comments and empty lines
+                    continue
                 full_path = os.path.expanduser(line)
-                agenda = orgparse.load(full_path)
-
-                for node in agenda:
-
-                    if hasattr(node, "datelist") and node.datelist:
-                        for date in node.datelist:
-                            d = date.start
-                            d = datetime.date(d.year, d.month, d.day)
-                            busydays[yearday(d)] += 1
-                    if hasattr(node, "rangelist") and node.rangelist:
-                        for date in node.rangelist:
-                            ds, de = date.start, date.end
-                            ds = datetime.date(ds.year, ds.month, ds.day)
-                            de = datetime.date(de.year, de.month, de.day)
-                            for i, d in enumerate(daterange(ds, de)):
+                if not os.path.isfile(full_path):
+                    logging.warning(f"Agenda file does not exist: {full_path}")
+                    continue
+                try:
+                    agenda = orgparse.load(full_path)
+                    for node in agenda:
+                        if hasattr(node, "datelist") and node.datelist:
+                            for date in node.datelist:
+                                d = date.start
+                                d = datetime.date(d.year, d.month, d.day)
                                 busydays[yearday(d)] += 1
-                    if hasattr(node, "scheduled") and node.scheduled:
-                        s = node.scheduled.start
-                        s = datetime.date(s.year, s.month, s.day)
-                        schedules.add(yearday(s))
-                    if hasattr(node, "deadline") and node.deadline:
-                        d = node.deadline.start
-                        d = datetime.date(d.year, d.month, d.day)
-                        deadlines.add(yearday(d))
+                        if hasattr(node, "rangelist") and node.rangelist:
+                            for date in node.rangelist:
+                                ds, de = date.start, date.end
+                                ds = datetime.date(ds.year, ds.month, ds.day)
+                                de = datetime.date(de.year, de.month, de.day)
+                                for d in daterange(ds, de):
+                                    busydays[yearday(d)] += 1
+                        if hasattr(node, "scheduled") and node.scheduled:
+                            s = node.scheduled.start
+                            s = datetime.date(s.year, s.month, s.day)
+                            schedules.add(yearday(s))
+                        if hasattr(node, "deadline") and node.deadline:
+                            d = node.deadline.start
+                            d = datetime.date(d.year, d.month, d.day)
+                            deadlines.add(yearday(d))
+                except Exception as e:
+                    logging.error(f"Failed to process agenda file {full_path}: {e}")
+    except FileNotFoundError:
+        logging.error(f"Agenda file list not found: {agenda_files}")
+        sys.exit(1)  # Stop only if the agenda list itself is missing.
+    except Exception as e:
+        logging.error(f"Unexpected error reading agenda files: {e}")
+        sys.exit(1)
+
 
 def printAgenda():
     month_per_row = 4
@@ -262,9 +268,12 @@ def printAgenda():
     for line in lines: print(" "+line)
 
 
-agenda_files="~/.doom.d/agenda-files.txt"
-
+agenda_files = "~/.doom.d/agenda-files.txt"
 agenda_files_path = os.path.expanduser(agenda_files)
+
+if not os.path.isfile(agenda_files_path):
+    logging.error(f"Agenda files path does not exist or is not a file: {agenda_files_path}")
+    sys.exit(1)
 
 readFile(agenda_files_path)
 printAgenda()
