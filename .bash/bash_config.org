@@ -492,9 +492,10 @@ now(){
 agenda(){
 	if [[ -z "$1"  ]]
 	then
-                "$HOME"/bin/python/agenda_manu.py --today | less --RAW-CONTROL-CHARS
+      "$HOME"/venv/python3.12.2/bin/python \
+      "$HOME"/bin/python/agenda_manu.py --today | less --RAW-CONTROL-CHARS
 	else
-                "$HOME"/bin/python/agenda_manu.py "$1" | less --RAW-CONTROL-CHARS
+      "$HOME"/bin/python/agenda_manu.py "$1" | less --RAW-CONTROL-CHARS
 	fi
 }
 #+end_src
