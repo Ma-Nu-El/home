@@ -34,7 +34,7 @@ import orgparse
 # Enter user information
 user_home="/Users/manuelfuica"
 agenda_file="/auxRoam/2024/calendar.org"
-current_year=2023
+current_year=2024
 # user_country="Chile"
 
 # Country holidays + Personal holidays
