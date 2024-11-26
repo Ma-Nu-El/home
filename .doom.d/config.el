@@ -467,6 +467,31 @@ Works if the point is anywhere within the subtree of the heading."
     (recenter window-line)                                      ;; Move cursor to same number of lines from top
     (other-window 1)))                                          ;; Return to the original window
 
+
+(defun my/copy-to-clipboard (start end)
+  "Copy the selected region or the entire buffer to the clipboard using a temporary file and an external script."
+  (interactive "r")
+  (let* ((is-region (use-region-p))                             ;; Check if region is active
+         (text (if is-region
+                   (buffer-substring-no-properties start end)   ;; Get region content
+                 (buffer-substring-no-properties (point-min) (point-max)))) ;; Get entire buffer content
+         (temp-file (make-temp-file "emacs-clipboard-"))
+         (script-path (expand-file-name "~/bin/copy_to_clipboard"))) ;; Adjust script path
+    (if (not (file-executable-p script-path))
+        (message "Error: Script not found or not executable: %s" script-path)
+      (progn
+        ;; Write text to temporary file
+        (with-temp-file temp-file
+          (insert text))
+        ;; Call the external script with the temporary file as argument
+        (call-process script-path nil nil nil temp-file)
+        ;; Delete the temporary file
+        (delete-file temp-file)
+        ;; Display success message
+        (message (if is-region
+                     "Region copied to clipboard!"
+                   "Buffer copied to clipboard!"))))))
+
 (map! :leader
   (:prefix-map ("k" . "custom key bindings")
 
@@ -482,6 +507,8 @@ Works if the point is anywhere within the subtree of the heading."
     (:prefix-map ("c" . "code")
      :desc "org-edit-src-block" "c" #'org-edit-src-code
     )
+
+    (:desc "my/copy-to-clipboard" "C" #'my/copy-to-clipboard)
 
     (:prefix-map ("o" . "orgmode")
       (:prefix-map ("p" . "Add property")
