@@ -491,6 +491,26 @@ Works if the point is anywhere within the subtree of the heading."
         (message (if is-region
                      "Region copied to clipboard!"
                    "Buffer copied to clipboard!"))))))
+(defun my/center-text ()
+  (interactive)
+  "Center text dynamically based on window width and CUSTOM_CLI_LINE_LENGTH."
+  (let* ((line-length (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55")))  ;; Get the desired line length
+         (total-width (window-width))  ;; Get the current window's width
+         (margin (/ (- total-width line-length) 2)))  ;; Calculate margin width
+    (setq left-margin-width (max margin 0))  ;; Ensure margins aren't negative
+    (setq right-margin-width (max margin 0))
+    (set-window-buffer (selected-window) (current-buffer))))  ;; Apply changes
+
+(defun my/flush-left-text ()
+  (interactive)
+  "Flush text to the left by resetting margins and ensuring wrapping rules are applied."
+  (setq left-margin-width 0)  ;; Reset left margin
+  (setq right-margin-width 0) ;; Reset right margin
+  (let ((line-length (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55"))))
+    (setq-default display-fill-column-indicator-column line-length)
+    (setq-default fill-column line-length)
+  (global-display-fill-column-indicator-mode))
+  (set-window-buffer (selected-window) (current-buffer)))  ;; Apply changes
 
 (map! :leader
   (:prefix-map ("k" . "custom key bindings")
@@ -542,6 +562,8 @@ Works if the point is anywhere within the subtree of the heading."
     )
     (:prefix-map ("w" . "windows")
       :desc "my/sync-line-in-windows-simple" "s" #'my/sync-line-in-windows-simple
+      :desc "my/center-text" "c" #'my/center-text
+      :desc "my/flush-left-text" "l" #'my/flush-left-text
     )
   )
 )
