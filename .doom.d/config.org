@@ -1618,13 +1618,21 @@ more careful.
                    "Buffer copied to clipboard!"))))))
 (defun my/center-text ()
   (interactive)
-  "Center text dynamically based on window width and CUSTOM_CLI_LINE_LENGTH."
-  (let* ((line-length (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55")))  ;; Get the desired line length
-         (total-width (window-width))  ;; Get the current window's width
-         (margin (/ (- total-width line-length) 2)))  ;; Calculate margin width
-    (setq left-margin-width (max margin 0))  ;; Ensure margins aren't negative
+  (let* ((line-length (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55")))
+          (margin (/ (- (window-width) line-length 4 ) 2 ))
+        )
+    (setq left-margin-width (max margin 0))
     (setq right-margin-width (max margin 0))
-    (set-window-buffer (selected-window) (current-buffer))))  ;; Apply changes
+  )
+  (set-window-buffer (selected-window) (current-buffer))
+  ;; (setq centered t)
+)
+
+;; (defun my/center-text-p ()
+;;   (if (centered (my/center-text)))
+;; )
+
+;; (add-hook 'window-configuration-change-hook #'my/center-text-p)
 
 (defun my/flush-left-text ()
   (interactive)
@@ -1635,8 +1643,14 @@ more careful.
     (setq-default display-fill-column-indicator-column line-length)
     (setq-default fill-column line-length)
   (global-display-fill-column-indicator-mode))
-  (set-window-buffer (selected-window) (current-buffer)))  ;; Apply changes
+  (set-window-buffer (selected-window) (current-buffer))
+)
 #+end_src
+
+- [[https://stackoverflow.com/questions/24955253/centre-emacs-buffer-within-window][Centre Emacs buffer within window - Stack Overflow]]
+- [[https://emacs.stackexchange.com/questions/76254/center-emacs-window-in-the-middle][centering - Center emacs window in the middle - Emacs Stack Exchange]]
+- [[https://superuser.com/questions/307751/setting-default-emacs-window-margins/645114#645114][elisp - Setting default Emacs window margins - Super User]]
+
 
 * keyboard shortcuts
 :PROPERTIES:

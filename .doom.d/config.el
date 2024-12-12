@@ -493,13 +493,21 @@ Works if the point is anywhere within the subtree of the heading."
                    "Buffer copied to clipboard!"))))))
 (defun my/center-text ()
   (interactive)
-  "Center text dynamically based on window width and CUSTOM_CLI_LINE_LENGTH."
-  (let* ((line-length (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55")))  ;; Get the desired line length
-         (total-width (window-width))  ;; Get the current window's width
-         (margin (/ (- total-width line-length) 2)))  ;; Calculate margin width
-    (setq left-margin-width (max margin 0))  ;; Ensure margins aren't negative
+  (let* ((line-length (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55")))
+          (margin (/ (- (window-width) line-length 4 ) 2 ))
+        )
+    (setq left-margin-width (max margin 0))
     (setq right-margin-width (max margin 0))
-    (set-window-buffer (selected-window) (current-buffer))))  ;; Apply changes
+  )
+  (set-window-buffer (selected-window) (current-buffer))
+  ;; (setq centered t)
+)
+
+;; (defun my/center-text-p ()
+;;   (if (centered (my/center-text)))
+;; )
+
+;; (add-hook 'window-configuration-change-hook #'my/center-text-p)
 
 (defun my/flush-left-text ()
   (interactive)
@@ -510,7 +518,8 @@ Works if the point is anywhere within the subtree of the heading."
     (setq-default display-fill-column-indicator-column line-length)
     (setq-default fill-column line-length)
   (global-display-fill-column-indicator-mode))
-  (set-window-buffer (selected-window) (current-buffer)))  ;; Apply changes
+  (set-window-buffer (selected-window) (current-buffer))
+)
 
 (map! :leader
   (:prefix-map ("k" . "custom key bindings")
