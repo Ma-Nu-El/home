@@ -497,7 +497,7 @@ Works if the point is anywhere within the subtree of the heading."
           (margin (/ (- (window-width) line-length 4 ) 2 ))
         )
     (setq left-margin-width (max margin 0))
-    (setq right-margin-width (max margin 0))
+    (setq right-margin-width (max (/ margin 2) 0))
   )
   (set-window-buffer (selected-window) (current-buffer))
   ;; (setq centered t)
