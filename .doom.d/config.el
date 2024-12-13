@@ -467,7 +467,6 @@ Works if the point is anywhere within the subtree of the heading."
     (recenter window-line)                                      ;; Move cursor to same number of lines from top
     (other-window 1)))                                          ;; Return to the original window
 
-
 (defun my/copy-to-clipboard (start end)
   "Copy the selected region or the entire buffer to the clipboard using a temporary file and an external script."
   (interactive "r")
@@ -491,35 +490,57 @@ Works if the point is anywhere within the subtree of the heading."
         (message (if is-region
                      "Region copied to clipboard!"
                    "Buffer copied to clipboard!"))))))
+
+(defconst my/custom-cli-line-length
+  (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55"))
+  "The default line length: read from system or default value (55).")
+
 (defun my/center-text ()
+  "Center window text."
   (interactive)
-  (let* ((line-length (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55")))
-          (margin (/ (- (window-width) line-length 4 ) 2 ))
-        )
+  (let* ((line-length my/custom-cli-line-length)
+         (margin (max (/ (- (window-width) line-length 4) 2) 0)))
     (setq left-margin-width (max margin 0))
     (setq right-margin-width (max (/ margin 2) 0))
-  )
-  (set-window-buffer (selected-window) (current-buffer))
-  ;; (setq centered t)
-)
-
-;; (defun my/center-text-p ()
-;;   (if (centered (my/center-text)))
-;; )
-
-;; (add-hook 'window-configuration-change-hook #'my/center-text-p)
+    (set-window-buffer (selected-window) (current-buffer))))
 
 (defun my/flush-left-text ()
+  "Flush text to the left by resetting margins. Also ensuring wrapping rules are applied."
   (interactive)
-  "Flush text to the left by resetting margins and ensuring wrapping rules are applied."
   (setq left-margin-width 0)  ;; Reset left margin
   (setq right-margin-width 0) ;; Reset right margin
-  (let ((line-length (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55"))))
+  (let ((line-length my/custom-cli-line-length))
     (setq-default display-fill-column-indicator-column line-length)
-    (setq-default fill-column line-length)
-  (global-display-fill-column-indicator-mode))
-  (set-window-buffer (selected-window) (current-buffer))
-)
+    (setq-default fill-column line-length))
+  (global-display-fill-column-indicator-mode)
+  (set-window-buffer (selected-window) (current-buffer)))
+
+(defvar my/center-text-enabled nil
+  "Tracks whether dynamic centering is enabled.")
+
+(defun my/center-text-p ()
+  "Reapply centering if globally enabled."
+  (when my/center-text-enabled
+    (dolist (window (window-list)) ;; Iterate over all windows
+      (with-selected-window window
+        (my/center-text)))))
+
+(defun my/enable-auto-center-text ()
+  "Enable auto-centering dynamically across all windows."
+  (interactive)
+  (setq my/center-text-enabled t)
+  (add-hook 'window-configuration-change-hook #'my/center-text-p)
+  ;; (my/center-text-p) ;; Initial application
+  )
+
+(defun my/disable-auto-center-text ()
+  "Disable auto-centering dynamically across all windows."
+  (interactive)
+  (setq my/center-text-enabled nil)
+  (remove-hook 'window-configuration-change-hook #'my/center-text-p)
+  (dolist (window (window-list)) ;; Reset margins for all windows
+    (with-selected-window window
+      (my/flush-left-text))))
 
 (map! :leader
   (:prefix-map ("k" . "custom key bindings")
@@ -573,6 +594,9 @@ Works if the point is anywhere within the subtree of the heading."
       :desc "my/sync-line-in-windows-simple" "s" #'my/sync-line-in-windows-simple
       :desc "my/center-text" "c" #'my/center-text
       :desc "my/flush-left-text" "l" #'my/flush-left-text
+      :desc "my/enable-auto-center-text" "C" #'my/enable-auto-center-text
+      :desc "my/disable-auto-center-text" "L" #'my/disable-auto-center-text
+
     )
   )
 )
