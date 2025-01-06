@@ -530,7 +530,7 @@ Works if the point is anywhere within the subtree of the heading."
   (interactive)
   (setq my/center-text-enabled t)
   (add-hook 'window-configuration-change-hook #'my/center-text-p)
-  ;; (my/center-text-p) ;; Initial application
+  (my/center-text-p) ;; Initial application
   )
 
 (defun my/disable-auto-center-text ()
