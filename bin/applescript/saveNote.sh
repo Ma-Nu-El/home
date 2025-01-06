@@ -90,6 +90,17 @@ if [[ -f "$OUTPUT" ]]; then
 fi
 echo "Removed intermediate HTML file: $OUTPUT"
 
+# Clean the Org file by removing Zero-Width Space characters
+sed -i.bak $'s/\xE2\x80\x8B//g' "$ORG_OUTPUT" && rm "${ORG_OUTPUT}.bak"
+
+# Verify that the zero-width space character was removed
+if grep -q $'\xE2\x80\x8B' "$ORG_OUTPUT"; then
+    echo "Error: Failed to remove Zero-Width Space characters from $ORG_OUTPUT."
+    exit 1
+fi
+
+echo "Cleaned Zero-Width Space characters from $ORG_OUTPUT"
+
 # Move the Org file to the capture directory
 mv "$ORG_OUTPUT" "$CAPTURE_DIR/"
 if [[ ! -f "$CAPTURE_DIR/$ORG_OUTPUT" ]]; then
