@@ -77,7 +77,7 @@ ocaml             ; an objective camel
 perl              ; write code no one else can comprehend
 (raku +lsp)
 
-;; (php +lsp)               ; perl's insecure younger brother
+(php +lsp)               ; perl's insecure younger brother
 
 plantuml          ; diagrams for confusing people more
 

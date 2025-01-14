@@ -300,9 +300,8 @@ perl              ; write code no one else can comprehend
 (raku +lsp)
 #+end_src
 
-
 #+begin_src elisp
-;; (php +lsp)               ; perl's insecure younger brother
+(php +lsp)               ; perl's insecure younger brother
 #+end_src
 
 #+begin_src elisp
