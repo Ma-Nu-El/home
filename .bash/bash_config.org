@@ -136,7 +136,7 @@ alias install_tmux_plugins='git clone https://github.com/tmux-plugins/tpm ~/.tmu
 # quick editor
 
 alias v='vim'
-alias ee='clear && cd ~ && emacs -nw' # same but from home directory
+alias ee='clear && cd ~ && emacs -nw'
 alias ed='emacs --daemon' # creates default emacs server named 'server'
 alias ec='emacsclient -t' # attach to the default emacs server
 alias edn='emacs-daemon-new' # creates a custom-named emacs server
