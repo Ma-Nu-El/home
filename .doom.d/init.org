@@ -40,8 +40,8 @@ NOTE Move your cursor over a module's name (or its flags) and press 'K' (or
      'C-c g k' for non-vim users) to view its documentation. This works on
      flags as well (those symbols that start with a plus).
 
-     Alternatively, press 'gd' (or 'C-c g d') on a module to browse its
-     directory (for easy access to its source code).
+Alternatively, press 'gd' (or 'C-c g d') on a module to browse its
+directory (for easy access to its source code).
 
 * Begin Doom!
 :PROPERTIES:
@@ -296,7 +296,7 @@ ocaml             ; an objective camel
 #+end_src
 
 #+begin_src elisp
-perl              ; write code no one else can comprehend
+;; perl              ; write code no one else can comprehend
 (raku +lsp)
 #+end_src
 
@@ -321,7 +321,7 @@ plantuml          ; diagrams for confusing people more
 ;;scala             ; java, but good
 ;;scheme            ; a fully conniving family of lisps
 #+begin_src elisp
-sh                ; she sells {ba,z,fi}sh shells on the C xor
+(sh +lsp)                ; she sells {ba,z,fi}sh shells on the C xor
 #+end_src
 ;;sml
 ;;solidity          ; do you need a blockchain? No.
@@ -329,8 +329,8 @@ sh                ; she sells {ba,z,fi}sh shells on the C xor
 ;;terra             ; Earth and Moon in alignment for performance.
 
 #+begin_src elisp
-web               ; the tubes
-yaml              ; JSON, but readable
+(web +lsp)               ; the tubes
+(yaml +lsp)              ; JSON, but readable
 #+end_src
 
 ** email

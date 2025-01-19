@@ -58,6 +58,7 @@
   - [[#cnld-disable-heading-numbering-during-export][CNLD disable heading numbering during export]]
   - [[#cnld-prevent-invisible-edits-commented-out][CNLD prevent invisible edits [Commented out]]]
 - [[#end-org-section][end org section]]
+- [[#lsp-section][lsp section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
 - [[#personal-keybindings][personal keybindings]]
@@ -1348,6 +1349,16 @@ more careful.
 #+begin_src elisp
 )
 ;; END AFTER ORG
+#+end_src
+
+* lsp section
+:PROPERTIES:
+:CREATED:  [2025-01-15 Wed 12:09]
+:END:
+
+#+begin_src elisp
+(after! lsp-mode
+  (setq lsp-clients-php-server-command '("intelephense" "--stdio")))
 #+end_src
 
 * flyspell-mode t

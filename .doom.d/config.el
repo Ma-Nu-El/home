@@ -396,6 +396,9 @@ Works if the point is anywhere within the subtree of the heading."
 )
 ;; END AFTER ORG
 
+(after! lsp-mode
+  (setq lsp-clients-php-server-command '("intelephense" "--stdio")))
+
 (define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
 (global-set-key (kbd "\C-cr") 'ispell-region)
 
