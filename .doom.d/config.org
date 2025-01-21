@@ -1520,30 +1520,39 @@ more careful.
 - https://github.com/hlissner/doom-emacs/issues/4369
 
 #+begin_src elisp
-(global-git-gutter-mode +1)
+;; (global-git-gutter-mode +1)
 #+end_src
 
 * ~org-ai~
 :PROPERTIES:
 :CREATED:  [2023-11-15 Wed 22:37]
+:ID:       41b37756-f1b8-45a1-bd54-eee41ed5fa6c
 :END:
 
 
-#+begin_src elisp :tangle no
-(setq org-ai-openai-api-token "")
+#+begin_src elisp
+;; (setq org-ai-openai-api-token "") ; Ensure this is valid and set before the package
+;; Ensure auth-source is enabled
+(setq auth-sources '("~/.authinfo.gpg"))
+
+;; Disable direct API token setting (optional if you're using auth-source)
+(setq org-ai-use-auth-source t)
 
 (use-package! org-ai
   :ensure t
-  :defer t
   :commands (org-ai-mode
-             org-ai-global-mode);;
+             org-ai-global-mode)
   :init
   (add-hook 'org-mode-hook #'org-ai-mode) ; enable org-ai in org-mode
   (org-ai-global-mode) ; installs global keybindings on C-c M-a
   :config
-  (setq org-ai-default-chat-model "gpt-3.5-turbo") ; if you are on the free gpt-3.5-turbo:
-  ;; (setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
-  (org-ai-install-yasnippets)) ; if you are using yasnippet and want ai snippets
+  (setq org-ai-auto-fill t)
+  (setq org-ai-jump-to-end-of-block nil)
+  ;; (setq org-ai-default-chat-model "gpt-3.5-turbo")
+  (setq org-ai-default-chat-model "gpt-4o-mini")
+  ;; (setq org-ai-default-chat-model "gpt-4")
+  (org-ai-install-yasnippets)) ; if you are using yasnippet and want `ai` snippets
+
 #+end_src
 
 * fix =zo= not working in macOS
@@ -1762,9 +1771,16 @@ in windows instead of buffer based?
          :desc "org-mark-readonly" "e" #'org-mark-readonly
          :desc "org-remove-readonly" "d" #'org-remove-readonly
       )
-      :desc "my/org-archive-done-tasks" "A" #'my/org-archive-done-tasks
+
+      :desc "my/org-archive-done-tasks" "c" #'my/org-archive-done-tasks
+
       (:prefix-map ("a" . "agenda")
          :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
+      )
+      (:prefix-map ("a" . "org-ai")
+         ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
+         ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
+         ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
       )
     )
     (:prefix-map ("w" . "windows")

@@ -74,7 +74,7 @@ markdown          ; writing docs for people to ignore
 ocaml             ; an objective camel
 (org +gnuplot +pomodoro) ; organize your plain life in plain text
 
-perl              ; write code no one else can comprehend
+;; perl              ; write code no one else can comprehend
 (raku +lsp)
 
 (php +lsp)               ; perl's insecure younger brother
@@ -83,10 +83,10 @@ plantuml          ; diagrams for confusing people more
 
 (python +lsp)            ; beautiful is better than ugly
 
-sh                ; she sells {ba,z,fi}sh shells on the C xor
+(sh +lsp)                ; she sells {ba,z,fi}sh shells on the C xor
 
-web               ; the tubes
-yaml              ; JSON, but readable
+(web +lsp)               ; the tubes
+(yaml +lsp)              ; JSON, but readable
 
 :email
 (mu4e +gmail +org)

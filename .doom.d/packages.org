@@ -192,12 +192,15 @@ Contained in [[https://github.com/emacsmirror/org-contrib][org-contrib]].
 #+end_src
 
 * org-ai
+:PROPERTIES:
+:ID:       5a975bd3-e2bc-444c-ae9b-fb2d50e45402
+:END:
 # - [2023-11-15 Wed 22:33]
 - [[https://github.com/rksm/org-ai/issues/50][doom-emacs configuration · Issue #50 · rksm/org-ai · GitHub]]
 
 
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (package! org-ai
   :recipe (:host github
            :repo "rksm/org-ai"

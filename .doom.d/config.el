@@ -430,7 +430,29 @@ Works if the point is anywhere within the subtree of the heading."
   (setq-default fill-column line-length)
   (global-display-fill-column-indicator-mode))
 
-(global-git-gutter-mode +1)
+;; (global-git-gutter-mode +1)
+
+;; (setq org-ai-openai-api-token "") ; Ensure this is valid and set before the package
+;; Ensure auth-source is enabled
+(setq auth-sources '("~/.authinfo.gpg"))
+
+;; Disable direct API token setting (optional if you're using auth-source)
+(setq org-ai-use-auth-source t)
+
+(use-package! org-ai
+  :ensure t
+  :commands (org-ai-mode
+             org-ai-global-mode)
+  :init
+  (add-hook 'org-mode-hook #'org-ai-mode) ; enable org-ai in org-mode
+  (org-ai-global-mode) ; installs global keybindings on C-c M-a
+  :config
+  (setq org-ai-auto-fill t)
+  (setq org-ai-jump-to-end-of-block nil)
+  ;; (setq org-ai-default-chat-model "gpt-3.5-turbo")
+  (setq org-ai-default-chat-model "gpt-4o-mini")
+  ;; (setq org-ai-default-chat-model "gpt-4")
+  (org-ai-install-yasnippets)) ; if you are using yasnippet and want `ai` snippets
 
 (after! org (setq org-fold-core-style 'overlays) )
 
@@ -588,9 +610,16 @@ Works if the point is anywhere within the subtree of the heading."
          :desc "org-mark-readonly" "e" #'org-mark-readonly
          :desc "org-remove-readonly" "d" #'org-remove-readonly
       )
-      :desc "my/org-archive-done-tasks" "A" #'my/org-archive-done-tasks
+
+      :desc "my/org-archive-done-tasks" "c" #'my/org-archive-done-tasks
+
       (:prefix-map ("a" . "agenda")
          :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
+      )
+      (:prefix-map ("a" . "org-ai")
+         ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
+         ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
+         ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
       )
     )
     (:prefix-map ("w" . "windows")

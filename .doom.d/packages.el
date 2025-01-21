@@ -16,6 +16,11 @@
            )
 )
 
+(package! org-ai
+  :recipe (:host github
+           :repo "rksm/org-ai"
+           :files ("*.el" "README.md" "snippets")))
+
 (package! org-web-tools
   :recipe (:host github
            :repo "alphapapa/org-web-tools"
