@@ -16,4 +16,5 @@ export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 export MY_DRIVE="$HOME"/FilenSync
 export PYTHONSTARTUP="$HOME/.config/pythonenv/.pythonrc.py"
 export CUSTOM_CLI_LINE_LENGTH=55
+export HOMEBREW_NO_AUTO_UPDATE=1
 set -o vi
