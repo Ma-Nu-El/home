@@ -72,9 +72,9 @@ ledger            ; an accounting system in Emacs
 markdown          ; writing docs for people to ignore
 
 ocaml             ; an objective camel
-(org +gnuplot +pomodoro) ; organize your plain life in plain text
+(org +gnuplot +pomodoro +pandoc) ; organize your plain life in plain text
 
-;; perl              ; write code no one else can comprehend
+;; ;; perl              ; write code no one else can comprehend [DEPRECATED]
 (raku +lsp)
 
 (php +lsp)               ; perl's insecure younger brother
@@ -89,7 +89,7 @@ plantuml          ; diagrams for confusing people more
 (yaml +lsp)              ; JSON, but readable
 
 :email
-(mu4e +gmail +org)
+;; (mu4e +org)
 
 :app
 calendar

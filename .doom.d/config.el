@@ -4,23 +4,6 @@
       ;; user-mail-address "m.fuica01@ufromail.cl"
       )
 
-(setq mu4e-maildir "~/Maildir")
-(setq mu4e-attachment-dir (expand-file-name "~/myDrive/mailAttachments"))
-
-(setq message-send-mail-function 'smtpmail-send-it
-      starttls-use-gnutls t
-      smtpmail-starttls-credentials
-      '(("smtp.gmail.com" 587 nil nil))
-      smtpmail-auth-credentials
-      (expand-file-name "~/.authinfo.gpg")
-      smtpmail-default-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587
-      smtpmail-debug-info t
-      ;; auth-sources '(password-store)
-      auth-source-debug t
-      )
-
 (setq doom-theme 'doom-gruvbox)
 
 (setq org-directory "~/FilenSync/org/")

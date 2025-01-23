@@ -7,8 +7,6 @@
 - [[#shebang][shebang]]
 - [[#user-full-name][user-full-name]]
 - [[#mu4e][mu4e]]
-  - [[#standard-config][standard config]]
-  - [[#after-standard-config][after standard config]]
 - [[#font][font]]
 - [[#theme][theme]]
 - [[#org-directory][org directory]]
@@ -114,58 +112,68 @@
 ;; https://emacs.stackexchange.com/questions/46257/sending-email-fails-with-process-smtpmail-not-running
 
 * mu4e
-** standard config
 :PROPERTIES:
 :ID:       53c3636b-214b-43e4-967b-e8af4a806c45
 :END:
 
-#+begin_src elisp
-(setq mu4e-maildir "~/Maildir")
-(setq mu4e-attachment-dir (expand-file-name "~/myDrive/mailAttachments"))
+
+# #+header: :tangle ~/.mbsyncrc
+#+header: :tangle no
+#+begin_src org
+# Tangled from ~/.doom.d/config.org
+# - [2025-01-22 Wed 16:59]
+
+IMAPAccount protonmail
+Host 127.0.0.1
+Port 1143
+User USER
+Pass PASS
+TLSType NONE
+AuthMechs LOGIN
+
+IMAPStore protonmail-remote
+Account protonmail
+
+MaildirStore protonmail-local
+Path ~/Maildir/
+Inbox ~/Maildir/INBOX
+SubFolders Verbatim
+
+Channel protonmail
+Far :protonmail-remote:
+Near :protonmail-local:
+Patterns *
+Create Near
+SyncState *
 #+end_src
 
-;; Details for mu4e-attachement-dir configuration:
-;; https://github.com/hlissner/doom-emacs/issues/3294
+The following fails because there is a problem
+with mu4e (hombrew) and intel macos.
+- [[https://github.com/djcb/mu/issues/2539][[mu4e bug] (void-function defvar-1) · Issue #2539 · djcb/mu]]
 
-;; https://gist.github.com/areina/3879626
 
-#+begin_src elisp
+#+begin_src elisp :tangle no
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
+(require 'mu4e)
+
+(setq mu4e-maildir "~/Maildir")
+(setq mu4e-attachment-dir (expand-file-name "~/Maildir/mailAttachments"))
+
 (setq message-send-mail-function 'smtpmail-send-it
       starttls-use-gnutls t
-      smtpmail-starttls-credentials
-      '(("smtp.gmail.com" 587 nil nil))
-      smtpmail-auth-credentials
-      (expand-file-name "~/.authinfo.gpg")
-      smtpmail-default-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587
+      smtpmail-starttls-credentials '(("127.0.0.1" 1025 nil nil))
+      smtpmail-auth-credentials (expand-file-name "~/.authinfo.gpg")
+      smtpmail-default-smtp-server "127.0.0.1"
+      smtpmail-smtp-server "127.0.0.1"
+      smtpmail-smtp-service 1025
       smtpmail-debug-info t
-      ;; auth-sources '(password-store)
-      auth-source-debug t
-      )
+      auth-source-debug t)
 #+end_src
 
-** after standard config :crypt:
-:PROPERTIES:
-:ID:       1ee20f94-c54e-4597-9a06-d3b32ecd1b32
-:END:
+Details for mu4e-attachement-dir configuration:
+https://github.com/hlissner/doom-emacs/issues/3294
 
------BEGIN PGP MESSAGE-----
-
-jA0ECQMC3MG0U+DW6sD/0ukBLNhXmPMl96VRjoOoDHZVLB1Tg7ox5eUbt2GLVVsx
-cBhR56uJe0NsNVvGS8gZh/kG9N21jNVJHf8fNIsQM4Vf48RqK6o8XbWwLPh47+k7
-tLu7iRPjZnp985qpxF0KVMIVrOUIVPtWT8wxHSLLPh5/0tE5o1E7qeteKF2VMDgW
-OvWJLLY/ANeAx/Q6ECJJ+HmwZQrJiIzxqrsYf6hJ8W+Sqzo2xgafsF7qXVG7QoEV
-QZ0s2+D9lRd8/7tmaBUpusfHcp5KbAAaRnFwAqpv04/RRDjcAAHXmL5ZS/VUk4Hw
-i24m28RLVpiMq73ibBs0A9vXlmr1emOppbLTG+MMRpIgwK6akn9hWhX42s+swMfu
-dpXEwEDXsaua41XZe7+SOa0SxaEL7eQfdawq/iX4Ej5i6vO7CD/lWFZ/R6EjiYCQ
-XShHdMxgiwp1meGu/JlTbPNfjY9H/pxbLbnFWjmoTrzGrcJ6HP2bAl9dwbejRPow
-vBfoPGFUW+Ma5MTvUE7ZBd79fxFqFw2s2hK+gV/3/pijuXqdlvfAfr8cD/AwwWkU
-9//kQjv8v++AyC9lO6w9iaMmp38vWu5NDrcnXfhAX9dRDdxhXHBWgdf7bwqtn8D8
-t9yibjiPj6BVogXmXPESp5ux2Zt1+p2v7KL1ymeCDWLl82QVDpn3pWEndKUoutQn
-rhL7T1r4kXZ6NC4iFR56ROMPLzA=
-=2AAL
------END PGP MESSAGE-----
+https://gist.github.com/areina/3879626
 
 * font
 :PROPERTIES:
@@ -594,6 +602,7 @@ See also:
 #+end_src
 
 ** mu4e store links
+
 But when enabling this, it overrides the other org-store-link* protocols.
 Have to enable, compile and restart emacs when wanting to use, and disable
 compile and restart emacs when wanting to store links from anywhere else.

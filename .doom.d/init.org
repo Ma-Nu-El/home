@@ -292,11 +292,11 @@ markdown          ; writing docs for people to ignore
 ;;nix               ; I hereby declare "nix geht mehr!"
 #+begin_src elisp
 ocaml             ; an objective camel
-(org +gnuplot +pomodoro) ; organize your plain life in plain text
+(org +gnuplot +pomodoro +pandoc) ; organize your plain life in plain text
 #+end_src
 
 #+begin_src elisp
-;; perl              ; write code no one else can comprehend
+;; ;; perl              ; write code no one else can comprehend [DEPRECATED]
 (raku +lsp)
 #+end_src
 
@@ -339,7 +339,7 @@ plantuml          ; diagrams for confusing people more
 :END:
 #+begin_src elisp
 :email
-(mu4e +gmail +org)
+;; (mu4e +org)
 #+end_src
 ;;notmuch
 ;;(wanderlust +gmail)
