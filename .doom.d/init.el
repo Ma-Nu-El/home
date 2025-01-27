@@ -31,6 +31,8 @@ file-templates    ; auto-snippets for empty files
 fold              ; (nigh) universal code folding
 snippets          ; my elves. They type so I don't have to
 
+multiple-cursors  ; editing in many places at once
+
 :emacs
 dired             ; making dired pretty [functional]
 electric          ; smarter, keyword-based electric-indent
