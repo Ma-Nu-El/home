@@ -1728,6 +1728,7 @@ more careful.
 #+begin_src elisp
 (defun my/show-region-bytes (&rest _args)
   "Show the size in bytes of the current region in the echo area."
+  (interactive)
   (if (use-region-p)
       (message "Region is %d bytes"
                (string-bytes (buffer-substring (region-beginning) (region-end))))
@@ -1819,7 +1820,6 @@ more careful.
 - [2023-11-24 Fri 17:09]
 - [[https://github.com/doomemacs/doomemacs/blob/master/modules/lang/data/config.el][doomemacs/modules/lang/data/config.el at master · doomemacs/doomemacs · GitHub]]
 - [[https://emacs.stackexchange.com/questions/71553/in-huge-csv-files-how-can-i-easily-find-out-in-which-csv-column-the-cursor-is][minor mode - In huge CSV files how can I easily find out in which CSV column the cursor is? - Emacs Stack Exchange]]
-
 
 ** csv-mode
 #+begin_src elisp

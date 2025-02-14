@@ -96,7 +96,7 @@ ophints           ; highlight the region an operation acts on
 (popup +defaults)   ; tame sudden yet inevitable temporary windows
 vi-tilde-fringe   ; fringe tildes to mark beyond EOB
 (window-select +numbers)     ; visually switch windows
-;; (treemacs +lsp)          ; a project drawer, like neotree but cooler
+(treemacs +lsp)          ; a project drawer, like neotree but cooler
 workspaces        ; tab emulation, persistence & separate workspaces
 #+end_src
 

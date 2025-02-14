@@ -552,6 +552,7 @@ Works if the point is anywhere within the subtree of the heading."
 
 (defun my/show-region-bytes (&rest _args)
   "Show the size in bytes of the current region in the echo area."
+  (interactive)
   (if (use-region-p)
       (message "Region is %d bytes"
                (string-bytes (buffer-substring (region-beginning) (region-end))))
