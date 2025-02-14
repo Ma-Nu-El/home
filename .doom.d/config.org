@@ -71,8 +71,16 @@
 - [[#org-ai][~org-ai~]]
 - [[#fix-zo-not-working-in-macos][fix =zo= not working in macOS]]
 - [[#orgmode-readonly-custom-functions][orgmode readonly custom functions]]
+- [[#custom-variables][custom variables]]
+  - [[#mycustom-cli-line-length][my/custom-cli-line-length]]
 - [[#custom-functions][custom functions]]
+  - [[#mysync-line-in-windows-simple][my/sync-line-in-windows-simple]]
+  - [[#mycopy-to-clipboard][my/copy-to-clipboard]]
+  - [[#mycenter-text][my/center-text]]
+  - [[#myshow-region-bytes][my/show-region-bytes]]
 - [[#keyboard-shortcuts][keyboard shortcuts]]
+  - [[#misc-functions][misc functions]]
+  - [[#csv-mode][csv-mode]]
 
 * shebang
 :PROPERTIES:
@@ -1607,11 +1615,22 @@ more careful.
 
 #+end_src
 
+* custom variables
+:PROPERTIES:
+:CREATED:  [2025-02-14 Fri 15:29]
+:END:
+** my/custom-cli-line-length
+#+begin_src elisp
+(defconst my/custom-cli-line-length
+  (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55"))
+  "The default line length: read from system or default value (55).")
+#+end_src
 * custom functions
 :PROPERTIES:
 :CREATED:  [2024-10-19 Sat 17:29]
 :END:
 
+** my/sync-line-in-windows-simple
 #+begin_src elisp
 (defun my/sync-line-in-windows-simple ()
   "Sync the current line number and cursor position relative to the window in both horizontally split windows."
@@ -1622,7 +1641,9 @@ more careful.
     (goto-line current-line)                                    ;; Go to the same line number in the other window
     (recenter window-line)                                      ;; Move cursor to same number of lines from top
     (other-window 1)))                                          ;; Return to the original window
-
+#+end_src
+** my/copy-to-clipboard
+#+begin_src elisp
 (defun my/copy-to-clipboard (start end)
   "Copy the selected region or the entire buffer to the clipboard using a temporary file and an external script."
   (interactive "r")
@@ -1646,11 +1667,9 @@ more careful.
         (message (if is-region
                      "Region copied to clipboard!"
                    "Buffer copied to clipboard!"))))))
-
-(defconst my/custom-cli-line-length
-  (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55"))
-  "The default line length: read from system or default value (55).")
-
+#+end_src
+** my/center-text
+#+begin_src elisp
 (defun my/center-text ()
   "Center window text."
   (interactive)
@@ -1698,31 +1717,22 @@ more careful.
     (with-selected-window window
       (my/flush-left-text))))
 #+end_src
-
-Sources:
 - [[https://stackoverflow.com/questions/24955253/centre-emacs-buffer-within-window][Centre Emacs buffer within window - Stack Overflow]]
 - [[https://emacs.stackexchange.com/questions/76254/center-emacs-window-in-the-middle][centering - Center emacs window in the middle - Emacs Stack Exchange]]
 - [[https://superuser.com/questions/307751/setting-default-emacs-window-margins/645114#645114][elisp - Setting default Emacs window margins - Super User]]
+** my/show-region-bytes
+:PROPERTIES:
+:CREATED:  [2025-02-14 Fri 15:21]
+:END:
 
-
-Oh you mean like this?
-
-Pseudocode to re-center text if resize action:
-#+begin_quote
-defun my/center-text ()
-   ... center text ...
-   return centered=true
-
-defun my/center-text-p
-   if centered=true
-   my/center-text()
-
-;; (add-hook 'window-configuration-change-hook #'my/center-text-p)
-#+end_quote
-
-Another thing now: how to globally center text
-in windows instead of buffer based?
-
+#+begin_src elisp
+(defun my/show-region-bytes (&rest _args)
+  "Show the size in bytes of the current region in the echo area."
+  (if (use-region-p)
+      (message "Region is %d bytes"
+               (string-bytes (buffer-substring (region-beginning) (region-end))))
+    (message "")))
+#+end_src
 
 * keyboard shortcuts
 :PROPERTIES:
@@ -1736,6 +1746,7 @@ in windows instead of buffer based?
 - [[https://orgmode.org/manual/Column-Width-and-Alignment.html][Column Width and Alignment (The Org Manual)]]
 
 
+** misc functions
 #+begin_src elisp
 (map! :leader
   (:prefix-map ("k" . "custom key bindings")
@@ -1754,6 +1765,7 @@ in windows instead of buffer based?
     )
 
     (:desc "my/copy-to-clipboard" "C" #'my/copy-to-clipboard)
+    (:desc "my/show-region-bytes" "s" #'my/show-region-bytes)
 
     (:prefix-map ("o" . "orgmode")
       (:prefix-map ("p" . "Add property")
@@ -1809,6 +1821,7 @@ in windows instead of buffer based?
 - [[https://emacs.stackexchange.com/questions/71553/in-huge-csv-files-how-can-i-easily-find-out-in-which-csv-column-the-cursor-is][minor mode - In huge CSV files how can I easily find out in which CSV column the cursor is? - Emacs Stack Exchange]]
 
 
+** csv-mode
 #+begin_src elisp
 ;;;###package csv-mode
 (map! :after csv-mode

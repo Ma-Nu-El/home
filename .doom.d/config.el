@@ -465,6 +465,10 @@ Works if the point is anywhere within the subtree of the heading."
 
 (add-hook 'org-mode-hook 'org-mark-readonly)
 
+(defconst my/custom-cli-line-length
+  (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55"))
+  "The default line length: read from system or default value (55).")
+
 (defun my/sync-line-in-windows-simple ()
   "Sync the current line number and cursor position relative to the window in both horizontally split windows."
   (interactive)
@@ -498,10 +502,6 @@ Works if the point is anywhere within the subtree of the heading."
         (message (if is-region
                      "Region copied to clipboard!"
                    "Buffer copied to clipboard!"))))))
-
-(defconst my/custom-cli-line-length
-  (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55"))
-  "The default line length: read from system or default value (55).")
 
 (defun my/center-text ()
   "Center window text."
@@ -550,6 +550,13 @@ Works if the point is anywhere within the subtree of the heading."
     (with-selected-window window
       (my/flush-left-text))))
 
+(defun my/show-region-bytes (&rest _args)
+  "Show the size in bytes of the current region in the echo area."
+  (if (use-region-p)
+      (message "Region is %d bytes"
+               (string-bytes (buffer-substring (region-beginning) (region-end))))
+    (message "")))
+
 (map! :leader
   (:prefix-map ("k" . "custom key bindings")
 
@@ -567,6 +574,7 @@ Works if the point is anywhere within the subtree of the heading."
     )
 
     (:desc "my/copy-to-clipboard" "C" #'my/copy-to-clipboard)
+    (:desc "my/show-region-bytes" "s" #'my/show-region-bytes)
 
     (:prefix-map ("o" . "orgmode")
       (:prefix-map ("p" . "Add property")
