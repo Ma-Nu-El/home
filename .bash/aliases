@@ -46,7 +46,6 @@ alias guntrack='git rm -r --cached" # untrack files currently tracked by git, '-
 alias gamend='git commit --amend'
 alias grestore='git restore'
 alias gsm='git submodule | cut -d " " -f3'
-
 # shell interaction
 
 alias c='clear'
@@ -185,6 +184,7 @@ alias agpt='~/bin/auto_gpt_fire_up'
 ## python_environments
 alias penv='. "$HOME"/venv/python3.12.2/bin/activate'
 alias p3='"$HOME"/venv/python3.12.2/bin/python'
+alias cal='/usr/local/opt/util-linux/bin/cal -m'
 
     set -o pipefail
 
@@ -233,7 +233,6 @@ alias p3='"$HOME"/venv/python3.12.2/bin/python'
     alias gamend='git commit --amend'
     alias grestore='git restore'
     alias gsm='git submodule | cut -d " " -f3'
-    
     # shell interaction
     
     alias c='clear'

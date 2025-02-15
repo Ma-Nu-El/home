@@ -23,6 +23,7 @@ set -o pipefail
 <<bash_alias_lights>>
 <<bash_alias_chatgpt>>
 <<bash_alias_python>>
+<<bash_alias_macos_calendar>>
 #+end_src
 
 ** git
@@ -80,7 +81,6 @@ alias gsm='git submodule | cut -d " " -f3'
 
 #+name: bash_alias_shell_interaction_and_quick_navigation
 #+begin_src bash :tangle no
-
 # shell interaction
 
 alias c='clear'
@@ -267,6 +267,13 @@ alias tt='"$HOME"/bin/today'
 alias ttc='"$HOME"/bin/today -c'
 alias ttt='"$HOME"/bin/today time'
 alias tttc='"$HOME"/bin/today -c time'
+#+end_src
+
+** macos_calendar
+
+#+name: bash_alias_macos_calendar
+#+begin_src bash :tangle no
+alias cal='/usr/local/opt/util-linux/bin/cal -m'
 #+end_src
 
 * Functions
