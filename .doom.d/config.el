@@ -448,7 +448,7 @@ Works if the point is anywhere within the subtree of the heading."
             (end (org-element-property :end element)))
        (add-text-properties begin (- end 1) '(read-only t))))
    "read_only")
-)
+  )
 
 (defun org-remove-readonly ()
   (interactive)
@@ -458,9 +458,9 @@ Works if the point is anywhere within the subtree of the heading."
             (begin (org-element-property :begin element))
             (end (org-element-property :end element))
             (inhibit-read-only t))
-         (remove-text-properties begin (- end 1) '(read-only t))))
-     "read_only")
-     (message "readonly disabled")
+       (remove-text-properties begin (- end 1) '(read-only t))))
+   "read_only")
+  (message "readonly disabled")
   )
 
 (add-hook 'org-mode-hook 'org-mark-readonly)
@@ -559,70 +559,75 @@ Works if the point is anywhere within the subtree of the heading."
     (message "")))
 
 (map! :leader
-  (:prefix-map ("k" . "custom key bindings")
+      (:prefix-map ("k" . "custom key bindings")
 
-    (:prefix-map ("r" . "reload")
-     :desc "Current dynamic block" "d" #'org-update-dblock
-     :desc "All dynamic blocks" "D" #'org-update-all-dblocks
-    )
+(:prefix-map ("r" . "reload")
+ :desc "Current dynamic block" "d" #'org-update-dblock
+ :desc "All dynamic blocks" "D" #'org-update-all-dblocks
+ )
 
-    (:prefix-map ("a" . "align")
-     :desc "align-regexp" "r" #'align-regexp
-    )
+(:prefix-map ("a" . "align")
+ :desc "align-regexp" "r" #'align-regexp
+ )
 
-    (:prefix-map ("c" . "code")
-     :desc "org-edit-src-block" "c" #'org-edit-src-code
-    )
+(:prefix-map ("c" . "code")
+ :desc "org-edit-src-block" "c" #'org-edit-src-code
+ )
 
-    (:desc "my/copy-to-clipboard" "C" #'my/copy-to-clipboard)
-    (:desc "my/show-region-bytes" "s" #'my/show-region-bytes)
+(:desc "my/copy-to-clipboard" "C" #'my/copy-to-clipboard)
 
-    (:prefix-map ("o" . "orgmode")
-      (:prefix-map ("p" . "Add property")
-       :desc "CREATED" "c" #'org-set-created-property
-      )
+(:desc "my/show-region-bytes" "s" #'my/show-region-bytes)
 
-      (:prefix-map ("k" . "org-kanban")
-       :desc "Insert kanban here" "i" #'org-kanban/initialize-here
-       :desc "Configure kanban block at point" "c" #'org-kanban/configure-block
-       :desc "Shift TODO state of current entry" "s" #'org-kanban/shift
-      )
+(:prefix-map ("o" . "orgmode")
+             (:prefix-map ("p" . "Add property")
+              :desc "CREATED" "c" #'org-set-created-property
+              )
 
-      (:prefix-map ("T" . "table")
-         :desc "org-table-shrink" "s" #'org-table-shrink
-         :desc "org-table-expand" "e" #'org-table-expand
-         :desc "org-table-toggle-column-width" "t" #'org-table-toggle-column-width
-      )
+             (:prefix-map ("k" . "org-kanban")
+              :desc "Insert kanban here" "i" #'org-kanban/initialize-here
+              :desc "Configure kanban block at point" "c" #'org-kanban/configure-block
+              :desc "Shift TODO state of current entry" "s" #'org-kanban/shift
+              )
 
-      (:prefix-map ("t" . "TODO")
-         :desc "my/org-convert-to-next-action" "n" #'my/org-convert-to-next-action
-      )
+             (:prefix-map ("T" . "table")
+              :desc "org-table-shrink" "s" #'org-table-shrink
+              :desc "org-table-expand" "e" #'org-table-expand
+              :desc "org-table-toggle-column-width" "t" #'org-table-toggle-column-width
+              )
 
-      (:prefix-map ("r" . "readonly")
-         :desc "org-mark-readonly" "e" #'org-mark-readonly
-         :desc "org-remove-readonly" "d" #'org-remove-readonly
-      )
+             (:prefix-map ("t" . "TODO")
+              :desc "my/org-convert-to-next-action" "n" #'my/org-convert-to-next-action
+              )
 
-      :desc "my/org-archive-done-tasks" "c" #'my/org-archive-done-tasks
+             (:prefix-map ("r" . "readonly")
+              :desc "org-mark-readonly" "e" #'org-mark-readonly
+              :desc "org-remove-readonly" "d" #'org-remove-readonly
+              )
 
-      (:prefix-map ("a" . "agenda")
-         :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
-      )
-      (:prefix-map ("a" . "org-ai")
-         ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
-         ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
-         ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
-      )
-    )
-    (:prefix-map ("w" . "windows")
-      :desc "my/sync-line-in-windows-simple" "s" #'my/sync-line-in-windows-simple
-      :desc "my/center-text" "c" #'my/center-text
-      :desc "my/flush-left-text" "l" #'my/flush-left-text
-      :desc "my/enable-auto-center-text" "C" #'my/enable-auto-center-text
-      :desc "my/disable-auto-center-text" "L" #'my/disable-auto-center-text
+             :desc "my/org-archive-done-tasks" "c" #'my/org-archive-done-tasks
 
-    )
-  )
+             (:prefix-map ("a" . "agenda")
+              :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
+              )
+             (:prefix-map ("a" . "org-ai")
+                          ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
+                          ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
+                          ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
+                          )
+             )
+
+(:prefix-map ("w" . "windows")
+ :desc "my/sync-line-in-windows-simple" "s" #'my/sync-line-in-windows-simple
+ :desc "my/center-text" "c" #'my/center-text
+ :desc "my/flush-left-text" "l" #'my/flush-left-text
+ :desc "my/enable-auto-center-text" "C" #'my/enable-auto-center-text
+ :desc "my/disable-auto-center-text" "L" #'my/disable-auto-center-text
+
+ )
+
+:desc "treemacs-select-window" "t" #'treemacs-select-window
+
+)
 )
 
 ;;;###package csv-mode
