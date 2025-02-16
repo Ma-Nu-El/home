@@ -76,8 +76,10 @@
 - [[#custom-functions][custom functions]]
   - [[#mysync-line-in-windows-simple][my/sync-line-in-windows-simple]]
   - [[#mycopy-to-clipboard][my/copy-to-clipboard]]
-  - [[#mycenter-text][my/center-text]]
+  - [[#mycopy-file-path-to-clipboard][my/copy-file-path-to-clipboard]]
+  - [[#mycopy-directory-path-to-cliboard][my/copy-directory-path-to-cliboard]]
   - [[#myshow-region-bytes][my/show-region-bytes]]
+  - [[#mycenter-text][my/center-text]]
 - [[#keyboard-shortcuts][keyboard shortcuts]]
   - [[#misc-functions][misc functions]]
   - [[#end-definition][end definition]]
@@ -1644,6 +1646,7 @@ more careful.
     (other-window 1)))                                          ;; Return to the original window
 #+end_src
 ** my/copy-to-clipboard
+
 #+begin_src elisp
 (defun my/copy-to-clipboard (start end)
   "Copy the selected region or the entire buffer to the clipboard using a temporary file and an external script."
@@ -1669,6 +1672,84 @@ more careful.
                      "Region copied to clipboard!"
                    "Buffer copied to clipboard!"))))))
 #+end_src
+
+** my/copy-file-path-to-clipboard
+:PROPERTIES:
+:CREATED:  [2025-02-16 Sun 18:28]
+:END:
+
+#+begin_src elisp
+(defun my/copy-file-path-to-clipboard ()
+  "Copy the current buffer's file path to the clipboard, replacing the home directory with '~'."
+  (interactive)
+  (if buffer-file-name
+      (let* ((home (expand-file-name "~"))
+             (file-path (if (string-prefix-p home buffer-file-name)
+                            (concat "~" (substring buffer-file-name (length home)))
+                          buffer-file-name))
+             (temp-file (make-temp-file "emacs-clipboard-"))
+             (script-path (expand-file-name "~/bin/copy_to_clipboard"))) ;; Adjust script path
+        (if (not (file-executable-p script-path))
+            (message "Error: Script not found or not executable: %s" script-path)
+          (progn
+            ;; Write file path to temporary file
+            (with-temp-file temp-file
+              (insert file-path))
+            ;; Call the external script with the temporary file as argument
+            (call-process script-path nil nil nil temp-file)
+            ;; Delete the temporary file
+            (delete-file temp-file)
+            ;; Display success message
+            (message "File path copied to clipboard: %s" file-path))))
+    (message "Error: This buffer is not visiting a file.")))
+#+end_src
+
+** my/copy-directory-path-to-cliboard
+:PROPERTIES:
+:CREATED:  [2025-02-16 Sun 18:31]
+:END:
+
+#+begin_src elisp
+(defun my/copy-directory-path-to-clipboard ()
+  "Copy the current buffer's directory path to the clipboard, replacing the home directory with '~'."
+  (interactive)
+  (if default-directory
+      (let* ((home (expand-file-name "~"))
+             (dir-path (if (string-prefix-p home default-directory)
+                           (concat "~" (substring default-directory (length home)))
+                         default-directory))
+             (temp-file (make-temp-file "emacs-clipboard-"))
+             (script-path (expand-file-name "~/bin/copy_to_clipboard"))) ;; Adjust script path
+        (if (not (file-executable-p script-path))
+            (message "Error: Script not found or not executable: %s" script-path)
+          (progn
+            ;; Write directory path to temporary file
+            (with-temp-file temp-file
+              (insert dir-path))
+            ;; Call the external script with the temporary file as argument
+            (call-process script-path nil nil nil temp-file)
+            ;; Delete the temporary file
+            (delete-file temp-file)
+            ;; Display success message
+            (message "Directory path copied to clipboard: %s" dir-path))))
+    (message "Error: No valid directory found.")))
+#+end_src
+
+** my/show-region-bytes
+:PROPERTIES:
+:CREATED:  [2025-02-14 Fri 15:21]
+:END:
+
+#+begin_src elisp
+(defun my/show-region-bytes (&rest _args)
+  "Show the size in bytes of the current region in the echo area."
+  (interactive)
+  (if (use-region-p)
+      (message "Region is %d bytes"
+               (string-bytes (buffer-substring (region-beginning) (region-end))))
+    (message "")))
+#+end_src
+
 ** my/center-text
 #+begin_src elisp
 (defun my/center-text ()
@@ -1721,21 +1802,6 @@ more careful.
 - [[https://stackoverflow.com/questions/24955253/centre-emacs-buffer-within-window][Centre Emacs buffer within window - Stack Overflow]]
 - [[https://emacs.stackexchange.com/questions/76254/center-emacs-window-in-the-middle][centering - Center emacs window in the middle - Emacs Stack Exchange]]
 - [[https://superuser.com/questions/307751/setting-default-emacs-window-margins/645114#645114][elisp - Setting default Emacs window margins - Super User]]
-** my/show-region-bytes
-:PROPERTIES:
-:CREATED:  [2025-02-14 Fri 15:21]
-:END:
-
-#+begin_src elisp
-(defun my/show-region-bytes (&rest _args)
-  "Show the size in bytes of the current region in the echo area."
-  (interactive)
-  (if (use-region-p)
-      (message "Region is %d bytes"
-               (string-bytes (buffer-substring (region-beginning) (region-end))))
-    (message "")))
-#+end_src
-
 * keyboard shortcuts
 :PROPERTIES:
 :CREATED:  [2023-09-07 Thu 16:31]
@@ -1776,7 +1842,11 @@ more careful.
 *** my/: (various)
 **** copy-to-clipboard: ~C~
 #+begin_src elisp
-(:desc "my/copy-to-clipboard" "C" #'my/copy-to-clipboard)
+(:prefix-map ("C" . "copy to clipboard")
+  (:desc "my/copy-to-clipboard" "c" #'my/copy-to-clipboard)
+  (:desc "my/copy-file-path-to-clipboard" "f" #'my/copy-file-path-to-clipboard)
+  (:desc "my/copy-directory-path-to-clipboard" "d" #'my/copy-directory-path-to-clipboard)
+)
 #+end_src
 **** show-region-bytes: ~s~
 #+begin_src elisp

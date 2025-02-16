@@ -503,6 +503,62 @@ Works if the point is anywhere within the subtree of the heading."
                      "Region copied to clipboard!"
                    "Buffer copied to clipboard!"))))))
 
+(defun my/copy-file-path-to-clipboard ()
+  "Copy the current buffer's file path to the clipboard, replacing the home directory with '~'."
+  (interactive)
+  (if buffer-file-name
+      (let* ((home (expand-file-name "~"))
+             (file-path (if (string-prefix-p home buffer-file-name)
+                            (concat "~" (substring buffer-file-name (length home)))
+                          buffer-file-name))
+             (temp-file (make-temp-file "emacs-clipboard-"))
+             (script-path (expand-file-name "~/bin/copy_to_clipboard"))) ;; Adjust script path
+        (if (not (file-executable-p script-path))
+            (message "Error: Script not found or not executable: %s" script-path)
+          (progn
+            ;; Write file path to temporary file
+            (with-temp-file temp-file
+              (insert file-path))
+            ;; Call the external script with the temporary file as argument
+            (call-process script-path nil nil nil temp-file)
+            ;; Delete the temporary file
+            (delete-file temp-file)
+            ;; Display success message
+            (message "File path copied to clipboard: %s" file-path))))
+    (message "Error: This buffer is not visiting a file.")))
+
+(defun my/copy-directory-path-to-clipboard ()
+  "Copy the current buffer's directory path to the clipboard, replacing the home directory with '~'."
+  (interactive)
+  (if default-directory
+      (let* ((home (expand-file-name "~"))
+             (dir-path (if (string-prefix-p home default-directory)
+                           (concat "~" (substring default-directory (length home)))
+                         default-directory))
+             (temp-file (make-temp-file "emacs-clipboard-"))
+             (script-path (expand-file-name "~/bin/copy_to_clipboard"))) ;; Adjust script path
+        (if (not (file-executable-p script-path))
+            (message "Error: Script not found or not executable: %s" script-path)
+          (progn
+            ;; Write directory path to temporary file
+            (with-temp-file temp-file
+              (insert dir-path))
+            ;; Call the external script with the temporary file as argument
+            (call-process script-path nil nil nil temp-file)
+            ;; Delete the temporary file
+            (delete-file temp-file)
+            ;; Display success message
+            (message "Directory path copied to clipboard: %s" dir-path))))
+    (message "Error: No valid directory found.")))
+
+(defun my/show-region-bytes (&rest _args)
+  "Show the size in bytes of the current region in the echo area."
+  (interactive)
+  (if (use-region-p)
+      (message "Region is %d bytes"
+               (string-bytes (buffer-substring (region-beginning) (region-end))))
+    (message "")))
+
 (defun my/center-text ()
   "Center window text."
   (interactive)
@@ -550,14 +606,6 @@ Works if the point is anywhere within the subtree of the heading."
     (with-selected-window window
       (my/flush-left-text))))
 
-(defun my/show-region-bytes (&rest _args)
-  "Show the size in bytes of the current region in the echo area."
-  (interactive)
-  (if (use-region-p)
-      (message "Region is %d bytes"
-               (string-bytes (buffer-substring (region-beginning) (region-end))))
-    (message "")))
-
 (map! :leader
       (:prefix-map ("k" . "custom key bindings")
 
@@ -574,7 +622,11 @@ Works if the point is anywhere within the subtree of the heading."
  :desc "org-edit-src-block" "c" #'org-edit-src-code
  )
 
-(:desc "my/copy-to-clipboard" "C" #'my/copy-to-clipboard)
+(:prefix-map ("C" . "copy to clipboard")
+  (:desc "my/copy-to-clipboard" "c" #'my/copy-to-clipboard)
+  (:desc "my/copy-file-path-to-clipboard" "f" #'my/copy-file-path-to-clipboard)
+  (:desc "my/copy-directory-path-to-clipboard" "d" #'my/copy-directory-path-to-clipboard)
+)
 
 (:desc "my/show-region-bytes" "s" #'my/show-region-bytes)
 
