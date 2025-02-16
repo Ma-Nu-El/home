@@ -86,7 +86,8 @@ doom-quit         ; DOOM quit-message prompts when you quit Emacs
 fill-column       ; a `fill-column' indicator
 #+begin_src elisp
 hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
-(modeline +light)          ; snazzy, Atom-inspired modeline, plus API
+;;(modeline +light)          ; snazzy, Atom-inspired modeline, plus API
+modeline          ; snazzy, Atom-inspired modeline, plus API
 #+end_src
 ;; https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#why-is-emacsdoom-slow
 

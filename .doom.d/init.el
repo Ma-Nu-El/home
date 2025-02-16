@@ -12,7 +12,8 @@ doom-dashboard    ; a nifty splash screen for Emacs
 doom-quit         ; DOOM quit-message prompts when you quit Emacs
 
 hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
-(modeline +light)          ; snazzy, Atom-inspired modeline, plus API
+;;(modeline +light)          ; snazzy, Atom-inspired modeline, plus API
+modeline          ; snazzy, Atom-inspired modeline, plus API
 
 nav-flash         ; blink cursor line after big motions
 ophints           ; highlight the region an operation acts on
