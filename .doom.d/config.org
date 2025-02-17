@@ -1854,6 +1854,7 @@ more careful.
 #+end_src
 **** orgmode: ~o~
 #+begin_src elisp
+
 (:prefix-map ("o" . "orgmode")
              (:prefix-map ("p" . "Add property")
               :desc "CREATED" "c" #'org-set-created-property
@@ -1885,6 +1886,16 @@ more careful.
              (:prefix-map ("a" . "agenda")
               :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
               )
+
+             (:prefix-map ("m" . "org-timer")
+              :desc "Start timer (Countdown)" "d" #'org-timer-set-timer
+              :desc "Start stopwatch" "s" #'org-timer-start
+              :desc "Pause/Play" "k" #'org-timer-pause-or-continue
+              :desc "Stop" "t" #'org-timer-stop
+              :desc "Insert timestamp" "i" #'org-timer
+              :desc "Insert list item" "l" #'org-timer-item
+              )
+
              (:prefix-map ("a" . "org-ai")
                           ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
                           ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
@@ -1892,6 +1903,7 @@ more careful.
                           )
              )
 #+end_src
+
 **** windows: ~w~
 #+begin_src elisp
 (:prefix-map ("w" . "windows")

@@ -661,6 +661,16 @@ Works if the point is anywhere within the subtree of the heading."
              (:prefix-map ("a" . "agenda")
               :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
               )
+
+             (:prefix-map ("m" . "org-timer")
+              :desc "Start timer (Countdown)" "d" #'org-timer-set-timer
+              :desc "Start stopwatch" "s" #'org-timer-start
+              :desc "Pause/Play" "k" #'org-timer-pause-or-continue
+              :desc "Stop" "t" #'org-timer-stop
+              :desc "Insert timestamp" "i" #'org-timer
+              :desc "Insert list item" "l" #'org-timer-item
+              )
+
              (:prefix-map ("a" . "org-ai")
                           ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
                           ;; :desc "my/org-agenda-custom-search-next-action" "n" #'my/org-agenda-custom-search-next-action
