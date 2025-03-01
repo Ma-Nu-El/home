@@ -134,7 +134,7 @@ esac
 }
 now(){
     date "+%Y-%m-%d %H:%M:%S" && \
-    /usr/local/opt/util-linux/bin/cal -m
+    /usr/local/opt/util-linux/bin/cal -m "$@"
 }
 agenda(){
 	if [[ -z "$1"  ]]

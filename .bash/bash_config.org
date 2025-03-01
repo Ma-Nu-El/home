@@ -491,7 +491,7 @@ esac
 #+begin_src bash :tangle no
 now(){
     date "+%Y-%m-%d %H:%M:%S" && \
-    /usr/local/opt/util-linux/bin/cal -m
+    /usr/local/opt/util-linux/bin/cal -m "$@"
 }
 #+end_src
 
