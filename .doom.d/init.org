@@ -359,8 +359,11 @@ plantuml          ; diagrams for confusing people more
 calendar
 #+end_src
 
+#+begin_src elisp
 ;;irc               ; how neckbeards socialize
-;;(rss +org)        ; emacs as an RSS reader
+(rss +org)        ; emacs as an RSS reader
+#+end_src
+
 ;;twitter           ; twitter client https://twitter.com/vnought
 
 ** literate config
