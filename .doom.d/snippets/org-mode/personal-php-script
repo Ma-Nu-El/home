@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: personal-php-script
+# key: trigger-key
+# condition: t
+# --
+#+begin_src php :tangle ${1: insert filename} :shebang "<?php"
+
+${2:  body}
+#+end_src
