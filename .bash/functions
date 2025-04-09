@@ -160,5 +160,3 @@ find_duplicates() {
 
   sort "$1" | uniq -d
 }
-. ~/bin/backup
-. ~/bin/recover
