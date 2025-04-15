@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+# ~/bin/orgpdfpreview - Live PDF preview from Org with fast export
+
+set -o pipefail
+
+usage() {
+    cat <<EOF
+'orgpdfpreview' usage:
+
+  Watches an .org file and automatically exports it to PDF using Emacs
+  with a minimal config for speed, whenever the file changes.
+
+  Usage:
+    orgpdfpreview [--once] path/to/file.org
+
+  Options:
+    --once               Run a single export (no live watch)
+    -h, --help, -?       Show this help message
+
+  Requirements:
+    - Emacs
+    - fswatch
+    - macOS: uses 'open'
+    - Linux: uses 'xdg-open'
+EOF
+}
+
+# Help or --once flag handling
+if [[ $1 == "-h" || $1 == "--help" || $1 == "-?" ]]; then
+    usage
+    exit 0
+fi
+
+once_mode=false
+if [[ $1 == "--once" ]]; then
+    once_mode=true
+    shift
+fi
+
+# Check input file
+if [[ $# -ne 1 ]]; then
+    echo "[ERROR] You must provide a single .org file to process."
+    usage
+    exit 1
+fi
+
+input_file="$1"
+
+if [[ ! -f "$input_file" ]]; then
+    echo "[ERROR] File '$input_file' does not exist."
+    exit 1
+fi
+
+# OS detection
+os=$("$HOME/bin/detect_os")
+
+# Output path
+dir="$(dirname "$input_file")"
+filename="$(basename "$input_file" .org)"
+output_pdf="${dir}/${filename}.pdf"
+
+# Create minimal Emacs config
+minimal_config=$(mktemp)
+cat <<'EOF' > "$minimal_config"
+(require 'org)
+(require 'ox-latex)
+(setq org-latex-compiler "pdflatex")
+(setq org-export-with-toc nil)
+(setq org-export-with-author nil)
+(setq org-export-with-date nil)
+(setq org-export-with-section-numbers nil)
+EOF
+
+# Export and preview
+export_and_preview() {
+    echo "[INFO] Exporting $input_file to PDF..."
+    emacs --batch -Q -l "$minimal_config" "$input_file" -f org-latex-export-to-pdf > /dev/null 2>&1
+
+    if [[ $? -ne 0 ]]; then
+        echo "[ERROR] Export failed."
+        return 1
+    fi
+
+    echo "[INFO] Opening $output_pdf..."
+    case "$os" in
+        darwin)
+            open "$output_pdf"
+            ;;
+        linux)
+            xdg-open "$output_pdf"
+            ;;
+        *)
+            echo "[ERROR] Unsupported OS for preview."
+            ;;
+    esac
+}
+
+# Run export
+export_and_preview
+
+# If --once, exit after one export
+if $once_mode; then
+    echo "[INFO] Finished (ran once with --once)."
+    exit 0
+fi
+
+# Watch for changes
+echo "[INFO] Watching $input_file for changes. Ctrl+C to stop."
+fswatch -o "$input_file" | while read -r; do
+    export_and_preview
+done
+
+# Clean up temp file on exit
+trap "rm -f '$minimal_config'" EXIT
