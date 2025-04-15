@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # ~/bin/orgpdfpreview - Live PDF preview from Org with fast export
+# - [2025-04-15 Tue 18:16]
+# Author: Manuel Fuica Morales via ChatGPT
 
 set -o pipefail
 
