@@ -24,7 +24,7 @@
   - [[#org-habit][~org-habit~]]
   - [[#todo-keywords][~TODO~ keywords]]
   - [[#org-log-done-insert-closed-when-done][~org-log-done~: insert ~CLOSED~ when ~DONE~]]
-  - [[#org-latex-classes][~org-latex-classes~]]
+  - [[#org-latex-classes][`org-latex-classes`]]
   - [[#latex-export-table-of-contents-settings][latex export table of contents settings]]
   - [[#latex-other-languages][latex other languages]]
   - [[#org-babel-python-command][~org-babel-python-command~]]
@@ -487,7 +487,7 @@ when checking agenda remotely.
 (setq org-log-done 'note)
 #+end_src
 
-** ~org-latex-classes~
+** `org-latex-classes`
 
 - [[https://ctan.org/tex-archive/macros/latex/contrib/extsizes][CTAN: /tex-archive/macros/latex/contrib/extsizes]]
 - [[https://emacs.stackexchange.com/questions/29726/org-mode-different-latex-document-class][org export - org-mode different latex document class - Emacs Stack Exchange]]
@@ -498,42 +498,38 @@ when checking agenda remotely.
 
 : \documentclass[letter,twoside,14pt,openright]{extbook}
 
-(require 'ox-latex)
+~ext-class~ versions of regular latex classes enable
+an extended range of font sizes (the default is 10-12,
+while the ~ext~ package is 9-20).
+
 #+begin_src elisp
 (with-eval-after-load 'ox-latex
-(add-to-list 'org-latex-classes
-             '("extbook"
-               "\\documentclass{extbook}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-(add-to-list 'org-latex-classes
-             '("extarticle"
-               "\\documentclass{extarticle}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-(add-to-list 'org-latex-classes
-             '("extreport"
-               "\\documentclass{extreport}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-(add-to-list 'org-latex-classes
-             '("IEEEtran"
-               "\\documentclass{IEEEtran}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-)
+  (dolist (class
+           '(("extbook" "\\documentclass{extbook}"
+              ("\\section{%s}" . "\\section*{%s}")
+              ("\\subsection{%s}" . "\\subsection*{%s}")
+              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+              ("\\paragraph{%s}" . "\\paragraph*{%s}")
+              ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+             ("extarticle" "\\documentclass{extarticle}"
+              ("\\section{%s}" . "\\section*{%s}")
+              ("\\subsection{%s}" . "\\subsection*{%s}")
+              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+              ("\\paragraph{%s}" . "\\paragraph*{%s}")
+              ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+             ("extreport" "\\documentclass{extreport}"
+              ("\\section{%s}" . "\\section*{%s}")
+              ("\\subsection{%s}" . "\\subsection*{%s}")
+              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+              ("\\paragraph{%s}" . "\\paragraph*{%s}")
+              ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+             ("IEEEtran" "\\documentclass{IEEEtran}"
+              ("\\section{%s}" . "\\section*{%s}")
+              ("\\subsection{%s}" . "\\subsection*{%s}")
+              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+              ("\\paragraph{%s}" . "\\paragraph*{%s}")
+              ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+    (add-to-list 'org-latex-classes class t)))
 #+end_src
 
 ** latex export table of contents settings
