@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
-# - [2025-04-28 Mon 11:28]
+# - [2025-04-28 Mon 12:40]
 
 import subprocess
 import os
 import sys
+import json
 import random
 
-VERSION = "v0.3.0"
-CHANGELOG = "Added paragraph length control (short, medium, long)"
+VERSION = "v0.8.0"
+CHANGELOG = "Added fine-grained paragraph size randomization (per paragraph); improved interaction flow"
+
+CONFIG_DIR = os.path.expanduser("~/.config/dummytext")
+CONFIG_FILE = os.path.join(CONFIG_DIR, "presets.json")
+LAST_PROFILE_FILE = os.path.join(CONFIG_DIR, "last_used_profile.txt")
 
 def usage():
     print(f"""
@@ -18,13 +23,21 @@ Usage:
   dummytext [options]
 
 Options:
-  -h, --help        Show this help message
-  -v, --version     Show version information
+  -h, --help             Show this help message
+  -v, --version          Show version information
+  --profile NAME         Load preset profile and generate automatically
+  --save NAME            After interactive generation, save as preset NAME
+  -i, --interactive      Force interactive session (ignores last used profile)
+  --batch                No prompts; generate text and exit
+  --list-profiles        List all available preset profiles
 
 Examples:
   dummytext
-  dummytext --help
-  dummytext --version
+  dummytext --profile quicktest
+  dummytext --save newprofile
+  dummytext -i
+  dummytext --profile quicktest --batch > output.tex
+  dummytext --list-profiles
 """)
     sys.exit(0)
 
@@ -33,7 +46,6 @@ def version():
     sys.exit(0)
 
 def copy_to_clipboard(text):
-    """Use user's own copy_to_clipboard script."""
     script_path = os.path.expanduser("~/bin/copy_to_clipboard")
     if os.path.isfile(script_path) and os.access(script_path, os.X_OK):
         subprocess.run([script_path], input=text.encode())
@@ -51,69 +63,55 @@ def ask_choice(question, options, allow_multiple=False):
     else:
         return options[int(choice)-1]
 
-def main():
-    # Handle CLI flags only
-    args = sys.argv[1:]
-    while args:
-        arg = args.pop(0)
-        if arg in ("-h", "--help"):
-            usage()
-        elif arg in ("-v", "--version"):
-            version()
-        else:
-            print(f"Unknown argument: {arg}")
-            usage()
+def ensure_config():
+    if not os.path.isdir(CONFIG_DIR):
+        os.makedirs(CONFIG_DIR)
+    if not os.path.isfile(CONFIG_FILE):
+        with open(CONFIG_FILE, "w") as f:
+            json.dump({}, f)
 
-    # === Interactive Mode ===
-    print("Welcome to DummyText Generator!\n")
+def load_presets():
+    ensure_config()
+    with open(CONFIG_FILE, "r") as f:
+        return json.load(f)
 
-    # Step 1: Ask Org or LaTeX
-    format_output = ask_choice(
-        "Which output format?",
-        ["Org Mode", "LaTeX"]
-    )
-    format_output = "org" if "Org" in format_output else "latex"
+def save_presets(presets):
+    ensure_config()
+    with open(CONFIG_FILE, "w") as f:
+        json.dump(presets, f, indent=4)
 
-    # Step 2: Ask simple vs flexible
-    simple_or_flexible = ask_choice(
-        "Do you want simple dummy text or flexible structures?",
-        ["Simple (lipsum)", "Flexible (blindtext)"]
-    )
+def save_last_profile(profile_name):
+    with open(LAST_PROFILE_FILE, "w") as f:
+        f.write(profile_name)
 
-    package = "lipsum" if "Simple" in simple_or_flexible else "blindtext"
+def load_last_profile():
+    if os.path.isfile(LAST_PROFILE_FILE):
+        with open(LAST_PROFILE_FILE, "r") as f:
+            return f.read().strip()
+    return None
 
-    # Step 3: Ask structures
-    structures = []
-    if package == "lipsum":
-        structures.append("paragraphs")
+def random_wordcount(style):
+    if style.startswith("Short"):
+        return random.randint(20, 50)
+    elif style.startswith("Medium"):
+        return random.randint(100, 200)
+    elif style.startswith("Long"):
+        return random.randint(300, 500)
     else:
-        structures = ask_choice(
-            "Which structures do you want to generate?",
-            ["words", "paragraphs", "itemized list", "table", "full document"],
-            allow_multiple=True
-        )
+        return 50
 
-    # Step 4: Ask randomize or not
-    randomize_order = input("Randomize structure order? (y/N): ").lower().startswith('y')
-
-    # Step 5: How many of each
-    counts = {}
-    for struct in structures:
-        count = input(f"How many {struct}? (default 1): ").strip()
-        counts[struct] = int(count) if count.isdigit() else 1
+def generate_output(config):
+    format_output = config["format"]
+    package = config["package"]
+    structures = config["structures"]
+    counts = config["counts"]
+    randomize_order = config["randomize_order"]
+    para_length_style = config.get("paragraph_style", "Medium")
+    para_varied = config.get("paragraph_varied", False)
 
     if randomize_order:
         random.shuffle(structures)
 
-    # Step 6: If paragraphs selected, ask paragraph length style
-    para_length_style = None
-    if "paragraphs" in structures:
-        para_length_style = ask_choice(
-            "Choose paragraph length style:",
-            ["Short (20–50 words)", "Medium (100–200 words)", "Long (300–500 words)"]
-        )
-
-    # === Output generation ===
     header = ""
     if format_output == "org":
         header += f"#+LATEX_HEADER: \\usepackage{{{package}}}\n\n"
@@ -124,36 +122,30 @@ def main():
 
     body = ""
 
-    def random_wordcount(style):
-        if style.startswith("Short"):
-            return random.randint(20, 50)
-        elif style.startswith("Medium"):
-            return random.randint(100, 200)
-        elif style.startswith("Long"):
-            return random.randint(300, 500)
-        else:
-            return 50
-
     for struct in structures:
         if struct == "paragraphs":
-            for _ in range(counts[struct]):
+            for _ in range(counts.get(struct, 1)):
                 if package == "lipsum":
                     body += "% lipsum paragraph\n" if format_output == "latex" else "# lipsum paragraph\n"
                     body += "\\lipsum[1]\n\n"
                 else:
-                    wordcount = random_wordcount(para_length_style)
+                    if para_varied:
+                        style = random.choice(["Short", "Medium", "Long"])
+                    else:
+                        style = para_length_style
+                    wordcount = random_wordcount(style)
                     body += "% blindtext paragraph\n" if format_output == "latex" else "# blindtext paragraph\n"
                     body += f"\\Blindtext[1][{wordcount}]\n\n"
         elif struct == "words":
-            for _ in range(counts[struct]):
+            for _ in range(counts.get(struct, 1)):
                 body += "% blindtext words\n" if format_output == "latex" else "# blindtext words\n"
                 body += "\\Blindtext[1][1]\n\n"
         elif struct == "itemized list":
-            for _ in range(counts[struct]):
+            for _ in range(counts.get(struct, 1)):
                 body += "% blindtext itemized list\n" if format_output == "latex" else "# blindtext itemized list\n"
                 body += "\\Blinditemize\n\n"
         elif struct == "table":
-            for _ in range(counts[struct]):
+            for _ in range(counts.get(struct, 1)):
                 body += "% blindtext table\n" if format_output == "latex" else "# blindtext table\n"
                 body += "\\Blindtable\n\n"
         elif struct == "full document":
@@ -164,19 +156,153 @@ def main():
     if format_output == "latex":
         footer += "\\end{document}\n"
 
-    # Final output
-    final_output = header + body + footer
+    return header + body + footer
+
+def interactive_config():
+    format_output = ask_choice(
+        "Which output format?",
+        ["Org Mode", "LaTeX"]
+    )
+    format_output = "org" if "Org" in format_output else "latex"
+
+    simple_or_flexible = ask_choice(
+        "Do you want simple dummy text or flexible structures?",
+        ["Simple (lipsum)", "Flexible (blindtext)"]
+    )
+
+    package = "lipsum" if "Simple" in simple_or_flexible else "blindtext"
+
+    if package == "lipsum":
+        structures = ["paragraphs"]
+    else:
+        structures = ask_choice(
+            "Which structures do you want to generate?",
+            ["words", "paragraphs", "itemized list", "table", "full document"],
+            allow_multiple=True
+        )
+
+    randomize_order = input("Randomize structure order? (y/N): ").lower().startswith('y')
+
+    counts = {}
+    for struct in structures:
+        count = input(f"How many {struct}? (default 1): ").strip()
+        counts[struct] = int(count) if count.isdigit() else 1
+
+    para_length_style = "Medium"
+    para_varied = False
+    if "paragraphs" in structures:
+        para_varied = input("Vary paragraph sizes individually? (y/N): ").lower().startswith('y')
+        if not para_varied:
+            para_length_style = ask_choice(
+                "Choose paragraph length style:",
+                ["Short (20–50 words)", "Medium (100–200 words)", "Long (300–500 words)"]
+            )
+
+    return {
+        "format": format_output,
+        "package": package,
+        "structures": structures,
+        "counts": counts,
+        "randomize_order": randomize_order,
+        "paragraph_style": para_length_style,
+        "paragraph_varied": para_varied
+    }
+
+def main():
+    args = sys.argv[1:]
+    profile_name = None
+    save_profile = None
+    interactive_forced = False
+    batch_mode = False
+    list_profiles = False
+
+    while args:
+        arg = args.pop(0)
+        if arg in ("-h", "--help"):
+            usage()
+        elif arg in ("-v", "--version"):
+            version()
+        elif arg == "--profile":
+            if args:
+                profile_name = args.pop(0)
+            else:
+                print("Error: --profile needs a name.")
+                sys.exit(1)
+        elif arg == "--save":
+            if args:
+                save_profile = args.pop(0)
+            else:
+                print("Error: --save needs a name.")
+                sys.exit(1)
+        elif arg in ("-i", "--interactive"):
+            interactive_forced = True
+        elif arg == "--batch":
+            batch_mode = True
+        elif arg == "--list-profiles":
+            list_profiles = True
+        else:
+            print(f"Unknown argument: {arg}")
+            usage()
+
+    if list_profiles:
+        presets = load_presets()
+        if not presets:
+            print("No profiles found.")
+        else:
+            print("Available profiles:")
+            for name in sorted(presets.keys()):
+                print(f"- {name}")
+        sys.exit(0)
+
+    if profile_name and save_profile:
+        print("Error: Cannot use --profile and --save at the same time.")
+        sys.exit(1)
+
+    presets = load_presets()
+
+    if profile_name:
+        if profile_name not in presets:
+            print(f"Error: Profile '{profile_name}' not found.")
+            sys.exit(1)
+        config = presets[profile_name]
+        save_last_profile(profile_name)
+
+    elif save_profile:
+        config = interactive_config()
+
+    elif interactive_forced:
+        config = interactive_config()
+
+    else:
+        last_profile = load_last_profile()
+        if last_profile and last_profile in presets:
+            print(f"ℹ️  No arguments provided. Auto-loading last used profile: {last_profile}")
+            config = presets[last_profile]
+        else:
+            print("ℹ️  No last profile found. Starting interactive mode.")
+            config = interactive_config()
+
+    final_output = generate_output(config)
     print(final_output)
 
-    # === Ask to copy to clipboard ===
-    copy_choice = input("\nCopy output to clipboard? (y/N): ").lower().startswith('y')
-    if copy_choice:
-        success = copy_to_clipboard(final_output)
-        if success:
-            print("✅ Output copied to clipboard!")
-        else:
-            print("⚠️  Copy-to-clipboard script not found or not executable at ~/bin/copy_to_clipboard.")
+    if not batch_mode:
+        copy_choice = input("\nCopy output to clipboard? (y/N): ").lower().startswith('y')
+        if copy_choice:
+            success = copy_to_clipboard(final_output)
+            if success:
+                print("✅ Output copied to clipboard!")
+            else:
+                print("⚠️  Copy-to-clipboard script not found or not executable at ~/bin/copy_to_clipboard.")
 
+    if save_profile:
+        if save_profile in presets:
+            overwrite = input(f"Profile '{save_profile}' already exists. Overwrite? (y/N): ").lower().startswith('y')
+            if not overwrite:
+                print("Save cancelled.")
+                sys.exit(0)
+        presets[save_profile] = config
+        save_presets(presets)
+        print(f"✅ Profile '{save_profile}' saved to {CONFIG_FILE}")
 
 if __name__ == "__main__":
     main()
