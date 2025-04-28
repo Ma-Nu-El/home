@@ -7,7 +7,7 @@ import sys
 import json
 import random
 
-VERSION = "v0.8.0"
+VERSION = "v1.0.0"
 CHANGELOG = "Added fine-grained paragraph size randomization (per paragraph); improved interaction flow"
 
 CONFIG_DIR = os.path.expanduser("~/.config/dummytext")
