@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 # - [2025-04-28 Mon 11:28]
 
+import subprocess
+import os
 import sys
 import random
 
-VERSION = "v0.2.0"
-CHANGELOG = "Moved format selection to interactive mode; only --help and --version as CLI flags"
+VERSION = "v0.3.0"
+CHANGELOG = "Added paragraph length control (short, medium, long)"
 
 def usage():
     print(f"""
@@ -29,6 +31,15 @@ Examples:
 def version():
     print(f"{VERSION} - {CHANGELOG}")
     sys.exit(0)
+
+def copy_to_clipboard(text):
+    """Use user's own copy_to_clipboard script."""
+    script_path = os.path.expanduser("~/bin/copy_to_clipboard")
+    if os.path.isfile(script_path) and os.access(script_path, os.X_OK):
+        subprocess.run([script_path], input=text.encode())
+        return True
+    else:
+        return False
 
 def ask_choice(question, options, allow_multiple=False):
     print(question)
@@ -94,6 +105,14 @@ def main():
     if randomize_order:
         random.shuffle(structures)
 
+    # Step 6: If paragraphs selected, ask paragraph length style
+    para_length_style = None
+    if "paragraphs" in structures:
+        para_length_style = ask_choice(
+            "Choose paragraph length style:",
+            ["Short (20–50 words)", "Medium (100–200 words)", "Long (300–500 words)"]
+        )
+
     # === Output generation ===
     header = ""
     if format_output == "org":
@@ -105,6 +124,16 @@ def main():
 
     body = ""
 
+    def random_wordcount(style):
+        if style.startswith("Short"):
+            return random.randint(20, 50)
+        elif style.startswith("Medium"):
+            return random.randint(100, 200)
+        elif style.startswith("Long"):
+            return random.randint(300, 500)
+        else:
+            return 50
+
     for struct in structures:
         if struct == "paragraphs":
             for _ in range(counts[struct]):
@@ -112,8 +141,9 @@ def main():
                     body += "% lipsum paragraph\n" if format_output == "latex" else "# lipsum paragraph\n"
                     body += "\\lipsum[1]\n\n"
                 else:
+                    wordcount = random_wordcount(para_length_style)
                     body += "% blindtext paragraph\n" if format_output == "latex" else "# blindtext paragraph\n"
-                    body += "\\Blindtext\n\n"
+                    body += f"\\Blindtext[1][{wordcount}]\n\n"
         elif struct == "words":
             for _ in range(counts[struct]):
                 body += "% blindtext words\n" if format_output == "latex" else "# blindtext words\n"
@@ -135,7 +165,18 @@ def main():
         footer += "\\end{document}\n"
 
     # Final output
-    print(header + body + footer)
+    final_output = header + body + footer
+    print(final_output)
+
+    # === Ask to copy to clipboard ===
+    copy_choice = input("\nCopy output to clipboard? (y/N): ").lower().startswith('y')
+    if copy_choice:
+        success = copy_to_clipboard(final_output)
+        if success:
+            print("✅ Output copied to clipboard!")
+        else:
+            print("⚠️  Copy-to-clipboard script not found or not executable at ~/bin/copy_to_clipboard.")
+
 
 if __name__ == "__main__":
     main()
