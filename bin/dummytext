@@ -1,0 +1,142 @@
+#!/usr/bin/env python3
+# - [2025-04-28 Mon 11:28]
+
+import sys
+import random
+
+VERSION = "v0.2.0"
+CHANGELOG = "Moved format selection to interactive mode; only --help and --version as CLI flags"
+
+def usage():
+    print(f"""
+dummytext {VERSION}
+{CHANGELOG}
+
+Usage:
+  dummytext [options]
+
+Options:
+  -h, --help        Show this help message
+  -v, --version     Show version information
+
+Examples:
+  dummytext
+  dummytext --help
+  dummytext --version
+""")
+    sys.exit(0)
+
+def version():
+    print(f"{VERSION} - {CHANGELOG}")
+    sys.exit(0)
+
+def ask_choice(question, options, allow_multiple=False):
+    print(question)
+    for idx, opt in enumerate(options, 1):
+        print(f"{idx}. {opt}")
+    choice = input("Enter number(s) (comma separated if multiple): ").strip()
+    if allow_multiple:
+        return [options[int(c.strip())-1] for c in choice.split(',') if c.strip().isdigit()]
+    else:
+        return options[int(choice)-1]
+
+def main():
+    # Handle CLI flags only
+    args = sys.argv[1:]
+    while args:
+        arg = args.pop(0)
+        if arg in ("-h", "--help"):
+            usage()
+        elif arg in ("-v", "--version"):
+            version()
+        else:
+            print(f"Unknown argument: {arg}")
+            usage()
+
+    # === Interactive Mode ===
+    print("Welcome to DummyText Generator!\n")
+
+    # Step 1: Ask Org or LaTeX
+    format_output = ask_choice(
+        "Which output format?",
+        ["Org Mode", "LaTeX"]
+    )
+    format_output = "org" if "Org" in format_output else "latex"
+
+    # Step 2: Ask simple vs flexible
+    simple_or_flexible = ask_choice(
+        "Do you want simple dummy text or flexible structures?",
+        ["Simple (lipsum)", "Flexible (blindtext)"]
+    )
+
+    package = "lipsum" if "Simple" in simple_or_flexible else "blindtext"
+
+    # Step 3: Ask structures
+    structures = []
+    if package == "lipsum":
+        structures.append("paragraphs")
+    else:
+        structures = ask_choice(
+            "Which structures do you want to generate?",
+            ["words", "paragraphs", "itemized list", "table", "full document"],
+            allow_multiple=True
+        )
+
+    # Step 4: Ask randomize or not
+    randomize_order = input("Randomize structure order? (y/N): ").lower().startswith('y')
+
+    # Step 5: How many of each
+    counts = {}
+    for struct in structures:
+        count = input(f"How many {struct}? (default 1): ").strip()
+        counts[struct] = int(count) if count.isdigit() else 1
+
+    if randomize_order:
+        random.shuffle(structures)
+
+    # === Output generation ===
+    header = ""
+    if format_output == "org":
+        header += f"#+LATEX_HEADER: \\usepackage{{{package}}}\n\n"
+    else:
+        header += "\\documentclass{article}\n"
+        header += f"\\usepackage{{{package}}}\n\n"
+        header += "\\begin{document}\n\n"
+
+    body = ""
+
+    for struct in structures:
+        if struct == "paragraphs":
+            for _ in range(counts[struct]):
+                if package == "lipsum":
+                    body += "% lipsum paragraph\n" if format_output == "latex" else "# lipsum paragraph\n"
+                    body += "\\lipsum[1]\n\n"
+                else:
+                    body += "% blindtext paragraph\n" if format_output == "latex" else "# blindtext paragraph\n"
+                    body += "\\Blindtext\n\n"
+        elif struct == "words":
+            for _ in range(counts[struct]):
+                body += "% blindtext words\n" if format_output == "latex" else "# blindtext words\n"
+                body += "\\Blindtext[1][1]\n\n"
+        elif struct == "itemized list":
+            for _ in range(counts[struct]):
+                body += "% blindtext itemized list\n" if format_output == "latex" else "# blindtext itemized list\n"
+                body += "\\Blinditemize\n\n"
+        elif struct == "table":
+            for _ in range(counts[struct]):
+                body += "% blindtext table\n" if format_output == "latex" else "# blindtext table\n"
+                body += "\\Blindtable\n\n"
+        elif struct == "full document":
+            body += "% blindtext full document\n" if format_output == "latex" else "# blindtext full document\n"
+            body += "\\Blinddocument\n\n"
+
+    footer = ""
+    if format_output == "latex":
+        footer += "\\end{document}\n"
+
+    # Final output
+    print(header + body + footer)
+
+if __name__ == "__main__":
+    main()
+
