@@ -1,0 +1,99 @@
+#+title: Dummytext Release Notes
+#+AUTHOR: Manuel Fuica Morales
+
+#+DATE: 2025-04-28
+
+* TOC :TOC_1:noexport:
+- [[#version][Version]]
+- [[#summary][Summary]]
+- [[#major-features][Major Features]]
+- [[#installation][Installation]]
+- [[#usage-examples][Usage Examples]]
+- [[#profile-system][Profile System]]
+- [[#dependencies][Dependencies]]
+- [[#known-limitations][Known Limitations]]
+- [[#future-ideas][Future Ideas]]
+- [[#thanks][Thanks]]
+
+* Version
+v1.0.0
+
+* Summary
+dummytext is a flexible LaTeX/Org-mode dummy text generator designed for document prototyping, layout testing, and development workflows.
+
+It supports:
+- Paragraphs, words, itemized lists, tables, full documents
+- Profile system for reusable configurations
+- Fine-grained randomization of paragraph sizes
+- Org-mode and LaTeX output
+- Batch mode for scripts and pipelines
+- Copy-to-clipboard integration
+
+* Major Features
+- Simple or flexible text generation (via blindtext/lipsum packages)
+- Fully interactive setup wizard
+- Preset profiles (save and reuse configurations)
+- Auto-load last used profile if no options are given
+- Batch mode (--batch) for silent generation
+- List all available profiles (--list-profiles)
+- Fine-grained randomization of paragraph size per paragraph
+- Output directly to Org-mode or LaTeX format
+- Supports UNIX shell pipelines and redirects
+
+* Installation
+1. Save `dummytext` somewhere in your =$PATH= (e.g., =~/bin/=).
+2. Set executable permission: =chmod +x dummytext=
+3. Ensure a LaTeX system is installed (e.g., TeX Live, MacTeX).
+4. Ensure `blindtext` and `lipsum` LaTeX packages are available.
+5. Install clipboard helper at =~/bin/copy_to_clipboard= if you want clipboard functionality.
+
+* Usage Examples
+#+BEGIN_SRC bash
+# Start interactive session
+dummytext
+
+# Load an existing profile
+dummytext --profile quicktest
+
+# Save new profile after an interactive session
+dummytext --save myprofile
+
+# Generate using profile and redirect output
+dummytext --profile quicktest --batch > dummy.tex
+
+# List all available profiles
+dummytext --list-profiles
+
+# Force interactive even if a last profile exists
+dummytext -i
+#+END_SRC
+
+* Profile System
+- Profiles stored under =~/.config/dummytext/presets.json=
+- Fields saved:
+  - Output format (Org or LaTeX)
+  - Text package (blindtext or lipsum)
+  - Structures to generate (words, paragraphs, lists, tables, documents)
+  - Counts of each structure
+  - Paragraph size options
+  - Paragraph varied/random option
+  - Randomize order of structures
+
+* Dependencies
+- Python 3.x (no pip modules required)
+- xclip, pbcopy, or compatible clipboard tool (optional)
+
+* Known Limitations
+- No per-item fine-tuning inside lists/tables yet
+- No custom text sources (only blindtext/lipsum)
+
+* Future Ideas
+- Paragraph size weighting (e.g., 70% medium, 20% short, 10% long)
+- Inline table and list fine-tuning
+- Export directly to PDF
+- Extendable dummy data generators for non-LaTeX use
+
+* Thanks
+Thanks to careful design and iteration, dummytext is now a powerful and flexible tool for LaTeX and Org-mode users who need quick and realistic document mockups.
+
+---
