@@ -1,0 +1,14 @@
+{
+    "quicktest": {
+        "format": "org",
+        "package": "blindtext",
+        "structures": ["paragraphs", "itemized list"],
+        "counts": {
+            "paragraphs": 1,
+            "itemized list": 1
+        },
+        "randomize_order": false,
+        "paragraph_style": "Medium"
+    }
+}
+
