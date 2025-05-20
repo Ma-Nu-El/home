@@ -553,9 +553,10 @@ Orgmode latex export: new page after TOC
 - https://emacs.stackexchange.com/questions/20062/exporting-unicode-characters-to-pdf-using-latex-from-org-mode
 
 
-Seems like the default is =utf8=, and that is a problem when you want to
-write something weird like _/ε/_ for authors/ in =pdf= export;
-the =html= export has not presented this problem so far.
+Seems like the default is =utf8=, and that is a problem
+when you want to write something weird like _/ε/_ for
+authors/ in =pdf= export; the =html= export has not
+presented this problem so far.
 
 # #+begin_src elisp
 # (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
@@ -571,9 +572,7 @@ the =html= export has not presented this problem so far.
 
 This seems to do the job.
 
-#+begin_center
-This one does not work.
-#+end_center
+*** This one does not work.
 
 : #+begin_example elisp
 : (add-to-list 'org-latex-packages-alist '("AUTO" "babel" t ("pdflatex")))
@@ -583,9 +582,7 @@ This one does not work.
 
 An alternative not tested solution is to put this in your file.
 
-#+begin_center
-This one works!
-#+end_center
+*** This one works!
 
 : #+LANGUAGE: es
 : #+LATEX_HEADER: \usepackage[spanish]{babel}
@@ -954,10 +951,10 @@ I use Beorg on mobile to capture stuff on my phone. And for funsies I set up my 
 - [[https://github.com/tecosaur/org-glossary][GitHub - tecosaur/org-glossary: Glossary, Acronyms, and Index capability within Org]]
 
 
-# #+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (use-package! org-glossary
   :hook (org-mode . org-glossary-mode))
-# #+end_src
+#+end_src
 
 ** ~org-cite~
 :PROPERTIES:
@@ -967,8 +964,20 @@ I use Beorg on mobile to capture stuff on my phone. And for funsies I set up my 
 - As in [cite:@ref_20230503125135]
 
 
-I want to use either:
+#+begin_src elisp
+(setq org-cite-export-processors
+      '((html csl)            ; use citeproc-el for HTML
+        (latex biblatex)))    ; use biblatex/biber for PDF
+#+end_src
 
+#+begin_src elisp
+(setq org-cite-global-bibliography '("~/FilenSync/org/bibliography.bib"))
+#+end_src
+
+#+RESULTS:
+: (~/FilenSync/org/bibliography.bib)
+
+*** other trials
 #+begin_example emacs-lisp
 (setq org-cite-global-bibliography (concat org-directory "bibliography.bib"))
 #+end_example
@@ -976,22 +985,12 @@ I want to use either:
 #+RESULTS:
 : ~/FilenSync/org/bibliography.bib
 
-or
-
 #+begin_example emacs-lisp
 (setq org-cite-global-bibliography (concat (file-name-as-directory org-directory) "bibliography.bib"))
 #+end_example
 
 #+RESULTS:
 : ~/FilenSync/org/bibliography.bib
-
-but the one that works is
-#+begin_example elisp
-(setq org-cite-global-bibliography '("~/FilenSync/org/bibliography.bib"))
-#+end_example
-
-#+RESULTS:
-: (~/FilenSync/org/bibliography.bib)
 
 Notice that the one that works outputs
 : ("~/FilenSync/org/bibliography.bib")

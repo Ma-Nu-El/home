@@ -180,6 +180,12 @@
          "* %u %?\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
 ))
 
+(setq org-cite-export-processors
+      '((html csl)            ; use citeproc-el for HTML
+        (latex biblatex)))    ; use biblatex/biber for PDF
+
+(setq org-cite-global-bibliography '("~/FilenSync/org/bibliography.bib"))
+
 (setq org-export-with-sub-superscripts nil)
 
 (setq org-tag-alist '(
