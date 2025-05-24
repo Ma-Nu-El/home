@@ -12,8 +12,8 @@
 - [[#ob-ledger][ob-ledger]]
 - [[#org-roam-bibtex][org-roam-bibtex]]
 - [[#org-ref][org-ref]]
-- [[#org-glossary][org-glossary]]
-- [[#org-kanban][org-kanban]]
+- [[#org-glossary][`org-glossary`]]
+- [[#org-kanban][`org-kanban`]]
 - [[#org-ai][org-ai]]
 - [[#org-web-tools][org-web-tools]]
 
@@ -170,21 +170,25 @@ Contained in [[https://github.com/emacsmirror/org-contrib][org-contrib]].
 (package! org-ref)
 #+end_example
 
-* org-glossary
-# - [2023-04-27 Thu 23:37]
+* `org-glossary`
+:PROPERTIES:
+:CREATED:  [2023-04-27 Thu 23:37]
+:END:
 - [[https://github.com/tecosaur/org-glossary][GitHub - tecosaur/org-glossary: Glossary, Acronyms, and Index capability within Org]]
 
 
-# #+begin_src emacs-lisp
-(package! org-glossary
-  :recipe (:host github :repo "tecosaur/org-glossary"))
-# #+end_src
-
-* org-kanban
-# - [2023-08-25 Fri 18:10]
-
 #+begin_src emacs-lisp
 (package! org-glossary
+  :recipe (:host github :repo "tecosaur/org-glossary"))
+#+end_src
+
+* `org-kanban`
+:PROPERTIES:
+:CREATED:  [2023-08-25 Fri 18:10]
+:END:
+
+#+begin_src emacs-lisp
+(package! org-kanban
   :recipe (:host github
            :repo "gizmomogwai/org-kanban"
            )
@@ -194,8 +198,8 @@ Contained in [[https://github.com/emacsmirror/org-contrib][org-contrib]].
 * org-ai
 :PROPERTIES:
 :ID:       5a975bd3-e2bc-444c-ae9b-fb2d50e45402
+:CREATED:  [2023-11-15 Wed 22:33]
 :END:
-# - [2023-11-15 Wed 22:33]
 - [[https://github.com/rksm/org-ai/issues/50][doom-emacs configuration · Issue #50 · rksm/org-ai · GitHub]]
 
 

@@ -42,8 +42,7 @@
   - [[#org-roam-bibtex][~org-roam-bibtex~]]
   - [[#org-capture][~org-capture~]]
   - [[#org-ref][~org-ref~]]
-  - [[#org-glossary][~org-glossary~]]
-  - [[#org-cite][~org-cite~]]
+  - [[#org-cite]['org-cite']]
   - [[#underscore-and-hat-handling][underscore and hat handling]]
   - [[#org-tag-alist][~org-tag-alist~]]
   - [[#created-property][=CREATED= property]]
@@ -56,6 +55,7 @@
   - [[#cnld-disable-heading-numbering-during-export][CNLD disable heading numbering during export]]
   - [[#cnld-prevent-invisible-edits-commented-out][CNLD prevent invisible edits [Commented out]]]
 - [[#end-org-section][end org section]]
+- [[#org-glossary]['org-glossary']]
 - [[#lsp-section][lsp section]]
 - [[#flyspell-mode-t][flyspell-mode t]]
 - [[#ispell-config][ispell config]]
@@ -944,19 +944,7 @@ I use Beorg on mobile to capture stuff on my phone. And for funsies I set up my 
 )
 #+end_example
 
-** ~org-glossary~
-:PROPERTIES:
-:CREATED:  [2023-04-27 Thu 23:36]
-:END:
-- [[https://github.com/tecosaur/org-glossary][GitHub - tecosaur/org-glossary: Glossary, Acronyms, and Index capability within Org]]
-
-
-#+begin_src emacs-lisp :tangle no
-(use-package! org-glossary
-  :hook (org-mode . org-glossary-mode))
-#+end_src
-
-** ~org-cite~
+** 'org-cite'
 :PROPERTIES:
 :CREATED:  [2023-05-03 Wed 12:35]
 :END:
@@ -1364,6 +1352,18 @@ more careful.
 #+begin_src elisp
 )
 ;; END AFTER ORG
+#+end_src
+
+* 'org-glossary'
+:PROPERTIES:
+:CREATED:  [2023-04-27 Thu 23:36]
+:END:
+- [[https://github.com/tecosaur/org-glossary][GitHub - tecosaur/org-glossary: Glossary, Acronyms, and Index capability within Org]]
+
+
+#+begin_src emacs-lisp
+(use-package! org-glossary
+  :hook (org-mode . org-glossary-mode))
 #+end_src
 
 * lsp section

@@ -378,6 +378,9 @@ Works if the point is anywhere within the subtree of the heading."
 )
 ;; END AFTER ORG
 
+(use-package! org-glossary
+  :hook (org-mode . org-glossary-mode))
+
 (after! lsp-mode
   (setq lsp-clients-php-server-command '("intelephense" "--stdio")))
 
