@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: personal-org-latex-table-wide
+# key: trigger-key
+# condition: t
+# --
+#+LATEX_HEADER: \usepackage{rotating}
+#+BEGIN_LATEX
+\begin{sidewaystable*}
+\noindent
+\begin{tabularx}{\textwidth}{|p{4cm}|X|X|}
+\hline
+Header 1 & Header 2 & Header 3 \\
+\hline
+$1 & $2 & $3 \\
+\hline
+\end{tabularx}
+\end{sidewaystable*}
+#+END_LATEX

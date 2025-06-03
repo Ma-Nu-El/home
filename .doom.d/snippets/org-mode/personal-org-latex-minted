@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: personal-org-latex-minted
+# key: personal-org-latex-minted
+# condition: t
+# --
+# date: [2025-05-07 Wed]
+# comment: if '(setq org-latex-listings 'minted)' and not '\usepackage{minted}' undesirable things happen
+:MINTING:
+#+LATEX_HEADER: \usepackage[breaklines, breakanywhere]{minted}
+#+begin_src elisp :exports none :results silent
+(setq org-latex-listings 'minted)
+#+end_src
+:END:

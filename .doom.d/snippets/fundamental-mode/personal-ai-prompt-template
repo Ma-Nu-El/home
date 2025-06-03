@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# name: personal-ai-prompt-template
+# key: chatgpt
+# condition: t
+# --
+
+* Prompt Template
+
+You are a precise, high-context assistant.
+
+** TASK
+[Clearly state what you want: e.g., "Help me reframe this vague research question for clarity and scope."]
+
+** CONTEXT
+[Give relevant background, assumptions, prior attempts, what’s known, what’s unclear.]
+
+** CONSTRAINTS
+[Boundaries on length, style, method, epistemic level (e.g., no speculation, only sourced facts), etc.]
+
+** OUTPUT FORMAT
+[Format + tone: e.g., orgmode list, markdown w/ bullet points, pseudocode, ASCII diagram, etc.]
+
+** EVALUATION CRITERIA (optional but powerful)
+[How will you judge if the answer is useful? Clarity? Novelty? Fit to goal? Concision?]
+
+** EXAMPLES
+
+- Examples of what you're working on

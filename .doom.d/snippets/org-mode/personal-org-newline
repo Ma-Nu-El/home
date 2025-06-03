@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: personal-org-newline
+# key: trigger-key
+# condition: t
+# --
+@@latex:\vspace{1em}@@@@html:<div></div>@@

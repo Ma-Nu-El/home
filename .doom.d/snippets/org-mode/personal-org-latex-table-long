@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: personal-org-latex-table-long
+# key: trigger-key
+# condition: t
+# --
+#+LATEX_HEADER: \usepackage{longtable}
+#+ATTR_LATEX: :environment longtable :align |p{3cm}|X|X|
+| Column 1        | Column 2 (auto wrap) | Column 3 (auto wrap)  |
+|-----------------+----------------------+-----------------------|
+| /               | <                    |                       |
+|                 |                      |                       |
