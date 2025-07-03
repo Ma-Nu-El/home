@@ -50,6 +50,7 @@
   - [[#myorg-archive-done-tasks][~my/org-archive-done-tasks~]]
   - [[#myorg-agenda-custom-search-next-action-and-myorg-convert-to-next-action][~my/org-agenda-custom-search-next-action~ and ~my/org-convert-to-next-action~]]
   - [[#load-tags-file][load tags file]]
+  - [[#do-not-export-tags-in-headers][Do not export tags in headers]]
   - [[#cnld-log][CNLD log]]
   - [[#cnld-org-fontify-quote-and-verse-blocks-disabled][CNLD org fontify quote and verse blocks [DISABLED]]]
   - [[#cnld-disable-heading-numbering-during-export][CNLD disable heading numbering during export]]
@@ -1244,6 +1245,15 @@ Works if the point is anywhere within the subtree of the heading."
 (when (file-exists-p "~/.doom.d/personal.el")
   (load "~/.doom.d/personal.el"))
 
+#+end_src
+
+** Do not export tags in headers
+:PROPERTIES:
+:CREATED:  [2025-07-03 Thu 16:32]
+:END:
+
+#+begin_src emacs-lisp
+(setq org-export-with-tags nil)
 #+end_src
 
 ** CNLD log

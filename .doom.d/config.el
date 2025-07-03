@@ -375,6 +375,8 @@ Works if the point is anywhere within the subtree of the heading."
 (when (file-exists-p "~/.doom.d/personal.el")
   (load "~/.doom.d/personal.el"))
 
+(setq org-export-with-tags nil)
+
 )
 ;; END AFTER ORG
 
