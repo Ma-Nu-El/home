@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: personal-latex-unicode-support
+# key: trigger-key
+# condition: t
+# --
+:LATEX_UNICODE_SUPPORT:
+#+LATEX_COMPILER: lualatex
+#+LATEX_HEADER: \usepackage{fontspec}
+#+LATEX_HEADER: \usepackage{unicode-math}
+#+LATEX_HEADER: \setmainfont{Libertinus Serif}
+#+LATEX_HEADER: \setmonofont{Fira Code}
+#+LATEX_HEADER: \setmathfont{Libertinus Math}
+:END:

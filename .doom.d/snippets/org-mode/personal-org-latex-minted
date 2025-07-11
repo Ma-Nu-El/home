@@ -6,7 +6,8 @@
 # date: [2025-05-07 Wed]
 # comment: if '(setq org-latex-listings 'minted)' and not '\usepackage{minted}' undesirable things happen
 :MINTING:
-#+LATEX_HEADER: \usepackage[breaklines, breakanywhere]{minted}
+#+LATEX_HEADER: \usepackage{minted}
+#+LATEX_HEADER: \setminted{breaklines=true, breakanywhere=true}
 #+begin_src elisp :exports none :results silent
 (setq org-latex-listings 'minted)
 #+end_src
