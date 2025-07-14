@@ -3,6 +3,6 @@
 # key: personal-org-src-block-eval-no
 # condition: t
 # --
-#+begin_src ${0:  language} :eval no
-
+#+begin_src ${1} :eval no
+${2}
 #+end_src
