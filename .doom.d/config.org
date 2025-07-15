@@ -69,8 +69,8 @@
 - [[#custom-set-variables][custom set variables]]
 - [[#60-char-ruler][60 char ruler]]
 - [[#git-gutter][git gutter]]
-- [[#org-ai][~org-ai~]]
-- [[#fix-zo-not-working-in-macos][fix =zo= not working in macOS]]
+- [[#org-ai][`org-ai`]]
+- [[#fix-zo-not-working-in-macos][fix `zo` not working in macOS]]
 - [[#orgmode-readonly-custom-functions][orgmode readonly custom functions]]
 - [[#custom-variables][custom variables]]
   - [[#mycustom-cli-line-length][my/custom-cli-line-length]]
@@ -1548,7 +1548,7 @@ more careful.
 ;; (global-git-gutter-mode +1)
 #+end_src
 
-* ~org-ai~
+* `org-ai`
 :PROPERTIES:
 :CREATED:  [2023-11-15 Wed 22:37]
 :ID:       41b37756-f1b8-45a1-bd54-eee41ed5fa6c
@@ -1580,7 +1580,7 @@ more careful.
 
 #+end_src
 
-* fix =zo= not working in macOS
+* fix `zo` not working in macOS
 :PROPERTIES:
 :CREATED:  [2024-01-03 Wed 16:24]
 :END:
