@@ -6,7 +6,8 @@
 
 (setq doom-theme 'doom-gruvbox)
 
-(setq org-directory "~/FilenSync/org/")
+(setq org-directory "~/FilenSync/org/"
+      personal-org-directory "~/auxRoam/")
 
 (setq org-agenda-files "~/.doom.d/agenda-files.txt")
 
@@ -442,6 +443,9 @@ Works if the point is anywhere within the subtree of the heading."
   (org-ai-install-yasnippets)) ; if you are using yasnippet and want `ai` snippets
 
 (after! org (setq org-fold-core-style 'overlays) )
+
+(setq rmh-elfeed-org-files
+      (list (concat personal-org-directory "elfeed.org")))
 
 (defun org-mark-readonly ()
   (interactive)

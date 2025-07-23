@@ -1,6 +1,6 @@
 #+TITLE: Config File
 #+PROPERTY: header-args :tangle ~/.doom.d/config.el :results silent
-#+bibliography: "~/FilenSync/org/bibliography.bib"
+#+bibliography: bib.bib
 #+cite_export: basic
 
 * Table of Contents :TOC_2:noexport:
@@ -9,7 +9,7 @@
 - [[#mu4e][mu4e]]
 - [[#font][font]]
 - [[#theme][theme]]
-- [[#org-directory][org directory]]
+- [[#org-directories][org directories]]
 - [[#recursive-agenda-files][recursive agenda files]]
 - [[#no-line-numbers][no line numbers]]
 - [[#horizontal-scroll-with-mouse-wheel][horizontal scroll with mouse wheel]]
@@ -71,20 +71,16 @@
 - [[#git-gutter][git gutter]]
 - [[#org-ai][`org-ai`]]
 - [[#fix-zo-not-working-in-macos][fix `zo` not working in macOS]]
-- [[#orgmode-readonly-custom-functions][orgmode readonly custom functions]]
-- [[#custom-variables][custom variables]]
-  - [[#mycustom-cli-line-length][my/custom-cli-line-length]]
-- [[#custom-functions][custom functions]]
-  - [[#mysync-line-in-windows-simple][my/sync-line-in-windows-simple]]
-  - [[#mycopy-to-clipboard][my/copy-to-clipboard]]
-  - [[#mycopy-file-path-to-clipboard][my/copy-file-path-to-clipboard]]
-  - [[#mycopy-directory-path-to-cliboard][my/copy-directory-path-to-cliboard]]
-  - [[#myshow-region-bytes][my/show-region-bytes]]
-  - [[#mycenter-text][my/center-text]]
-- [[#keyboard-shortcuts][keyboard shortcuts]]
+- [[#emacs-feed---rss---elfeed][Emacs feed - rss - elfeed]]
+- [[#custom-functions-and-variables][Custom functions and variables]]
+  - [[#orgmode-readonly-custom-functions][orgmode readonly custom functions]]
+  - [[#custom-variables][custom variables]]
+  - [[#custom-functions][custom functions]]
+- [[#keyboard-shortcuts][Keyboard Shortcuts]]
   - [[#misc-functions][misc functions]]
   - [[#end-definition][end definition]]
   - [[#csv-mode][csv-mode]]
+- [[#bibliography][Bibliography]]
 
 * shebang
 :PROPERTIES:
@@ -219,21 +215,22 @@ available. You can either set `doom-theme' or manually load a theme with the
 - Check the different themes
   + https://github.com/hlissner/emacs-doom-themes/tree/screenshots
 
-* org directory
+* org directories
 :PROPERTIES:
 :ID:       86d962a4-8100-483a-a739-59cfcdfb0655
+:CREATED:  [2025-07-23 Wed 15:03]
 :END:
 
-If you use `org' and don't want your org files in
+If you use ~org~ and don't want your org files in
 the default location below, change `org-directory'.
 It must be set before org loads!
 
 #+begin_src elisp
-(setq org-directory "~/FilenSync/org/")
+(setq org-directory "~/FilenSync/org/"
+      personal-org-directory "~/auxRoam/")
 #+end_src
 
-;; Added by me
-;; https://stackoverflow.com/questions/11384516/how-to-make-all-org-files-under-a-folder-added-in-agenda-list-automatically
+Added by MFM - Source: [cite:@2025-07-23-stackoverflow]
 
 * recursive agenda files
 :PROPERTIES:
@@ -828,10 +825,12 @@ university stuff. Check ~/org/uni/docs/index.html
 :PROPERTIES:
   :ID:       41e53852-03b8-4098-a190-287a30504cfc
   :END:
+
 #+begin_src elisp
 ;; ORG-ROAM
 (setq org-roam-directory "~/auxRoam")
 #+end_src
+
 (setq org-roam-directory "~/auxRoam")
 (require 'org-roam-protocol)
 ;; (add-hook 'after-init-hook 'org-roam-mode)
@@ -1589,7 +1588,18 @@ more careful.
 (after! org (setq org-fold-core-style 'overlays) )
 #+end_src
 
-* orgmode readonly custom functions
+* Emacs feed - rss - elfeed
+:PROPERTIES:
+:CREATED:  [2025-07-23 Wed 14:55]
+:END:
+
+#+begin_src elisp
+(setq rmh-elfeed-org-files
+      (list (concat personal-org-directory "elfeed.org")))
+#+end_src
+
+* Custom functions and variables
+** orgmode readonly custom functions
 :PROPERTIES:
 :CREATED:  [2024-02-07 Wed 16:10]
 :END:
@@ -1623,22 +1633,22 @@ more careful.
 
 #+end_src
 
-* custom variables
+** custom variables
 :PROPERTIES:
 :CREATED:  [2025-02-14 Fri 15:29]
 :END:
-** my/custom-cli-line-length
+*** my/custom-cli-line-length
 #+begin_src elisp
 (defconst my/custom-cli-line-length
   (string-to-number (or (getenv "CUSTOM_CLI_LINE_LENGTH") "55"))
   "The default line length: read from system or default value (55).")
 #+end_src
-* custom functions
+** custom functions
 :PROPERTIES:
 :CREATED:  [2024-10-19 Sat 17:29]
 :END:
 
-** my/sync-line-in-windows-simple
+*** my/sync-line-in-windows-simple
 #+begin_src elisp
 (defun my/sync-line-in-windows-simple ()
   "Sync the current line number and cursor position relative to the window in both horizontally split windows."
@@ -1650,7 +1660,7 @@ more careful.
     (recenter window-line)                                      ;; Move cursor to same number of lines from top
     (other-window 1)))                                          ;; Return to the original window
 #+end_src
-** my/copy-to-clipboard
+*** my/copy-to-clipboard
 
 #+begin_src elisp
 (defun my/copy-to-clipboard (start end)
@@ -1678,7 +1688,7 @@ more careful.
                    "Buffer copied to clipboard!"))))))
 #+end_src
 
-** my/copy-file-path-to-clipboard
+*** my/copy-file-path-to-clipboard
 :PROPERTIES:
 :CREATED:  [2025-02-16 Sun 18:28]
 :END:
@@ -1709,7 +1719,7 @@ more careful.
     (message "Error: This buffer is not visiting a file.")))
 #+end_src
 
-** my/copy-directory-path-to-cliboard
+*** my/copy-directory-path-to-cliboard
 :PROPERTIES:
 :CREATED:  [2025-02-16 Sun 18:31]
 :END:
@@ -1740,7 +1750,7 @@ more careful.
     (message "Error: No valid directory found.")))
 #+end_src
 
-** my/show-region-bytes
+*** my/show-region-bytes
 :PROPERTIES:
 :CREATED:  [2025-02-14 Fri 15:21]
 :END:
@@ -1755,7 +1765,7 @@ more careful.
     (message "")))
 #+end_src
 
-** my/center-text
+*** my/center-text
 #+begin_src elisp
 (defun my/center-text ()
   "Center window text."
@@ -1807,7 +1817,7 @@ more careful.
 - [[https://stackoverflow.com/questions/24955253/centre-emacs-buffer-within-window][Centre Emacs buffer within window - Stack Overflow]]
 - [[https://emacs.stackexchange.com/questions/76254/center-emacs-window-in-the-middle][centering - Center emacs window in the middle - Emacs Stack Exchange]]
 - [[https://superuser.com/questions/307751/setting-default-emacs-window-margins/645114#645114][elisp - Setting default Emacs window margins - Super User]]
-* keyboard shortcuts
+* Keyboard Shortcuts
 :PROPERTIES:
 :CREATED:  [2023-09-07 Thu 16:31]
 :END:
@@ -1955,4 +1965,21 @@ more careful.
       "t" #'csv-transpose
       "h" #'csv-header-line
       )
+#+end_src
+* Bibliography
+:PROPERTIES:
+:CREATED:  [2025-07-23 Wed 14:57]
+:END:
+
+#+begin_src bibtex :tangle bib.bib
+@online{2025-07-23-stackoverflow,
+	title = {{How to make all org-files under a folder added in agenda-list automatically?}},
+	journaltitle = {Stack Overflow},
+	author = {Stack Overflow},
+	year = {2025},
+	month = jul,
+	urldate = {2025-07-23},
+	note = {[Online; accessed 23. Jul. 2025]},
+	url = {https://stackoverflow.com/questions/11384516/how-to-make-all-org-files-under-a-folder-added-in-agenda-list-automatically}
+}
 #+end_src
