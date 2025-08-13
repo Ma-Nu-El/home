@@ -185,3 +185,11 @@ alias agpt='~/bin/auto_gpt_fire_up'
 alias penv='. "$HOME"/venv/python3.12.2/bin/activate'
 alias p3='"$HOME"/venv/python3.12.2/bin/python'
 alias cal='/usr/local/opt/util-linux/bin/cal -m'
+# Generic rclone defaults that work well across remotes
+alias rclonef='rclone -P \
+  --fast-list \
+  --checkers 8 --transfers 8 \
+  --tpslimit 8 --tpslimit-burst 8 \
+  --retries 5 --retries-sleep 5s --low-level-retries 10 \
+  --stats 15s \
+  --filter-from ~/FilenSync/rclone-filters.txt'

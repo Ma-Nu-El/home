@@ -24,6 +24,7 @@ set -o pipefail
 <<bash_alias_chatgpt>>
 <<bash_alias_python>>
 <<bash_alias_macos_calendar>>
+<<bash_alias_rclone>>
 #+end_src
 
 ** git
@@ -274,6 +275,23 @@ alias tttc='"$HOME"/bin/today -c time'
 #+name: bash_alias_macos_calendar
 #+begin_src bash :tangle no
 alias cal='/usr/local/opt/util-linux/bin/cal -m'
+#+end_src
+
+** rclone
+:PROPERTIES:
+:CREATED:  [2025-08-12 Tue 23:50]
+:END:
+
+#+name: bash_alias_rclone
+#+begin_src bash :tangle no
+# Generic rclone defaults that work well across remotes
+alias rclonef='rclone -P \
+  --fast-list \
+  --checkers 8 --transfers 8 \
+  --tpslimit 8 --tpslimit-burst 8 \
+  --retries 5 --retries-sleep 5s --low-level-retries 10 \
+  --stats 15s \
+  --filter-from ~/FilenSync/rclone-filters.txt'
 #+end_src
 
 * Functions
