@@ -58,7 +58,7 @@
       '(("A" "Custom Agenda View"
          ((agenda "" ;; Regular agenda view
                   (
-                    ;; Do not include scheduled, due or overdue items here
+                   ;; Do not include scheduled, due or overdue items here
                    (org-deadline-warning-days 0)
                    (org-scheduled-past-days 0)
                    (org-deadline-past-days 0)
@@ -170,16 +170,16 @@
 (setq org-default-notes-file (concat org-directory "default_notes.org"))
 
 (setq org-capture-templates
-     '(
-      ("w" "Work" entry (file "~/FilenSync/org/refile.org")
+      '(
+        ("w" "Work" entry (file "~/FilenSync/org/refile.org")
          "* %u %?\n\n" :clock-in nil)
-      ("W" "Work Citation" entry (file "~/FilenSync/org/bibliography.org")
+        ("W" "Work Citation" entry (file "~/FilenSync/org/bibliography.org")
          "* %u %?\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
-      ("p" "Personal" entry (file "~/auxRoam/refile.org")
+        ("p" "Personal" entry (file "~/auxRoam/refile.org")
          "* %u %?\n\n" :clock-in nil)
-      ("P" "Personal Citation" entry (file "~/auxRoam/bibliography.org")
+        ("P" "Personal Citation" entry (file "~/auxRoam/bibliography.org")
          "* %u %?\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
-))
+        ))
 
 (setq org-cite-export-processors
       '((html csl)            ; use citeproc-el for HTML
@@ -194,7 +194,7 @@
                       ("PROJ" . ?p)
                       ("read_only" . ?R)
                       )
-)
+      )
 
 (defvar org-created-property-name "CREATED"
   "The name of the org-mode property that stores the creation date of the entry")
@@ -214,9 +214,9 @@ will not be modified."
 (add-hook 'org-capture-before-finalize-hook #'org-set-created-property)
 
 (setq org-enable-priority-commands t
-    org-priority-highest 1
-    org-priority-default 9
-    org-priority-lowest 9)
+      org-priority-highest 1
+      org-priority-default 9
+      org-priority-lowest 9)
 
 (defun my/org-get-parent-heading ()
   "Return the name of the parent heading of the current task."
@@ -631,10 +631,10 @@ Works if the point is anywhere within the subtree of the heading."
  )
 
 (:prefix-map ("C" . "copy to clipboard")
-  (:desc "my/copy-to-clipboard" "c" #'my/copy-to-clipboard)
-  (:desc "my/copy-file-path-to-clipboard" "f" #'my/copy-file-path-to-clipboard)
-  (:desc "my/copy-directory-path-to-clipboard" "d" #'my/copy-directory-path-to-clipboard)
-)
+             (:desc "my/copy-to-clipboard" "c" #'my/copy-to-clipboard)
+             (:desc "my/copy-file-path-to-clipboard" "f" #'my/copy-file-path-to-clipboard)
+             (:desc "my/copy-directory-path-to-clipboard" "d" #'my/copy-directory-path-to-clipboard)
+             )
 
 (:desc "my/show-region-bytes" "s" #'my/show-region-bytes)
 

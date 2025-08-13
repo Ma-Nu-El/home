@@ -248,8 +248,8 @@ Added by MFM - Source: [cite:@2025-07-23-stackoverflow]
 - https://orgmode.org/manual/Agenda-Files.html
 
 (setq org-agenda-files (list "~/org/auxRoam/.org"
-                             "~/org/school.org"
-                             "~/org/home.org"))
+"~/org/school.org"
+"~/org/home.org"))
 
 * no line numbers
 :PROPERTIES:
@@ -368,7 +368,7 @@ Set global Column View format.
 #+end_src
 
 (setq org-columns-default-format '"%34ITEM(Item) %10TAGS(Tags) %5TODO(State)
- %5Effort(Estim){:} %10CLOCKSUM(Actual)")
+%5Effort(Estim){:} %10CLOCKSUM(Actual)")
 
 ** ~LOGBOOK~ and ~CLOCKBOOK~
 :PROPERTIES:
@@ -420,7 +420,7 @@ when checking agenda remotely.
       '(("A" "Custom Agenda View"
          ((agenda "" ;; Regular agenda view
                   (
-                    ;; Do not include scheduled, due or overdue items here
+                   ;; Do not include scheduled, due or overdue items here
                    (org-deadline-warning-days 0)
                    (org-scheduled-past-days 0)
                    (org-deadline-past-days 0)
@@ -593,7 +593,7 @@ See also:
 
 ** ~org-babel-python-command~
 :PROPERTIES:
-:CREATED:   [2024-03-28 Thu 11:26]
+:CREATED:  [2024-03-28 Thu 11:26]
 :END:
 
 - https://emacs.stackexchange.com/questions/57447/org-babel-loads-different-python
@@ -823,8 +823,8 @@ university stuff. Check ~/org/uni/docs/index.html
 
 ** ~org-roam~
 :PROPERTIES:
-  :ID:       41e53852-03b8-4098-a190-287a30504cfc
-  :END:
+:ID:       41e53852-03b8-4098-a190-287a30504cfc
+:END:
 
 #+begin_src elisp
 ;; ORG-ROAM
@@ -883,16 +883,16 @@ university stuff. Check ~/org/uni/docs/index.html
 
 #+begin_src elisp :tangle no
 (setq org-capture-templates
-     '(
-      ("w" "Work" entry (file "~/FilenSync/org/refile.org")
+      '(
+        ("w" "Work" entry (file "~/FilenSync/org/refile.org")
          "* %u %?\n# - %U\n\n" :clock-in nil)
-      ("W" "Work Citation" entry (file "~/FilenSync/org/bibliography.org")
+        ("W" "Work Citation" entry (file "~/FilenSync/org/bibliography.org")
          "* %u\n# - %U\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
-      ("p" "Personal" entry (file "~/auxRoam/refile.org")
+        ("p" "Personal" entry (file "~/auxRoam/refile.org")
          "* %u %?\n# - %U\n\n" :clock-in nil)
-      ("P" "Personal Citation" entry (file "~/auxRoam/bibliography.org")
+        ("P" "Personal Citation" entry (file "~/auxRoam/bibliography.org")
          "* %u\n# - %U\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
-))
+        ))
 #+end_src
 
 
@@ -904,16 +904,16 @@ university stuff. Check ~/org/uni/docs/index.html
 
 #+begin_src elisp
 (setq org-capture-templates
-     '(
-      ("w" "Work" entry (file "~/FilenSync/org/refile.org")
+      '(
+        ("w" "Work" entry (file "~/FilenSync/org/refile.org")
          "* %u %?\n\n" :clock-in nil)
-      ("W" "Work Citation" entry (file "~/FilenSync/org/bibliography.org")
+        ("W" "Work Citation" entry (file "~/FilenSync/org/bibliography.org")
          "* %u %?\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
-      ("p" "Personal" entry (file "~/auxRoam/refile.org")
+        ("p" "Personal" entry (file "~/auxRoam/refile.org")
          "* %u %?\n\n" :clock-in nil)
-      ("P" "Personal Citation" entry (file "~/auxRoam/bibliography.org")
+        ("P" "Personal Citation" entry (file "~/auxRoam/bibliography.org")
          "* %u %?\n\n#+begin_src latex\n%?\n#+end_src" :clock-in nil)
-))
+        ))
 #+end_src
 
 Use with beorg:
@@ -1007,7 +1007,7 @@ where as the others output
                       ("PROJ" . ?p)
                       ("read_only" . ?R)
                       )
-)
+      )
 #+end_src
 
 ** =CREATED= property
@@ -1051,9 +1051,9 @@ at least.
 
 #+begin_src elisp
 (setq org-enable-priority-commands t
-    org-priority-highest 1
-    org-priority-default 9
-    org-priority-lowest 9)
+      org-priority-highest 1
+      org-priority-default 9
+      org-priority-lowest 9)
 #+end_src
 
 ** ~my/org-archive-done-tasks~
@@ -1407,18 +1407,18 @@ more careful.
 - Seems unnecessary.
 
 * personal keybindings
-  :PROPERTIES:
-  :ID:       0cc3c478-ed08-4e4a-b993-a2ff205b829d
-  :END:
+:PROPERTIES:
+:ID:       0cc3c478-ed08-4e4a-b993-a2ff205b829d
+:END:
 #+begin_src elisp
 (define-key evil-motion-state-map (kbd "C-z") nil) ; disable C-z as 'pause'
 (global-set-key (kbd "\C-cr") 'ispell-region)
 #+end_src
 
 * start week on monday
-  :PROPERTIES:
-  :ID:       c1d944f2-b415-42b6-8e75-73a33185d38c
-  :END:
+:PROPERTIES:
+:ID:       c1d944f2-b415-42b6-8e75-73a33185d38c
+:END:
 - [2021-06-08 Tue 19:46]
 #+begin_src elisp
 (setq calendar-week-start-day 1)
@@ -1596,6 +1596,24 @@ more careful.
 #+begin_src elisp
 (setq rmh-elfeed-org-files
       (list (concat personal-org-directory "elfeed.org")))
+#+end_src
+
+- [2025-08-05 Tue 17:10]
+
+The following replaces the regular elfeed ssearch page
+with only titles, good, but everything is non-bold,
+and we want boldness to first mark reads and unreads.
+
+But good to now this works.
+
+#+begin_src elisp :eval no :tangle no
+(after! elfeed
+  (setq elfeed-search-print-entry-function
+        (lambda (entry)
+          (let ((title (or (elfeed-entry-title entry) "")))
+            (insert (propertize title 'face 'elfeed-search-title-face)))))
+  ;; Optionally set width for title truncation
+  (setq elfeed-search-title-max-width 100)) ;; adjust width as needed
 #+end_src
 
 * Custom functions and variables
@@ -1858,10 +1876,10 @@ more careful.
 **** copy-to-clipboard: ~C~
 #+begin_src elisp
 (:prefix-map ("C" . "copy to clipboard")
-  (:desc "my/copy-to-clipboard" "c" #'my/copy-to-clipboard)
-  (:desc "my/copy-file-path-to-clipboard" "f" #'my/copy-file-path-to-clipboard)
-  (:desc "my/copy-directory-path-to-clipboard" "d" #'my/copy-directory-path-to-clipboard)
-)
+             (:desc "my/copy-to-clipboard" "c" #'my/copy-to-clipboard)
+             (:desc "my/copy-file-path-to-clipboard" "f" #'my/copy-file-path-to-clipboard)
+             (:desc "my/copy-directory-path-to-clipboard" "d" #'my/copy-directory-path-to-clipboard)
+             )
 #+end_src
 **** show-region-bytes: ~s~
 #+begin_src elisp
@@ -1972,14 +1990,14 @@ more careful.
 :END:
 
 #+begin_src bibtex :tangle bib.bib
-@online{2025-07-23-stackoverflow,
-	title = {{How to make all org-files under a folder added in agenda-list automatically?}},
-	journaltitle = {Stack Overflow},
-	author = {Stack Overflow},
-	year = {2025},
-	month = jul,
-	urldate = {2025-07-23},
-	note = {[Online; accessed 23. Jul. 2025]},
-	url = {https://stackoverflow.com/questions/11384516/how-to-make-all-org-files-under-a-folder-added-in-agenda-list-automatically}
-}
+                  @online{2025-07-23-stackoverflow,
+                  	title = {{How to make all org-files under a folder added in agenda-list automatically?}},
+                  	journaltitle = {Stack Overflow},
+                  	author = {Stack Overflow},
+                  	year = {2025},
+                  	month = jul,
+                  	urldate = {2025-07-23},
+                  	note = {[Online; accessed 23. Jul. 2025]},
+                  	url = {https://stackoverflow.com/questions/11384516/how-to-make-all-org-files-under-a-folder-added-in-agenda-list-automatically}
+                  }
 #+end_src
