@@ -87,6 +87,8 @@
         )
       )
 
+(setq org-export-with-todo-keywords nil)
+
 (setq org-log-done 'note)
 
 (with-eval-after-load 'ox-latex

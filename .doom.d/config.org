@@ -21,9 +21,10 @@
   - [[#logbook-and-clockbook][~LOGBOOK~ and ~CLOCKBOOK~]]
   - [[#org-agenda-default-settings][~org-agenda~ default settings]]
   - [[#org-agenda-custom-commands][~org-agenda-custom-commands~]]
-  - [[#org-habit][~org-habit~]]
-  - [[#todo-keywords][~TODO~ keywords]]
-  - [[#org-log-done-insert-closed-when-done][~org-log-done~: insert ~CLOSED~ when ~DONE~]]
+  - [[#org-habit][`org-habit`]]
+  - [[#todo-keywords][`TODO` keywords]]
+  - [[#do-not-export-todo-keywords-in-headings][Do not export `TODO` keywords in headings]]
+  - [[#org-log-done-insert-closed-when-done][`org-log-done`: insert ~CLOSED~ when ~DONE~]]
   - [[#org-latex-classes][`org-latex-classes`]]
   - [[#latex-export-table-of-contents-settings][latex export table of contents settings]]
   - [[#latex-other-languages][latex other languages]]
@@ -433,10 +434,11 @@ when checking agenda remotely.
 
 - https://emacs.stackexchange.com/questions/38183/how-to-exclude-a-file-from-agenda
 
-** ~org-habit~
+** `org-habit`
 :PROPERTIES:
 :ID:       c6e2c52f-51bd-4fd9-8fd5-080fb2a617be
 :END:
+
 #+begin_src elisp
 (add-to-list 'org-modules 'org-habit)
 #+end_src
@@ -450,7 +452,7 @@ when checking agenda remotely.
 
 - https://orgmode.org/manual/Tracking-your-habits.html
 
-** ~TODO~ keywords
+** `TODO` keywords
 :PROPERTIES:
 :ID:       55c05291-82b3-443f-93ee-68a68b38d3de
 :END:
@@ -476,7 +478,16 @@ when checking agenda remotely.
 - OrgMode E03S01: Automatic logging of status changes:
   + https://www.youtube.com/watch?v=R4QSTDco_w8
 
-** ~org-log-done~: insert ~CLOSED~ when ~DONE~
+** Do not export `TODO` keywords in headings
+:PROPERTIES:
+:CREATED:  [2025-08-19 Tue 09:03]
+:END:
+
+#+begin_src elisp
+(setq org-export-with-todo-keywords nil)
+#+end_src
+
+** `org-log-done`: insert ~CLOSED~ when ~DONE~
 :PROPERTIES:
 :CREATED:  [2024-09-30 Mon 00:21]
 :END:
